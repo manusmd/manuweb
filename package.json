@@ -5,7 +5,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint ."
+    "lint": "stylelint \"**/*.css\" && eslint . && prettier . --check",
+    "lint-fix": "stylelint \"**/*.css\" --fix && eslint . --fix && prettier . --check"
   },
   "dependencies": {
     "react": "^17.0.2",
@@ -18,6 +19,9 @@
     "eslint": "^8.5.0",
     "eslint-plugin-react": "^7.28.0",
     "prettier": "^2.5.1",
+    "stylelint": "^14.2.0",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-standard": "^24.0.0",
     "typescript": "^4.5.4",
     "vite": "^2.7.2"
   }
