@@ -1,5 +1,5 @@
 import Lottie from 'react-lottie';
-import animationData from './lotties/logo_animation.json';
+import animationData from '../../lotties/logo_animation.json';
 import styles from './Intro.module.css';
 
 function Intro(): JSX.Element {
