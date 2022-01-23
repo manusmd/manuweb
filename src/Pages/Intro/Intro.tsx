@@ -5,8 +5,6 @@ import styles from './Intro.module.css';
 import Topbar from '../../Components/Topbar/Topbar';
 
 export default function Intro(): JSX.Element {
-  const [isReady, setIsReady] = useState(false);
-
   const defaultOptions = {
     loop: false,
     autoplay: true,
@@ -16,20 +14,9 @@ export default function Intro(): JSX.Element {
     },
   };
 
-  setTimeout(() => {
-    setIsReady(true);
-  }, 4000);
-
-  if (!isReady) {
-    return (
-      <div className={styles.container}>
-        <Lottie options={defaultOptions} />
-      </div>
-    );
-  }
   return (
-    <>
-      <Topbar />
-    </>
+    <div className={styles.container}>
+      <Lottie options={defaultOptions} />
+    </div>
   );
 }
