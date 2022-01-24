@@ -1,0 +1,37 @@
+.container {
+  display: grid;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  place-items: center;
+}
+
+.nav {
+  display: grid;
+  place-items: center;
+  gap: 4rem;
+  width: 100vw;
+}
+
+.navlink {
+  font-family: 'Archivo', sans-serif;
+  text-decoration: none;
+  color: white;
+  font-size: 15vw;
+  opacity: 0.7;
+}
+
+@media screen and (min-width: 800px) {
+  .navlink {
+    font-size: 8vw;
+  }
+
+  .navlink:hover {
+    opacity: 1;
+    color: purple;
+    text-transform: uppercase;
+    transition: 0.5s;
+  }
+}
