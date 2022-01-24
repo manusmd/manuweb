@@ -1,12 +1,25 @@
 .container {
-  position: absolute;
   display: grid;
-  top: 0;
-  width: 100%;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 100vw;
   height: 6rem;
   place-items: center;
 }
 
-.logo {
+.container > .logo {
   height: 5rem;
+}
+
+.container > .menu {
+  grid-column: 3/4;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.menu > .stripe {
+  background-color: white;
+  width: 3rem;
+  height: 0.15rem;
+  border-radius: 1rem;
 }
