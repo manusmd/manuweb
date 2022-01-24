@@ -1,3 +1,5 @@
+import styles from './Home.module.css';
+
 export default function Home(): JSX.Element {
-  return <h1>Hallo!</h1>;
+  return <p className={styles.text}>Hallo!</p>;
 }
