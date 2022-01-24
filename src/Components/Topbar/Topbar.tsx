@@ -1,6 +1,7 @@
 import styles from './Topbar.module.css';
 import { motion, useAnimation } from 'framer-motion';
 import { useState } from 'react';
+import Menu from '../Menu/Menu';
 
 export default function Topbar() {
   const [isMenu, setIsMenu] = useState(false);
@@ -40,33 +41,53 @@ export default function Topbar() {
     },
   };
 
+  const menuVariants = {
+    opened: {
+      y: 20,
+    },
+    closed: {
+      y: -500,
+      opacity: 0,
+    },
+  };
+
   return (
-    <nav className={styles.container}>
-      <img
-        className={styles.logo}
-        src="src/Components/Topbar/assets/manuwebLogo.png"
-        alt=""
-      />
-      <div className={styles.menu} onClick={() => setIsMenu(!isMenu)}>
-        <motion.div
-          initial={false}
-          variants={topVariants}
-          animate={isMenu ? 'opened' : 'closed'}
-          className={styles.stripe}
+    <>
+      <nav className={styles.container}>
+        <img
+          className={styles.logo}
+          src="src/Components/Topbar/assets/manuwebLogo.png"
+          alt=""
         />
-        <motion.div
-          initial={false}
-          variants={middleVariants}
-          animate={isMenu ? 'opened' : 'closed'}
-          className={styles.stripe}
-        />
-        <motion.div
-          initial={false}
-          variants={bottomVariants}
-          animate={isMenu ? 'opened' : 'closed'}
-          className={styles.stripe}
-        />
-      </div>
-    </nav>
+        <div className={styles.menu} onClick={() => setIsMenu(!isMenu)}>
+          <motion.div
+            initial={false}
+            variants={topVariants}
+            animate={isMenu ? 'opened' : 'closed'}
+            className={styles.stripe}
+          />
+          <motion.div
+            initial={false}
+            variants={middleVariants}
+            animate={isMenu ? 'opened' : 'closed'}
+            className={styles.stripe}
+          />
+          <motion.div
+            initial={false}
+            variants={bottomVariants}
+            animate={isMenu ? 'opened' : 'closed'}
+            className={styles.stripe}
+          />
+        </div>
+      </nav>
+
+      <motion.div
+        variants={menuVariants}
+        animate={isMenu ? 'opened' : 'closed'}
+        transition={{ type: 'spring', mass: 1.5 }}
+      >
+        <Menu />
+      </motion.div>
+    </>
   );
 }
