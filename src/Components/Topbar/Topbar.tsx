@@ -44,6 +44,7 @@ export default function Topbar() {
   const menuVariants = {
     opened: {
       y: 20,
+      opacity: 1,
     },
     closed: {
       y: -500,
@@ -82,6 +83,7 @@ export default function Topbar() {
       </nav>
 
       <motion.div
+        initial={false}
         variants={menuVariants}
         animate={isMenu ? 'opened' : 'closed'}
         transition={{ type: 'spring', mass: 1.5 }}
