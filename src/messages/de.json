@@ -131,10 +131,24 @@
     "postNotFound": "Beitrag nicht gefunden",
     "postNotFoundDesc": "Sorry, der gesuchte Blog-Beitrag existiert nicht.",
     "backToBlog": "Zurück zum Blog",
+    "backToHome": "Zurück zur Startseite",
     "share": "Teilen",
     "contents": "Inhalt",
     "sectionsCount": "{count} Abschnitte",
     "readingTime": "{time} Min. Lesezeit",
+    "search": {
+      "placeholder": "Artikel suchen...",
+      "noResults": "Keine Artikel gefunden",
+      "noResultsDescription": "Versuche deine Such- oder Filterkriterien anzupassen",
+      "clearFilters": "Filter löschen",
+      "resultsCount": "{count} {count, plural, one {Artikel} other {Artikel}} gefunden"
+    },
+    "filter": {
+      "all": "Alle"
+    },
+    "loading": {
+      "article": "Artikel wird geladen..."
+    },
     "readingProgress": {
       "timeLeft": "{time} Min. übrig",
       "finished": "🎉 Fertig gelesen!"
@@ -142,7 +156,8 @@
     "articleFooter": {
       "enjoyedTitle": "Hat dir der Artikel gefallen?",
       "enjoyedDescription": "Teile ihn mit anderen, die ihn nützlich finden könnten."
-    }
+    },
+    "viewAllPosts": "Alle Artikel anzeigen"
   },
   "contact": {
     "title": "Kontakt",

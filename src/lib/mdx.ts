@@ -11,6 +11,10 @@ export interface FrontMatter {
   slug: string;
 }
 
+export interface BlogPost extends FrontMatter {
+  content: string;
+}
+
 export async function getMDXContent(slug: string, locale: string) {
   const postsDirectory = path.join(process.cwd(), 'content', 'blog', locale);
   const filePath = path.join(postsDirectory, `${slug}.mdx`);
@@ -36,7 +40,7 @@ export async function getMDXContent(slug: string, locale: string) {
   }
 }
 
-export async function getAllPosts(locale: string = 'en') {
+export async function getAllPosts(locale: string = 'en'): Promise<BlogPost[]> {
   const postsDirectory = path.join(process.cwd(), 'content', 'blog', locale);
 
   try {
@@ -46,14 +50,15 @@ export async function getAllPosts(locale: string = 'en') {
         .filter(file => file.endsWith('.mdx'))
         .map(async file => {
           const source = await fs.readFile(path.join(postsDirectory, file), 'utf8');
-          const { data } = matter(source);
+          const { data, content } = matter(source);
           const slug = file.replace(/\.mdx$/, '');
 
           return {
             ...data,
             slug,
             language: locale,
-          } as FrontMatter;
+            content,
+          } as BlogPost;
         })
     );
 

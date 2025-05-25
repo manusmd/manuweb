@@ -6,13 +6,19 @@ import { ChevronUp } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
 export function ScrollProgress() {
+  const pathname = usePathname();
+  
+  // Check if we're on any blog page (listing or individual post)
+  const isBlogPage = pathname.includes('/blog');
+
+  // Don't render anything on blog pages - return early before any other hooks
+  if (isBlogPage) {
+    return null;
+  }
+
   const [isVisible, setIsVisible] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
-  const pathname = usePathname();
   const { scrollYProgress } = useScroll();
-
-  // Check if we're on a blog page
-  const isBlogPage = pathname.includes('/blog/');
 
   // Smooth spring animation for the progress
   const scaleX = useSpring(scrollYProgress, {
@@ -125,38 +131,36 @@ export function ScrollProgress() {
         </motion.button>
       </motion.div>
 
-      {/* Floating Progress Dots - Hidden on blog pages */}
-      {!isBlogPage && (
-        <div className="fixed left-8 top-1/2 -translate-y-1/2 z-40 hidden lg:block">
-          <div className="flex flex-col space-y-4">
-            {['home', 'about', 'projects', 'blog', 'contact'].map((section, index) => (
-              <motion.button
-                key={section}
-                onClick={() => {
-                  const element = document.getElementById(section);
-                  element?.scrollIntoView({ behavior: 'smooth' });
+      {/* Floating Progress Dots */}
+      <div className="fixed left-8 top-1/2 -translate-y-1/2 z-40 hidden lg:block">
+        <div className="flex flex-col space-y-4">
+          {['home', 'about', 'projects', 'blog', 'contact'].map((section, index) => (
+            <motion.button
+              key={section}
+              onClick={() => {
+                const element = document.getElementById(section);
+                element?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="w-3 h-3 rounded-full border-2 border-muted-foreground/30 hover:border-primary transition-all duration-300 relative group"
+              whileHover={{ scale: 1.5 }}
+            >
+              <motion.div
+                className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"
+                initial={{ scale: 0 }}
+                animate={{
+                  scale: index <= activeSection ? 1 : 0,
                 }}
-                className="w-3 h-3 rounded-full border-2 border-muted-foreground/30 hover:border-primary transition-all duration-300 relative group"
-                whileHover={{ scale: 1.5 }}
-              >
-                <motion.div
-                  className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"
-                  initial={{ scale: 0 }}
-                  animate={{
-                    scale: index <= activeSection ? 1 : 0,
-                  }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
-                />
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+              />
 
-                {/* Tooltip */}
-                <div className="absolute left-6 top-1/2 -translate-y-1/2 px-2 py-1 bg-background/90 backdrop-blur-sm border rounded text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-                  {section.charAt(0).toUpperCase() + section.slice(1)}
-                </div>
-              </motion.button>
-            ))}
-          </div>
+              {/* Tooltip */}
+              <div className="absolute left-6 top-1/2 -translate-y-1/2 px-2 py-1 bg-background/90 backdrop-blur-sm border rounded text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+                {section.charAt(0).toUpperCase() + section.slice(1)}
+              </div>
+            </motion.button>
+          ))}
         </div>
-      )}
+      </div>
     </>
   );
 }

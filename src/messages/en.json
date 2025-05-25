@@ -130,6 +130,21 @@
     "contents": "Contents",
     "sectionsCount": "{count} sections",
     "readingTime": "{time} min read",
+    "backToBlog": "Back to Blog",
+    "backToHome": "Back to Home",
+    "search": {
+      "placeholder": "Search articles...",
+      "noResults": "No articles found",
+      "noResultsDescription": "Try adjusting your search or filter criteria",
+      "clearFilters": "Clear filters",
+      "resultsCount": "{count} {count, plural, one {article} other {articles}} found"
+    },
+    "filter": {
+      "all": "All"
+    },
+    "loading": {
+      "article": "Loading article..."
+    },
     "readingProgress": {
       "timeLeft": "{time} min left",
       "finished": "🎉 Finished reading!"
@@ -198,6 +213,7 @@
     "readMore": "Read More",
     "postNotFound": "Post Not Found",
     "postNotFoundDesc": "Sorry, the blog post you're looking for doesn't exist.",
-    "backToBlog": "Back to Blog"
+    "backToBlog": "Back to Blog",
+    "viewAllPosts": "View All Posts"
   }
 }

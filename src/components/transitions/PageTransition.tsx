@@ -51,7 +51,7 @@ export function PageTransition({ children, className = '' }: PageTransitionProps
 
   const isBlogRoute = pathname.includes('/blog');
 
-  if (!isBlogRoute) {
+  if (isBlogRoute) {
     return <div className={className}>{children}</div>;
   }
 
@@ -68,7 +68,6 @@ export function PageTransition({ children, className = '' }: PageTransitionProps
         style={{
           position: 'relative',
           width: '100%',
-          minHeight: '100vh',
         }}
       >
         {isTransitioning ? displayChildren : children}

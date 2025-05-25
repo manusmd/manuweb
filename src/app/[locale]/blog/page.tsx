@@ -1,7 +1,8 @@
 import { getAllPosts } from '@/lib/mdx';
 import { getTranslations } from 'next-intl/server';
-import { BlogLink } from '@/components/transitions/BlogLink';
 import { BlogTransition } from '@/components/transitions/BlogTransition';
+import { BackButton } from '@/components/blog/BackButton';
+import { BlogListingClient } from '@/components/blog/BlogListingClient';
 
 interface BlogPageProps {
   params: Promise<{
@@ -16,39 +17,20 @@ export default async function BlogPage({ params }: BlogPageProps) {
 
   return (
     <BlogTransition>
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-display mb-8">{t('title')}</h1>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {posts.map(post => (
-            <BlogLink
-              key={post.slug}
-              href={`/blog/${post.slug}`}
-              className="group block bg-card rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
-            >
-              <div className="p-6">
-                <h2 className="text-2xl font-display mb-2 group-hover:text-primary transition-colors">
-                  {post.title}
-                </h2>
-                <p className="text-muted-foreground mb-4">{post.description}</p>
-                <div className="flex items-center justify-between">
-                  <time className="text-sm text-muted-foreground">
-                    {new Date(post.date).toLocaleDateString(locale, {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
-                  </time>
-                  <div className="flex gap-2">
-                    {post.tags?.map(tag => (
-                      <span key={tag} className="text-xs px-2 py-1 bg-muted rounded-full">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </BlogLink>
-          ))}
+      <div className="bg-gradient-to-br from-background via-background to-muted/20">
+        <div className="container mx-auto px-4 py-4">
+          <BackButton locale={locale} showOnBlogListing={true} />
+          
+          {/* Header Section */}
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-display font-bold mb-4 text-foreground">
+              {t('title')}
+            </h1>
+            <div className="mt-4 w-24 h-1 bg-gradient-to-r from-primary to-primary/50 mx-auto rounded-full"></div>
+          </div>
+
+          {/* Posts Grid with Client-side filtering */}
+          <BlogListingClient posts={posts} locale={locale} />
         </div>
       </div>
     </BlogTransition>

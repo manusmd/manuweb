@@ -1,6 +1,7 @@
 import { getAllPosts } from '@/lib/mdx';
 import { getTranslations } from 'next-intl/server';
 import { BlogLink } from '@/components/transitions/BlogLink';
+import { ArrowRight } from 'lucide-react';
 
 interface BlogPreviewProps {
   locale: string;
@@ -54,6 +55,7 @@ export async function BlogPreview({ locale }: BlogPreviewProps) {
               key={post.slug}
               href={`/${locale}/blog/${post.slug}`}
               className="group block bg-card rounded-lg overflow-hidden hover:shadow-lg transition-all hover:-translate-y-1 border border-border"
+              title={post.title}
             >
               <div className="p-6">
                 <h3 className="text-xl font-display mb-3 group-hover:text-primary transition-colors line-clamp-2">
@@ -89,6 +91,20 @@ export async function BlogPreview({ locale }: BlogPreviewProps) {
             </BlogLink>
           ))}
         </div>
+
+        {/* View All Posts Link */}
+        {posts.length > 0 && (
+          <div className="text-center mt-12">
+            <BlogLink
+              href={`/${locale}/blog`}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-200 group"
+              title="All Blog Posts"
+            >
+              <span>{t('viewAllPosts')}</span>
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            </BlogLink>
+          </div>
+        )}
       </div>
     </section>
   );

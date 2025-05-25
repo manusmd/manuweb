@@ -40,6 +40,7 @@ export async function RelatedPosts({ currentSlug, locale, tags = [] }: RelatedPo
               key={post.slug}
               href={`/${locale}/blog/${post.slug}`}
               className="group block p-6 bg-card border border-border rounded-lg hover:border-primary/50 transition-all duration-200"
+              title={post.title}
             >
               <div className="space-y-3">
                 <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2">

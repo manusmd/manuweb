@@ -6,6 +6,7 @@ import { TableOfContents } from '@/components/blog/TableOfContents';
 import { ReadingTime } from '@/components/blog/ReadingTime';
 import { SocialShare } from '@/components/blog/SocialShare';
 import { RelatedPosts } from '@/components/blog/RelatedPosts';
+import { BackButton } from '@/components/blog/BackButton';
 import { BlogTransition } from '@/components/transitions/BlogTransition';
 import { headers } from 'next/headers';
 import { getTranslations } from 'next-intl/server';
@@ -65,7 +66,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <BlogLayout>
           <div className="container mx-auto px-4 py-8">
             <div className="max-w-4xl mx-auto">
-              {/* Main Content - Full width */}
+              <BackButton locale={locale} />
+              
               <article>
                 <header className="mb-8">
                   <h1 className="text-4xl font-display font-bold mb-4 text-foreground">
@@ -83,7 +85,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
                     <ReadingTime content={content} />
 
-                    <div className="flex gap-2">
+                    <div className="flex flex-wrap gap-2">
                       {frontMatter.tags?.map(tag => (
                         <span
                           key={tag}
