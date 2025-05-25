@@ -16,12 +16,19 @@ export function KonamiCodeHandler({ onGameStart }: KonamiCodeHandlerProps) {
   const [showGameModal, setShowGameModal] = useState(false);
   const [showSnakeGame, setShowSnakeGame] = useState(false);
   const [sequence, setSequence] = useState<string[]>([]);
-  
+
   // The classic Konami code sequence
   const konamiCode = [
-    'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
-    'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight',
-    'KeyB', 'KeyA'
+    'ArrowUp',
+    'ArrowUp',
+    'ArrowDown',
+    'ArrowDown',
+    'ArrowLeft',
+    'ArrowRight',
+    'ArrowLeft',
+    'ArrowRight',
+    'KeyB',
+    'KeyA',
   ];
 
   useEffect(() => {
@@ -38,28 +45,29 @@ export function KonamiCodeHandler({ onGameStart }: KonamiCodeHandlerProps) {
       setSequence(newSequence);
 
       // Check if the sequence matches the Konami code
-      if (newSequence.length === konamiCode.length && 
-          newSequence.every((key, index) => key === konamiCode[index])) {
-        
+      if (
+        newSequence.length === konamiCode.length &&
+        newSequence.every((key, index) => key === konamiCode[index])
+      ) {
         if (!isGameUnlocked) {
           // First time unlocking
           setIsGameUnlocked(true);
           setShowGameModal(true);
           localStorage.setItem('konami-game-unlocked', 'true');
-          
+
           // Celebration effects
           confetti({
             particleCount: 100,
             spread: 70,
-            origin: { y: 0.6 }
+            origin: { y: 0.6 },
           });
-          
+
           onGameStart?.();
         } else {
           // Already unlocked, just show the game
           setShowSnakeGame(true);
         }
-        
+
         setSequence([]);
       }
     };
@@ -104,12 +112,13 @@ export function KonamiCodeHandler({ onGameStart }: KonamiCodeHandlerProps) {
                   <Sparkles className="w-6 h-6 text-yellow-400 absolute -top-1 -right-1 animate-pulse" />
                 </div>
               </div>
-              
+
               <h2 className="text-2xl font-bold mb-2">🎉 Easter Egg Unlocked!</h2>
               <p className="text-muted-foreground mb-6">
-                You've discovered the secret Konami code! Enjoy a special portfolio-themed Snake game.
+                You've discovered the secret Konami code! Enjoy a special portfolio-themed Snake
+                game.
               </p>
-              
+
               <div className="flex gap-3 justify-center">
                 <Button onClick={handlePlayGame} className="flex items-center gap-2">
                   <Gamepad2 className="w-4 h-4" />
@@ -120,7 +129,7 @@ export function KonamiCodeHandler({ onGameStart }: KonamiCodeHandlerProps) {
                   Maybe Later
                 </Button>
               </div>
-              
+
               <p className="text-xs text-muted-foreground mt-4">
                 Tip: Use the Konami code again anytime to play!
               </p>
@@ -130,10 +139,7 @@ export function KonamiCodeHandler({ onGameStart }: KonamiCodeHandlerProps) {
       </AnimatePresence>
 
       {/* Snake Game */}
-      <PortfolioSnakeGame 
-        isOpen={showSnakeGame} 
-        onClose={handleCloseGame} 
-      />
+      <PortfolioSnakeGame isOpen={showSnakeGame} onClose={handleCloseGame} />
     </>
   );
-} 
+}

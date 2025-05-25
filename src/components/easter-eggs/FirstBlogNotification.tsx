@@ -24,12 +24,12 @@ export function FirstBlogNotification({ onDismiss }: FirstBlogNotificationProps)
       return;
     }
 
-    const handleFirstBlogCompleted = (event: CustomEvent) => {
+    const handleFirstBlogCompleted = (_: CustomEvent) => {
       if (!hasShown) {
         setIsVisible(true);
         setHasShown(true);
         localStorage.setItem('first-blog-notification-shown', 'true');
-        
+
         // Trigger celebration confetti
         setTimeout(() => {
           confetti({
@@ -87,19 +87,16 @@ export function FirstBlogNotification({ onDismiss }: FirstBlogNotificationProps)
                   <Trophy className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg text-foreground">
-                    Congratulations! 🎉
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    First blog completed
-                  </p>
+                  <h3 className="font-bold text-lg text-foreground">Congratulations! 🎉</h3>
+                  <p className="text-sm text-muted-foreground">First blog completed</p>
                 </div>
               </div>
 
               {/* Message */}
               <div className="mb-6">
                 <p className="text-sm text-foreground mb-3">
-                  You've just finished reading your first blog post! As a reward, I've unlocked a special mini-game for you.
+                  You've just finished reading your first blog post! As a reward, I've unlocked a
+                  special mini-game for you.
                 </p>
                 <div className="flex items-center gap-2 text-xs text-muted-foreground bg-background/30 rounded-lg p-3 border border-border/30">
                   <Sparkles className="w-4 h-4 text-primary" />
@@ -134,10 +131,7 @@ export function FirstBlogNotification({ onDismiss }: FirstBlogNotificationProps)
       </AnimatePresence>
 
       {/* Snake Game Modal */}
-      <PortfolioSnakeGame 
-        isOpen={showSnakeGame} 
-        onClose={() => setShowSnakeGame(false)} 
-      />
+      <PortfolioSnakeGame isOpen={showSnakeGame} onClose={() => setShowSnakeGame(false)} />
     </>
   );
-} 
+}

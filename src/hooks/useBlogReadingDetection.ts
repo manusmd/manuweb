@@ -32,7 +32,7 @@ export function useBlogReadingDetection(): BlogReadingDetectionReturn {
     isReading: false,
     completedBlogs: [],
   });
-  
+
   const [readingTime, setReadingTime] = useState(0);
   const readingIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const hasTriggeredCompletion = useRef(false);
@@ -86,7 +86,7 @@ export function useBlogReadingDetection(): BlogReadingDetectionReturn {
         isReading: true,
         currentBlogProgress: 0,
       });
-      
+
       hasTriggeredCompletion.current = false;
       setReadingTime(0);
 
@@ -111,7 +111,7 @@ export function useBlogReadingDetection(): BlogReadingDetectionReturn {
     const updateProgress = () => {
       const scrollTop = window.pageYOffset;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) : 0;
+      const scrollPercent = docHeight > 0 ? scrollTop / docHeight : 0;
       const progress = Math.min(1, Math.max(0, scrollPercent));
 
       setReadingState(prev => ({
@@ -140,46 +140,53 @@ export function useBlogReadingDetection(): BlogReadingDetectionReturn {
   }, [isBlogPost, readingState.isReading, currentSlug, readingState.completedBlogs]);
 
   // Mark blog as read
-  const markBlogAsRead = useCallback((slug: string) => {
-    if (readingIntervalRef.current) {
-      clearInterval(readingIntervalRef.current);
-      readingIntervalRef.current = null;
-    }
-
-    setReadingState(prev => {
-      const newCompletedBlogs = [...prev.completedBlogs, slug];
-      const isFirstBlog = prev.completedBlogs.length === 0;
-      
-      const updatedState = {
-        ...prev,
-        hasReadFirstBlog: isFirstBlog || prev.hasReadFirstBlog,
-        completedBlogs: newCompletedBlogs,
-        isReading: false,
-        currentBlogProgress: 1,
-      };
-
-      // Save to localStorage
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedState));
-      } catch (error) {
-        console.warn('Failed to save blog reading state:', error);
+  const markBlogAsRead = useCallback(
+    (slug: string) => {
+      if (readingIntervalRef.current) {
+        clearInterval(readingIntervalRef.current);
+        readingIntervalRef.current = null;
       }
 
-      // Trigger custom events
-      setTimeout(() => {
-        if (isFirstBlog) {
-          window.dispatchEvent(new CustomEvent('firstBlogCompleted', {
-            detail: { slug, readingTime }
-          }));
-        }
-        window.dispatchEvent(new CustomEvent('blogCompleted', {
-          detail: { slug, readingTime, isFirstBlog }
-        }));
-      }, 0);
+      setReadingState(prev => {
+        const newCompletedBlogs = [...prev.completedBlogs, slug];
+        const isFirstBlog = prev.completedBlogs.length === 0;
 
-      return updatedState;
-    });
-  }, [readingTime]);
+        const updatedState = {
+          ...prev,
+          hasReadFirstBlog: isFirstBlog || prev.hasReadFirstBlog,
+          completedBlogs: newCompletedBlogs,
+          isReading: false,
+          currentBlogProgress: 1,
+        };
+
+        // Save to localStorage
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedState));
+        } catch (error) {
+          console.warn('Failed to save blog reading state:', error);
+        }
+
+        // Trigger custom events
+        setTimeout(() => {
+          if (isFirstBlog) {
+            window.dispatchEvent(
+              new CustomEvent('firstBlogCompleted', {
+                detail: { slug, readingTime },
+              })
+            );
+          }
+          window.dispatchEvent(
+            new CustomEvent('blogCompleted', {
+              detail: { slug, readingTime, isFirstBlog },
+            })
+          );
+        }, 0);
+
+        return updatedState;
+      });
+    },
+    [readingTime]
+  );
 
   // Reset reading state (for testing/debugging)
   const resetReadingState = useCallback(() => {
@@ -205,4 +212,4 @@ export function useBlogReadingDetection(): BlogReadingDetectionReturn {
     markBlogAsRead,
     resetReadingState,
   };
-} 
+}

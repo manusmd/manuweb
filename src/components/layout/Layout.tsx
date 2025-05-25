@@ -7,6 +7,7 @@ import { NavigationTracker } from '@/components/transitions/NavigationTracker';
 import { FirstBlogNotification } from '@/components/easter-eggs/FirstBlogNotification';
 import { SimpleEasterEggs } from '@/components/easter-eggs/SimpleEasterEggs';
 import { PersistentGameButton } from '@/components/easter-eggs/PersistentGameButton';
+import { BugHuntGame } from '@/components/easter-eggs/BugHuntGame';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -20,14 +21,13 @@ export function Layout({ children }: LayoutProps) {
         <Header />
         <ScrollProgress />
         <main className="relative">
-          <PageTransition>
-            {children}
-          </PageTransition>
+          <PageTransition>{children}</PageTransition>
         </main>
         <Footer />
         <FirstBlogNotification />
         <SimpleEasterEggs />
         <PersistentGameButton />
+        <BugHuntGame />
       </div>
     </ThemeProvider>
   );

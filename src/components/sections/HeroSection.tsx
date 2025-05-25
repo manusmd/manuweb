@@ -124,7 +124,13 @@ export function HeroSection() {
                 <AnimatedWrapper animation="fadeInLeft" delay={0.2}>
                   <div className="space-y-4">
                     <h1 className="text-6xl lg:text-8xl font-bold tracking-tight">
-                      <span className="text-gradient">{t('name')}</span>
+                      <span
+                        className="text-gradient relative inline-block transition-all duration-300 ease-out hover:transform hover:skew-y-1 hover:scale-105 group cursor-pointer"
+                        data-name-trigger="true"
+                      >
+                        {t('name')}
+                        <span className="absolute bottom-0 left-0 w-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 transition-all duration-500 ease-out group-hover:w-3/5 rounded-full"></span>
+                      </span>
                     </h1>
                     <h2 className="text-2xl lg:text-3xl font-medium text-muted-foreground/80">
                       {t('title')}

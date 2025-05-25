@@ -25,7 +25,20 @@ export function ScrollProgress() {
   const isBlogPage = pathname.includes('/blog');
 
   useEffect(() => {
-    if (isBlogPage) return;
+    // Only set up section tracking for non-blog pages
+    if (isBlogPage) {
+      // For blog pages, just handle back-to-top visibility
+      const toggleVisibility = () => {
+        if (window.pageYOffset > 300) {
+          setIsVisible(true);
+        } else {
+          setIsVisible(false);
+        }
+      };
+
+      window.addEventListener('scroll', toggleVisibility);
+      return () => window.removeEventListener('scroll', toggleVisibility);
+    }
 
     const toggleVisibility = () => {
       if (window.pageYOffset > 300) {
@@ -58,11 +71,6 @@ export function ScrollProgress() {
     };
   }, [isBlogPage]);
 
-  // Don't render anything on blog pages
-  if (isBlogPage) {
-    return null;
-  }
-
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -72,13 +80,13 @@ export function ScrollProgress() {
 
   return (
     <>
-      {/* Top Progress Bar */}
+      {/* Top Progress Bar - Always show */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 origin-left z-50"
         style={{ scaleX }}
       />
 
-      {/* Circular Progress Indicator with Back to Top */}
+      {/* Circular Progress Indicator with Back to Top - Show on all pages */}
       <motion.div
         className="fixed bottom-8 right-8 z-50"
         initial={{ opacity: 0, scale: 0 }}
@@ -135,36 +143,38 @@ export function ScrollProgress() {
         </motion.button>
       </motion.div>
 
-      {/* Floating Progress Dots */}
-      <div className="fixed left-8 top-1/2 -translate-y-1/2 z-40 hidden lg:block">
-        <div className="flex flex-col space-y-4">
-          {['home', 'about', 'projects', 'blog', 'contact'].map((section, index) => (
-            <motion.button
-              key={section}
-              onClick={() => {
-                const element = document.getElementById(section);
-                element?.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="w-3 h-3 rounded-full border-2 border-muted-foreground/30 hover:border-primary transition-all duration-300 relative group"
-              whileHover={{ scale: 1.5 }}
-            >
-              <motion.div
-                className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"
-                initial={{ scale: 0 }}
-                animate={{
-                  scale: index <= activeSection ? 1 : 0,
+      {/* Floating Progress Dots - Only show on non-blog pages */}
+      {!isBlogPage && (
+        <div className="fixed left-8 top-1/2 -translate-y-1/2 z-40 hidden lg:block">
+          <div className="flex flex-col space-y-4">
+            {['home', 'about', 'projects', 'blog', 'contact'].map((section, index) => (
+              <motion.button
+                key={section}
+                onClick={() => {
+                  const element = document.getElementById(section);
+                  element?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-              />
+                className="w-3 h-3 rounded-full border-2 border-muted-foreground/30 hover:border-primary transition-all duration-300 relative group"
+                whileHover={{ scale: 1.5 }}
+              >
+                <motion.div
+                  className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"
+                  initial={{ scale: 0 }}
+                  animate={{
+                    scale: index <= activeSection ? 1 : 0,
+                  }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                />
 
-              {/* Tooltip */}
-              <div className="absolute left-6 top-1/2 -translate-y-1/2 px-2 py-1 bg-background/90 backdrop-blur-sm border rounded text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-                {section.charAt(0).toUpperCase() + section.slice(1)}
-              </div>
-            </motion.button>
-          ))}
+                {/* Tooltip */}
+                <div className="absolute left-6 top-1/2 -translate-y-1/2 px-2 py-1 bg-background/90 backdrop-blur-sm border rounded text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+                  {section.charAt(0).toUpperCase() + section.slice(1)}
+                </div>
+              </motion.button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

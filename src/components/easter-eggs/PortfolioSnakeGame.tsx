@@ -51,15 +51,18 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
     generateFood();
   }, [generateFood]);
 
-  const changeDirection = useCallback((newDirection: Position) => {
-    if (!isPlaying || gameOver) return;
-    
-    // Prevent reversing into self
-    if (direction.x !== 0 && newDirection.x !== 0) return;
-    if (direction.y !== 0 && newDirection.y !== 0) return;
-    
-    setDirection(newDirection);
-  }, [direction, isPlaying, gameOver]);
+  const changeDirection = useCallback(
+    (newDirection: Position) => {
+      if (!isPlaying || gameOver) return;
+
+      // Prevent reversing into self
+      if (direction.x !== 0 && newDirection.x !== 0) return;
+      if (direction.y !== 0 && newDirection.y !== 0) return;
+
+      setDirection(newDirection);
+    },
+    [direction, isPlaying, gameOver]
+  );
 
   const moveSnake = useCallback(() => {
     if (gameOver || !isPlaying) return;
@@ -67,7 +70,7 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
     setSnake(currentSnake => {
       const newSnake = [...currentSnake];
       const head = { ...newSnake[0] };
-      
+
       head.x += direction.x;
       head.y += direction.y;
 
@@ -99,37 +102,32 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
     });
   }, [direction, food, gameOver, isPlaying, generateFood]);
 
-  const handleKeyPress = useCallback((e: KeyboardEvent) => {
-    // Prevent default for game-related keys when modal is open
-    if (isOpen && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'a', 's', 'd', 'W', 'A', 'S', 'D', ' '].includes(e.key)) {
-      e.preventDefault();
-    }
+  const handleKeyPress = useCallback(
+    (e: KeyboardEvent) => {
+      // Prevent default for game-related keys when modal is open
+      if (isOpen && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
+        e.preventDefault();
+      }
 
-    if (!isPlaying || gameOver) return;
+      if (!isPlaying || gameOver) return;
 
-    switch (e.key) {
-      case 'ArrowUp':
-      case 'w':
-      case 'W':
-        changeDirection({ x: 0, y: -1 });
-        break;
-      case 'ArrowDown':
-      case 's':
-      case 'S':
-        changeDirection({ x: 0, y: 1 });
-        break;
-      case 'ArrowLeft':
-      case 'a':
-      case 'A':
-        changeDirection({ x: -1, y: 0 });
-        break;
-      case 'ArrowRight':
-      case 'd':
-      case 'D':
-        changeDirection({ x: 1, y: 0 });
-        break;
-    }
-  }, [changeDirection, isPlaying, gameOver, isOpen]);
+      switch (e.key) {
+        case 'ArrowUp':
+          changeDirection({ x: 0, y: -1 });
+          break;
+        case 'ArrowDown':
+          changeDirection({ x: 0, y: 1 });
+          break;
+        case 'ArrowLeft':
+          changeDirection({ x: -1, y: 0 });
+          break;
+        case 'ArrowRight':
+          changeDirection({ x: 1, y: 0 });
+          break;
+      }
+    },
+    [changeDirection, isPlaying, gameOver, isOpen]
+  );
 
   // Touch controls
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
@@ -137,37 +135,40 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
     touchStartRef.current = { x: touch.clientX, y: touch.clientY };
   }, []);
 
-  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
-    if (!touchStartRef.current || !isPlaying || gameOver) return;
+  const handleTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      if (!touchStartRef.current || !isPlaying || gameOver) return;
 
-    const touch = e.changedTouches[0];
-    const deltaX = touch.clientX - touchStartRef.current.x;
-    const deltaY = touch.clientY - touchStartRef.current.y;
-    const minSwipeDistance = 30;
+      const touch = e.changedTouches[0];
+      const deltaX = touch.clientX - touchStartRef.current.x;
+      const deltaY = touch.clientY - touchStartRef.current.y;
+      const minSwipeDistance = 30;
 
-    // Determine swipe direction
-    if (Math.abs(deltaX) > Math.abs(deltaY)) {
-      // Horizontal swipe
-      if (Math.abs(deltaX) > minSwipeDistance) {
-        if (deltaX > 0) {
-          changeDirection({ x: 1, y: 0 }); // Right
-        } else {
-          changeDirection({ x: -1, y: 0 }); // Left
+      // Determine swipe direction
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        // Horizontal swipe
+        if (Math.abs(deltaX) > minSwipeDistance) {
+          if (deltaX > 0) {
+            changeDirection({ x: 1, y: 0 }); // Right
+          } else {
+            changeDirection({ x: -1, y: 0 }); // Left
+          }
+        }
+      } else {
+        // Vertical swipe
+        if (Math.abs(deltaY) > minSwipeDistance) {
+          if (deltaY > 0) {
+            changeDirection({ x: 0, y: 1 }); // Down
+          } else {
+            changeDirection({ x: 0, y: -1 }); // Up
+          }
         }
       }
-    } else {
-      // Vertical swipe
-      if (Math.abs(deltaY) > minSwipeDistance) {
-        if (deltaY > 0) {
-          changeDirection({ x: 0, y: 1 }); // Down
-        } else {
-          changeDirection({ x: 0, y: -1 }); // Up
-        }
-      }
-    }
 
-    touchStartRef.current = null;
-  }, [changeDirection, isPlaying, gameOver]);
+      touchStartRef.current = null;
+    },
+    [changeDirection, isPlaying, gameOver]
+  );
 
   useEffect(() => {
     if (isOpen) {
@@ -195,7 +196,7 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
     if (isOpen) {
       // Prevent scrolling when game is open
       document.body.style.overflow = 'hidden';
-      
+
       window.addEventListener('keydown', handleKeyPress);
       return () => {
         // Restore scrolling when game closes
@@ -212,7 +213,6 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
 
   if (!isOpen) return null;
 
-  const cellSize = CANVAS_SIZE / GRID_SIZE;
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const gameSize = isMobile ? Math.min(window.innerWidth - 32, 350) : CANVAS_SIZE;
   const mobileCellSize = gameSize / GRID_SIZE;
@@ -249,18 +249,22 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
             </p>
             <div className="flex items-center justify-between bg-muted/50 rounded-lg p-3 border">
               <div className="text-left">
-                <span className="text-xs uppercase tracking-wide text-muted-foreground font-semibold">Score</span>
+                <span className="text-xs uppercase tracking-wide text-muted-foreground font-semibold">
+                  Score
+                </span>
                 <div className="text-lg md:text-xl font-bold text-foreground">{score}</div>
               </div>
               <div className="text-right">
-                <span className="text-xs uppercase tracking-wide text-muted-foreground font-semibold">Next</span>
+                <span className="text-xs uppercase tracking-wide text-muted-foreground font-semibold">
+                  Next
+                </span>
                 <div className="text-2xl">{currentIcon}</div>
               </div>
             </div>
           </div>
 
           <div className="relative mx-auto mb-4" style={{ width: gameSize, height: gameSize }}>
-            <div 
+            <div
               className="border-2 border-border rounded-lg bg-slate-100 dark:bg-slate-800 relative overflow-hidden"
               style={{ width: gameSize, height: gameSize }}
               onTouchStart={handleTouchStart}
@@ -293,29 +297,30 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
               </div>
 
               {/* Snake */}
-              {isPlaying && snake.map((segment, index) => (
-                <div
-                  key={`snake-${index}`}
-                  className={`absolute border-2 ${
-                    index === 0 
-                      ? 'bg-green-500 border-green-600 shadow-lg' 
-                      : 'bg-green-400 border-green-500'
-                  } rounded-sm transition-all duration-100`}
-                  style={{
-                    left: segment.x * mobileCellSize + 1,
-                    top: segment.y * mobileCellSize + 1,
-                    width: mobileCellSize - 2,
-                    height: mobileCellSize - 2,
-                    zIndex: 10,
-                  }}
-                >
-                  {index === 0 && (
-                    <div className="w-full h-full flex items-center justify-center text-xs">
-                      🐍
-                    </div>
-                  )}
-                </div>
-              ))}
+              {isPlaying &&
+                snake.map((segment, index) => (
+                  <div
+                    key={`snake-${index}`}
+                    className={`absolute border-2 ${
+                      index === 0
+                        ? 'bg-green-500 border-green-600 shadow-lg'
+                        : 'bg-green-400 border-green-500'
+                    } rounded-sm transition-all duration-100`}
+                    style={{
+                      left: segment.x * mobileCellSize + 1,
+                      top: segment.y * mobileCellSize + 1,
+                      width: mobileCellSize - 2,
+                      height: mobileCellSize - 2,
+                      zIndex: 10,
+                    }}
+                  >
+                    {index === 0 && (
+                      <div className="w-full h-full flex items-center justify-center text-xs">
+                        🐍
+                      </div>
+                    )}
+                  </div>
+                ))}
 
               {/* Food */}
               {isPlaying && (
@@ -338,7 +343,9 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
                 <div className="absolute inset-0 bg-black/70 flex items-center justify-center rounded-lg">
                   <div className="text-center text-white">
                     <h3 className="text-2xl md:text-3xl font-bold mb-3">Game Over!</h3>
-                    <p className="text-base md:text-lg mb-4 font-medium">Final Score: <span className="font-bold text-yellow-400">{score}</span></p>
+                    <p className="text-base md:text-lg mb-4 font-medium">
+                      Final Score: <span className="font-bold text-yellow-400">{score}</span>
+                    </p>
                   </div>
                 </div>
               )}
@@ -349,9 +356,13 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
                   <div className="text-center text-white">
                     <Play className="w-12 h-12 mx-auto mb-4 text-green-400" />
                     <h3 className="text-xl md:text-2xl font-bold mb-2">Ready to Play?</h3>
-                    <p className="text-sm md:text-base font-medium opacity-90">Press Start to begin!</p>
+                    <p className="text-sm md:text-base font-medium opacity-90">
+                      Press Start to begin!
+                    </p>
                     {isMobile && (
-                      <p className="text-xs md:text-sm mt-2 opacity-75 font-medium">Swipe on the board to control</p>
+                      <p className="text-xs md:text-sm mt-2 opacity-75 font-medium">
+                        Swipe on the board to control
+                      </p>
                     )}
                   </div>
                 </div>
@@ -361,12 +372,15 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
 
           <div className="flex gap-3 justify-center mb-4">
             {!isPlaying && !gameOver && (
-              <Button onClick={startGame} className="flex items-center gap-2 bg-green-600 hover:bg-green-700 font-semibold px-6">
+              <Button
+                onClick={startGame}
+                className="flex items-center gap-2 bg-green-600 hover:bg-green-700 font-semibold px-6"
+              >
                 <Play className="w-4 h-4" />
                 Start Game
               </Button>
             )}
-            
+
             {gameOver && (
               <Button onClick={resetGame} className="flex items-center gap-2 font-semibold px-6">
                 <RotateCcw className="w-4 h-4" />
@@ -375,7 +389,11 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
             )}
 
             {isPlaying && (
-              <Button onClick={() => setIsPlaying(false)} variant="outline" className="flex items-center gap-2 font-semibold px-6">
+              <Button
+                onClick={() => setIsPlaying(false)}
+                variant="outline"
+                className="flex items-center gap-2 font-semibold px-6"
+              >
                 ⏸️ Pause
               </Button>
             )}
@@ -386,7 +404,7 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
               {isMobile ? (
                 <>Swipe on the game board to control your snake • Collect tech icons to grow!</>
               ) : (
-                <>Use arrow keys or WASD to move • Collect tech icons to grow your snake!</>
+                <>Use arrow keys to move • Collect tech icons to grow your snake!</>
               )}
             </p>
           </div>
@@ -394,4 +412,4 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
       </motion.div>
     </AnimatePresence>
   );
-} 
+}
