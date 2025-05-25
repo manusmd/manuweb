@@ -4,11 +4,10 @@ import { BlogLayout } from '@/components/blog/BlogLayout';
 import { MDXContent } from '@/components/MDXContent';
 import { TableOfContents } from '@/components/blog/TableOfContents';
 import { ReadingTime } from '@/components/blog/ReadingTime';
-import { ReadingProgress } from '@/components/blog/ReadingProgress';
 import { SocialShare } from '@/components/blog/SocialShare';
-import { BackToTop } from '@/components/blog/BackToTop';
 import { RelatedPosts } from '@/components/blog/RelatedPosts';
 import { headers } from 'next/headers';
+import { getTranslations } from 'next-intl/server';
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -51,6 +50,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   try {
     const { frontMatter, content } = await getMDXContent(slug, locale);
+    const t = await getTranslations({ locale, namespace: 'blog.articleFooter' });
 
     const headersList = await headers();
     const host = headersList.get('host') || 'localhost:3000';
@@ -59,9 +59,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
     return (
       <>
-        {/* Reading Progress Bar */}
-        <ReadingProgress />
-
         {/* Floating Table of Contents */}
         <TableOfContents />
 
@@ -115,9 +112,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <footer className="mt-12 pt-8 border-t border-border">
                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
-                      <h3 className="font-semibold text-foreground mb-2">Enjoyed this article?</h3>
+                      <h3 className="font-semibold text-foreground mb-2">{t('enjoyedTitle')}</h3>
                       <p className="text-sm text-muted-foreground">
-                        Share it with others who might find it useful.
+                        {t('enjoyedDescription')}
                       </p>
                     </div>
                     <SocialShare title={frontMatter.title} url={currentUrl} />
@@ -129,9 +126,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </article>
             </div>
           </div>
-
-          {/* Back to Top Button */}
-          <BackToTop />
         </BlogLayout>
       </>
     );

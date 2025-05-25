@@ -129,7 +129,15 @@
     "share": "Share",
     "contents": "Contents",
     "sectionsCount": "{count} sections",
-    "readingTime": "{time} min read"
+    "readingTime": "{time} min read",
+    "readingProgress": {
+      "timeLeft": "{time} min left",
+      "finished": "🎉 Finished reading!"
+    },
+    "articleFooter": {
+      "enjoyedTitle": "Enjoyed this article?",
+      "enjoyedDescription": "Share it with others who might find it useful."
+    }
   },
   "contact": {
     "title": "Contact",

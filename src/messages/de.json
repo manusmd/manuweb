@@ -134,7 +134,15 @@
     "share": "Teilen",
     "contents": "Inhalt",
     "sectionsCount": "{count} Abschnitte",
-    "readingTime": "{time} Min. Lesezeit"
+    "readingTime": "{time} Min. Lesezeit",
+    "readingProgress": {
+      "timeLeft": "{time} Min. übrig",
+      "finished": "🎉 Fertig gelesen!"
+    },
+    "articleFooter": {
+      "enjoyedTitle": "Hat dir der Artikel gefallen?",
+      "enjoyedDescription": "Teile ihn mit anderen, die ihn nützlich finden könnten."
+    }
   },
   "contact": {
     "title": "Kontakt",
