@@ -1,4 +1,5 @@
 import { getAllPosts } from '@/lib/mdx';
+import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 
 interface BlogPageProps {
@@ -10,10 +11,11 @@ interface BlogPageProps {
 export default async function BlogPage({ params }: BlogPageProps) {
   const { locale } = await params;
   const posts = await getAllPosts(locale);
+  const t = await getTranslations('blog');
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-display mb-8">Blog</h1>
+      <h1 className="text-4xl font-display mb-8">{t('title')}</h1>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {posts.map(post => (
           <Link

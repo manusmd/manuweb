@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { BookOpen } from 'lucide-react';
 
 interface TocItem {
@@ -10,6 +11,7 @@ interface TocItem {
 }
 
 export function TableOfContents() {
+  const t = useTranslations('blog');
   const [toc, setToc] = useState<TocItem[]>([]);
   const [activeId, setActiveId] = useState<string>('');
 
@@ -93,8 +95,8 @@ export function TableOfContents() {
             <BookOpen className="w-4 h-4 text-primary" />
           </div>
           <div>
-            <h3 className="font-semibold text-base text-foreground">Contents</h3>
-            <p className="text-xs text-muted-foreground">{toc.length} sections</p>
+            <h3 className="font-semibold text-base text-foreground">{t('contents')}</h3>
+            <p className="text-xs text-muted-foreground">{t('sectionsCount', { count: toc.length })}</p>
           </div>
         </div>
 

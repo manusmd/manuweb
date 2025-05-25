@@ -23,41 +23,72 @@
     "lightMode": "Heller Modus"
   },
   "hero": {
-    "greeting": "Hallo, ich bin",
+    "greeting": "Hey, ich bin",
     "name": "Manuel Schmid",
     "title": "Fullstack Entwickler",
     "subtitle": "Fullstack Entwickler",
-    "description": "Entwicklung moderner Webanwendungen mit Fokus auf außergewöhnliche Nutzererlebnisse und innovative Technologien.",
+    "description": "Ich entwickle moderne Webanwendungen mit Fokus auf coole User Experiences und innovative Technologien.",
     "scrollDown": "Nach unten scrollen",
     "cta": {
-      "projects": "Projekte ansehen",
-      "contact": "Kontakt aufnehmen",
+      "projects": "Projekte anschauen",
+      "contact": "Lass uns reden",
       "resume": "Lebenslauf herunterladen"
     }
   },
   "about": {
     "meta": {
       "title": "Über Mich | Manuel Ernesto",
-      "description": "Erfahren Sie mehr über meinen Werdegang, meine Fähigkeiten und Erfahrungen in der Webentwicklung und Softwaretechnik."
+      "description": "Erfahre mehr über meinen Werdegang, meine Skills und Erfahrungen in der Webentwicklung."
     },
     "title": "Über Mich",
     "subtitle": "Software-Entwickler mit Leidenschaft für elegante Lösungen",
     "timeline": {
       "title": "Erfahrung"
-    }
+    },
+    "buttons": {
+      "email": "E-Mail",
+      "github": "GitHub",
+      "linkedin": "LinkedIn"
+    },
+    "experience": [
+      {
+        "date": "Nov 2023 - heute",
+        "title": "Software Developer",
+        "company": "SYNDIKAT7 GmbH",
+        "description": "-"
+      },
+      {
+        "date": "Dez 2022 - Okt 2023",
+        "title": "Junior Software Developer",
+        "company": "T-Systems onsite GmbH, Leinfelden-Echterdingen",
+        "description": "Einarbeitung in Java, Spring Boot, Docker, Kubernetes und Agile Methoden. Entwicklung eines Remote Docker Services für Mitarbeiter."
+      },
+      {
+        "date": "Feb 2022 - Jul 2022",
+        "title": "IT-Consultant Schwerpunkt Development",
+        "company": "PRGH GmbH, Hamburg (Remote)",
+        "description": "Coaching von Programmieranfängern mit den Schwerpunkten HTML, CSS, JavaScript und React und Entwicklung von Tools mit Hilfe von no/low-code Lösungen."
+      },
+      {
+        "date": "Sep - Dez 2021",
+        "title": "Trainee Web Development",
+        "company": "neue fische - School and Pool for Digital Talent",
+        "description": "540 Stunden Programmierpraxis mit Eigenentwicklung einer Web App als Abschlussarbeit. MyStudy hilft Nachhilfeschulen mit der Verwaltung von Schülern, Lehrern, Gruppen und Schulfächern."
+      }
+    ]
   },
   "projects": {
     "title": "Projekte",
     "subtitle": "Eine Auswahl meiner aktuellen Arbeiten",
-    "viewProject": "Projekt ansehen",
-    "viewGithub": "Auf GitHub ansehen",
-    "viewDemo": "Demo ansehen",
-    "viewCode": "Code ansehen",
+    "viewProject": "Projekt anschauen",
+    "viewGithub": "Auf GitHub anschauen",
+    "viewDemo": "Demo anschauen",
+    "viewCode": "Code anschauen",
     "liveDemo": "Live Demo",
     "viewApp": "App öffnen",
     "techStack": "Tech Stack",
     "searchPlaceholder": "Projekte suchen...",
-    "noResults": "Keine Projekte gefunden, die Ihren Suchkriterien entsprechen.",
+    "noResults": "Keine Projekte gefunden, die zu deiner Suche passen.",
     "categories": {
       "all": "Alle",
       "frontend": "Frontend",
@@ -66,29 +97,58 @@
       "library": "Bibliothek",
       "tool": "Tool"
     },
+    "filter": {
+      "title": "Projekte filtern",
+      "clear": "Filter löschen",
+      "searchPlaceholder": "Projekte, Technologien oder Tags suchen...",
+      "category": "Kategorie",
+      "status": "Status",
+      "featured": "Highlights",
+      "allProjects": "Alle Projekte",
+      "featuredOnly": "Nur Highlights"
+    },
+    "status": {
+      "all": "Alle",
+      "completed": "Fertig",
+      "inProgress": "In Arbeit",
+      "archived": "Archiviert"
+    },
     "clubscan": {
-      "description": "Eine moderne Webanwendung für Sportvereine zur Verwaltung ihrer Mitgliederanwesenheiten. Zu den Funktionen gehören Offline-Unterstützung, Echtzeit-Updates und eine benutzerfreundliche Oberfläche zur Anwesenheitserfassung und Berichtserstellung."
+      "description": "Eine moderne Web-App für Sportvereine zur Verwaltung von Mitgliederanwesenheiten. Mit Offline-Support, Echtzeit-Updates und einer benutzerfreundlichen Oberfläche."
     },
     "portfolio": {
-      "description": "Eine moderne, responsive Portfolio-Website, entwickelt mit Next.js 14, mit flüssigen Animationen, 3D-Elementen und einem Dark Mode. Präsentiert meine Projekte und Erfahrungen in der Webentwicklung."
+      "description": "Eine moderne, responsive Portfolio-Website mit Next.js 14, flüssigen Animationen, 3D-Elementen und Dark Mode. Zeigt meine Projekte und Erfahrungen."
     }
   },
   "blog": {
     "title": "Blog",
-    "subtitle": "Gedanken zu Entwicklung und Technologie",
+    "subtitle": "Gedanken zu Development und Tech",
     "readMore": "Weiterlesen",
     "readTime": "Min. Lesezeit",
     "publishedOn": "Veröffentlicht am",
     "tags": "Tags",
     "noArticles": "Keine Artikel gefunden",
     "postNotFound": "Beitrag nicht gefunden",
-    "postNotFoundDesc": "Entschuldigung, der gesuchte Blog-Beitrag existiert nicht.",
-    "backToBlog": "Zurück zum Blog"
+    "postNotFoundDesc": "Sorry, der gesuchte Blog-Beitrag existiert nicht.",
+    "backToBlog": "Zurück zum Blog",
+    "share": "Teilen",
+    "contents": "Inhalt",
+    "sectionsCount": "{count} Abschnitte",
+    "readingTime": "{time} Min. Lesezeit"
   },
   "contact": {
     "title": "Kontakt",
-    "subtitle": "Lassen Sie uns zusammenarbeiten",
-    "description": "Haben Sie ein Projekt im Kopf? Ich würde gerne von Ihnen hören und besprechen, wie wir Ihre Ideen zum Leben erwecken können.",
+    "subtitle": "Lass uns zusammenarbeiten",
+    "description": "Hast du ein Projekt im Kopf? Ich würde gerne von dir hören und besprechen, wie wir deine Ideen zum Leben erwecken können.",
+    "getInTouch": "Melde dich",
+    "sendEmail": "Schreib mir eine E-Mail",
+    "labels": {
+      "email": "E-Mail",
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "location": "Standort"
+    },
+    "location": "Deutschland",
     "form": {
       "name": "Name",
       "email": "E-Mail",
@@ -97,7 +157,7 @@
       "send": "Nachricht senden",
       "sending": "Wird gesendet...",
       "success": "Nachricht erfolgreich gesendet!",
-      "error": "Fehler beim Senden der Nachricht. Bitte versuchen Sie es erneut.",
+      "error": "Fehler beim Senden. Bitte versuch es nochmal.",
       "required": "Pflichtfeld"
     },
     "info": {
@@ -108,9 +168,9 @@
   },
   "footer": {
     "description": "Fullstack-Entwickler spezialisiert auf moderne Webanwendungen mit innovativen Technologien.",
-    "connect": "Verbinden",
+    "connect": "Connect",
     "copyright": "© {year} Manuel Schmid. Alle Rechte vorbehalten.",
-    "builtWith": "Erstellt mit {technologies}",
+    "builtWith": "Gebaut mit {technologies}",
     "social": {
       "github": "GitHub",
       "linkedin": "LinkedIn",
@@ -121,7 +181,7 @@
     "title": "Full Stack Entwickler",
     "description": "Ich entwickle außergewöhnliche und zugängliche digitale Erlebnisse für das Web.",
     "contact": "Kontaktiere mich",
-    "viewProjects": "Projekte ansehen"
+    "viewProjects": "Projekte anschauen"
   },
   "Navigation": {
     "home": "Start",

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { Twitter, Linkedin, Link, Check, Share2 } from 'lucide-react';
 
 interface SocialShareProps {
@@ -9,6 +10,7 @@ interface SocialShareProps {
 }
 
 export function SocialShare({ title, url }: SocialShareProps) {
+  const t = useTranslations('blog');
   const [copied, setCopied] = useState(false);
 
   const shareUrls = {
@@ -32,7 +34,7 @@ export function SocialShare({ title, url }: SocialShareProps) {
     <div className="flex items-center gap-4">
       <div className="flex items-center gap-2">
         <Share2 className="w-4 h-4 text-primary" />
-        <span className="text-sm font-medium text-foreground">Share</span>
+        <span className="text-sm font-medium text-foreground">{t('share')}</span>
       </div>
 
       <div className="flex items-center gap-2">

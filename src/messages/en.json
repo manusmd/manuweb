@@ -42,7 +42,38 @@
     "subtitle": "Software Developer with a passion for creating elegant solutions",
     "timeline": {
       "title": "Experience"
-    }
+    },
+    "buttons": {
+      "email": "Email",
+      "github": "GitHub",
+      "linkedin": "LinkedIn"
+    },
+    "experience": [
+      {
+        "date": "Nov 2023 - present",
+        "title": "Software Developer",
+        "company": "SYNDIKAT7 GmbH",
+        "description": "-"
+      },
+      {
+        "date": "Dec 2022 - Oct 2023",
+        "title": "Junior Software Developer",
+        "company": "T-Systems onsite GmbH, Leinfelden-Echterdingen",
+        "description": "Learning Java, Spring Boot, Docker, Kubernetes and Agile methods. Development of a Remote Docker Service for employees."
+      },
+      {
+        "date": "Feb 2022 - Jul 2022",
+        "title": "IT-Consultant Focus Development",
+        "company": "PRGH GmbH, Hamburg (Remote)",
+        "description": "Coaching programming beginners with focus on HTML, CSS, JavaScript and React and development of tools using no/low-code solutions."
+      },
+      {
+        "date": "Sep - Dec 2021",
+        "title": "Trainee Web Development",
+        "company": "neue fische - School and Pool for Digital Talent",
+        "description": "540 hours of programming practice with self-development of a web app as final project. MyStudy helps tutoring schools with the management of students, teachers, groups and school subjects."
+      }
+    ]
   },
   "projects": {
     "title": "Projects",
@@ -64,6 +95,22 @@
       "library": "Library",
       "tool": "Tool"
     },
+    "filter": {
+      "title": "Filter Projects",
+      "clear": "Clear Filters",
+      "searchPlaceholder": "Search projects, technologies, or tags...",
+      "category": "Category",
+      "status": "Status",
+      "featured": "Featured",
+      "allProjects": "All Projects",
+      "featuredOnly": "Featured Only"
+    },
+    "status": {
+      "all": "All",
+      "completed": "Completed",
+      "inProgress": "In Progress",
+      "archived": "Archived"
+    },
     "clubscan": {
       "description": "A modern web application for sports clubs to manage their member attendances. Features include offline support, real-time updates, and a user-friendly interface for tracking attendance and generating reports."
     },
@@ -78,12 +125,25 @@
     "readTime": "min read",
     "publishedOn": "Published on",
     "tags": "Tags",
-    "noArticles": "No articles found"
+    "noArticles": "No articles found",
+    "share": "Share",
+    "contents": "Contents",
+    "sectionsCount": "{count} sections",
+    "readingTime": "{time} min read"
   },
   "contact": {
     "title": "Contact",
     "subtitle": "Let's work together",
     "description": "Have a project in mind? I'd love to hear from you and discuss how we can bring your ideas to life.",
+    "getInTouch": "Get In Touch",
+    "sendEmail": "Send me an email",
+    "labels": {
+      "email": "Email",
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "location": "Location"
+    },
+    "location": "Germany",
     "form": {
       "name": "Name",
       "email": "Email",

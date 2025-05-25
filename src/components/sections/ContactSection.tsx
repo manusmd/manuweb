@@ -11,29 +11,29 @@ export function ContactSection() {
   const contactMethods = [
     {
       icon: Mail,
-      label: 'Email',
+      label: t('labels.email'),
       value: 'info@manu-web.de',
       href: 'mailto:info@manu-web.de',
       color: 'text-green-500',
     },
     {
       icon: Github,
-      label: 'GitHub',
+      label: t('labels.github'),
       value: '@manusmd',
       href: 'https://github.com/manusmd',
       color: 'text-gray-500',
     },
     {
       icon: Linkedin,
-      label: 'LinkedIn',
+      label: t('labels.linkedin'),
       value: 'Manuel Schmid',
       href: 'https://www.linkedin.com/in/manusmd/',
       color: 'text-blue-500',
     },
     {
       icon: MapPin,
-      label: 'Location',
-      value: 'Germany',
+      label: t('labels.location'),
+      value: t('location'),
       href: null,
       color: 'text-red-500',
     },
@@ -45,10 +45,9 @@ export function ContactSection() {
         <div className="container mx-auto px-4 max-w-4xl">
           <StaggerContainer className="text-center space-y-12">
             <div>
-              <h2 className="text-4xl font-display font-bold mb-4">Get In Touch</h2>
+              <h2 className="text-4xl font-display font-bold mb-4">{t('getInTouch')}</h2>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Have a project in mind? I'd love to hear from you and discuss how we can bring your
-                ideas to life.
+                {t('description')}
               </p>
             </div>
 
@@ -91,7 +90,7 @@ export function ContactSection() {
               <Button size="lg" asChild>
                 <a href="mailto:info@manu-web.de">
                   <Mail className="mr-2 h-5 w-5" />
-                  Send me an email
+                  {t('sendEmail')}
                 </a>
               </Button>
             </div>

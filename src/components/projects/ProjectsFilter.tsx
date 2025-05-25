@@ -127,7 +127,7 @@ export function ProjectsFilter({ projects, onFilter, onFilterChange }: ProjectsF
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Filter className="w-5 h-5 text-muted-foreground" />
-            <h3 className="text-lg font-semibold">Filter Projects</h3>
+            <h3 className="text-lg font-semibold">{t('filter.title')}</h3>
           </div>
           {hasActiveFilters && (
             <button
@@ -135,7 +135,7 @@ export function ProjectsFilter({ projects, onFilter, onFilterChange }: ProjectsF
               className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               <X className="w-4 h-4" />
-              Clear Filters
+              {t('filter.clear')}
             </button>
           )}
         </div>
@@ -144,7 +144,7 @@ export function ProjectsFilter({ projects, onFilter, onFilterChange }: ProjectsF
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
-            placeholder="Search projects, technologies, or tags..."
+            placeholder={t('filter.searchPlaceholder')}
             value={filters.search}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               updateFilter('search', e.target.value)
@@ -155,7 +155,7 @@ export function ProjectsFilter({ projects, onFilter, onFilterChange }: ProjectsF
 
         {/* Category Filter */}
         <div className="space-y-3">
-          <h4 className="text-sm font-medium text-foreground">Category</h4>
+          <h4 className="text-sm font-medium text-foreground">{t('filter.category')}</h4>
           <div className="flex flex-wrap gap-2">
             {categories.map(category => (
               <Badge
@@ -176,7 +176,7 @@ export function ProjectsFilter({ projects, onFilter, onFilterChange }: ProjectsF
 
         {/* Status Filter */}
         <div className="space-y-3">
-          <h4 className="text-sm font-medium text-foreground">Status</h4>
+          <h4 className="text-sm font-medium text-foreground">{t('filter.status')}</h4>
           <div className="flex flex-wrap gap-2">
             {statuses.map(status => (
               <Badge
@@ -189,13 +189,7 @@ export function ProjectsFilter({ projects, onFilter, onFilterChange }: ProjectsF
                 }`}
                 onClick={() => updateFilter('status', status)}
               >
-                {status === 'all'
-                  ? 'All'
-                  : status === 'in-progress'
-                  ? 'In Progress'
-                  : status === 'completed'
-                  ? 'Completed'
-                  : 'Archived'}
+                {t(`status.${status === 'in-progress' ? 'inProgress' : status}`)}
               </Badge>
             ))}
           </div>
@@ -203,21 +197,21 @@ export function ProjectsFilter({ projects, onFilter, onFilterChange }: ProjectsF
 
         {/* Featured Filter */}
         <div className="space-y-3">
-          <h4 className="text-sm font-medium text-foreground">Featured</h4>
+          <h4 className="text-sm font-medium text-foreground">{t('filter.featured')}</h4>
           <div className="flex gap-2">
             <Badge
               variant={filters.featured === 'all' ? 'default' : 'outline'}
               className="cursor-pointer transition-all hover:scale-105"
               onClick={() => updateFilter('featured', 'all')}
             >
-              All Projects
+              {t('filter.allProjects')}
             </Badge>
             <Badge
               variant={filters.featured === true ? 'default' : 'outline'}
               className="cursor-pointer transition-all hover:scale-105"
               onClick={() => updateFilter('featured', true)}
             >
-              Featured Only
+              {t('filter.featuredOnly')}
             </Badge>
           </div>
         </div>

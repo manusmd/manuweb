@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { AnimatedWrapper, StaggerContainer } from '@/components/animations';
 import { AnimatedButton } from '@/components/animations/AnimatedButton';
 import { Scene3D } from '@/components/three/Scene3D';
@@ -24,7 +24,8 @@ const DynamicScene3D = dynamic(
 );
 
 export function HeroSection() {
-  const t = useTranslations();
+  const t = useTranslations('hero');
+  const locale = useLocale();
   const isMobile = useMediaQuery('(max-width: 768px)');
   const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
 
@@ -85,17 +86,17 @@ export function HeroSection() {
               <AnimatedWrapper animation="fadeInLeft" delay={0.2}>
                 <div className="space-y-4">
                   <h1 className="text-6xl lg:text-8xl font-bold tracking-tight">
-                    <span className="text-gradient">Manuel Schmid</span>
+                    <span className="text-gradient">{t('name')}</span>
                   </h1>
                   <h2 className="text-2xl lg:text-3xl font-medium text-muted-foreground/80">
-                    {t('hero.title')}
+                    {t('title')}
                   </h2>
                 </div>
               </AnimatedWrapper>
 
               <AnimatedWrapper animation="fadeInLeft" delay={0.4}>
                 <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed mt-8">
-                  {t('hero.description')}
+                  {t('description')}
                 </p>
               </AnimatedWrapper>
 
@@ -108,7 +109,7 @@ export function HeroSection() {
                     onClick={scrollToProjects}
                     className="text-lg px-10 py-6 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:from-blue-600 hover:via-blue-700 hover:to-blue-800 text-white shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-200 rounded-2xl font-medium"
                   >
-                    {t('hero.cta.projects')}
+                    {t('cta.projects')}
                   </AnimatedButton>
                   <AnimatedButton
                     variant="outline"
@@ -116,7 +117,7 @@ export function HeroSection() {
                     onClick={scrollToContact}
                     className="text-lg px-10 py-6 border-2 hover:bg-accent/10 rounded-2xl font-medium backdrop-blur-sm hover:scale-[1.02] transition-all duration-200"
                   >
-                    {t('hero.cta.contact')}
+                    {t('cta.contact')}
                   </AnimatedButton>
                 </div>
               </AnimatedWrapper>
@@ -149,17 +150,6 @@ export function HeroSection() {
               </AnimatedWrapper>
             </StaggerContainer>
           </div>
-
-          {/* Right Content - Large 3D Element */}
-          {!isMobile && (
-            <div className="flex-1 h-96 lg:h-[500px] relative">
-              <AnimatedWrapper animation="scaleIn" delay={1.0}>
-                <DynamicScene3D className="w-full h-full">
-                  <Blob3D position={[0, 0, 0]} scale={2.5} color="#3b82f6" />
-                </DynamicScene3D>
-              </AnimatedWrapper>
-            </div>
-          )}
         </div>
 
         {/* Scroll Indicator */}
@@ -173,7 +163,7 @@ export function HeroSection() {
             className="flex flex-col items-center space-y-2 text-muted-foreground hover:text-primary transition-colors group"
             aria-label="Scroll to next section"
           >
-            <span className="text-sm font-medium">{t('hero.scrollDown')}</span>
+            <span className="text-sm font-medium">{t('scrollDown')}</span>
             <ArrowDown className="w-6 h-6 animate-bounce group-hover:translate-y-1 transition-transform" />
           </button>
         </AnimatedWrapper>

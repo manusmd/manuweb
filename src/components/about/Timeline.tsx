@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 interface TimelineItemProps {
   date: string;
@@ -31,35 +32,13 @@ function TimelineItem({ date, title, company, description, delay = 0 }: Timeline
 }
 
 export function Timeline() {
-  const experiences = [
-    {
-      date: 'Nov 2023 - heute',
-      title: 'Software Developer',
-      company: 'SYNDIKAT7 GmbH',
-      description: '-',
-    },
-    {
-      date: 'Dez 2022 - Okt 2023',
-      title: 'Junior Software Developer',
-      company: 'T-Systems onsite GmbH, Leinfelden-Echterdingen',
-      description:
-        'Einarbeitung in Java, Spring Boot, Docker, Kubernetes und Agile Methoden. Entwicklung eines Remote Docker Services für Mitarbeiter.',
-    },
-    {
-      date: 'Feb 2022 - Jul 2022',
-      title: 'IT-Consultant Schwerpunkt Development',
-      company: 'PRGH GmbH, Hamburg (Remote)',
-      description:
-        'Coaching von Programmieranfängern mit den Schwerpunkten HTML, CSS, JavaScript und React und Entwicklung von Tools mit Hilfe von no/low-code Lösungen.',
-    },
-    {
-      date: 'Sep - Dez 2021',
-      title: 'Trainee Web Development',
-      company: 'neue fische - School and Pool for Digital Talent',
-      description:
-        '540 Stunden Programmierpraxis mit Eigenentwicklung einer Web App als Abschlussarbeit (digitales Gesellenstück). MyStudy hilft Nachhilfeschulen mit der Verwaltung von Schülern, Lehrern, Gruppen und Schulfächern.',
-    },
-  ];
+  const t = useTranslations('about');
+  const experiences = t.raw('experience') as Array<{
+    date: string;
+    title: string;
+    company: string;
+    description: string;
+  }>;
 
   return (
     <div className="space-y-4">
