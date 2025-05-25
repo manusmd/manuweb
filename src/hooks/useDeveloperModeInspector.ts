@@ -159,4 +159,4 @@ export function useDeveloperModeInspector(isDeveloperMode: boolean) {
     tooltipRef,
     setStyleInfo,
   };
-} 
+}

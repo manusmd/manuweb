@@ -85,6 +85,18 @@ export function BugHuntGame() {
     return newBugs;
   }, []);
 
+  const showProgressNotification = useCallback(
+    (currentFoundBugs: string[]) => {
+      const progressMessage = t('bugHuntProgress.message', {
+        found: currentFoundBugs.length,
+        total: 10,
+      });
+
+      emitNotification(t('bugHuntProgress.title'), progressMessage, '🐛', false, undefined);
+    },
+    [t]
+  );
+
   // Initialize game state from localStorage
   useEffect(() => {
     const savedBugs = localStorage.getItem('bug-hunt-bugs');
@@ -102,36 +114,13 @@ export function BugHuntGame() {
         setIsGameActive(true);
 
         // Show progress notification for resumed game
-        showProgressNotification(parsedFound, parsedBugs);
+        showProgressNotification(parsedFound);
       } catch (error) {
         console.error('Error loading bug hunt state:', error);
         clearBugHuntStorage();
       }
     }
-  }, [clearBugHuntStorage]);
-
-  const showProgressNotification = useCallback(
-    (currentFoundBugs: string[], currentBugs: BugData[]) => {
-      const totalScore = currentFoundBugs.reduce((score, bugId) => {
-        const bug = currentBugs.find(b => b.id === bugId);
-        return score + (bug?.points || 0);
-      }, 0);
-
-      const progressMessage = t('bugHuntProgress.message', { 
-        found: currentFoundBugs.length, 
-        total: 10 
-      });
-
-      emitNotification(
-        t('bugHuntProgress.title'), 
-        progressMessage, 
-        '🐛', 
-        false, 
-        undefined
-      );
-    },
-    [t]
-  );
+  }, [clearBugHuntStorage, showProgressNotification]);
 
   const startBugHunt = useCallback(
     (showStartConfetti = false) => {
@@ -146,7 +135,7 @@ export function BugHuntGame() {
       localStorage.setItem('bug-hunt-active', 'true');
 
       // Show progress notification
-      showProgressNotification([], newBugs);
+      showProgressNotification([]);
 
       // Show start notification
       if (showStartConfetti) {
@@ -241,12 +230,12 @@ export function BugHuntGame() {
     // Show combined bug caught + progress notification
     const bugTypeKey = `bugTypes.${bug.type}` as const;
     const pointsKey = `points.${bug.type}` as const;
-    
+
     emitNotification(
       t('bugCaught.title'),
-      `${t('bugCaught.message', { 
-        type: tBugHunt(bugTypeKey), 
-        points: tBugHunt(pointsKey) 
+      `${t('bugCaught.message', {
+        type: tBugHunt(bugTypeKey),
+        points: tBugHunt(pointsKey),
       })} (${newFoundBugs.length}/10)`,
       '🎯',
       false
@@ -299,7 +288,7 @@ export function BugHuntGame() {
   // Expose clear function globally for debugging
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      (window as any).clearBugHuntStorage = clearBugHuntStorage;
+      window.clearBugHuntStorage = clearBugHuntStorage;
     }
   }, [clearBugHuntStorage]);
 
@@ -312,13 +301,15 @@ export function BugHuntGame() {
           <AnimatePresence>
             {isGameActive &&
               bugs.length > 0 &&
-              bugs.map((bug, index) => {
+              bugs.map(bug => {
                 const isVisible = !foundBugs.includes(bug.id);
 
                 if (!isVisible) return null;
 
                 // Generate unique animation parameters for each bug
-                const animationSeed = bug.id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+                const animationSeed = bug.id
+                  .split('')
+                  .reduce((acc, char) => acc + char.charCodeAt(0), 0);
                 const xMovement = 3 + (animationSeed % 5); // 3-7px movement
                 const yMovement = 2 + (animationSeed % 4); // 2-5px movement
                 const xDuration = 1.5 + (animationSeed % 10) / 10; // 1.5-2.4s duration
@@ -341,20 +332,20 @@ export function BugHuntGame() {
                     transition={{
                       duration: 0.5,
                       delay: initialDelay,
-                      rotate: { 
-                        repeat: Infinity, 
+                      rotate: {
+                        repeat: Infinity,
                         duration: 3 + (animationSeed % 15) / 10, // 3-4.4s wiggle
-                        ease: "easeInOut" 
+                        ease: 'easeInOut',
                       },
-                      x: { 
-                        repeat: Infinity, 
+                      x: {
+                        repeat: Infinity,
                         duration: xDuration,
-                        ease: "easeInOut" 
+                        ease: 'easeInOut',
                       },
-                      y: { 
-                        repeat: Infinity, 
+                      y: {
+                        repeat: Infinity,
                         duration: yDuration,
-                        ease: "easeInOut" 
+                        ease: 'easeInOut',
                       },
                     }}
                     className="fixed z-40 cursor-pointer select-none"
@@ -383,5 +374,6 @@ export function BugHuntGame() {
 declare global {
   interface Window {
     bugHuntSequence?: string;
+    clearBugHuntStorage?: () => void;
   }
 }

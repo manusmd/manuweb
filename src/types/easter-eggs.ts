@@ -14,4 +14,4 @@ export interface StyleInfo {
   tagName: string;
   className: string;
   styles: { [key: string]: string };
-} 
+}

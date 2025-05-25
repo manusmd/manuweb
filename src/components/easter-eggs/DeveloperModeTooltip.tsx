@@ -34,7 +34,7 @@ export function DeveloperModeTooltip({ styleInfo, tooltipRef }: DeveloperModeToo
                 {t('tagName', { tag: styleInfo.tagName })}
               </span>
             </div>
-            
+
             {styleInfo.className && (
               <div className="mb-2 pb-2 border-b border-green-500/20">
                 <span className="text-blue-400">{t('class')}</span>
@@ -57,4 +57,4 @@ export function DeveloperModeTooltip({ styleInfo, tooltipRef }: DeveloperModeToo
       )}
     </AnimatePresence>
   );
-} 
+}

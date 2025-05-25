@@ -70,13 +70,17 @@ export function EasterEggHelp({ isOpen, onClose }: EasterEggHelpProps) {
                       <span className="font-mono bg-background px-2 py-1 rounded border text-sm">
                         R
                       </span>
-                      <span className="text-sm text-muted-foreground">{t('keyboardShortcuts.reset')}</span>
+                      <span className="text-sm text-muted-foreground">
+                        {t('keyboardShortcuts.reset')}
+                      </span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="font-mono bg-background px-2 py-1 rounded border text-sm">
                         A
                       </span>
-                      <span className="text-sm text-muted-foreground">{t('keyboardShortcuts.help')}</span>
+                      <span className="text-sm text-muted-foreground">
+                        {t('keyboardShortcuts.help')}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -101,7 +105,9 @@ export function EasterEggHelp({ isOpen, onClose }: EasterEggHelpProps) {
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium">{t('mouseActions.nameClick')}</span>
-                      <span className="text-sm text-muted-foreground">{t('mouseActions.nameClickDesc')}</span>
+                      <span className="text-sm text-muted-foreground">
+                        {t('mouseActions.nameClickDesc')}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -125,7 +131,9 @@ export function EasterEggHelp({ isOpen, onClose }: EasterEggHelpProps) {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">{t('gamesActivities.blogRewards')}</span>
+                      <span className="text-sm font-medium">
+                        {t('gamesActivities.blogRewards')}
+                      </span>
                       <span className="text-sm text-muted-foreground">
                         {t('gamesActivities.blogRewardsDesc')}
                       </span>
@@ -149,13 +157,11 @@ export function EasterEggHelp({ isOpen, onClose }: EasterEggHelpProps) {
             </div>
 
             <div className="mt-6 pt-4 border-t text-center">
-              <p className="text-sm text-muted-foreground">
-                {t('closeHint', { key: 'A' })}
-              </p>
+              <p className="text-sm text-muted-foreground">{t('closeHint', { key: 'A' })}</p>
             </div>
           </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
   );
-} 
+}

@@ -20,20 +20,6 @@ export function KonamiCodeHandler({ onGameStart }: KonamiCodeHandlerProps) {
 
   const t = useTranslations('easterEggs.konamiCode.unlocked');
 
-  // The classic Konami code sequence
-  const konamiCode = [
-    'ArrowUp',
-    'ArrowUp',
-    'ArrowDown',
-    'ArrowDown',
-    'ArrowLeft',
-    'ArrowRight',
-    'ArrowLeft',
-    'ArrowRight',
-    'KeyB',
-    'KeyA',
-  ];
-
   useEffect(() => {
     // Check if game was already unlocked
     const gameUnlocked = localStorage.getItem('konami-game-unlocked');
@@ -43,6 +29,20 @@ export function KonamiCodeHandler({ onGameStart }: KonamiCodeHandlerProps) {
   }, []);
 
   useEffect(() => {
+    // The classic Konami code sequence
+    const konamiCode = [
+      'ArrowUp',
+      'ArrowUp',
+      'ArrowDown',
+      'ArrowDown',
+      'ArrowLeft',
+      'ArrowRight',
+      'ArrowLeft',
+      'ArrowRight',
+      'KeyB',
+      'KeyA',
+    ];
+
     const handleKeyDown = (event: KeyboardEvent) => {
       const newSequence = [...sequence, event.code].slice(-konamiCode.length);
       setSequence(newSequence);
@@ -77,7 +77,7 @@ export function KonamiCodeHandler({ onGameStart }: KonamiCodeHandlerProps) {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [sequence, konamiCode, isGameUnlocked, onGameStart]);
+  }, [sequence, isGameUnlocked, onGameStart]);
 
   const handlePlayGame = () => {
     setShowGameModal(false);
@@ -117,9 +117,7 @@ export function KonamiCodeHandler({ onGameStart }: KonamiCodeHandlerProps) {
               </div>
 
               <h2 className="text-2xl font-bold mb-2">{t('title')}</h2>
-              <p className="text-muted-foreground mb-6">
-                {t('message')}
-              </p>
+              <p className="text-muted-foreground mb-6">{t('message')}</p>
 
               <div className="flex gap-3 justify-center">
                 <Button onClick={handlePlayGame} className="flex items-center gap-2">
@@ -132,9 +130,7 @@ export function KonamiCodeHandler({ onGameStart }: KonamiCodeHandlerProps) {
                 </Button>
               </div>
 
-              <p className="text-xs text-muted-foreground mt-4">
-                {t('tip')}
-              </p>
+              <p className="text-xs text-muted-foreground mt-4">{t('tip')}</p>
             </motion.div>
           </motion.div>
         )}

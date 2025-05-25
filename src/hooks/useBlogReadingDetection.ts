@@ -77,6 +77,55 @@ export function useBlogReadingDetection(): BlogReadingDetectionReturn {
   const isBlogPost = pathname.includes('/blog/') && !pathname.endsWith('/blog');
   const currentSlug = isBlogPost ? pathname.split('/blog/')[1] : null;
 
+  // Mark blog as read
+  const markBlogAsRead = useCallback(
+    (slug: string) => {
+      if (readingIntervalRef.current) {
+        clearInterval(readingIntervalRef.current);
+        readingIntervalRef.current = null;
+      }
+
+      setReadingState(prev => {
+        const newCompletedBlogs = [...prev.completedBlogs, slug];
+        const isFirstBlog = prev.completedBlogs.length === 0;
+
+        const updatedState = {
+          ...prev,
+          hasReadFirstBlog: isFirstBlog || prev.hasReadFirstBlog,
+          completedBlogs: newCompletedBlogs,
+          isReading: false,
+          currentBlogProgress: 1,
+        };
+
+        // Save to localStorage
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedState));
+        } catch (error) {
+          console.warn('Failed to save blog reading state:', error);
+        }
+
+        // Trigger custom events
+        setTimeout(() => {
+          if (isFirstBlog) {
+            window.dispatchEvent(
+              new CustomEvent('firstBlogCompleted', {
+                detail: { slug, readingTime },
+              })
+            );
+          }
+          window.dispatchEvent(
+            new CustomEvent('blogCompleted', {
+              detail: { slug, readingTime, isFirstBlog },
+            })
+          );
+        }, 0);
+
+        return updatedState;
+      });
+    },
+    [readingTime]
+  );
+
   // Start reading session when entering a blog post
   useEffect(() => {
     if (isBlogPost && currentSlug && !readingState.completedBlogs.includes(currentSlug)) {
@@ -137,56 +186,13 @@ export function useBlogReadingDetection(): BlogReadingDetectionReturn {
     return () => {
       window.removeEventListener('scroll', updateProgress);
     };
-  }, [isBlogPost, readingState.isReading, currentSlug, readingState.completedBlogs]);
-
-  // Mark blog as read
-  const markBlogAsRead = useCallback(
-    (slug: string) => {
-      if (readingIntervalRef.current) {
-        clearInterval(readingIntervalRef.current);
-        readingIntervalRef.current = null;
-      }
-
-      setReadingState(prev => {
-        const newCompletedBlogs = [...prev.completedBlogs, slug];
-        const isFirstBlog = prev.completedBlogs.length === 0;
-
-        const updatedState = {
-          ...prev,
-          hasReadFirstBlog: isFirstBlog || prev.hasReadFirstBlog,
-          completedBlogs: newCompletedBlogs,
-          isReading: false,
-          currentBlogProgress: 1,
-        };
-
-        // Save to localStorage
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedState));
-        } catch (error) {
-          console.warn('Failed to save blog reading state:', error);
-        }
-
-        // Trigger custom events
-        setTimeout(() => {
-          if (isFirstBlog) {
-            window.dispatchEvent(
-              new CustomEvent('firstBlogCompleted', {
-                detail: { slug, readingTime },
-              })
-            );
-          }
-          window.dispatchEvent(
-            new CustomEvent('blogCompleted', {
-              detail: { slug, readingTime, isFirstBlog },
-            })
-          );
-        }, 0);
-
-        return updatedState;
-      });
-    },
-    [readingTime]
-  );
+  }, [
+    isBlogPost,
+    readingState.isReading,
+    currentSlug,
+    readingState.completedBlogs,
+    markBlogAsRead,
+  ]);
 
   // Reset reading state (for testing/debugging)
   const resetReadingState = useCallback(() => {

@@ -3,14 +3,15 @@
 import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import confetti from 'canvas-confetti';
+import { Notification, StyleInfo } from '../../types/easter-eggs';
 
 interface KeyboardEasterEggsProps {
   isDeveloperMode: boolean;
   setIsDeveloperMode: (mode: boolean) => void;
-  setStyleInfo: (info: any) => void;
+  setStyleInfo: (info: StyleInfo | null) => void;
   showEasterEggHelp: boolean;
   setShowEasterEggHelp: (show: boolean) => void;
-  setNotifications: (fn: (prev: any[]) => any[]) => void;
+  setNotifications: (fn: (prev: Notification[]) => Notification[]) => void;
   showEasterEggDiscovery: (title: string, message: string, icon: string) => void;
 }
 
@@ -44,18 +45,10 @@ export function KeyboardEasterEggs({
             origin: { y: 0.6 },
             colors: ['#00ff00', '#0080ff', '#8000ff'],
           });
-          showEasterEggDiscovery(
-            t('developerMode.title'),
-            t('developerMode.message'),
-            '👨‍💻'
-          );
+          showEasterEggDiscovery(t('developerMode.title'), t('developerMode.message'), '👨‍💻');
         } else {
           setStyleInfo(null);
-          showEasterEggDiscovery(
-            t('developerModeOff.title'),
-            t('developerModeOff.message'),
-            '😴'
-          );
+          showEasterEggDiscovery(t('developerModeOff.title'), t('developerModeOff.message'), '😴');
         }
       }
     };
@@ -75,11 +68,7 @@ export function KeyboardEasterEggs({
         setShowEasterEggHelp(!showEasterEggHelp);
 
         if (!showEasterEggHelp) {
-          showEasterEggDiscovery(
-            t('easterEggGuide.title'),
-            t('easterEggGuide.message'),
-            '📚'
-          );
+          showEasterEggDiscovery(t('easterEggGuide.title'), t('easterEggGuide.message'), '📚');
         }
       }
     };
@@ -112,11 +101,7 @@ export function KeyboardEasterEggs({
           }, i * 200);
         }
 
-        showEasterEggDiscovery(
-          t('confettiBurst.title'),
-          t('confettiBurst.message'),
-          '🎊'
-        );
+        showEasterEggDiscovery(t('confettiBurst.title'), t('confettiBurst.message'), '🎊');
       }
     };
 
@@ -158,11 +143,7 @@ export function KeyboardEasterEggs({
           colors: ['#ff6b6b', '#4ecdc4', '#45b7d1'],
         });
 
-        showEasterEggDiscovery(
-          t('resetCommand.title'),
-          t('resetCommand.message'),
-          '🔄'
-        );
+        showEasterEggDiscovery(t('resetCommand.title'), t('resetCommand.message'), '🔄');
       }
     };
 
@@ -170,7 +151,7 @@ export function KeyboardEasterEggs({
     return () => {
       document.removeEventListener('keydown', handleKeyPress);
     };
-  }, [showEasterEggDiscovery, setNotifications, setIsDeveloperMode, setStyleInfo, t]);
+  }, [showEasterEggDiscovery, setNotifications, setIsDeveloperMode, setStyleInfo, t, tBugHunt]);
 
   return null;
-} 
+}

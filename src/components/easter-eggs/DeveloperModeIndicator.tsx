@@ -41,4 +41,4 @@ export function DeveloperModeIndicator({ isDeveloperMode }: DeveloperModeIndicat
       )}
     </>
   );
-} 
+}

@@ -12,7 +12,7 @@ interface MouseEasterEggsProps {
 export function MouseEasterEggs({ showEasterEggDiscovery }: MouseEasterEggsProps) {
   const [logoClickCount, setLogoClickCount] = useState(0);
   const [showLogoHint, setShowLogoHint] = useState(false);
-  
+
   const t = useTranslations('easterEggs.notifications');
   const tHint = useTranslations('easterEggs.logoHint');
 
@@ -35,18 +35,14 @@ export function MouseEasterEggs({ showEasterEggDiscovery }: MouseEasterEggsProps
         if (currentClickCount >= 3) {
           // Dispatch custom event to trigger hearts animation
           window.dispatchEvent(new CustomEvent('showHearts'));
-          
+
           confetti({
             particleCount: 50,
             spread: 70,
             origin: { y: 0.6 },
             colors: ['#ff69b4', '#ff1493', '#dc143c'],
           });
-          showEasterEggDiscovery(
-            t('heartsDiscovered.title'),
-            t('heartsDiscovered.message'),
-            '💕'
-          );
+          showEasterEggDiscovery(t('heartsDiscovered.title'), t('heartsDiscovered.message'), '💕');
         }
         currentClickCount = 0;
       }, 500);
@@ -124,4 +120,4 @@ export function MouseEasterEggs({ showEasterEggDiscovery }: MouseEasterEggsProps
       </AnimatePresence>
     </>
   );
-} 
+}

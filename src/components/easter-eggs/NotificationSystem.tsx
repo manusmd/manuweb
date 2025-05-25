@@ -10,7 +10,10 @@ interface NotificationSystemProps {
   onRemoveNotification: (id: string) => void;
 }
 
-export function NotificationSystem({ notifications, onRemoveNotification }: NotificationSystemProps) {
+export function NotificationSystem({
+  notifications,
+  onRemoveNotification,
+}: NotificationSystemProps) {
   const t = useTranslations('easterEggs.notificationSystem.status');
 
   return (
@@ -49,13 +52,11 @@ export function NotificationSystem({ notifications, onRemoveNotification }: Noti
             <p className="text-sm opacity-90">{notification.message}</p>
             <div className="flex items-center gap-1 mt-2 text-xs opacity-75">
               <Sparkles className="w-3 h-3" />
-              <span>
-                {notification.type === 'persistent' ? t('active') : t('discovered')}
-              </span>
+              <span>{notification.type === 'persistent' ? t('active') : t('discovered')}</span>
             </div>
           </motion.div>
         ))}
       </AnimatePresence>
     </div>
   );
-} 
+}

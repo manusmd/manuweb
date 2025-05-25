@@ -23,4 +23,4 @@ export function useFloatingHearts() {
   return {
     showHearts,
   };
-} 
+}

@@ -40,4 +40,4 @@ export function FloatingHearts({ showHearts }: FloatingHeartsProps) {
       )}
     </AnimatePresence>
   );
-} 
+}

@@ -17,12 +17,8 @@ export function SimpleEasterEggs() {
   const [showEasterEggHelp, setShowEasterEggHelp] = useState(false);
 
   // Custom hooks
-  const {
-    notifications,
-    removeNotification,
-    showEasterEggDiscovery,
-    setNotifications,
-  } = useNotifications();
+  const { notifications, removeNotification, showEasterEggDiscovery, setNotifications } =
+    useNotifications();
 
   const { styleInfo, tooltipRef, setStyleInfo } = useDeveloperModeInspector(isDeveloperMode);
   const { showHearts } = useFloatingHearts();
@@ -33,24 +29,16 @@ export function SimpleEasterEggs() {
       <FloatingHearts showHearts={showHearts} />
 
       {/* Developer Mode Style Inspector Tooltip */}
-      {isDeveloperMode && (
-        <DeveloperModeTooltip styleInfo={styleInfo} tooltipRef={tooltipRef} />
-      )}
+      {isDeveloperMode && <DeveloperModeTooltip styleInfo={styleInfo} tooltipRef={tooltipRef} />}
 
       {/* Developer Mode Indicator */}
       <DeveloperModeIndicator isDeveloperMode={isDeveloperMode} />
 
       {/* Easter Egg Help Window */}
-      <EasterEggHelp 
-        isOpen={showEasterEggHelp} 
-        onClose={() => setShowEasterEggHelp(false)} 
-      />
+      <EasterEggHelp isOpen={showEasterEggHelp} onClose={() => setShowEasterEggHelp(false)} />
 
       {/* Notification System */}
-      <NotificationSystem 
-        notifications={notifications} 
-        onRemoveNotification={removeNotification} 
-      />
+      <NotificationSystem notifications={notifications} onRemoveNotification={removeNotification} />
 
       {/* Keyboard Easter Eggs */}
       <KeyboardEasterEggs

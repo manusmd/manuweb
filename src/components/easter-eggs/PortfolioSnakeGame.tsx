@@ -359,7 +359,9 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
                 <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-lg">
                   <div className="text-center text-white">
                     <Play className="w-12 h-12 mx-auto mb-4 text-green-400" />
-                    <h3 className="text-xl md:text-2xl font-bold mb-2">{t('instructions.title')}</h3>
+                    <h3 className="text-xl md:text-2xl font-bold mb-2">
+                      {t('instructions.title')}
+                    </h3>
                     <p className="text-sm md:text-base font-medium opacity-90">
                       {t('instructions.goal')}
                     </p>

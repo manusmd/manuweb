@@ -6,23 +6,26 @@ import { Notification } from '../types/easter-eggs';
 export function useNotifications() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
-  const addNotification = useCallback((notification: Omit<Notification, 'id'>) => {
-    const id = `notification-${Date.now()}-${Math.random()}`;
-    const newNotification: Notification = { ...notification, id };
-
-    setNotifications(prev => [...prev, newNotification]);
-
-    // Auto-remove temporary notifications
-    if (notification.type === 'temporary') {
-      setTimeout(() => {
-        removeNotification(id);
-      }, notification.duration || 4000);
-    }
-  }, []);
-
   const removeNotification = useCallback((id: string) => {
     setNotifications(prev => prev.filter(n => n.id !== id));
   }, []);
+
+  const addNotification = useCallback(
+    (notification: Omit<Notification, 'id'>) => {
+      const id = `notification-${Date.now()}-${Math.random()}`;
+      const newNotification: Notification = { ...notification, id };
+
+      setNotifications(prev => [...prev, newNotification]);
+
+      // Auto-remove temporary notifications
+      if (notification.type === 'temporary') {
+        setTimeout(() => {
+          removeNotification(id);
+        }, notification.duration || 4000);
+      }
+    },
+    [removeNotification]
+  );
 
   // Helper function to show easter egg discovery notifications
   // Components should pass already translated title and message
@@ -65,4 +68,4 @@ export function useNotifications() {
     showEasterEggDiscovery,
     setNotifications,
   };
-} 
+}

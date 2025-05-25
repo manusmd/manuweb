@@ -1,12 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-import { Trophy, Gamepad2, X, Sparkles, Play } from 'lucide-react';
+import { Play, Trophy, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PortfolioSnakeGame } from './PortfolioSnakeGame';
-import confetti from 'canvas-confetti';
 
 interface FirstBlogNotificationProps {
   onPlayGame: () => void;
@@ -22,7 +21,7 @@ export function FirstBlogNotification({ onPlayGame }: FirstBlogNotificationProps
   useEffect(() => {
     const checkBlogCompletion = () => {
       const hasShownBefore = localStorage.getItem('first-blog-notification-shown') === 'true';
-      
+
       if (hasShownBefore) {
         setHasShown(true);
         return;
@@ -30,16 +29,16 @@ export function FirstBlogNotification({ onPlayGame }: FirstBlogNotificationProps
 
       const blogState = localStorage.getItem('blog-reading-state');
       if (blogState) {
-        const state = JSON.parse(blogState);
+        const state = JSON.parse(blogState) as Record<string, { completed?: boolean }>;
         const hasCompletedAnyBlog = Object.values(state).some(
-          (progress: any) => progress.completed === true
+          progress => progress.completed === true
         );
 
         if (hasCompletedAnyBlog && !hasShown) {
           setShowNotification(true);
           setHasShown(true);
           localStorage.setItem('first-blog-notification-shown', 'true');
-          
+
           // Dispatch custom event for other components
           window.dispatchEvent(
             new CustomEvent('easterEggDiscovered', {
@@ -55,7 +54,7 @@ export function FirstBlogNotification({ onPlayGame }: FirstBlogNotificationProps
 
           // Unlock the snake game
           localStorage.setItem('konami-unlocked', 'true');
-          
+
           // Show reward notification after a delay
           setTimeout(() => {
             window.dispatchEvent(
@@ -111,7 +110,9 @@ export function FirstBlogNotification({ onPlayGame }: FirstBlogNotificationProps
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-3">
                   <Trophy className="w-8 h-8 text-yellow-400" />
-                  <h3 className="font-bold text-lg text-foreground">{t('firstBlogComplete.title')}</h3>
+                  <h3 className="font-bold text-lg text-foreground">
+                    {t('firstBlogComplete.title')}
+                  </h3>
                 </div>
                 <button
                   onClick={handleClose}
@@ -122,13 +123,12 @@ export function FirstBlogNotification({ onPlayGame }: FirstBlogNotificationProps
               </div>
 
               <div className="space-y-4">
-                <p className="text-white/90 leading-relaxed">
-                  {t('firstBlogComplete.message')}
-                </p>
+                <p className="text-white/90 leading-relaxed">{t('firstBlogComplete.message')}</p>
 
                 <div className="bg-white/10 rounded-lg p-4 border border-white/20">
                   <p className="text-sm text-white/80 mb-2">
-                    <strong>{t('blogReward.title').replace('!', '')}:</strong> {t('snakeGame.title')} - {t('snakeGame.subtitle').toLowerCase()}
+                    <strong>{t('blogReward.title').replace('!', '')}:</strong>{' '}
+                    {t('snakeGame.title')} - {t('snakeGame.subtitle').toLowerCase()}
                   </p>
                 </div>
 
