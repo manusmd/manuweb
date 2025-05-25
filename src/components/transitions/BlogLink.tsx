@@ -16,7 +16,7 @@ interface BlogLinkProps {
 
 const linkVariants = {
   initial: { scale: 1 },
-  hover: { 
+  hover: {
     scale: 1.02,
     transition: {
       type: 'spring',
@@ -24,7 +24,7 @@ const linkVariants = {
       damping: 25,
     },
   },
-  tap: { 
+  tap: {
     scale: 0.98,
     transition: {
       duration: 0.1,
@@ -33,10 +33,10 @@ const linkVariants = {
 };
 
 const fullScreenOverlayVariants = {
-  initial: { 
+  initial: {
     opacity: 0,
   },
-  animate: { 
+  animate: {
     opacity: 1,
     transition: {
       duration: 0.4,
@@ -51,67 +51,17 @@ const fullScreenOverlayVariants = {
   },
 };
 
-const centerContentVariants = {
-  initial: { 
-    scale: 0.8,
-    opacity: 0,
-  },
-  animate: { 
-    scale: 1,
-    opacity: 1,
-    transition: {
-      delay: 0.1,
-      duration: 0.5,
-      ease: 'easeOut',
-    },
-  },
-};
-
-const pulseRingVariants = {
-  initial: { scale: 0.8 },
-  animate: { 
-    scale: [0.8, 1.2, 0.8],
-    transition: {
-      duration: 2,
-      repeat: Infinity,
-      ease: 'easeInOut',
-    },
-  },
-};
-
-const orbitVariants = {
-  animate: {
-    rotate: 360,
-    transition: {
-      duration: 3,
-      repeat: Infinity,
-      ease: 'linear',
-    },
-  },
-};
-
-const dotVariants = {
-  animate: {
-    scale: [1, 1.5, 1],
-    transition: {
-      duration: 1.5,
-      repeat: Infinity,
-      ease: 'easeInOut',
-    },
-  },
-};
-
 function FullScreenLoader({ title }: { title?: string }) {
   const [mounted, setMounted] = useState(false);
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     setMounted(true);
-    
+
     // Prevent body scroll during loading
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
-    
+
     // Animate progress
     const interval = setInterval(() => {
       setProgress(prev => {
@@ -122,7 +72,7 @@ function FullScreenLoader({ title }: { title?: string }) {
         return prev + 2;
       });
     }, 24); // Complete in ~1.2 seconds
-    
+
     return () => {
       document.body.style.overflow = 'unset';
       document.documentElement.style.overflow = 'unset';
@@ -137,17 +87,20 @@ function FullScreenLoader({ title }: { title?: string }) {
   const portalRoot = document.getElementById('__next') || document.body;
 
   return createPortal(
-    <div className="fixed inset-0 z-[9999]" style={{ width: '100vw', height: '100vh', top: 0, left: 0 }}>
+    <div
+      className="fixed inset-0 z-[9999]"
+      style={{ width: '100vw', height: '100vh', top: 0, left: 0 }}
+    >
       <motion.div
         variants={fullScreenOverlayVariants}
         initial="initial"
         animate="animate"
         exit="exit"
         className="absolute inset-0 bg-background/95 backdrop-blur-sm flex items-center justify-center"
-        style={{ 
+        style={{
           pointerEvents: 'auto',
           width: '100%',
-          height: '100%'
+          height: '100%',
         }}
       >
         <div className="flex flex-col items-center space-y-4 sm:space-y-6 px-4">
@@ -234,20 +187,23 @@ export function BlogLink({ href, children, className = '', onClick, title }: Blo
   const isBlogLink = href.includes('/blog');
   const isCurrentPage = pathname === href;
 
-  const handleClick = useCallback((e: React.MouseEvent) => {
-    if (!isBlogLink || isCurrentPage) {
+  const handleClick = useCallback(
+    (e: React.MouseEvent) => {
+      if (!isBlogLink || isCurrentPage) {
+        onClick?.();
+        return;
+      }
+
+      e.preventDefault();
+      setIsNavigating(true);
       onClick?.();
-      return;
-    }
 
-    e.preventDefault();
-    setIsNavigating(true);
-    onClick?.();
-
-    setTimeout(() => {
-      router.push(href);
-    }, 1200);
-  }, [href, isBlogLink, isCurrentPage, router, onClick]);
+      setTimeout(() => {
+        router.push(href);
+      }, 1200);
+    },
+    [href, isBlogLink, isCurrentPage, router, onClick]
+  );
 
   if (!isBlogLink) {
     return (
@@ -273,7 +229,7 @@ export function BlogLink({ href, children, className = '', onClick, title }: Blo
         >
           {children}
         </Link>
-        
+
         {isBlogLink && !isCurrentPage && !isNavigating && (
           <motion.div
             className="absolute inset-0 bg-primary/5 rounded-lg opacity-0 pointer-events-none"
@@ -282,8 +238,8 @@ export function BlogLink({ href, children, className = '', onClick, title }: Blo
           />
         )}
       </motion.div>
-      
+
       {isNavigating && <FullScreenLoader title={title} />}
     </>
   );
-} 
+}

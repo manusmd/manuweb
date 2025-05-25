@@ -67,7 +67,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <div className="container mx-auto px-4 py-8">
             <div className="max-w-4xl mx-auto">
               <BackButton locale={locale} />
-              
+
               <article>
                 <header className="mb-8">
                   <h1 className="text-4xl font-display font-bold mb-4 text-foreground">

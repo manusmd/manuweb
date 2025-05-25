@@ -7,15 +7,6 @@ import { usePathname } from 'next/navigation';
 
 export function ScrollProgress() {
   const pathname = usePathname();
-  
-  // Check if we're on any blog page (listing or individual post)
-  const isBlogPage = pathname.includes('/blog');
-
-  // Don't render anything on blog pages - return early before any other hooks
-  if (isBlogPage) {
-    return null;
-  }
-
   const [isVisible, setIsVisible] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
   const { scrollYProgress } = useScroll();
@@ -27,7 +18,15 @@ export function ScrollProgress() {
     restDelta: 0.001,
   });
 
+  // Transform for circular progress
+  const strokeDashoffset = useTransform(scrollYProgress, [0, 1], [2 * Math.PI * 24, 0]);
+
+  // Check if we're on any blog page (listing or individual post)
+  const isBlogPage = pathname.includes('/blog');
+
   useEffect(() => {
+    if (isBlogPage) return;
+
     const toggleVisibility = () => {
       if (window.pageYOffset > 300) {
         setIsVisible(true);
@@ -57,7 +56,12 @@ export function ScrollProgress() {
       window.removeEventListener('scroll', toggleVisibility);
       window.removeEventListener('scroll', updateActiveSection);
     };
-  }, []);
+  }, [isBlogPage]);
+
+  // Don't render anything on blog pages
+  if (isBlogPage) {
+    return null;
+  }
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -113,7 +117,7 @@ export function ScrollProgress() {
               strokeLinecap="round"
               strokeDasharray={`${2 * Math.PI * 24}`}
               style={{
-                strokeDashoffset: useTransform(scrollYProgress, [0, 1], [2 * Math.PI * 24, 0]),
+                strokeDashoffset,
               }}
             />
             {/* Gradient definition */}

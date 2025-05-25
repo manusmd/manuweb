@@ -27,4 +27,4 @@ export function NavigationTracker() {
   }, [pathname]);
 
   return null;
-} 
+}

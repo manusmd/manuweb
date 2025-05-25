@@ -1,8 +1,8 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState, useCallback } from 'react';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { Loader2 } from 'lucide-react';
 
 interface BlogTransitionProps {
@@ -57,16 +57,16 @@ const contentVariants = {
 
 const loadingVariants = {
   initial: { opacity: 0, scale: 0.8 },
-  animate: { 
-    opacity: 1, 
+  animate: {
+    opacity: 1,
     scale: 1,
     transition: {
       duration: 0.3,
       ease: 'easeOut',
     },
   },
-  exit: { 
-    opacity: 0, 
+  exit: {
+    opacity: 0,
     scale: 0.8,
     transition: {
       duration: 0.2,
@@ -86,7 +86,7 @@ export function BlogTransition({ children }: BlogTransitionProps) {
 
     if (children !== displayChildren) {
       setIsLoading(true);
-      
+
       const timer = setTimeout(() => {
         setDisplayChildren(children);
         setIsLoading(false);
@@ -136,11 +136,9 @@ export function BlogTransition({ children }: BlogTransitionProps) {
           animate="animate"
           exit="exit"
         >
-          <motion.div variants={contentVariants}>
-            {displayChildren}
-          </motion.div>
+          <motion.div variants={contentVariants}>{displayChildren}</motion.div>
         </motion.div>
       )}
     </AnimatePresence>
   );
-} 
+}

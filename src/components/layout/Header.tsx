@@ -22,35 +22,35 @@ export function Header() {
   const isHomePage = pathname === `/${locale}`;
 
   const navigation = [
-    { 
-      name: t('home'), 
-      href: `/${locale}`, 
+    {
+      name: t('home'),
+      href: `/${locale}`,
       section: 'home',
-      icon: Home
+      icon: Home,
     },
-    { 
-      name: t('about'), 
-      href: `/${locale}#about`, 
+    {
+      name: t('about'),
+      href: `/${locale}#about`,
       section: 'about',
-      icon: User
+      icon: User,
     },
-    { 
-      name: t('projects'), 
-      href: `/${locale}#projects`, 
+    {
+      name: t('projects'),
+      href: `/${locale}#projects`,
       section: 'projects',
-      icon: FolderOpen
+      icon: FolderOpen,
     },
-    { 
-      name: t('blog'), 
-      href: `/${locale}#blog`, 
+    {
+      name: t('blog'),
+      href: `/${locale}#blog`,
       section: 'blog',
-      icon: FileText
+      icon: FileText,
     },
-    { 
-      name: t('contact'), 
-      href: `/${locale}#contact`, 
+    {
+      name: t('contact'),
+      href: `/${locale}#contact`,
       section: 'contact',
-      icon: Mail
+      icon: Mail,
     },
   ];
 
@@ -123,14 +123,14 @@ export function Header() {
 
   // Animation variants
   const overlayVariants = {
-    hidden: { 
+    hidden: {
       opacity: 0,
-      transition: { duration: 0.3, ease: 'easeInOut' }
+      transition: { duration: 0.3, ease: 'easeInOut' },
     },
-    visible: { 
+    visible: {
       opacity: 1,
-      transition: { duration: 0.4, ease: 'easeOut' }
-    }
+      transition: { duration: 0.4, ease: 'easeOut' },
+    },
   };
 
   const itemVariants = {
@@ -141,9 +141,9 @@ export function Header() {
       transition: {
         delay: 0.2 + i * 0.1,
         duration: 0.5,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }
-    })
+        ease: [0.25, 0.46, 0.45, 0.94],
+      },
+    }),
   };
 
   const settingsVariants = {
@@ -154,9 +154,9 @@ export function Header() {
       transition: {
         delay: 0.8,
         duration: 0.5,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }
-    }
+        ease: [0.25, 0.46, 0.45, 0.94],
+      },
+    },
   };
 
   return (
@@ -234,7 +234,7 @@ export function Header() {
                 {navigation.map((item, index) => {
                   const Icon = item.icon;
                   const isActive = activeSection === item.section;
-                  
+
                   return (
                     <motion.div
                       key={item.name}
@@ -248,28 +248,30 @@ export function Header() {
                         onClick={e => handleNavClick(e, item.section)}
                         className={`
                           group flex flex-col items-center gap-2 px-6 py-4 rounded-xl transition-all duration-300 min-w-[160px]
-                          ${isActive 
-                            ? 'text-white' 
-                            : 'text-white/70 hover:text-white'
-                          }
+                          ${isActive ? 'text-white' : 'text-white/70 hover:text-white'}
                         `}
                       >
                         {/* Icon */}
-                        <div className={`
+                        <div
+                          className={`
                           flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-300
-                          ${isActive 
-                            ? 'bg-white/20 text-white' 
-                            : 'bg-white/10 text-white/70 group-hover:bg-white/15 group-hover:text-white'
+                          ${
+                            isActive
+                              ? 'bg-white/20 text-white'
+                              : 'bg-white/10 text-white/70 group-hover:bg-white/15 group-hover:text-white'
                           }
-                        `}>
+                        `}
+                        >
                           <Icon className="w-6 h-6" />
                         </div>
 
                         {/* Text */}
-                        <span className={`
+                        <span
+                          className={`
                           font-medium text-lg transition-all duration-300 text-center
                           ${isActive ? 'text-white' : 'group-hover:text-white'}
-                        `}>
+                        `}
+                        >
                           {item.name}
                         </span>
 
@@ -278,7 +280,7 @@ export function Header() {
                           <motion.div
                             layoutId="fullscreenActiveIndicator"
                             className="w-1.5 h-1.5 bg-white rounded-full"
-                            transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                            transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
                           />
                         )}
                       </Link>

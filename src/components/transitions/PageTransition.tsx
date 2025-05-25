@@ -74,4 +74,4 @@ export function PageTransition({ children, className = '' }: PageTransitionProps
       </motion.div>
     </AnimatePresence>
   );
-} 
+}

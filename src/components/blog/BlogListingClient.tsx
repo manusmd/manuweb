@@ -60,7 +60,8 @@ export function BlogListingClient({ posts, locale }: BlogListingClientProps) {
   // Filter posts based on search and tag
   const filteredPosts = useMemo(() => {
     return posts.filter(post => {
-      const matchesSearch = searchQuery === '' || 
+      const matchesSearch =
+        searchQuery === '' ||
         post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         post.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
         post.tags?.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -94,7 +95,7 @@ export function BlogListingClient({ posts, locale }: BlogListingClientProps) {
             <Input
               placeholder={t('search.placeholder')}
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={e => setSearchQuery(e.target.value)}
               className="pl-10"
             />
           </div>
@@ -104,7 +105,7 @@ export function BlogListingClient({ posts, locale }: BlogListingClientProps) {
             <div className="flex items-center gap-2 flex-wrap">
               <Filter className="w-4 h-4 text-muted-foreground" />
               <Button
-                variant={selectedTag === null ? "default" : "outline"}
+                variant={selectedTag === null ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setSelectedTag(null)}
               >
@@ -113,7 +114,7 @@ export function BlogListingClient({ posts, locale }: BlogListingClientProps) {
               {allTags.slice(0, 5).map(tag => (
                 <Button
                   key={tag}
-                  variant={selectedTag === tag ? "default" : "outline"}
+                  variant={selectedTag === tag ? 'default' : 'outline'}
                   size="sm"
                   onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
                 >
@@ -153,7 +154,7 @@ export function BlogListingClient({ posts, locale }: BlogListingClientProps) {
         </div>
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 pb-4">
-          {filteredPosts.map((post) => (
+          {filteredPosts.map(post => (
             <BlogLink
               key={post.slug}
               href={`/blog/${post.slug}`}
@@ -217,13 +218,18 @@ export function BlogListingClient({ posts, locale }: BlogListingClientProps) {
                 <div className="px-6 pb-6">
                   <div className="flex items-center text-primary font-medium text-sm group-hover:gap-3 gap-2 transition-all duration-200">
                     <span>{t('readMore')}</span>
-                    <svg 
-                      className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" 
-                      fill="none" 
-                      viewBox="0 0 24 24" 
+                    <svg
+                      className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
+                      fill="none"
+                      viewBox="0 0 24 24"
                       stroke="currentColor"
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
                     </svg>
                   </div>
                 </div>
@@ -234,4 +240,4 @@ export function BlogListingClient({ posts, locale }: BlogListingClientProps) {
       )}
     </div>
   );
-} 
+}

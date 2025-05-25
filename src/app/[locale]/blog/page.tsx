@@ -20,12 +20,10 @@ export default async function BlogPage({ params }: BlogPageProps) {
       <div className="bg-gradient-to-br from-background via-background to-muted/20">
         <div className="container mx-auto px-4 py-4">
           <BackButton locale={locale} showOnBlogListing={true} />
-          
+
           {/* Header Section */}
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-display font-bold mb-4 text-foreground">
-              {t('title')}
-            </h1>
+            <h1 className="text-4xl font-display font-bold mb-4 text-foreground">{t('title')}</h1>
             <div className="mt-4 w-24 h-1 bg-gradient-to-r from-primary to-primary/50 mx-auto rounded-full"></div>
           </div>
 
