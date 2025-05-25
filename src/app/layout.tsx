@@ -49,6 +49,13 @@ export const metadata: Metadata = {
       'de-DE': '/de',
     },
   },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+    viewportFit: 'cover',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',

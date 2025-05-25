@@ -225,13 +225,14 @@ export function Header() {
             animate="visible"
             exit="hidden"
             className="fixed inset-0 z-[55] md:hidden bg-black/80 backdrop-blur-md"
+            style={{
+              paddingTop: 'var(--safe-area-inset-top)',
+              paddingBottom: 'var(--mobile-safe-bottom)',
+            }}
           >
-            <div className="flex flex-col h-screen justify-between items-center py-20 px-8">
-              {/* Top Spacer */}
-              <div className="flex-1" />
-
+            <div className="flex flex-col h-full justify-center items-center px-8 py-8">
               {/* Navigation Items */}
-              <nav className="flex flex-col items-center space-y-6">
+              <nav className="flex flex-col items-center space-y-3 flex-1 justify-center max-h-[70vh] overflow-y-auto w-full max-w-xs">
                 {navigation.map((item, index) => {
                   const Icon = item.icon;
                   const isActive = activeSection === item.section;
@@ -243,19 +244,20 @@ export function Header() {
                       initial="hidden"
                       animate="visible"
                       custom={index}
+                      className="w-full"
                     >
                       <Link
                         href={item.href}
                         onClick={e => handleNavClick(e, item.section)}
                         className={`
-                          group flex flex-col items-center gap-2 px-6 py-4 rounded-xl transition-all duration-300 min-w-[160px]
+                          group flex items-center gap-4 px-6 py-3 rounded-xl transition-all duration-300 w-full
                           ${isActive ? 'text-white' : 'text-white/70 hover:text-white'}
                         `}
                       >
                         {/* Icon */}
                         <div
                           className={`
-                          flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-300
+                          flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-300 flex-shrink-0
                           ${
                             isActive
                               ? 'bg-white/20 text-white'
@@ -263,13 +265,13 @@ export function Header() {
                           }
                         `}
                         >
-                          <Icon className="w-6 h-6" />
+                          <Icon className="w-5 h-5" />
                         </div>
 
                         {/* Text */}
                         <span
                           className={`
-                          font-medium text-lg transition-all duration-300 text-center
+                          font-medium text-lg transition-all duration-300 flex-1 text-left
                           ${isActive ? 'text-white' : 'group-hover:text-white'}
                         `}
                         >
@@ -280,7 +282,7 @@ export function Header() {
                         {isActive && (
                           <motion.div
                             layoutId="fullscreenActiveIndicator"
-                            className="w-1.5 h-1.5 bg-white rounded-full"
+                            className="w-2 h-2 bg-white rounded-full flex-shrink-0"
                             transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
                           />
                         )}
@@ -290,24 +292,21 @@ export function Header() {
                 })}
               </nav>
 
-              {/* Bottom Spacer */}
-              <div className="flex-1" />
-
               {/* Settings Section */}
               <motion.div
                 variants={settingsVariants}
                 initial="hidden"
                 animate="visible"
-                className="flex items-center gap-6"
+                className="flex items-center gap-4 mt-6 mb-4"
               >
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-white/70">Theme</span>
+                  <span className="text-xs text-white/70">Theme</span>
                   <div className="[&_button]:bg-white/10 [&_button]:border-white/20 [&_button]:text-white [&_button:hover]:bg-white/20 [&_button[data-state=on]]:bg-white/30">
                     <ThemeToggle />
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-white/70">Language</span>
+                  <span className="text-xs text-white/70">Language</span>
                   <div className="[&_button]:bg-white/10 [&_button]:border-white/20 [&_button]:text-white [&_button:hover]:bg-white/20 [&_button[data-variant=default]]:bg-white/30 [&_button[data-variant=default]]:text-black">
                     <LanguageSwitcher />
                   </div>

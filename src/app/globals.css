@@ -93,6 +93,15 @@ body {
   --accent-blue: 213 94% 68%;
   --accent-violet: 261 83% 58%;
   --accent-green: 142 76% 36%;
+
+  /* Safe area support */
+  --safe-area-inset-top: env(safe-area-inset-top, 0px);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-inset-left: env(safe-area-inset-left, 0px);
+  --safe-area-inset-right: env(safe-area-inset-right, 0px);
+  
+  /* Minimum safe area for devices without safe area support */
+  --mobile-safe-bottom: max(env(safe-area-inset-bottom, 0px), 1rem);
 }
 
 /* Light theme */
