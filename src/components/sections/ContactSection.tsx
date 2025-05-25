@@ -46,9 +46,7 @@ export function ContactSection() {
           <StaggerContainer className="text-center space-y-12">
             <div>
               <h2 className="text-4xl font-display font-bold mb-4">{t('getInTouch')}</h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                {t('description')}
-              </p>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">{t('description')}</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

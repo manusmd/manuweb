@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { useRef } from 'react';
 import { ReadingProgress } from '@/components/scroll/ReadingProgress';
 
 interface BlogLayoutProps {

@@ -15,15 +15,15 @@ export function SectionProgress() {
   const [activeSection, setActiveSection] = useState('home');
   const [sections, setSections] = useState<Section[]>([]);
 
-  const sectionNames = {
-    home: t('home'),
-    about: t('about'),
-    projects: t('projects'),
-    blog: t('blog'),
-    contact: t('contact')
-  };
-
   useEffect(() => {
+    const sectionNames = {
+      home: t('home'),
+      about: t('about'),
+      projects: t('projects'),
+      blog: t('blog'),
+      contact: t('contact'),
+    };
+
     const sectionElements = ['home', 'about', 'projects', 'blog', 'contact']
       .map(id => ({ id, element: document.getElementById(id) }))
       .filter(({ element }) => element !== null);
@@ -32,16 +32,17 @@ export function SectionProgress() {
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
-      
+
       // Check if we're at the bottom of the page
       const isAtBottom = scrollY + windowHeight >= documentHeight - 10;
       // Check if we're at the top of the page
       const isAtTop = scrollY <= 50;
 
       let currentActiveSection = 'home';
-      
+
       const updatedSections = sectionElements.map(({ id, element }, index) => {
-        if (!element) return { id, name: sectionNames[id as keyof typeof sectionNames], progress: 0 };
+        if (!element)
+          return { id, name: sectionNames[id as keyof typeof sectionNames], progress: 0 };
 
         const rect = element.getBoundingClientRect();
         const elementTop = scrollY + rect.top;
@@ -50,10 +51,13 @@ export function SectionProgress() {
         const viewportCenter = scrollY + windowHeight / 2;
 
         let progress = 0;
-        
+
         // If we're at the top of the page, mark the first section as active
         if (isAtTop && index === 0) {
-          progress = Math.min(100, Math.max(0, (scrollY / Math.min(elementHeight, windowHeight)) * 100));
+          progress = Math.min(
+            100,
+            Math.max(0, (scrollY / Math.min(elementHeight, windowHeight)) * 100)
+          );
           currentActiveSection = id;
         }
         // If we're at the bottom of the page, mark the last section as active with 100% progress
@@ -63,7 +67,10 @@ export function SectionProgress() {
         }
         // Check if the viewport center is within this section
         else if (viewportCenter >= elementTop && viewportCenter <= elementBottom) {
-          progress = Math.min(100, Math.max(0, ((viewportCenter - elementTop) / elementHeight) * 100));
+          progress = Math.min(
+            100,
+            Math.max(0, ((viewportCenter - elementTop) / elementHeight) * 100)
+          );
           currentActiveSection = id;
         }
         // If we've scrolled past this section completely
@@ -78,7 +85,7 @@ export function SectionProgress() {
         return {
           id,
           name: sectionNames[id as keyof typeof sectionNames],
-          progress
+          progress,
         };
       });
 
@@ -100,7 +107,7 @@ export function SectionProgress() {
   return (
     <div className="fixed right-8 top-1/2 -translate-y-1/2 z-40 hidden xl:block">
       <div className="flex flex-col space-y-6">
-        {sections.map((section) => (
+        {sections.map(section => (
           <motion.div
             key={section.id}
             className="relative group cursor-pointer"
@@ -135,7 +142,7 @@ export function SectionProgress() {
                   strokeDasharray={`${2 * Math.PI * 20}`}
                   initial={{ strokeDashoffset: 2 * Math.PI * 20 }}
                   animate={{
-                    strokeDashoffset: 2 * Math.PI * 20 * (1 - section.progress / 100)
+                    strokeDashoffset: 2 * Math.PI * 20 * (1 - section.progress / 100),
                   }}
                   transition={{ duration: 0.5, ease: 'easeOut' }}
                 />
@@ -171,10 +178,10 @@ export function SectionProgress() {
               <motion.div
                 className="absolute right-16 top-1/2 -translate-y-1/2 px-3 py-1 bg-background/90 backdrop-blur-sm border rounded-lg text-sm font-medium shadow-lg whitespace-nowrap"
                 initial={{ opacity: 0, x: 10, scale: 0.8 }}
-                animate={{ 
+                animate={{
                   opacity: activeSection === section.id ? 1 : 0,
                   x: activeSection === section.id ? 0 : 10,
-                  scale: activeSection === section.id ? 1 : 0.8
+                  scale: activeSection === section.id ? 1 : 0.8,
                 }}
                 transition={{ duration: 0.2 }}
               >
@@ -196,7 +203,7 @@ export function SectionProgress() {
             <motion.div
               className="absolute right-16 top-1/2 -translate-y-1/2 px-2 py-1 bg-background/80 backdrop-blur-sm border rounded text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none"
               style={{
-                display: activeSection === section.id ? 'none' : 'block'
+                display: activeSection === section.id ? 'none' : 'block',
               }}
             >
               {section.name}
@@ -206,4 +213,4 @@ export function SectionProgress() {
       </div>
     </div>
   );
-} 
+}

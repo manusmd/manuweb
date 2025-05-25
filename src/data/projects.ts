@@ -418,7 +418,9 @@ export const getProjectBySlug = (slug: string): Project | undefined => {
 };
 
 export const getFeaturedProjects = (): Project[] => {
-  return projects.filter(project => project.featured).sort((a, b) => (a.priority || 0) - (b.priority || 0));
+  return projects
+    .filter(project => project.featured)
+    .sort((a, b) => (a.priority || 0) - (b.priority || 0));
 };
 
 export const getProjectsByCategory = (category: Project['category']): Project[] => {

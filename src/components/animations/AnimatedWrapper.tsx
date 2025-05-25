@@ -55,11 +55,7 @@ export const AnimatedWrapper = forwardRef<HTMLDivElement, AnimatedWrapperProps>(
     // If user prefers reduced motion, render without animations
     if (prefersReducedMotion) {
       const Component = as as keyof React.JSX.IntrinsicElements;
-      return React.createElement(
-        Component,
-        { ref, className, ...motionProps },
-        children
-      );
+      return React.createElement(Component, { ref, className, ...motionProps }, children);
     }
 
     // Get the animation variant, defaulting to fadeInUp
@@ -68,7 +64,8 @@ export const AnimatedWrapper = forwardRef<HTMLDivElement, AnimatedWrapperProps>(
     // Apply custom duration and delay if provided
     if (duration || delay > 0) {
       const originalVisible = variants.visible as Variant;
-      const originalTransition = (originalVisible as any)?.transition || {};
+      const originalTransition =
+        (originalVisible as Variant & { transition?: Record<string, unknown> })?.transition || {};
 
       variants = {
         ...variants,
@@ -83,7 +80,9 @@ export const AnimatedWrapper = forwardRef<HTMLDivElement, AnimatedWrapperProps>(
       };
     }
 
-    const MotionComponent = motion[as as keyof typeof motion] as any;
+    const MotionComponent = motion[as as keyof typeof motion] as React.ComponentType<
+      HTMLMotionProps<typeof as>
+    >;
 
     return (
       <MotionComponent

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useEffect, useState } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useSpring, animated } from '@react-spring/three';
 import * as THREE from 'three';
@@ -10,6 +10,7 @@ interface Blob3DProps {
   scale?: number;
   color?: string;
   wireframe?: boolean;
+  onReady?: () => void;
 }
 
 export function Blob3D({
@@ -17,9 +18,11 @@ export function Blob3D({
   scale = 1,
   color = '#3b82f6',
   wireframe = false,
+  onReady,
 }: Blob3DProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   const { mouse, viewport } = useThree();
+  const [isReady, setIsReady] = useState(false);
 
   // Create sphere geometry with more vertices for better morphing
   const geometry = useMemo(() => {
@@ -27,16 +30,26 @@ export function Blob3D({
     return geo;
   }, []);
 
-  // Animated spring for scale and rotation
-  const { rotation, meshScale } = useSpring({
-    rotation: [0, 0, 0] as [number, number, number],
-    meshScale: scale,
+  // Animated spring for scale, rotation, and opacity
+  const { meshScale, opacity } = useSpring({
+    meshScale: isReady ? scale : 0,
+    opacity: isReady ? 0.8 : 0,
     config: { mass: 1, tension: 280, friction: 60 },
   });
 
+  // Mark as ready after a short delay to ensure smooth loading
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsReady(true);
+      onReady?.();
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [onReady]);
+
   // Animation loop for morphing and mouse interaction
   useFrame(state => {
-    if (!meshRef.current) return;
+    if (!meshRef.current || !isReady) return;
 
     const time = state.clock.getElapsedTime();
 
@@ -79,13 +92,13 @@ export function Blob3D({
 
   return (
     <animated.mesh ref={meshRef} position={position} scale={meshScale} geometry={geometry}>
-      <meshStandardMaterial
+      <animated.meshStandardMaterial
         color={color}
         wireframe={wireframe}
         roughness={0.4}
         metalness={0.1}
         transparent
-        opacity={0.8}
+        opacity={opacity}
       />
     </animated.mesh>
   );

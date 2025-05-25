@@ -14,15 +14,15 @@ const withMDX = createMDX({
 
 const nextConfig: NextConfig = {
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
-  
+
   // Performance optimizations
   experimental: {
     optimizePackageImports: ['framer-motion', 'lucide-react', '@radix-ui/react-slot'],
   },
-  
+
   // Compression
   compress: true,
-  
+
   // Image optimization
   images: {
     remotePatterns: [
@@ -36,7 +36,7 @@ const nextConfig: NextConfig = {
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
-  
+
   // Bundle optimization
   webpack: (config, { dev, isServer }) => {
     // Optimize bundle size in production
@@ -65,10 +65,10 @@ const nextConfig: NextConfig = {
         },
       };
     }
-    
+
     return config;
   },
-  
+
   // Headers for performance
   async headers() {
     return [
@@ -77,11 +77,11 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: 'X-DNS-Prefetch-Control',
-            value: 'on'
+            value: 'on',
           },
           {
             key: 'X-Frame-Options',
-            value: 'DENY'
+            value: 'DENY',
           },
         ],
       },

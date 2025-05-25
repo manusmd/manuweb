@@ -96,7 +96,9 @@ export function TableOfContents() {
           </div>
           <div>
             <h3 className="font-semibold text-base text-foreground">{t('contents')}</h3>
-            <p className="text-xs text-muted-foreground">{t('sectionsCount', { count: toc.length })}</p>
+            <p className="text-xs text-muted-foreground">
+              {t('sectionsCount', { count: toc.length })}
+            </p>
           </div>
         </div>
 

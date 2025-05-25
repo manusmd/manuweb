@@ -1,8 +1,9 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, HTMLMotionProps } from 'framer-motion';
 import { forwardRef, ReactNode, createElement } from 'react';
 import { useAnimationVariants } from '@/hooks/useAnimations';
+import React from 'react';
 
 interface StaggerContainerProps {
   children: ReactNode;
@@ -27,7 +28,9 @@ export const StaggerContainer = forwardRef<HTMLDivElement, StaggerContainerProps
         }
       : stagger;
 
-    const MotionComponent = motion[as as keyof typeof motion] as any;
+    const MotionComponent = motion[as as keyof typeof motion] as React.ComponentType<
+      HTMLMotionProps<typeof as>
+    >;
 
     if (prefersReducedMotion) {
       return createElement(as, { ref, className }, children);

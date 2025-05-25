@@ -98,18 +98,23 @@ export function ProjectCard({ project, delay = 0, featured = false }: ProjectCar
         <div className="space-y-2">
           <h4 className="text-sm font-medium text-foreground">{t('techStack')}</h4>
           <div className="flex flex-wrap gap-1">
-            {(project.tech || project.technologies?.map(t => t.name) || []).slice(0, featured ? 8 : 6).map(tech => (
-              <Badge
-                key={tech}
-                variant="secondary"
-                className="text-xs px-2 py-1 bg-muted/50 hover:bg-muted transition-colors"
-              >
-                {tech}
-              </Badge>
-            ))}
-            {(project.tech || project.technologies?.map(t => t.name) || []).length > (featured ? 8 : 6) && (
+            {(project.tech || project.technologies?.map(t => t.name) || [])
+              .slice(0, featured ? 8 : 6)
+              .map(tech => (
+                <Badge
+                  key={tech}
+                  variant="secondary"
+                  className="text-xs px-2 py-1 bg-muted/50 hover:bg-muted transition-colors"
+                >
+                  {tech}
+                </Badge>
+              ))}
+            {(project.tech || project.technologies?.map(t => t.name) || []).length >
+              (featured ? 8 : 6) && (
               <Badge variant="secondary" className="text-xs px-2 py-1 bg-muted/50">
-                +{(project.tech || project.technologies?.map(t => t.name) || []).length - (featured ? 8 : 6)}
+                +
+                {(project.tech || project.technologies?.map(t => t.name) || []).length -
+                  (featured ? 8 : 6)}
               </Badge>
             )}
           </div>

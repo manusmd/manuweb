@@ -15,7 +15,8 @@ const AboutClient = dynamic(
 );
 
 const ProjectsSection = dynamic(
-  () => import('@/components/sections/ProjectsSection').then(mod => ({ default: mod.ProjectsSection })),
+  () =>
+    import('@/components/sections/ProjectsSection').then(mod => ({ default: mod.ProjectsSection })),
   {
     loading: () => (
       <div className="min-h-screen flex items-center justify-center">
@@ -26,7 +27,8 @@ const ProjectsSection = dynamic(
 );
 
 const ContactSection = dynamic(
-  () => import('@/components/sections/ContactSection').then(mod => ({ default: mod.ContactSection })),
+  () =>
+    import('@/components/sections/ContactSection').then(mod => ({ default: mod.ContactSection })),
   {
     loading: () => (
       <div className="min-h-[400px] flex items-center justify-center">

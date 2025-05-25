@@ -4,16 +4,17 @@ import { Callout } from '@/components/blog/Callout';
 import Link from 'next/link';
 import Image from 'next/image';
 
-// Custom image component that avoids hydration issues
-function CustomImage({
-  src = '',
-  alt = '',
-  ...props
-}: {
+interface CustomImageProps {
   src?: string;
   alt?: string;
-  [key: string]: any;
-}) {
+  width?: number;
+  height?: number;
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+// Custom image component that avoids hydration issues
+function CustomImage({ src = '', alt = '', ...props }: CustomImageProps) {
   return (
     <>
       <br />

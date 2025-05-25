@@ -1,12 +1,11 @@
 'use client';
 
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { AnimatedWrapper, StaggerContainer } from '@/components/animations';
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import { ExternalLink, Github, Search, X } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import type { Project } from '@/types/project';
@@ -47,7 +46,9 @@ export function ProjectsSection() {
     },
   ];
 
-  const allTechs = Array.from(new Set(projects.flatMap(p => p.tech || p.technologies?.map(t => t.name) || [])));
+  const allTechs = Array.from(
+    new Set(projects.flatMap(p => p.tech || p.technologies?.map(t => t.name) || []))
+  );
 
   const toggleTech = (tech: string) => {
     setSelectedTechs(prev =>
@@ -144,20 +145,22 @@ export function ProjectsSection() {
                           </div>
 
                           <div className="flex flex-wrap gap-2">
-                            {(project.tech || project.technologies?.map(t => t.name) || []).map(tech => {
-                              const colors = techColors[tech] || {
-                                bg: 'bg-primary/10',
-                                text: 'text-primary',
-                              };
-                              return (
-                                <span
-                                  key={tech}
-                                  className={`rounded-full px-2 py-0.5 text-xs ${colors.bg} ${colors.text}`}
-                                >
-                                  {tech}
-                                </span>
-                              );
-                            })}
+                            {(project.tech || project.technologies?.map(t => t.name) || []).map(
+                              tech => {
+                                const colors = techColors[tech] || {
+                                  bg: 'bg-primary/10',
+                                  text: 'text-primary',
+                                };
+                                return (
+                                  <span
+                                    key={tech}
+                                    className={`rounded-full px-2 py-0.5 text-xs ${colors.bg} ${colors.text}`}
+                                  >
+                                    {tech}
+                                  </span>
+                                );
+                              }
+                            )}
                           </div>
                         </div>
                       </div>

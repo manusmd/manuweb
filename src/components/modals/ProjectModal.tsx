@@ -32,11 +32,11 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             className="fixed left-[50%] top-[50%] z-50 w-full max-w-3xl translate-x-[-50%] translate-y-[-50%] bg-card border border-border shadow-lg"
           >
             <motion.div className="relative aspect-video overflow-hidden">
-              <Image 
-                src={project.image || project.thumbnail || '/placeholder-project.jpg'} 
-                alt={project.title} 
-                fill 
-                className="object-cover" 
+              <Image
+                src={project.image || project.thumbnail || '/placeholder-project.jpg'}
+                alt={project.title}
+                fill
+                className="object-cover"
               />
               <button
                 onClick={onClose}

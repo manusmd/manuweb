@@ -10,15 +10,15 @@ export function ScrollProgress() {
   const [activeSection, setActiveSection] = useState(0);
   const pathname = usePathname();
   const { scrollYProgress } = useScroll();
-  
+
   // Check if we're on a blog page
   const isBlogPage = pathname.includes('/blog/');
-  
+
   // Smooth spring animation for the progress
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
-    restDelta: 0.001
+    restDelta: 0.001,
   });
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export function ScrollProgress() {
     const updateActiveSection = () => {
       const sections = ['home', 'about', 'projects', 'blog', 'contact'];
       const scrollPosition = window.scrollY + window.innerHeight / 2;
-      
+
       for (let i = sections.length - 1; i >= 0; i--) {
         const element = document.getElementById(sections[i]);
         if (element && element.offsetTop <= scrollPosition) {
@@ -46,7 +46,7 @@ export function ScrollProgress() {
     window.addEventListener('scroll', toggleVisibility);
     window.addEventListener('scroll', updateActiveSection);
     updateActiveSection(); // Initial call
-    
+
     return () => {
       window.removeEventListener('scroll', toggleVisibility);
       window.removeEventListener('scroll', updateActiveSection);
@@ -72,9 +72,9 @@ export function ScrollProgress() {
       <motion.div
         className="fixed bottom-8 right-8 z-50"
         initial={{ opacity: 0, scale: 0 }}
-        animate={{ 
-          opacity: isVisible ? 1 : 0, 
-          scale: isVisible ? 1 : 0 
+        animate={{
+          opacity: isVisible ? 1 : 0,
+          scale: isVisible ? 1 : 0,
         }}
         transition={{ duration: 0.3 }}
       >
@@ -85,10 +85,7 @@ export function ScrollProgress() {
           whileTap={{ scale: 0.95 }}
         >
           {/* Circular Progress Ring */}
-          <svg
-            className="absolute inset-0 w-full h-full -rotate-90"
-            viewBox="0 0 56 56"
-          >
+          <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 56 56">
             {/* Background circle */}
             <circle
               cx="28"
@@ -110,11 +107,7 @@ export function ScrollProgress() {
               strokeLinecap="round"
               strokeDasharray={`${2 * Math.PI * 24}`}
               style={{
-                strokeDashoffset: useTransform(
-                  scrollYProgress,
-                  [0, 1],
-                  [2 * Math.PI * 24, 0]
-                )
+                strokeDashoffset: useTransform(scrollYProgress, [0, 1], [2 * Math.PI * 24, 0]),
               }}
             />
             {/* Gradient definition */}
@@ -126,7 +119,7 @@ export function ScrollProgress() {
               </linearGradient>
             </defs>
           </svg>
-          
+
           {/* Arrow Icon */}
           <ChevronUp className="w-5 h-5 text-foreground group-hover:text-primary transition-colors absolute inset-0 m-auto" />
         </motion.button>
@@ -149,12 +142,12 @@ export function ScrollProgress() {
                 <motion.div
                   className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"
                   initial={{ scale: 0 }}
-                  animate={{ 
-                    scale: index <= activeSection ? 1 : 0
+                  animate={{
+                    scale: index <= activeSection ? 1 : 0,
                   }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
                 />
-                
+
                 {/* Tooltip */}
                 <div className="absolute left-6 top-1/2 -translate-y-1/2 px-2 py-1 bg-background/90 backdrop-blur-sm border rounded text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
                   {section.charAt(0).toUpperCase() + section.slice(1)}
@@ -166,4 +159,4 @@ export function ScrollProgress() {
       )}
     </>
   );
-} 
+}

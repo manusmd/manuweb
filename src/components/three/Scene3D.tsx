@@ -30,9 +30,10 @@ function SceneLighting() {
 
 function FallbackLoader() {
   return (
-    <div className="flex items-center justify-center w-full h-full">
-      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-    </div>
+    <mesh>
+      <sphereGeometry args={[1, 8, 8]} />
+      <meshBasicMaterial color="#3b82f6" transparent opacity={0.1} wireframe />
+    </mesh>
   );
 }
 
@@ -48,7 +49,7 @@ export function Scene3D({ className = '', enableControls = false, children }: Sc
         }}
         dpr={[1, 2]}
       >
-        <Suspense fallback={null}>
+        <Suspense fallback={<FallbackLoader />}>
           <SceneLighting />
           {children || <Blob3D />}
           {enableControls && (

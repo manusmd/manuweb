@@ -16,16 +16,16 @@ export function ReadingProgress({ target, className = '' }: ReadingProgressProps
   const [timeLeft, setTimeLeft] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
   const hasTriggeredConfetti = useRef(false);
-  
+
   const { scrollYProgress } = useScroll({
     target: target?.current ? target : undefined,
-    offset: target ? ["start end", "end start"] : undefined
+    offset: target ? ['start end', 'end start'] : undefined,
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
-    restDelta: 0.001
+    restDelta: 0.001,
   });
 
   const opacity = useTransform(smoothProgress, [0, 0.1, 0.9, 1], [0, 1, 1, 0]);
@@ -50,7 +50,7 @@ export function ReadingProgress({ target, className = '' }: ReadingProgressProps
       return Math.random() * (max - min) + min;
     }
 
-    const interval = setInterval(function() {
+    const interval = setInterval(function () {
       const timeLeft = animationEnd - Date.now();
 
       if (timeLeft <= 0) {
@@ -58,36 +58,36 @@ export function ReadingProgress({ target, className = '' }: ReadingProgressProps
       }
 
       const particleCount = 50 * (timeLeft / duration);
-      
+
       // Left side
       confetti({
         ...defaults,
         particleCount,
-        origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
+        origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
       });
-      
+
       // Right side
       confetti({
         ...defaults,
         particleCount,
-        origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
+        origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
       });
     }, 250);
   };
 
   useEffect(() => {
-    const unsubscribe = smoothProgress.on('change', (latest) => {
+    const unsubscribe = smoothProgress.on('change', latest => {
       if (readingTime > 0) {
         // Check if we're at the bottom of the page
         const scrollY = window.scrollY;
         const windowHeight = window.innerHeight;
         const documentHeight = document.documentElement.scrollHeight;
         const isAtBottom = scrollY + windowHeight >= documentHeight - 10;
-        
+
         // More accurate completion detection
         const isNearEnd = latest >= 0.95; // Consider 95% as complete
         const remaining = Math.ceil(readingTime * (1 - latest));
-        
+
         if (isAtBottom || isNearEnd || remaining <= 0) {
           setTimeLeft(0);
           if (!isComplete) {
@@ -113,27 +113,24 @@ export function ReadingProgress({ target, className = '' }: ReadingProgressProps
   }, [smoothProgress, readingTime, isComplete]);
 
   return (
-    <motion.div
-      className={`fixed top-20 right-4 z-40 ${className}`}
-      style={{ opacity }}
-    >
+    <motion.div className={`fixed top-20 right-4 z-40 ${className}`} style={{ opacity }}>
       {/* Reading Time Indicator */}
       {readingTime > 0 && (
         <motion.div
           className={`px-3 py-1 backdrop-blur-sm border rounded-full text-xs font-medium shadow-lg transition-all duration-500 ${
-            isComplete 
-              ? 'bg-green-500/90 text-white border-green-400' 
+            isComplete
+              ? 'bg-green-500/90 text-white border-green-400'
               : 'bg-background/90 border-border'
           }`}
           initial={{ opacity: 0, y: -10 }}
-          animate={{ 
-            opacity: 1, 
+          animate={{
+            opacity: 1,
             y: 0,
-            scale: isComplete ? [1, 1.1, 1] : 1
+            scale: isComplete ? [1, 1.1, 1] : 1,
           }}
-          transition={{ 
+          transition={{
             delay: 0.5,
-            scale: { duration: 0.6, ease: "easeInOut" }
+            scale: { duration: 0.6, ease: 'easeInOut' },
           }}
         >
           <motion.span
@@ -149,4 +146,4 @@ export function ReadingProgress({ target, className = '' }: ReadingProgressProps
       )}
     </motion.div>
   );
-} 
+}

@@ -113,9 +113,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
                       <h3 className="font-semibold text-foreground mb-2">{t('enjoyedTitle')}</h3>
-                      <p className="text-sm text-muted-foreground">
-                        {t('enjoyedDescription')}
-                      </p>
+                      <p className="text-sm text-muted-foreground">{t('enjoyedDescription')}</p>
                     </div>
                     <SocialShare title={frontMatter.title} url={currentUrl} />
                   </div>
