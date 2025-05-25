@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import { ReadingProgress } from '@/components/scroll/ReadingProgress';
+import { useBlogReadingDetection } from '@/hooks/useBlogReadingDetection';
 
 interface BlogLayoutProps {
   children: React.ReactNode;
@@ -9,6 +10,9 @@ interface BlogLayoutProps {
 
 export function BlogLayout({ children }: BlogLayoutProps) {
   const articleRef = useRef<HTMLElement>(null);
+  
+  // Initialize blog reading detection
+  const { hasReadFirstBlog, currentProgress, isReading, readingTime } = useBlogReadingDetection();
 
   return (
     <div className="relative min-h-screen">

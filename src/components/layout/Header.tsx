@@ -169,6 +169,7 @@ export function Header() {
               href={`/${locale}`}
               className="flex items-center space-x-2 font-bold text-gradient hover:scale-105 transition-transform"
               onClick={() => setIsMobileMenuOpen(false)}
+              data-logo
             >
               <span className="text-2xl font-display tracking-tight">manu</span>
             </Link>
