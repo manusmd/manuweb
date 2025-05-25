@@ -1,0 +1,133 @@
+{
+  "common": {
+    "loading": "Lädt...",
+    "error": "Fehler",
+    "back": "Zurück",
+    "home": "Startseite",
+    "contact": "Kontakt",
+    "about": "Über mich",
+    "projects": "Projekte",
+    "blog": "Blog",
+    "resume": "Lebenslauf",
+    "download": "Herunterladen"
+  },
+  "navigation": {
+    "home": "Startseite",
+    "about": "Über mich",
+    "projects": "Projekte",
+    "blog": "Blog",
+    "contact": "Kontakt",
+    "language": "Sprache",
+    "theme": "Design",
+    "darkMode": "Dunkler Modus",
+    "lightMode": "Heller Modus"
+  },
+  "hero": {
+    "greeting": "Hallo, ich bin",
+    "name": "Manuel Schmid",
+    "title": "Fullstack Entwickler",
+    "subtitle": "Fullstack Entwickler",
+    "description": "Entwicklung moderner Webanwendungen mit Fokus auf außergewöhnliche Nutzererlebnisse und innovative Technologien.",
+    "scrollDown": "Nach unten scrollen",
+    "cta": {
+      "projects": "Projekte ansehen",
+      "contact": "Kontakt aufnehmen",
+      "resume": "Lebenslauf herunterladen"
+    }
+  },
+  "about": {
+    "meta": {
+      "title": "Über Mich | Manuel Ernesto",
+      "description": "Erfahren Sie mehr über meinen Werdegang, meine Fähigkeiten und Erfahrungen in der Webentwicklung und Softwaretechnik."
+    },
+    "title": "Über Mich",
+    "subtitle": "Software-Entwickler mit Leidenschaft für elegante Lösungen",
+    "timeline": {
+      "title": "Erfahrung"
+    }
+  },
+  "projects": {
+    "title": "Projekte",
+    "subtitle": "Eine Auswahl meiner aktuellen Arbeiten",
+    "viewProject": "Projekt ansehen",
+    "viewGithub": "Auf GitHub ansehen",
+    "viewDemo": "Demo ansehen",
+    "viewCode": "Code ansehen",
+    "liveDemo": "Live Demo",
+    "viewApp": "App öffnen",
+    "techStack": "Tech Stack",
+    "searchPlaceholder": "Projekte suchen...",
+    "noResults": "Keine Projekte gefunden, die Ihren Suchkriterien entsprechen.",
+    "categories": {
+      "all": "Alle",
+      "frontend": "Frontend",
+      "fullstack": "Fullstack",
+      "mobile": "Mobile",
+      "library": "Bibliothek",
+      "tool": "Tool"
+    },
+    "clubscan": {
+      "description": "Eine moderne Webanwendung für Sportvereine zur Verwaltung ihrer Mitgliederanwesenheiten. Zu den Funktionen gehören Offline-Unterstützung, Echtzeit-Updates und eine benutzerfreundliche Oberfläche zur Anwesenheitserfassung und Berichtserstellung."
+    },
+    "portfolio": {
+      "description": "Eine moderne, responsive Portfolio-Website, entwickelt mit Next.js 14, mit flüssigen Animationen, 3D-Elementen und einem Dark Mode. Präsentiert meine Projekte und Erfahrungen in der Webentwicklung."
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Gedanken zu Entwicklung und Technologie",
+    "readMore": "Weiterlesen",
+    "readTime": "Min. Lesezeit",
+    "publishedOn": "Veröffentlicht am",
+    "tags": "Tags",
+    "noArticles": "Keine Artikel gefunden",
+    "postNotFound": "Beitrag nicht gefunden",
+    "postNotFoundDesc": "Entschuldigung, der gesuchte Blog-Beitrag existiert nicht.",
+    "backToBlog": "Zurück zum Blog"
+  },
+  "contact": {
+    "title": "Kontakt",
+    "subtitle": "Lassen Sie uns zusammenarbeiten",
+    "description": "Haben Sie ein Projekt im Kopf? Ich würde gerne von Ihnen hören und besprechen, wie wir Ihre Ideen zum Leben erwecken können.",
+    "form": {
+      "name": "Name",
+      "email": "E-Mail",
+      "subject": "Betreff",
+      "message": "Nachricht",
+      "send": "Nachricht senden",
+      "sending": "Wird gesendet...",
+      "success": "Nachricht erfolgreich gesendet!",
+      "error": "Fehler beim Senden der Nachricht. Bitte versuchen Sie es erneut.",
+      "required": "Pflichtfeld"
+    },
+    "info": {
+      "email": "E-Mail",
+      "location": "Standort",
+      "availability": "Verfügbarkeit"
+    }
+  },
+  "footer": {
+    "description": "Fullstack-Entwickler spezialisiert auf moderne Webanwendungen mit innovativen Technologien.",
+    "connect": "Verbinden",
+    "copyright": "© {year} Manuel Schmid. Alle Rechte vorbehalten.",
+    "builtWith": "Erstellt mit {technologies}",
+    "social": {
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "email": "E-Mail"
+    }
+  },
+  "Index": {
+    "title": "Full Stack Entwickler",
+    "description": "Ich entwickle außergewöhnliche und zugängliche digitale Erlebnisse für das Web.",
+    "contact": "Kontaktiere mich",
+    "viewProjects": "Projekte ansehen"
+  },
+  "Navigation": {
+    "home": "Start",
+    "about": "Über mich",
+    "projects": "Projekte",
+    "blog": "Blog",
+    "contact": "Kontakt"
+  }
+}

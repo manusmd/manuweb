@@ -1,0 +1,204 @@
+# Product Requirements Document (PRD)
+
+## Project: Super Fancy Fullstack Developer Portfolio (Frontend-Focused)
+
+**Version:** 2.0
+**Owner:** Manuel Schmid
+**Date:** May 2025
+
+---
+
+# Overview
+
+This portfolio showcases the frontend and fullstack capabilities of Manuel Schmid. It is a modern, dark-themed, highly animated, and visually impressive personal site built to impress employers, collaborators, and clients. It includes deep dives into projects, blog content in Markdown, and an animated interactive experience.
+
+### Problem it Solves
+
+Typical developer portfolios are static and generic. This project demonstrates technical excellence, design awareness, and engineering sophistication with flair.
+
+### Target Audience
+
+* Hiring managers and recruiters
+* Technical leads and collaborators
+* Clients or companies looking for frontend or fullstack developers
+
+### Value Proposition
+
+* Demonstrates strong frontend and animation skills
+* Shows technical range without backend overcomplexity
+* Leaves a lasting impression through design, UX, and polish
+
+---
+
+# Core Features
+
+## Landing Page
+
+* **What it does:** Greets the visitor with a bold animated entry, personal headline, and call-to-actions.
+* **Why it's important:** First impressions count.
+* **How it works:** Parallax layers, hero text animation, background glow or particle effects, Three.js blob, hover spotlight.
+
+## About Page
+
+* **What it does:** Displays biography, tech stack, and career highlights.
+* **Why it's important:** Builds credibility and personal connection.
+* **How it works:** Timeline animations, interactive tech chips, radar chart of skills (Recharts), animated roadmap.
+
+## Projects
+
+* **What it does:** Lists fullstack and frontend projects with detail views.
+* **Why it's important:** Shows real-world applications and technologies.
+* **How it works:** Grid layout with filters and animated hover effects, modal/project page with animations, optional iframe previews.
+
+## Blog
+
+* **What it does:** Displays posts written in Markdown/MDX.
+* **Why it's important:** Demonstrates thought leadership and communication.
+* **How it works:** Static Markdown parsing, localized content (de/en), animated reading bar.
+
+## Contact Page
+
+* **What it does:** Allows users to reach out via animated form and download resume.
+* **Why it's important:** Provides a CTA and encourages follow-up.
+* **How it works:** Form submits to Next.js API route with email integration (Resend/Nodemailer).
+
+## Global Features
+
+* Dark/light toggle (dark by default)
+* i18n (German default, English supported)
+* Framer Motion-based animations across all pages
+* Toast system for feedback
+* Sticky footer + animated header
+
+---
+
+# User Experience
+
+## User Personas
+
+* **Recruiter**: Wants to see projects and get a sense of personality quickly.
+* **Hiring Manager**: Evaluates code quality, UX sensibility, and design skill.
+* **Developer Peer**: Interested in tech stack and implementation.
+
+## User Flows
+
+* Land → Browse projects → Read blog → Contact
+* Land → Switch to English → Browse → Download CV
+
+## UI/UX Considerations
+
+* Crisp animations (motion UI, smooth transitions)
+* Responsive, mobile-first layout
+* Visual hierarchy with bold headings and space
+* Interactive touchpoints (spotlight, cards, 3D elements)
+
+---
+
+# Technical Architecture
+
+## System Components
+
+* **Frontend:** Next.js 15 (App Router), React Server Components
+* **Styling:** TailwindCSS (custom config), shadcn/ui, CSS variables
+* **Animations:** Framer Motion, custom hooks
+* **Data:** Static files (Markdown blog), JSON for roadmap, project config
+* **API:** Next.js route for contact (email sending only)
+
+## Data Models
+
+* BlogPost (slug, title, tags, date, content)
+* Project (id, title, stack, description, repo, demo, media)
+* RoadmapItem (title, description, status, icon)
+
+## Infrastructure Requirements
+
+* Vercel deployment
+* GitHub repo with GitHub Actions for CI
+
+---
+
+# Development Roadmap
+
+## MVP
+
+* Landing Page with animations and 3D blob
+* About Page with tech stack and skill chart
+* Project overview with detail pages
+* Contact form with API route and email
+* Blog with German/English posts in Markdown
+* Dark theme + light toggle
+
+## Enhancements
+
+* Iframe preview toggle in projects
+* Interactive roadmap component
+* Hover spotlight animation
+* Easter eggs (e.g., Konami code)
+* Animated skill radar chart
+* Floating UI elements, scroll-linked effects
+
+---
+
+# Logical Dependency Chain
+
+## Phase 1 – Foundation
+
+* Initialize project with Tailwind, shadcn, i18n, Framer Motion
+* Create dark theme base layout, global styles, header/footer
+
+## Phase 2 – Core Pages
+
+* Landing page with animations and hero section
+* About page with content sections and charts
+* Contact form API + email integration
+
+## Phase 3 – Content
+
+* Project list and detail pages (data from JSON or TS file)
+* Blog markdown rendering with locale fallback
+
+## Phase 4 – Enhancement Layer
+
+* Add radar chart and roadmap
+* Add spotlight effect and hover animations
+* Add fun features and polish
+
+---
+
+# Risks and Mitigations
+
+## Technical Challenges
+
+* **i18n setup**: Use well-documented packages like `next-intl`
+* **Animation performance**: Optimize with layout animations and lazy loading
+
+## MVP Scope
+
+* Stick to content and animation polish rather than backend expansion
+
+## Resource Constraints
+
+* Minimize scope creep by keeping integrations local (no DB, no auth)
+
+---
+
+# Appendix
+
+## Design System Notes
+
+* Fonts: Inter + Satoshi (or similar)
+* Colors: #0f0f11 background, accents in blue/violet/green glow
+* Breakpoints: sm/md/lg/xl (Mobile-first)
+
+## Visual References
+
+* Inspiration from sites like [theverge.com](https://theverge.com), [rauno.me](https://rauno.me), \[apple.com]
+
+## Linting & CI
+
+* ESLint + Prettier setup
+* GitHub Actions for PR validation
+
+## Deployment
+
+* Hosted on Vercel with personal domain

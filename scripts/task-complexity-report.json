@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "generatedAt": "2025-05-25T00:00:41.591Z",
+    "tasksAnalyzed": 1,
+    "totalTasks": 20,
+    "analysisCount": 1,
+    "thresholdScore": 5,
+    "projectName": "Taskmaster",
+    "usedResearch": true
+  },
+  "complexityAnalysis": [
+    {
+      "taskId": 9,
+      "taskTitle": "Implement Blog with Markdown Support",
+      "complexityScore": 7,
+      "recommendedSubtasks": 5,
+      "expansionPrompt": "Break down the 'Implement Blog with Markdown Support' task into subtasks covering: 1) MDX setup and configuration, 2) file-based routing system, 3) blog post layout with reading progress bar, 4) language support and fallback mechanism, and 5) front matter parsing and integration.",
+      "reasoning": "This task involves multiple technical components including Markdown/MDX rendering, multilingual support, custom layout with animations, and file-based routing. The cyclomatic complexity would be moderate to high due to the language fallback logic and reading progress calculations. The task requires integration of multiple libraries (next-mdx-remote, gray-matter) and implementation of several interconnected features, suggesting a complexity score of 7."
+    }
+  ]
+}
