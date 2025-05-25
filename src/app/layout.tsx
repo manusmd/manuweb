@@ -2,8 +2,8 @@ import { Inter } from 'next/font/google';
 import localFont from 'next/font/local';
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
-import { Analytics } from "@vercel/analytics/next"
-
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -112,6 +112,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={cn(inter.className, calSans.variable)}>
       <body className={cn('min-h-screen bg-background font-sans antialiased')}>{children}</body>
       <Analytics />
+      <SpeedInsights />
     </html>
   );
 }
