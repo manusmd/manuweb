@@ -50,6 +50,25 @@ export function NotificationSystem({
               )}
             </div>
             <p className="text-sm opacity-90">{notification.message}</p>
+
+            {/* Action buttons */}
+            {notification.actions && notification.actions.length > 0 && (
+              <div className="flex gap-2 mt-3">
+                {notification.actions.map((action, actionIndex) => (
+                  <button
+                    key={actionIndex}
+                    onClick={() => {
+                      action.onClick();
+                      onRemoveNotification(notification.id);
+                    }}
+                    className="bg-white/20 hover:bg-white/30 text-white text-sm px-3 py-1 rounded transition-colors"
+                  >
+                    {action.label}
+                  </button>
+                ))}
+              </div>
+            )}
+
             <div className="flex items-center gap-1 mt-2 text-xs opacity-75">
               <Sparkles className="w-3 h-3" />
               <span>{notification.type === 'persistent' ? t('active') : t('discovered')}</span>

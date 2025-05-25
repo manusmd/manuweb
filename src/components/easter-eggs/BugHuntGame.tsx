@@ -124,28 +124,36 @@ export function BugHuntGame() {
 
   const startBugHunt = useCallback(
     (showStartConfetti = false) => {
-      const newBugs = generateBugs();
-
-      setBugs(newBugs);
+      // Clear any existing bugs first to prevent duplicates
+      setBugs([]);
       setFoundBugs([]);
-      setIsGameActive(true);
+      setIsGameActive(false);
 
-      localStorage.setItem('bug-hunt-bugs', JSON.stringify(newBugs));
-      localStorage.setItem('bug-hunt-found', JSON.stringify([]));
-      localStorage.setItem('bug-hunt-active', 'true');
+      // Small delay to ensure state is cleared
+      setTimeout(() => {
+        const newBugs = generateBugs();
 
-      // Show progress notification
-      showProgressNotification([]);
+        setBugs(newBugs);
+        setFoundBugs([]);
+        setIsGameActive(true);
 
-      // Show start notification
-      if (showStartConfetti) {
-        confetti({
-          particleCount: 50,
-          spread: 60,
-          origin: { y: 0.8 },
-          colors: ['#22c55e', '#16a34a', '#15803d'],
-        });
-      }
+        localStorage.setItem('bug-hunt-bugs', JSON.stringify(newBugs));
+        localStorage.setItem('bug-hunt-found', JSON.stringify([]));
+        localStorage.setItem('bug-hunt-active', 'true');
+
+        // Show progress notification
+        showProgressNotification([]);
+
+        // Show start notification
+        if (showStartConfetti) {
+          confetti({
+            particleCount: 50,
+            spread: 60,
+            origin: { y: 0.8 },
+            colors: ['#22c55e', '#16a34a', '#15803d'],
+          });
+        }
+      }, 100);
     },
     [generateBugs, showProgressNotification]
   );
@@ -154,6 +162,12 @@ export function BugHuntGame() {
   useEffect(() => {
     const handleNameClick = (e: Event) => {
       e.preventDefault();
+
+      // Prevent starting multiple games
+      if (isGameActive) {
+        console.log('Game already active, clearing first...');
+        clearBugHuntStorage();
+      }
 
       // Always start a new game when name is clicked, regardless of current state
       startBugHunt(true);
@@ -216,7 +230,7 @@ export function BugHuntGame() {
         nameElement.removeEventListener('click', handleNameClick);
       }
     };
-  }, [startBugHunt, tBugHunt]);
+  }, [startBugHunt, tBugHunt, clearBugHuntStorage, isGameActive]);
 
   const catchBug = (bugId: string) => {
     const bug = bugs.find(b => b.id === bugId);
@@ -258,9 +272,15 @@ export function BugHuntGame() {
   const completeGame = () => {
     setIsGameActive(false);
 
+    // Clear bugs immediately to prevent lingering bugs
+    setBugs([]);
+
     // Save completion state but don't block restarting
     localStorage.setItem('bug-hunt-completed', 'true');
     localStorage.removeItem('bug-hunt-active');
+    localStorage.removeItem('bug-hunt-bugs');
+
+    console.log('Bug hunt completed! All bugs cleared.');
 
     // Epic completion celebration
     for (let i = 0; i < 5; i++) {
@@ -301,68 +321,74 @@ export function BugHuntGame() {
           <AnimatePresence>
             {isGameActive &&
               bugs.length > 0 &&
-              bugs.map(bug => {
-                const isVisible = !foundBugs.includes(bug.id);
-
-                if (!isVisible) return null;
-
-                // Generate unique animation parameters for each bug
-                const animationSeed = bug.id
-                  .split('')
-                  .reduce((acc, char) => acc + char.charCodeAt(0), 0);
-                const xMovement = 3 + (animationSeed % 5); // 3-7px movement
-                const yMovement = 2 + (animationSeed % 4); // 2-5px movement
-                const xDuration = 1.5 + (animationSeed % 10) / 10; // 1.5-2.4s duration
-                const yDuration = 1.2 + (animationSeed % 8) / 10; // 1.2-1.9s duration
-                const initialDelay = (animationSeed % 20) / 10; // 0-1.9s delay
-                const rotationAmount = 5 + (animationSeed % 10); // 5-14 degrees
-
-                return (
-                  <motion.div
-                    key={bug.id}
-                    initial={{ opacity: 0, scale: 0, rotate: 0 }}
-                    animate={{
-                      opacity: 1,
-                      scale: 1,
-                      rotate: [-rotationAmount, rotationAmount, -rotationAmount],
-                      x: [0, xMovement, -xMovement, 0],
-                      y: [0, -yMovement, yMovement, 0],
-                    }}
-                    exit={{ opacity: 0, scale: 0 }}
-                    transition={{
-                      duration: 0.5,
-                      delay: initialDelay,
-                      rotate: {
-                        repeat: Infinity,
-                        duration: 3 + (animationSeed % 15) / 10, // 3-4.4s wiggle
-                        ease: 'easeInOut',
-                      },
-                      x: {
-                        repeat: Infinity,
-                        duration: xDuration,
-                        ease: 'easeInOut',
-                      },
-                      y: {
-                        repeat: Infinity,
-                        duration: yDuration,
-                        ease: 'easeInOut',
-                      },
-                    }}
-                    className="fixed z-40 cursor-pointer select-none"
-                    style={{
-                      left: `${bug.x}%`,
-                      top: `${bug.y}%`,
-                      transform: 'translate(-50%, -50%)',
-                    }}
-                    onClick={() => catchBug(bug.id)}
-                    title={`${tBugHunt(`bugTypes.${bug.type}`)} - ${tBugHunt(`points.${bug.type}`)}`}
-                  >
-                    <div className="text-2xl hover:scale-125 transition-transform duration-200 drop-shadow-lg">
-                      {bug.emoji}
-                    </div>
-                  </motion.div>
+              (() => {
+                const visibleBugs = bugs.filter(bug => !foundBugs.includes(bug.id));
+                console.log(
+                  'Rendering',
+                  visibleBugs.length,
+                  'visible bugs out of',
+                  bugs.length,
+                  'total bugs'
                 );
-              })}
+                return visibleBugs.map(bug => {
+                  // Generate unique animation parameters for each bug
+                  const animationSeed = bug.id
+                    .split('')
+                    .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+                  const xMovement = 3 + (animationSeed % 5); // 3-7px movement
+                  const yMovement = 2 + (animationSeed % 4); // 2-5px movement
+                  const xDuration = 1.5 + (animationSeed % 10) / 10; // 1.5-2.4s duration
+                  const yDuration = 1.2 + (animationSeed % 8) / 10; // 1.2-1.9s duration
+                  const initialDelay = (animationSeed % 20) / 10; // 0-1.9s delay
+                  const rotationAmount = 5 + (animationSeed % 10); // 5-14 degrees
+
+                  return (
+                    <motion.div
+                      key={bug.id}
+                      initial={{ opacity: 0, scale: 0, rotate: 0 }}
+                      animate={{
+                        opacity: 1,
+                        scale: 1,
+                        rotate: [-rotationAmount, rotationAmount, -rotationAmount],
+                        x: [0, xMovement, -xMovement, 0],
+                        y: [0, -yMovement, yMovement, 0],
+                      }}
+                      exit={{ opacity: 0, scale: 0 }}
+                      transition={{
+                        duration: 0.5,
+                        delay: initialDelay,
+                        rotate: {
+                          repeat: Infinity,
+                          duration: 3 + (animationSeed % 15) / 10, // 3-4.4s wiggle
+                          ease: 'easeInOut',
+                        },
+                        x: {
+                          repeat: Infinity,
+                          duration: xDuration,
+                          ease: 'easeInOut',
+                        },
+                        y: {
+                          repeat: Infinity,
+                          duration: yDuration,
+                          ease: 'easeInOut',
+                        },
+                      }}
+                      className="fixed z-[9999] cursor-pointer select-none"
+                      style={{
+                        left: `${bug.x}%`,
+                        top: `${bug.y}%`,
+                        transform: 'translate(-50%, -50%)',
+                      }}
+                      onClick={() => catchBug(bug.id)}
+                      title={`${tBugHunt(`bugTypes.${bug.type}`)} - ${tBugHunt(`points.${bug.type}`)}`}
+                    >
+                      <div className="text-2xl hover:scale-125 transition-transform duration-200 drop-shadow-lg">
+                        {bug.emoji}
+                      </div>
+                    </motion.div>
+                  );
+                });
+              })()}
           </AnimatePresence>,
           document.body
         )}

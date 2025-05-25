@@ -1,3 +1,8 @@
+export interface NotificationAction {
+  label: string;
+  onClick: () => void;
+}
+
 export interface Notification {
   id: string;
   title: string;
@@ -6,6 +11,7 @@ export interface Notification {
   type: 'temporary' | 'persistent';
   duration?: number;
   onClose?: () => void;
+  actions?: NotificationAction[];
 }
 
 export interface StyleInfo {

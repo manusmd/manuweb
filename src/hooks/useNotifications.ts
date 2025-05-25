@@ -45,7 +45,7 @@ export function useNotifications() {
   // Listen for custom easter egg discovery events
   useEffect(() => {
     const handleEasterEggDiscovered = (event: CustomEvent) => {
-      const { title, message, icon, persistent, onClose } = event.detail;
+      const { title, message, icon, persistent, onClose, actions } = event.detail;
       addNotification({
         title,
         message,
@@ -53,6 +53,7 @@ export function useNotifications() {
         type: persistent ? 'persistent' : 'temporary',
         duration: persistent ? undefined : 4000,
         onClose,
+        actions,
       });
     };
 
