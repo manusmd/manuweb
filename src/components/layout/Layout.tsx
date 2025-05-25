@@ -12,12 +12,12 @@ interface LayoutProps {
 export function Layout({ children }: LayoutProps) {
   return (
     <ThemeProvider>
-      <div className="min-h-screen bg-background text-foreground">
+      <div className="relative min-h-screen bg-background text-foreground">
         <NavigationTracker />
         <Header />
         <ScrollProgress />
         <PageTransition>
-          <main>{children}</main>
+          <main className="relative">{children}</main>
         </PageTransition>
         <Footer />
       </div>

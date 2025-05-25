@@ -13,14 +13,23 @@ interface CustomImageProps {
   style?: React.CSSProperties;
 }
 
-// Custom image component that avoids hydration issues
 function CustomImage({ src = '', alt = '', ...props }: CustomImageProps) {
+  const isHeroImage = alt?.toLowerCase().includes('title') || src?.includes('title');
+  
   return (
     <>
       <br />
       <div className="not-prose my-8">
         <div className="relative w-full h-[300px]">
-          <Image src={src} alt={alt} fill className="object-cover rounded-lg" {...props} />
+          <Image 
+            src={src} 
+            alt={alt} 
+            fill 
+            className="object-cover rounded-lg" 
+            priority={isHeroImage}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+            {...props} 
+          />
         </div>
         {alt && <p className="text-center text-sm text-muted-foreground mt-2">{alt}</p>}
       </div>

@@ -75,17 +75,17 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon.png', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon.png', sizes: '48x48', type: 'image/png' },
+      { url: '/favicon.ico', sizes: '32x32', type: 'image/x-icon' },
+      { url: '/favicon.ico', sizes: '16x16', type: 'image/x-icon' },
+      { url: '/favicon.ico', sizes: '48x48', type: 'image/x-icon' },
     ],
-    apple: [{ url: '/favicon.png', sizes: '180x180', type: 'image/png' }],
-    shortcut: '/favicon.png',
+    apple: [{ url: '/favicon.ico', sizes: '180x180', type: 'image/x-icon' }],
+    shortcut: '/favicon.ico',
     other: [
       {
         rel: 'icon',
-        url: '/favicon.png',
-        type: 'image/png',
+        url: '/favicon.ico',
+        type: 'image/x-icon',
       },
     ],
   },
