@@ -6,6 +6,7 @@ import { TableOfContents } from '@/components/blog/TableOfContents';
 import { ReadingTime } from '@/components/blog/ReadingTime';
 import { SocialShare } from '@/components/blog/SocialShare';
 import { RelatedPosts } from '@/components/blog/RelatedPosts';
+import { BlogTransition } from '@/components/transitions/BlogTransition';
 import { headers } from 'next/headers';
 import { getTranslations } from 'next-intl/server';
 
@@ -58,8 +59,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     const currentUrl = `${protocol}://${host}/${locale}/blog/${slug}`;
 
     return (
-      <>
-        {/* Floating Table of Contents */}
+      <BlogTransition>
         <TableOfContents />
 
         <BlogLayout>
@@ -125,7 +125,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
           </div>
         </BlogLayout>
-      </>
+      </BlogTransition>
     );
   } catch (error) {
     console.error('Error loading blog post:', error);

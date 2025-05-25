@@ -1,6 +1,6 @@
 import { getAllPosts } from '@/lib/mdx';
 import { getTranslations } from 'next-intl/server';
-import Link from 'next/link';
+import { BlogLink } from '@/components/transitions/BlogLink';
 
 interface BlogPreviewProps {
   locale: string;
@@ -50,7 +50,7 @@ export async function BlogPreview({ locale }: BlogPreviewProps) {
         </div>
         <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {latestPosts.map(post => (
-            <Link
+            <BlogLink
               key={post.slug}
               href={`/${locale}/blog/${post.slug}`}
               className="group block bg-card rounded-lg overflow-hidden hover:shadow-lg transition-all hover:-translate-y-1 border border-border"
@@ -86,7 +86,7 @@ export async function BlogPreview({ locale }: BlogPreviewProps) {
                   })}
                 </time>
               </div>
-            </Link>
+            </BlogLink>
           ))}
         </div>
       </div>

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { BlogLink } from '@/components/transitions/BlogLink';
 import { getAllPosts } from '@/lib/mdx';
 import { ArrowRight } from 'lucide-react';
 
@@ -36,7 +36,7 @@ export async function RelatedPosts({ currentSlug, locale, tags = [] }: RelatedPo
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {relatedPosts.map(post => (
-            <Link
+            <BlogLink
               key={post.slug}
               href={`/${locale}/blog/${post.slug}`}
               className="group block p-6 bg-card border border-border rounded-lg hover:border-primary/50 transition-all duration-200"
@@ -69,7 +69,7 @@ export async function RelatedPosts({ currentSlug, locale, tags = [] }: RelatedPo
                   </div>
                 )}
               </div>
-            </Link>
+            </BlogLink>
           ))}
         </div>
       </section>
