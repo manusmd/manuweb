@@ -31,6 +31,7 @@ export function ProjectsSection() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [hoveredProject, setHoveredProject] = useState<Project | null>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isDesktop, setIsDesktop] = useState(false);
 
   const projects: Project[] = [
     {
@@ -44,19 +45,38 @@ export function ProjectsSection() {
     },
   ];
 
+  // Check if device is desktop (1024px and above)
+  useEffect(() => {
+    const checkIsDesktop = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+
+    checkIsDesktop();
+    window.addEventListener('resize', checkIsDesktop);
+
+    return () => window.removeEventListener('resize', checkIsDesktop);
+  }, []);
+
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
-    if (hoveredProject) {
+    if (hoveredProject && isDesktop) {
       document.addEventListener('mousemove', handleMouseMove);
     }
 
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [hoveredProject]);
+  }, [hoveredProject, isDesktop]);
+
+  const handleProjectHover = (project: Project | null) => {
+    // Only set hover state on desktop
+    if (isDesktop) {
+      setHoveredProject(project);
+    }
+  };
 
   return (
     <AnimatedWrapper>
@@ -75,8 +95,8 @@ export function ProjectsSection() {
                   key={project.title}
                   layoutId={`project-${project.title}`}
                   onClick={() => setSelectedProject(project)}
-                  onMouseEnter={() => setHoveredProject(project)}
-                  onMouseLeave={() => setHoveredProject(null)}
+                  onMouseEnter={() => handleProjectHover(project)}
+                  onMouseLeave={() => handleProjectHover(null)}
                   className="group relative aspect-video cursor-pointer overflow-hidden rounded-xl border bg-card"
                 >
                   <Image
@@ -125,9 +145,9 @@ export function ProjectsSection() {
           <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
         </div>
 
-        {/* Live Preview Iframe - Following Mouse */}
+        {/* Live Preview Iframe - Desktop Only */}
         <AnimatePresence>
-          {hoveredProject && hoveredProject.liveUrl && (
+          {hoveredProject && hoveredProject.liveUrl && isDesktop && (
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
