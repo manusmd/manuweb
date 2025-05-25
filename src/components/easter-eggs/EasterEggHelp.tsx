@@ -1,6 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import { X } from 'lucide-react';
 
 interface EasterEggHelpProps {
@@ -9,6 +10,8 @@ interface EasterEggHelpProps {
 }
 
 export function EasterEggHelp({ isOpen, onClose }: EasterEggHelpProps) {
+  const t = useTranslations('easterEggs.help');
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -29,7 +32,7 @@ export function EasterEggHelp({ isOpen, onClose }: EasterEggHelpProps) {
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
                 <span className="text-3xl">🎮</span>
-                <h2 className="text-2xl font-bold tracking-tight">Easter Egg Guide</h2>
+                <h2 className="text-2xl font-bold tracking-tight">{t('title')}</h2>
               </div>
               <button
                 onClick={onClose}
@@ -44,7 +47,7 @@ export function EasterEggHelp({ isOpen, onClose }: EasterEggHelpProps) {
                 {/* Keyboard Shortcuts */}
                 <div className="bg-muted/50 rounded-lg p-4 border">
                   <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                    ⌨️ Keyboard Shortcuts
+                    {t('keyboardShortcuts.title')}
                   </h3>
                   <div className="grid gap-3">
                     <div className="flex items-center justify-between">
@@ -52,7 +55,7 @@ export function EasterEggHelp({ isOpen, onClose }: EasterEggHelpProps) {
                         D
                       </span>
                       <span className="text-sm text-muted-foreground">
-                        Toggle Developer Mode (CSS Inspector)
+                        {t('keyboardShortcuts.developerMode')}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
@@ -60,20 +63,20 @@ export function EasterEggHelp({ isOpen, onClose }: EasterEggHelpProps) {
                         C
                       </span>
                       <span className="text-sm text-muted-foreground">
-                        Colorful Confetti Burst
+                        {t('keyboardShortcuts.confetti')}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="font-mono bg-background px-2 py-1 rounded border text-sm">
                         R
                       </span>
-                      <span className="text-sm text-muted-foreground">Reset All Easter Eggs</span>
+                      <span className="text-sm text-muted-foreground">{t('keyboardShortcuts.reset')}</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="font-mono bg-background px-2 py-1 rounded border text-sm">
                         A
                       </span>
-                      <span className="text-sm text-muted-foreground">Show This Help Guide</span>
+                      <span className="text-sm text-muted-foreground">{t('keyboardShortcuts.help')}</span>
                     </div>
                   </div>
                 </div>
@@ -81,24 +84,24 @@ export function EasterEggHelp({ isOpen, onClose }: EasterEggHelpProps) {
                 {/* Mouse Actions */}
                 <div className="bg-muted/50 rounded-lg p-4 border">
                   <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                    🖱️ Mouse Actions
+                    {t('mouseActions.title')}
                   </h3>
                   <div className="grid gap-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">Triple Click Anywhere</span>
+                      <span className="text-sm font-medium">{t('mouseActions.tripleClick')}</span>
                       <span className="text-sm text-muted-foreground">
-                        Floating Hearts Animation
+                        {t('mouseActions.tripleClickDesc')}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">Click Logo (10x)</span>
+                      <span className="text-sm font-medium">{t('mouseActions.logoClick')}</span>
                       <span className="text-sm text-muted-foreground">
-                        Golden Confetti Celebration
+                        {t('mouseActions.logoClickDesc')}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">Click Name in Hero</span>
-                      <span className="text-sm text-muted-foreground">Start Bug Hunt Game</span>
+                      <span className="text-sm font-medium">{t('mouseActions.nameClick')}</span>
+                      <span className="text-sm text-muted-foreground">{t('mouseActions.nameClickDesc')}</span>
                     </div>
                   </div>
                 </div>
@@ -106,25 +109,25 @@ export function EasterEggHelp({ isOpen, onClose }: EasterEggHelpProps) {
                 {/* Games & Activities */}
                 <div className="bg-muted/50 rounded-lg p-4 border">
                   <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                    🎯 Games & Activities
+                    {t('gamesActivities.title')}
                   </h3>
                   <div className="grid gap-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">Portfolio Snake Game</span>
+                      <span className="text-sm font-medium">{t('gamesActivities.snakeGame')}</span>
                       <span className="text-sm text-muted-foreground">
-                        Click game button or complete first blog
+                        {t('gamesActivities.snakeGameDesc')}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">Bug Hunt Game</span>
+                      <span className="text-sm font-medium">{t('gamesActivities.bugHunt')}</span>
                       <span className="text-sm text-muted-foreground">
-                        Find 10 hidden bugs across the site
+                        {t('gamesActivities.bugHuntDesc')}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">Blog Reading Rewards</span>
+                      <span className="text-sm font-medium">{t('gamesActivities.blogRewards')}</span>
                       <span className="text-sm text-muted-foreground">
-                        Complete reading any blog post
+                        {t('gamesActivities.blogRewardsDesc')}
                       </span>
                     </div>
                   </div>
@@ -133,13 +136,13 @@ export function EasterEggHelp({ isOpen, onClose }: EasterEggHelpProps) {
                 {/* Pro Tips */}
                 <div className="bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-lg p-4 border border-purple-500/20">
                   <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                    💡 Pro Tips
+                    {t('proTips.title')}
                   </h3>
                   <div className="space-y-2 text-sm text-muted-foreground">
-                    <p>• Developer mode shows CSS properties when hovering over elements</p>
-                    <p>• Bug hunt progress is saved - you can continue later</p>
-                    <p>• Some easter eggs unlock others - explore to find them all!</p>
-                    <p>• Press 'R' to reset everything and start fresh</p>
+                    <p>{t('proTips.tip1')}</p>
+                    <p>{t('proTips.tip2')}</p>
+                    <p>{t('proTips.tip3')}</p>
+                    <p>{t('proTips.tip4')}</p>
                   </div>
                 </div>
               </div>
@@ -147,8 +150,7 @@ export function EasterEggHelp({ isOpen, onClose }: EasterEggHelpProps) {
 
             <div className="mt-6 pt-4 border-t text-center">
               <p className="text-sm text-muted-foreground">
-                Press <kbd className="font-mono bg-muted px-2 py-1 rounded text-xs">A</kbd> again
-                to close this guide
+                {t('closeHint', { key: 'A' })}
               </p>
             </div>
           </motion.div>

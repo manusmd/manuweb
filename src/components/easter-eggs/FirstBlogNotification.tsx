@@ -2,130 +2,154 @@
 
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trophy, Gamepad2, X, Sparkles } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { Trophy, Gamepad2, X, Sparkles, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PortfolioSnakeGame } from './PortfolioSnakeGame';
 import confetti from 'canvas-confetti';
 
 interface FirstBlogNotificationProps {
-  onDismiss?: () => void;
+  onPlayGame: () => void;
 }
 
-export function FirstBlogNotification({ onDismiss }: FirstBlogNotificationProps) {
-  const [isVisible, setIsVisible] = useState(false);
+export function FirstBlogNotification({ onPlayGame }: FirstBlogNotificationProps) {
+  const [showNotification, setShowNotification] = useState(false);
   const [hasShown, setHasShown] = useState(false);
   const [showSnakeGame, setShowSnakeGame] = useState(false);
 
+  const t = useTranslations('easterEggs.notifications');
+
   useEffect(() => {
-    // Check if notification has already been shown
-    const hasShownBefore = localStorage.getItem('first-blog-notification-shown');
-    if (hasShownBefore) {
-      setHasShown(true);
-      return;
-    }
-
-    const handleFirstBlogCompleted = (_: CustomEvent) => {
-      if (!hasShown) {
-        setIsVisible(true);
+    const checkBlogCompletion = () => {
+      const hasShownBefore = localStorage.getItem('first-blog-notification-shown') === 'true';
+      
+      if (hasShownBefore) {
         setHasShown(true);
-        localStorage.setItem('first-blog-notification-shown', 'true');
+        return;
+      }
 
-        // Trigger celebration confetti
-        setTimeout(() => {
-          confetti({
-            particleCount: 100,
-            spread: 70,
-            origin: { y: 0.6 },
-            colors: ['#3b82f6', '#8b5cf6', '#06d6a0', '#ffd60a'],
-          });
-        }, 500);
+      const blogState = localStorage.getItem('blog-reading-state');
+      if (blogState) {
+        const state = JSON.parse(blogState);
+        const hasCompletedAnyBlog = Object.values(state).some(
+          (progress: any) => progress.completed === true
+        );
+
+        if (hasCompletedAnyBlog && !hasShown) {
+          setShowNotification(true);
+          setHasShown(true);
+          localStorage.setItem('first-blog-notification-shown', 'true');
+          
+          // Dispatch custom event for other components
+          window.dispatchEvent(
+            new CustomEvent('easterEggDiscovered', {
+              detail: {
+                title: t('firstBlogComplete.title'),
+                message: t('firstBlogComplete.message'),
+                icon: '🎉',
+                type: 'temporary',
+                duration: 6000,
+              },
+            })
+          );
+
+          // Unlock the snake game
+          localStorage.setItem('konami-unlocked', 'true');
+          
+          // Show reward notification after a delay
+          setTimeout(() => {
+            window.dispatchEvent(
+              new CustomEvent('easterEggDiscovered', {
+                detail: {
+                  title: t('blogReward.title'),
+                  message: t('blogReward.message'),
+                  icon: '🐍',
+                  type: 'temporary',
+                  duration: 8000,
+                },
+              })
+            );
+          }, 2000);
+        }
       }
     };
 
-    window.addEventListener('firstBlogCompleted', handleFirstBlogCompleted as EventListener);
+    // Check immediately
+    checkBlogCompletion();
 
-    return () => {
-      window.removeEventListener('firstBlogCompleted', handleFirstBlogCompleted as EventListener);
-    };
-  }, [hasShown]);
+    // Set up interval to check periodically
+    const interval = setInterval(checkBlogCompletion, 2000);
 
-  const handleDismiss = () => {
-    setIsVisible(false);
-    onDismiss?.();
-  };
+    return () => clearInterval(interval);
+  }, [hasShown, t]);
 
   const handlePlayGame = () => {
-    setShowSnakeGame(true);
-    setIsVisible(false);
+    setShowNotification(false);
+    onPlayGame();
+  };
+
+  const handleClose = () => {
+    setShowNotification(false);
   };
 
   return (
     <>
       <AnimatePresence>
-        {isVisible && (
+        {showNotification && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 50 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: 50 }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="fixed bottom-6 right-6 z-50 max-w-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
           >
-            <div className="bg-gradient-to-br from-primary/10 to-purple-500/10 backdrop-blur-md border border-primary/20 rounded-2xl p-6 shadow-2xl">
-              {/* Close button */}
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleDismiss}
-                className="absolute top-2 right-2 h-8 w-8 p-0 hover:bg-background/20"
-              >
-                <X className="h-4 w-4" />
-              </Button>
-
-              {/* Header with icon */}
-              <div className="flex items-center gap-3 mb-4">
-                <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-purple-500/20 border border-primary/30">
-                  <Trophy className="w-6 h-6 text-primary" />
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.8, opacity: 0, y: 20 }}
+              className="bg-gradient-to-br from-purple-600 to-blue-600 text-white p-6 rounded-xl shadow-2xl max-w-md w-full border border-purple-400/30"
+            >
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <Trophy className="w-8 h-8 text-yellow-400" />
+                  <h3 className="font-bold text-lg text-foreground">{t('firstBlogComplete.title')}</h3>
                 </div>
-                <div>
-                  <h3 className="font-bold text-lg text-foreground">Congratulations! 🎉</h3>
-                  <p className="text-sm text-muted-foreground">First blog completed</p>
-                </div>
+                <button
+                  onClick={handleClose}
+                  className="text-white/70 hover:text-white transition-colors p-1"
+                >
+                  <X className="w-5 h-5" />
+                </button>
               </div>
 
-              {/* Message */}
-              <div className="mb-6">
-                <p className="text-sm text-foreground mb-3">
-                  You've just finished reading your first blog post! As a reward, I've unlocked a
-                  special mini-game for you.
+              <div className="space-y-4">
+                <p className="text-white/90 leading-relaxed">
+                  {t('firstBlogComplete.message')}
                 </p>
-                <div className="flex items-center gap-2 text-xs text-muted-foreground bg-background/30 rounded-lg p-3 border border-border/30">
-                  <Sparkles className="w-4 h-4 text-primary" />
-                  <span>
-                    <strong>Reward:</strong> Portfolio Snake Game - collect tech stack icons!
-                  </span>
+
+                <div className="bg-white/10 rounded-lg p-4 border border-white/20">
+                  <p className="text-sm text-white/80 mb-2">
+                    <strong>{t('blogReward.title').replace('!', '')}:</strong> {t('snakeGame.title')} - {t('snakeGame.subtitle').toLowerCase()}
+                  </p>
+                </div>
+
+                <div className="flex gap-3 pt-2">
+                  <Button
+                    onClick={handlePlayGame}
+                    className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold flex items-center gap-2"
+                  >
+                    <Play className="w-4 h-4" />
+                    {t('snakeGame.tooltip')}
+                  </Button>
+                  <Button
+                    onClick={handleClose}
+                    variant="outline"
+                    className="px-6 border-white/30 text-white hover:bg-white/10"
+                  >
+                    {t('snakeGame.close')}
+                  </Button>
                 </div>
               </div>
-
-              {/* Action buttons */}
-              <div className="flex gap-2">
-                <Button
-                  onClick={handlePlayGame}
-                  className="flex-1 bg-gradient-to-r from-primary to-purple-500 hover:from-primary/90 hover:to-purple-500/90 text-white"
-                  size="sm"
-                >
-                  <Gamepad2 className="w-4 h-4 mr-2" />
-                  Play Game!
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={handleDismiss}
-                  size="sm"
-                  className="border-border/50 hover:bg-background/50"
-                >
-                  Later
-                </Button>
-              </div>
-            </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

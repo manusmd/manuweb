@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, RotateCcw, Trophy, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useTranslations } from 'next-intl';
 
 interface Position {
   x: number;
@@ -19,6 +20,7 @@ const GRID_SIZE = 20;
 const CANVAS_SIZE = 400;
 const INITIAL_SNAKE: Position[] = [{ x: 10, y: 10 }];
 const INITIAL_DIRECTION = { x: 1, y: 0 };
+const GAME_SPEED = 150;
 
 const TECH_ICONS = ['⚛️', '🔥', '⚡', '🚀', '💎', '🎯', '🔧', '📱', '💻', '🌟'];
 
@@ -32,6 +34,8 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
   const [currentIcon, setCurrentIcon] = useState(TECH_ICONS[0]);
   const gameLoopRef = useRef<NodeJS.Timeout | undefined>(undefined);
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+
+  const t = useTranslations('easterEggs.snakeGame');
 
   const generateFood = useCallback(() => {
     const newFood = {
@@ -178,7 +182,7 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
 
   useEffect(() => {
     if (isPlaying && !gameOver) {
-      gameLoopRef.current = setInterval(moveSnake, 200);
+      gameLoopRef.current = setInterval(moveSnake, GAME_SPEED);
     } else {
       if (gameLoopRef.current) {
         clearInterval(gameLoopRef.current);
@@ -236,7 +240,7 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <Trophy className="w-5 h-5 text-primary" />
-              <h2 className="text-xl md:text-2xl font-bold tracking-tight">Portfolio Snake</h2>
+              <h2 className="text-xl md:text-2xl font-bold tracking-tight">{t('title')}</h2>
             </div>
             <Button variant="ghost" size="sm" onClick={onClose}>
               <X className="w-4 h-4" />
@@ -245,12 +249,12 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
 
           <div className="text-center mb-6">
             <p className="text-sm md:text-base text-muted-foreground mb-4 font-medium">
-              Collect tech stack icons to grow your portfolio!
+              {t('subtitle')}
             </p>
             <div className="flex items-center justify-between bg-muted/50 rounded-lg p-3 border">
               <div className="text-left">
                 <span className="text-xs uppercase tracking-wide text-muted-foreground font-semibold">
-                  Score
+                  {t('score', { score: '' }).replace(': ', '')}
                 </span>
                 <div className="text-lg md:text-xl font-bold text-foreground">{score}</div>
               </div>
@@ -342,9 +346,9 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
               {gameOver && (
                 <div className="absolute inset-0 bg-black/70 flex items-center justify-center rounded-lg">
                   <div className="text-center text-white">
-                    <h3 className="text-2xl md:text-3xl font-bold mb-3">Game Over!</h3>
+                    <h3 className="text-2xl md:text-3xl font-bold mb-3">{t('gameOver')}</h3>
                     <p className="text-base md:text-lg mb-4 font-medium">
-                      Final Score: <span className="font-bold text-yellow-400">{score}</span>
+                      {t('finalScore', { score })}
                     </p>
                   </div>
                 </div>
@@ -355,13 +359,13 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
                 <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-lg">
                   <div className="text-center text-white">
                     <Play className="w-12 h-12 mx-auto mb-4 text-green-400" />
-                    <h3 className="text-xl md:text-2xl font-bold mb-2">Ready to Play?</h3>
+                    <h3 className="text-xl md:text-2xl font-bold mb-2">{t('instructions.title')}</h3>
                     <p className="text-sm md:text-base font-medium opacity-90">
-                      Press Start to begin!
+                      {t('instructions.goal')}
                     </p>
                     {isMobile && (
                       <p className="text-xs md:text-sm mt-2 opacity-75 font-medium">
-                        Swipe on the board to control
+                        {t('instructions.mobile')}
                       </p>
                     )}
                   </div>
@@ -384,7 +388,7 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
             {gameOver && (
               <Button onClick={resetGame} className="flex items-center gap-2 font-semibold px-6">
                 <RotateCcw className="w-4 h-4" />
-                Play Again
+                {t('playAgain')}
               </Button>
             )}
 
@@ -401,11 +405,7 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
 
           <div className="text-center">
             <p className="text-xs md:text-sm text-muted-foreground font-medium leading-relaxed">
-              {isMobile ? (
-                <>Swipe on the game board to control your snake • Collect tech icons to grow!</>
-              ) : (
-                <>Use arrow keys to move • Collect tech icons to grow your snake!</>
-              )}
+              {isMobile ? t('instructions.mobile') : t('instructions.desktop')}
             </p>
           </div>
         </motion.div>

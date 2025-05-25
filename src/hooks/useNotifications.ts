@@ -25,6 +25,7 @@ export function useNotifications() {
   }, []);
 
   // Helper function to show easter egg discovery notifications
+  // Components should pass already translated title and message
   const showEasterEggDiscovery = useCallback(
     (title: string, message: string, icon: string) => {
       addNotification({

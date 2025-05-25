@@ -1,6 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import { Sparkles, X } from 'lucide-react';
 import { Notification } from '../../types/easter-eggs';
 
@@ -10,6 +11,8 @@ interface NotificationSystemProps {
 }
 
 export function NotificationSystem({ notifications, onRemoveNotification }: NotificationSystemProps) {
+  const t = useTranslations('easterEggs.notificationSystem.status');
+
   return (
     <div className="fixed top-20 right-4 z-50 space-y-3 max-w-sm">
       <AnimatePresence>
@@ -47,7 +50,7 @@ export function NotificationSystem({ notifications, onRemoveNotification }: Noti
             <div className="flex items-center gap-1 mt-2 text-xs opacity-75">
               <Sparkles className="w-3 h-3" />
               <span>
-                {notification.type === 'persistent' ? 'Active' : 'Easter egg discovered'}
+                {notification.type === 'persistent' ? t('active') : t('discovered')}
               </span>
             </div>
           </motion.div>

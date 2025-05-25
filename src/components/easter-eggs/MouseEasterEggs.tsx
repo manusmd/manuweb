@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import confetti from 'canvas-confetti';
 
 interface MouseEasterEggsProps {
@@ -11,6 +12,9 @@ interface MouseEasterEggsProps {
 export function MouseEasterEggs({ showEasterEggDiscovery }: MouseEasterEggsProps) {
   const [logoClickCount, setLogoClickCount] = useState(0);
   const [showLogoHint, setShowLogoHint] = useState(false);
+  
+  const t = useTranslations('easterEggs.notifications');
+  const tHint = useTranslations('easterEggs.logoHint');
 
   // Initialize logo click count from localStorage
   useEffect(() => {
@@ -39,8 +43,8 @@ export function MouseEasterEggs({ showEasterEggDiscovery }: MouseEasterEggsProps
             colors: ['#ff69b4', '#ff1493', '#dc143c'],
           });
           showEasterEggDiscovery(
-            'Hearts Discovered!',
-            'You found the triple-click easter egg! 💕',
+            t('heartsDiscovered.title'),
+            t('heartsDiscovered.message'),
             '💕'
           );
         }
@@ -53,7 +57,7 @@ export function MouseEasterEggs({ showEasterEggDiscovery }: MouseEasterEggsProps
       document.removeEventListener('click', handleTripleClick);
       clearTimeout(clickTimer);
     };
-  }, [showEasterEggDiscovery]);
+  }, [showEasterEggDiscovery, t]);
 
   // Logo click handler
   const handleLogoClick = useCallback(() => {
@@ -75,12 +79,12 @@ export function MouseEasterEggs({ showEasterEggDiscovery }: MouseEasterEggsProps
         colors: ['#ffd700', '#ffed4e', '#fbbf24'],
       });
       showEasterEggDiscovery(
-        'Logo Master!',
-        `You've clicked the logo ${logoClickCount} times! Golden confetti for your dedication! 🏆`,
+        t('logoMaster.title'),
+        t('logoMaster.message', { count: logoClickCount }),
         '🏆'
       );
     }
-  }, [showEasterEggDiscovery]);
+  }, [showEasterEggDiscovery, t]);
 
   // Attach logo click handler to any element with data-logo attribute
   useEffect(() => {
@@ -110,10 +114,10 @@ export function MouseEasterEggs({ showEasterEggDiscovery }: MouseEasterEggsProps
           >
             <div className="flex items-center gap-2 mb-2">
               <span className="text-2xl">👆</span>
-              <span className="font-bold text-lg">Keep clicking!</span>
+              <span className="font-bold text-lg">{tHint('title')}</span>
             </div>
             <p className="text-sm opacity-95 font-medium">
-              Something special happens at 10 clicks... ({logoClickCount}/10)
+              {tHint('message', { current: logoClickCount })}
             </p>
           </motion.div>
         )}

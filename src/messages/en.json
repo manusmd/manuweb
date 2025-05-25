@@ -215,5 +215,148 @@
     "postNotFoundDesc": "Sorry, the blog post you're looking for doesn't exist.",
     "backToBlog": "Back to Blog",
     "viewAllPosts": "View All Posts"
+  },
+  "easterEggs": {
+    "notifications": {
+      "heartsDiscovered": {
+        "title": "Hearts Discovered!",
+        "message": "You found the triple-click easter egg! 💕"
+      },
+      "developerMode": {
+        "title": "Developer Mode!",
+        "message": "Hover over any element to see its CSS properties! Press C for confetti or R to reset! 🚀"
+      },
+      "developerModeOff": {
+        "title": "Developer Mode Off",
+        "message": "Developer mode has been disabled. Press D again to re-enable! 💤"
+      },
+      "easterEggGuide": {
+        "title": "Easter Egg Guide!",
+        "message": "Here are all the hidden secrets you can discover! 📖"
+      },
+      "confettiBurst": {
+        "title": "Confetti Burst!",
+        "message": "You discovered the confetti key! Press C anytime for more! 🎊"
+      },
+      "resetCommand": {
+        "title": "Easter Eggs Reset!",
+        "message": "All easter egg progress has been cleared. Discover them again! 🔄"
+      },
+      "logoMaster": {
+        "title": "Logo Master!",
+        "message": "You've clicked the logo {count} times! Golden confetti for your dedication! 🏆"
+      },
+      "firstBlogComplete": {
+        "title": "Blog Explorer!",
+        "message": "Congratulations! You've completed your first blog post! 🎉"
+      },
+      "blogReward": {
+        "title": "Blog Reward Unlocked!",
+        "message": "You can now play the Portfolio Snake Game! Click the game button to start. 🐍"
+      },
+      "bugHuntProgress": {
+        "title": "Bug Hunt Progress",
+        "message": "Found {found}/{total} bugs! Keep hunting! 🐛"
+      },
+      "bugHuntComplete": {
+        "title": "Bug Hunt Master!",
+        "message": "Amazing! You found all {total} bugs! You're a true bug hunter! 🏆"
+      },
+      "bugCaught": {
+        "title": "Bug Caught!",
+        "message": "Nice catch! You found a {type} bug worth {points} points! 🎯"
+      }
+    },
+    "help": {
+      "title": "Easter Egg Guide",
+      "keyboardShortcuts": {
+        "title": "⌨️ Keyboard Shortcuts",
+        "developerMode": "Toggle Developer Mode (CSS Inspector)",
+        "confetti": "Colorful Confetti Burst",
+        "reset": "Reset All Easter Eggs",
+        "help": "Show This Help Guide"
+      },
+      "mouseActions": {
+        "title": "🖱️ Mouse Actions",
+        "tripleClick": "Triple Click Anywhere",
+        "tripleClickDesc": "Floating Hearts Animation",
+        "logoClick": "Click Logo (10x)",
+        "logoClickDesc": "Golden Confetti Celebration",
+        "nameClick": "Click Name in Hero",
+        "nameClickDesc": "Start Bug Hunt Game"
+      },
+      "gamesActivities": {
+        "title": "🎯 Games & Activities",
+        "snakeGame": "Portfolio Snake Game",
+        "snakeGameDesc": "Click game button or complete first blog",
+        "bugHunt": "Bug Hunt Game",
+        "bugHuntDesc": "Find 10 hidden bugs across the site",
+        "blogRewards": "Blog Reading Rewards",
+        "blogRewardsDesc": "Complete reading any blog post"
+      },
+      "proTips": {
+        "title": "💡 Pro Tips",
+        "tip1": "• Developer mode shows CSS properties when hovering over elements",
+        "tip2": "• Bug hunt progress is saved - you can continue later",
+        "tip3": "• Some easter eggs unlock others - explore to find them all!",
+        "tip4": "• Press 'R' to reset everything and start fresh"
+      },
+      "closeHint": "Press {key} again to close this guide"
+    },
+    "logoHint": {
+      "title": "Keep clicking!",
+      "message": "Something special happens at 10 clicks... ({current}/10)"
+    },
+    "snakeGame": {
+      "title": "Portfolio Snake",
+      "subtitle": "Collect tech stack icons to grow your portfolio!",
+      "score": "Score: {score}",
+      "gameOver": "Game Over!",
+      "finalScore": "Final Score: {score}",
+      "playAgain": "Play Again",
+      "tooltip": "Play Snake Game",
+      "close": "Later",
+      "instructions": {
+        "title": "Ready to Play?",
+        "goal": "Press Start to begin!",
+        "mobile": "Swipe on the board to control",
+        "desktop": "Use arrow keys to move • Collect tech icons to grow your snake!"
+      }
+    },
+    "bugHunt": {
+      "startHint": "Click to start Bug Hunt!",
+      "bugTypes": {
+        "common": "Common Bug",
+        "rare": "Rare Bug",
+        "legendary": "Legendary Bug"
+      },
+      "points": {
+        "common": "10 points",
+        "rare": "25 points",
+        "legendary": "50 points"
+      }
+    },
+    "developerMode": {
+      "indicator": "DEV_MODE",
+      "tooltip": {
+        "class": "class:",
+        "tagName": "<{tag}>"
+      }
+    },
+    "konamiCode": {
+      "unlocked": {
+        "title": "🎉 Easter Egg Unlocked!",
+        "message": "You've discovered the secret Konami code! Enjoy a special portfolio-themed Snake game.",
+        "playGame": "Play Game",
+        "maybeLater": "Maybe Later",
+        "tip": "Tip: Use the Konami code again anytime to play!"
+      }
+    },
+    "notificationSystem": {
+      "status": {
+        "active": "Active",
+        "discovered": "Easter egg discovered"
+      }
+    }
   }
 }

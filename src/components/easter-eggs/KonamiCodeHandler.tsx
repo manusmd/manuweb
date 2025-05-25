@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import { Gamepad2, X, Trophy, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PortfolioSnakeGame } from './PortfolioSnakeGame';
@@ -16,6 +17,8 @@ export function KonamiCodeHandler({ onGameStart }: KonamiCodeHandlerProps) {
   const [showGameModal, setShowGameModal] = useState(false);
   const [showSnakeGame, setShowSnakeGame] = useState(false);
   const [sequence, setSequence] = useState<string[]>([]);
+
+  const t = useTranslations('easterEggs.konamiCode.unlocked');
 
   // The classic Konami code sequence
   const konamiCode = [
@@ -113,25 +116,24 @@ export function KonamiCodeHandler({ onGameStart }: KonamiCodeHandlerProps) {
                 </div>
               </div>
 
-              <h2 className="text-2xl font-bold mb-2">🎉 Easter Egg Unlocked!</h2>
+              <h2 className="text-2xl font-bold mb-2">{t('title')}</h2>
               <p className="text-muted-foreground mb-6">
-                You've discovered the secret Konami code! Enjoy a special portfolio-themed Snake
-                game.
+                {t('message')}
               </p>
 
               <div className="flex gap-3 justify-center">
                 <Button onClick={handlePlayGame} className="flex items-center gap-2">
                   <Gamepad2 className="w-4 h-4" />
-                  Play Game
+                  {t('playGame')}
                 </Button>
                 <Button variant="outline" onClick={handleCloseModal}>
                   <X className="w-4 h-4" />
-                  Maybe Later
+                  {t('maybeLater')}
                 </Button>
               </div>
 
               <p className="text-xs text-muted-foreground mt-4">
-                Tip: Use the Konami code again anytime to play!
+                {t('tip')}
               </p>
             </motion.div>
           </motion.div>

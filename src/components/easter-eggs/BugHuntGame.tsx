@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import confetti from 'canvas-confetti';
 
 interface BugData {
@@ -16,9 +17,9 @@ interface BugData {
 }
 
 const BUG_TYPES = {
-  common: { points: 10, emoji: '🐛', probability: 0.6 },
-  rare: { points: 25, emoji: '🐞', probability: 0.3 },
-  legendary: { points: 50, emoji: '🦗', probability: 0.1 },
+  common: { emoji: '🐛', points: 10 },
+  rare: { emoji: '🦗', points: 25 },
+  legendary: { emoji: '🕷️', points: 50 },
 };
 
 // Helper function to emit notification events
@@ -37,9 +38,12 @@ const emitNotification = (
 
 export function BugHuntGame() {
   const [bugs, setBugs] = useState<BugData[]>([]);
-  const [isGameActive, setIsGameActive] = useState(false);
   const [foundBugs, setFoundBugs] = useState<string[]>([]);
+  const [isGameActive, setIsGameActive] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+
+  const t = useTranslations('easterEggs.notifications');
+  const tBugHunt = useTranslations('easterEggs.bugHunt');
 
   // Ensure we're mounted before using portals
   useEffect(() => {
@@ -52,35 +56,31 @@ export function BugHuntGame() {
     localStorage.removeItem('bug-hunt-found');
     localStorage.removeItem('bug-hunt-active');
     localStorage.removeItem('bug-hunt-completed');
+    setBugs([]);
+    setFoundBugs([]);
+    setIsGameActive(false);
     console.log('Bug Hunt localStorage cleared');
   }, []);
 
   // Generate random bugs
-  const generateBugs = useCallback(() => {
+  const generateBugs = useCallback((): BugData[] => {
     const newBugs: BugData[] = [];
+    const bugCounts = { common: 6, rare: 3, legendary: 1 };
 
-    for (let i = 0; i < 10; i++) {
-      const rand = Math.random();
-      let bugType: keyof typeof BUG_TYPES = 'common';
-
-      if (rand < BUG_TYPES.legendary.probability) {
-        bugType = 'legendary';
-      } else if (rand < BUG_TYPES.legendary.probability + BUG_TYPES.rare.probability) {
-        bugType = 'rare';
+    Object.entries(bugCounts).forEach(([type, count]) => {
+      for (let i = 0; i < count; i++) {
+        const bugType = type as keyof typeof BUG_TYPES;
+        newBugs.push({
+          id: `${type}-${i}`,
+          x: Math.random() * 80 + 10,
+          y: Math.random() * 80 + 10,
+          type: bugType,
+          points: BUG_TYPES[bugType].points,
+          emoji: BUG_TYPES[bugType].emoji,
+          found: false,
+        });
       }
-
-      const bug: BugData = {
-        id: `bug-${i}`,
-        x: Math.random() * 80 + 10, // 10-90% of screen width
-        y: Math.random() * 80 + 10, // 10-90% of screen height
-        type: bugType,
-        points: BUG_TYPES[bugType].points,
-        emoji: BUG_TYPES[bugType].emoji,
-        found: false,
-      };
-
-      newBugs.push(bug);
-    }
+    });
 
     return newBugs;
   }, []);
@@ -93,12 +93,22 @@ export function BugHuntGame() {
 
     // Only restore if there's an active game in progress
     if (savedBugs && gameActive === 'true') {
-      setBugs(JSON.parse(savedBugs));
-      setFoundBugs(JSON.parse(savedFoundBugs || '[]'));
-      setIsGameActive(true);
-      showProgressNotification(JSON.parse(savedFoundBugs || '[]'), JSON.parse(savedBugs));
+      try {
+        const parsedBugs = JSON.parse(savedBugs);
+        const parsedFound = JSON.parse(savedFoundBugs || '[]');
+
+        setBugs(parsedBugs);
+        setFoundBugs(parsedFound);
+        setIsGameActive(true);
+
+        // Show progress notification for resumed game
+        showProgressNotification(parsedFound, parsedBugs);
+      } catch (error) {
+        console.error('Error loading bug hunt state:', error);
+        clearBugHuntStorage();
+      }
     }
-  }, []);
+  }, [clearBugHuntStorage]);
 
   const showProgressNotification = useCallback(
     (currentFoundBugs: string[], currentBugs: BugData[]) => {
@@ -107,11 +117,20 @@ export function BugHuntGame() {
         return score + (bug?.points || 0);
       }, 0);
 
-      const progressMessage = `Found: ${currentFoundBugs.length}/10 • Score: ${totalScore}\nClick bugs to catch them!`;
+      const progressMessage = t('bugHuntProgress.message', { 
+        found: currentFoundBugs.length, 
+        total: 10 
+      });
 
-      emitNotification('Bug Hunt Active', progressMessage, '🐛', false, undefined);
+      emitNotification(
+        t('bugHuntProgress.title'), 
+        progressMessage, 
+        '🐛', 
+        false, 
+        undefined
+      );
     },
-    []
+    [t]
   );
 
   const startBugHunt = useCallback(
@@ -167,7 +186,7 @@ export function BugHuntGame() {
         nameElement.addEventListener('click', handleNameClick);
         // Add cursor pointer to indicate it's clickable
         (nameElement as HTMLElement).style.cursor = 'pointer';
-        (nameElement as HTMLElement).title = 'Click to start Bug Hunt!';
+        (nameElement as HTMLElement).title = tBugHunt('startHint');
         return nameElement;
       }
       return null;
@@ -208,7 +227,7 @@ export function BugHuntGame() {
         nameElement.removeEventListener('click', handleNameClick);
       }
     };
-  }, [startBugHunt]); // Removed gameCompleted and isGameActive dependencies
+  }, [startBugHunt, tBugHunt]);
 
   const catchBug = (bugId: string) => {
     const bug = bugs.find(b => b.id === bugId);
@@ -219,8 +238,19 @@ export function BugHuntGame() {
 
     localStorage.setItem('bug-hunt-found', JSON.stringify(newFoundBugs));
 
-    // Update progress notification
-    showProgressNotification(newFoundBugs, bugs);
+    // Show combined bug caught + progress notification
+    const bugTypeKey = `bugTypes.${bug.type}` as const;
+    const pointsKey = `points.${bug.type}` as const;
+    
+    emitNotification(
+      t('bugCaught.title'),
+      `${t('bugCaught.message', { 
+        type: tBugHunt(bugTypeKey), 
+        points: tBugHunt(pointsKey) 
+      })} (${newFoundBugs.length}/10)`,
+      '🎯',
+      false
+    );
 
     // Bug caught animation
     confetti({
@@ -258,8 +288,8 @@ export function BugHuntGame() {
     // Show completion notification
     setTimeout(() => {
       emitNotification(
-        'Bug Hunter Master!',
-        'Congratulations! You found all 10 bugs scattered around the website! Your debugging skills are legendary! 🏆\n\nClick your name again to play another round!',
+        t('bugHuntComplete.title'),
+        t('bugHuntComplete.message', { total: 10 }),
         '🏆',
         false
       );
@@ -282,36 +312,61 @@ export function BugHuntGame() {
           <AnimatePresence>
             {isGameActive &&
               bugs.length > 0 &&
-              bugs.map(bug => {
+              bugs.map((bug, index) => {
                 const isVisible = !foundBugs.includes(bug.id);
 
                 if (!isVisible) return null;
 
+                // Generate unique animation parameters for each bug
+                const animationSeed = bug.id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+                const xMovement = 3 + (animationSeed % 5); // 3-7px movement
+                const yMovement = 2 + (animationSeed % 4); // 2-5px movement
+                const xDuration = 1.5 + (animationSeed % 10) / 10; // 1.5-2.4s duration
+                const yDuration = 1.2 + (animationSeed % 8) / 10; // 1.2-1.9s duration
+                const initialDelay = (animationSeed % 20) / 10; // 0-1.9s delay
+                const rotationAmount = 5 + (animationSeed % 10); // 5-14 degrees
+
                 return (
                   <motion.div
                     key={bug.id}
-                    initial={{ opacity: 0, scale: 0 }}
+                    initial={{ opacity: 0, scale: 0, rotate: 0 }}
                     animate={{
                       opacity: 1,
                       scale: 1,
-                      x: [0, 5, -5, 0],
-                      y: [0, -3, 3, 0],
+                      rotate: [-rotationAmount, rotationAmount, -rotationAmount],
+                      x: [0, xMovement, -xMovement, 0],
+                      y: [0, -yMovement, yMovement, 0],
                     }}
                     exit={{ opacity: 0, scale: 0 }}
                     transition={{
-                      x: { repeat: Infinity, duration: 2 + Math.random() },
-                      y: { repeat: Infinity, duration: 1.5 + Math.random() },
+                      duration: 0.5,
+                      delay: initialDelay,
+                      rotate: { 
+                        repeat: Infinity, 
+                        duration: 3 + (animationSeed % 15) / 10, // 3-4.4s wiggle
+                        ease: "easeInOut" 
+                      },
+                      x: { 
+                        repeat: Infinity, 
+                        duration: xDuration,
+                        ease: "easeInOut" 
+                      },
+                      y: { 
+                        repeat: Infinity, 
+                        duration: yDuration,
+                        ease: "easeInOut" 
+                      },
                     }}
-                    className="fixed cursor-pointer z-[9999] hover:scale-125 transition-transform"
+                    className="fixed z-40 cursor-pointer select-none"
                     style={{
                       left: `${bug.x}%`,
                       top: `${bug.y}%`,
-                      pointerEvents: 'auto',
+                      transform: 'translate(-50%, -50%)',
                     }}
                     onClick={() => catchBug(bug.id)}
-                    title={`${bug.type} bug - ${bug.points} points`}
+                    title={`${tBugHunt(`bugTypes.${bug.type}`)} - ${tBugHunt(`points.${bug.type}`)}`}
                   >
-                    <div className="text-2xl drop-shadow-lg filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                    <div className="text-2xl hover:scale-125 transition-transform duration-200 drop-shadow-lg">
                       {bug.emoji}
                     </div>
                   </motion.div>

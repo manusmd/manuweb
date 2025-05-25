@@ -2,12 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import { Gamepad2 } from 'lucide-react';
 import { PortfolioSnakeGame } from './PortfolioSnakeGame';
 
 export function PersistentGameButton() {
   const [isGameUnlocked, setIsGameUnlocked] = useState(false);
   const [isGameOpen, setIsGameOpen] = useState(false);
+
+  const t = useTranslations('easterEggs.snakeGame');
 
   // Check if game is unlocked (user has completed first blog)
   useEffect(() => {
@@ -64,7 +67,7 @@ export function PersistentGameButton() {
               <div className="absolute right-16 top-1/2 -translate-y-1/2 px-3 py-2 bg-background/90 backdrop-blur-sm border border-border rounded-lg text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap shadow-lg">
                 <div className="flex items-center gap-2">
                   <span className="text-green-600">🐍</span>
-                  <span>Play Snake Game</span>
+                  <span>{t('tooltip')}</span>
                 </div>
                 {/* Tooltip arrow */}
                 <div className="absolute left-full top-1/2 -translate-y-1/2 border-4 border-transparent border-l-border"></div>

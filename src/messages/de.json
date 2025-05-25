@@ -201,16 +201,163 @@
     }
   },
   "Index": {
-    "title": "Full Stack Entwickler",
+    "title": "Full Stack Developer",
     "description": "Ich entwickle außergewöhnliche und zugängliche digitale Erlebnisse für das Web.",
-    "contact": "Kontaktiere mich",
+    "contact": "Kontakt",
     "viewProjects": "Projekte anschauen"
   },
   "Navigation": {
-    "home": "Start",
+    "home": "Startseite",
     "about": "Über mich",
     "projects": "Projekte",
     "blog": "Blog",
     "contact": "Kontakt"
+  },
+  "easterEggs": {
+    "notifications": {
+      "heartsDiscovered": {
+        "title": "Herzen entdeckt!",
+        "message": "Du hast das Dreifachklick-Easter-Egg gefunden! 💕"
+      },
+      "developerMode": {
+        "title": "Entwicklermodus!",
+        "message": "Fahre über Elemente, um CSS-Eigenschaften zu sehen! Drücke C für Konfetti oder R zum Zurücksetzen! 🚀"
+      },
+      "developerModeOff": {
+        "title": "Entwicklermodus aus",
+        "message": "Entwicklermodus wurde deaktiviert. Drücke D erneut zum Aktivieren! 💤"
+      },
+      "easterEggGuide": {
+        "title": "Easter Egg Guide!",
+        "message": "Hier sind alle versteckten Geheimnisse, die du entdecken kannst! 📖"
+      },
+      "confettiBurst": {
+        "title": "Konfetti-Explosion!",
+        "message": "Du hast die Konfetti-Taste entdeckt! Drücke C jederzeit für mehr! 🎊"
+      },
+      "resetCommand": {
+        "title": "Easter Eggs zurückgesetzt!",
+        "message": "Easter-Egg-Fortschritt wurde gelöscht. Entdecke sie erneut! 🔄"
+      },
+      "logoMaster": {
+        "title": "Logo-Meister!",
+        "message": "Du hast das Logo {count} mal geklickt! Goldenes Konfetti für deine Hingabe! 🏆"
+      },
+      "firstBlogComplete": {
+        "title": "Blog-Entdecker!",
+        "message": "Glückwunsch! Du hast deinen ersten Blog-Artikel abgeschlossen! 🎉"
+      },
+      "blogReward": {
+        "title": "Blog-Belohnung freigeschaltet!",
+        "message": "Du kannst jetzt das Portfolio Snake Game spielen! Klicke den Spiel-Button zum Starten. 🐍"
+      },
+      "bugHuntProgress": {
+        "title": "Bug-Jagd Fortschritt",
+        "message": "{found}/{total} Bugs gefunden! Weiter jagen! 🐛"
+      },
+      "bugHuntComplete": {
+        "title": "Bug-Jagd Meister!",
+        "message": "Fantastisch! Du hast alle {total} Bugs gefunden! Du bist ein wahrer Bug-Jäger! 🏆"
+      },
+      "bugCaught": {
+        "title": "Bug gefangen!",
+        "message": "Gut gemacht! Du hast einen {type} Bug im Wert von {points} Punkten gefunden! 🎯"
+      }
+    },
+    "help": {
+      "title": "Easter Egg Guide",
+      "keyboardShortcuts": {
+        "title": "⌨️ Tastatur-Shortcuts",
+        "developerMode": "Entwicklermodus umschalten (CSS-Inspektor)",
+        "confetti": "Buntes Konfetti-Feuerwerk",
+        "reset": "Alle Easter Eggs zurücksetzen",
+        "help": "Diese Hilfe anzeigen"
+      },
+      "mouseActions": {
+        "title": "🖱️ Maus-Aktionen",
+        "tripleClick": "Dreifachklick irgendwo",
+        "tripleClickDesc": "Schwebende Herzen-Animation",
+        "logoClick": "Logo klicken (10x)",
+        "logoClickDesc": "Goldenes Konfetti-Fest",
+        "nameClick": "Name im Hero klicken",
+        "nameClickDesc": "Bug-Jagd Spiel starten"
+      },
+      "gamesActivities": {
+        "title": "🎯 Spiele & Aktivitäten",
+        "snakeGame": "Portfolio Snake Game",
+        "snakeGameDesc": "Spiel-Button klicken oder ersten Blog abschließen",
+        "bugHunt": "Bug-Jagd Spiel",
+        "bugHuntDesc": "Finde 10 versteckte Bugs auf der Website",
+        "blogRewards": "Blog-Lese-Belohnungen",
+        "blogRewardsDesc": "Einen Blog-Artikel vollständig lesen"
+      },
+      "proTips": {
+        "title": "💡 Profi-Tipps",
+        "tip1": "• Entwicklermodus zeigt CSS-Eigenschaften beim Hovern über Elemente",
+        "tip2": "• Bug-Jagd Fortschritt wird gespeichert - du kannst später weitermachen",
+        "tip3": "• Manche Easter Eggs schalten andere frei - erkunde alles!",
+        "tip4": "• Drücke 'R' um alles zurückzusetzen und neu zu starten"
+      },
+      "closeHint": "Drücke {key} erneut um diese Hilfe zu schließen"
+    },
+    "logoHint": {
+      "title": "Weiter klicken!",
+      "message": "Etwas Besonderes passiert bei 10 Klicks... ({current}/10)"
+    },
+    "snakeGame": {
+      "title": "Portfolio Snake",
+      "subtitle": "Sammle Tech-Stack-Icons, um dein Portfolio zu erweitern!",
+      "score": "Punkte: {score}",
+      "gameOver": "Spiel vorbei!",
+      "finalScore": "Endpunktzahl: {score}",
+      "playAgain": "Nochmal spielen",
+      "tooltip": "Snake-Spiel spielen",
+      "close": "Später",
+      "instructions": {
+        "title": "Bereit zu spielen?",
+        "goal": "Drücke Start zum Beginnen!",
+        "mobile": "Wische auf dem Spielfeld zum Steuern",
+        "desktop": "Verwende Pfeiltasten zum Bewegen • Sammle Tech-Icons, um deine Schlange wachsen zu lassen!"
+      }
+    },
+    "bugHunt": {
+      "title": "Bug-Jagd",
+      "subtitle": "Finde alle versteckten Bugs auf der Website!",
+      "progress": "Fortschritt: {found}/{total}",
+      "instructions": "Klicke auf die Bugs um sie zu fangen!",
+      "bugTypes": {
+        "common": "Gewöhnlicher Bug",
+        "rare": "Seltener Bug",
+        "legendary": "Legendärer Bug"
+      },
+      "points": {
+        "common": "10 Punkte",
+        "rare": "25 Punkte",
+        "legendary": "50 Punkte"
+      },
+      "startHint": "Klicke, um Bug Hunt zu starten!"
+    },
+    "developerMode": {
+      "indicator": "DEV_MODUS",
+      "tooltip": {
+        "class": "Klasse:",
+        "tagName": "<{tag}>"
+      }
+    },
+    "konamiCode": {
+      "unlocked": {
+        "title": "🎉 Easter Egg freigeschaltet!",
+        "message": "Du hast den geheimen Konami-Code entdeckt! Genieße ein spezielles Portfolio-Snake-Spiel.",
+        "playGame": "Spiel starten",
+        "maybeLater": "Vielleicht später",
+        "tip": "Tipp: Verwende den Konami-Code jederzeit erneut zum Spielen!"
+      }
+    },
+    "notificationSystem": {
+      "status": {
+        "active": "Aktiv",
+        "discovered": "Easter Egg entdeckt"
+      }
+    }
   }
 }

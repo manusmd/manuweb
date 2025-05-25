@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import confetti from 'canvas-confetti';
 
 interface KeyboardEasterEggsProps {
@@ -22,6 +23,9 @@ export function KeyboardEasterEggs({
   setNotifications,
   showEasterEggDiscovery,
 }: KeyboardEasterEggsProps) {
+  const t = useTranslations('easterEggs.notifications');
+  const tBugHunt = useTranslations('easterEggs.bugHunt');
+
   // Easter Egg: Press 'd' key to toggle developer mode
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -41,15 +45,15 @@ export function KeyboardEasterEggs({
             colors: ['#00ff00', '#0080ff', '#8000ff'],
           });
           showEasterEggDiscovery(
-            'Developer Mode!',
-            'Hover over any element to see its CSS properties! Press C for confetti or R to reset! 🚀',
+            t('developerMode.title'),
+            t('developerMode.message'),
             '👨‍💻'
           );
         } else {
           setStyleInfo(null);
           showEasterEggDiscovery(
-            'Developer Mode Off',
-            'Developer mode has been disabled. Press D again to re-enable! 💤',
+            t('developerModeOff.title'),
+            t('developerModeOff.message'),
             '😴'
           );
         }
@@ -58,7 +62,7 @@ export function KeyboardEasterEggs({
 
     document.addEventListener('keydown', handleKeyPress);
     return () => document.removeEventListener('keydown', handleKeyPress);
-  }, [showEasterEggDiscovery, isDeveloperMode, setIsDeveloperMode, setStyleInfo]);
+  }, [showEasterEggDiscovery, isDeveloperMode, setIsDeveloperMode, setStyleInfo, t]);
 
   // Easter Egg: Press 'a' key to show easter egg help
   useEffect(() => {
@@ -72,8 +76,8 @@ export function KeyboardEasterEggs({
 
         if (!showEasterEggHelp) {
           showEasterEggDiscovery(
-            'Easter Egg Guide!',
-            'Here are all the hidden secrets you can discover! 📖',
+            t('easterEggGuide.title'),
+            t('easterEggGuide.message'),
             '📚'
           );
         }
@@ -82,7 +86,7 @@ export function KeyboardEasterEggs({
 
     document.addEventListener('keydown', handleKeyPress);
     return () => document.removeEventListener('keydown', handleKeyPress);
-  }, [showEasterEggDiscovery, showEasterEggHelp, setShowEasterEggHelp]);
+  }, [showEasterEggDiscovery, showEasterEggHelp, setShowEasterEggHelp, t]);
 
   // Easter Egg: Press 'c' key for confetti burst
   useEffect(() => {
@@ -109,8 +113,8 @@ export function KeyboardEasterEggs({
         }
 
         showEasterEggDiscovery(
-          'Confetti Burst!',
-          'You discovered the confetti key! Press C anytime for more! 🎊',
+          t('confettiBurst.title'),
+          t('confettiBurst.message'),
           '🎊'
         );
       }
@@ -118,7 +122,7 @@ export function KeyboardEasterEggs({
 
     document.addEventListener('keydown', handleKeyCombo);
     return () => document.removeEventListener('keydown', handleKeyCombo);
-  }, [showEasterEggDiscovery]);
+  }, [showEasterEggDiscovery, t]);
 
   // Easter Egg: Press 'r' key to reset all easter eggs
   useEffect(() => {
@@ -144,7 +148,7 @@ export function KeyboardEasterEggs({
         const nameElement = document.querySelector('h1 .text-gradient');
         if (nameElement) {
           (nameElement as HTMLElement).style.cursor = 'pointer';
-          (nameElement as HTMLElement).title = 'Click to start Bug Hunt!';
+          (nameElement as HTMLElement).title = tBugHunt('startHint');
         }
 
         confetti({
@@ -155,8 +159,8 @@ export function KeyboardEasterEggs({
         });
 
         showEasterEggDiscovery(
-          'Reset Command!',
-          'All easter eggs have been reset! Refresh to test again. 🔄',
+          t('resetCommand.title'),
+          t('resetCommand.message'),
           '🔄'
         );
       }
@@ -166,7 +170,7 @@ export function KeyboardEasterEggs({
     return () => {
       document.removeEventListener('keydown', handleKeyPress);
     };
-  }, [showEasterEggDiscovery, setNotifications, setIsDeveloperMode, setStyleInfo]);
+  }, [showEasterEggDiscovery, setNotifications, setIsDeveloperMode, setStyleInfo, t]);
 
   return null;
 } 

@@ -1,6 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import { Code } from 'lucide-react';
 import { StyleInfo } from '../../types/easter-eggs';
 
@@ -10,6 +11,8 @@ interface DeveloperModeTooltipProps {
 }
 
 export function DeveloperModeTooltip({ styleInfo, tooltipRef }: DeveloperModeTooltipProps) {
+  const t = useTranslations('easterEggs.developerMode.tooltip');
+
   return (
     <AnimatePresence>
       {styleInfo && (
@@ -27,12 +30,14 @@ export function DeveloperModeTooltip({ styleInfo, tooltipRef }: DeveloperModeToo
           <div className="bg-gray-900 text-green-400 p-3 rounded-lg shadow-2xl border border-green-500/30 max-w-xs font-mono text-xs">
             <div className="flex items-center gap-2 mb-2 pb-2 border-b border-green-500/20">
               <Code className="w-4 h-4" />
-              <span className="font-bold text-green-300">&lt;{styleInfo.tagName}&gt;</span>
+              <span className="font-bold text-green-300">
+                {t('tagName', { tag: styleInfo.tagName })}
+              </span>
             </div>
             
             {styleInfo.className && (
               <div className="mb-2 pb-2 border-b border-green-500/20">
-                <span className="text-blue-400">class:</span>
+                <span className="text-blue-400">{t('class')}</span>
                 <div className="text-yellow-300 break-all text-[10px] mt-1">
                   {styleInfo.className}
                 </div>
