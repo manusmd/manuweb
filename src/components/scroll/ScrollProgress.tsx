@@ -146,7 +146,7 @@ export function ScrollProgress() {
       {/* Floating Progress Dots - Only show on non-blog pages */}
       {!isBlogPage && (
         <div className="fixed left-8 top-1/2 -translate-y-1/2 z-40 hidden lg:block">
-          <div className="flex flex-col space-y-4">
+          <div className="flex flex-col space-y-6">
             {['home', 'about', 'projects', 'blog', 'contact'].map((section, index) => (
               <motion.button
                 key={section}
@@ -154,8 +154,10 @@ export function ScrollProgress() {
                   const element = document.getElementById(section);
                   element?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="w-3 h-3 rounded-full border-2 border-muted-foreground/30 hover:border-primary transition-all duration-300 relative group"
-                whileHover={{ scale: 1.5 }}
+                className="w-4 h-4 rounded-full border-2 border-muted-foreground/30 hover:border-primary transition-all duration-300 relative group cursor-pointer"
+                whileHover={{ scale: 1.3 }}
+                whileTap={{ scale: 0.9 }}
+                aria-label={`Navigate to ${section.charAt(0).toUpperCase() + section.slice(1)} section`}
               >
                 <motion.div
                   className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"
@@ -166,8 +168,16 @@ export function ScrollProgress() {
                   transition={{ duration: 0.3, delay: index * 0.1 }}
                 />
 
+                {/* Enhanced hover effect */}
+                <motion.div
+                  className="absolute inset-0 rounded-full bg-primary/20"
+                  initial={{ scale: 0, opacity: 0 }}
+                  whileHover={{ scale: 1.2, opacity: 1 }}
+                  transition={{ duration: 0.2 }}
+                />
+
                 {/* Tooltip */}
-                <div className="absolute left-6 top-1/2 -translate-y-1/2 px-2 py-1 bg-background/90 backdrop-blur-sm border rounded text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+                <div className="absolute left-8 top-1/2 -translate-y-1/2 px-3 py-2 bg-background/95 backdrop-blur-sm border rounded-lg text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap shadow-lg">
                   {section.charAt(0).toUpperCase() + section.slice(1)}
                 </div>
               </motion.button>

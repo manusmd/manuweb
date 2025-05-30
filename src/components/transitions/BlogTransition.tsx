@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Loader2 } from 'lucide-react';
+import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
 
 interface BlogTransitionProps {
   children: React.ReactNode;
@@ -80,6 +81,9 @@ export function BlogTransition({ children }: BlogTransitionProps) {
   const [displayChildren, setDisplayChildren] = useState(children);
 
   const isBlogRoute = pathname.includes('/blog');
+
+  // Lock body scroll when loading
+  useBodyScrollLock(isLoading && isBlogRoute);
 
   useEffect(() => {
     if (!isBlogRoute) return;

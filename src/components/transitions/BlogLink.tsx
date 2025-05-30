@@ -1,10 +1,11 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { useState, useCallback, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
 
 interface BlogLinkProps {
   href: string;
@@ -55,12 +56,11 @@ function FullScreenLoader({ title }: { title?: string }) {
   const [mounted, setMounted] = useState(false);
   const [progress, setProgress] = useState(0);
 
+  // Use the new scroll lock hook
+  useBodyScrollLock(true);
+
   useEffect(() => {
     setMounted(true);
-
-    // Prevent body scroll during loading
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
 
     // Animate progress
     const interval = setInterval(() => {
@@ -74,8 +74,6 @@ function FullScreenLoader({ title }: { title?: string }) {
     }, 24); // Complete in ~1.2 seconds
 
     return () => {
-      document.body.style.overflow = 'unset';
-      document.documentElement.style.overflow = 'unset';
       clearInterval(interval);
     };
   }, []);

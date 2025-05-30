@@ -3,32 +3,39 @@
 import { motion } from 'framer-motion';
 import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
 
-interface LoadingScreenProps {
+interface GlobalLoadingScreenProps {
   isVisible: boolean;
   progress?: number;
+  message?: string;
   className?: string;
 }
 
-export function LoadingScreen({ isVisible, progress = 0, className = '' }: LoadingScreenProps) {
+export function GlobalLoadingScreen({ 
+  isVisible, 
+  progress = 0, 
+  message = 'Loading...', 
+  className = '' 
+}: GlobalLoadingScreenProps) {
   // Lock body scroll when loading screen is visible
   useBodyScrollLock(isVisible);
 
+  if (!isVisible) return null;
+
   return (
     <motion.div
-      className={`fixed inset-0 z-50 flex items-center justify-center bg-background/95 backdrop-blur-sm ${className}`}
-      initial={{ opacity: 1 }}
-      animate={{ opacity: isVisible ? 1 : 0 }}
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-background/95 backdrop-blur-sm ${className}`}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.5, ease: 'easeInOut' }}
-      style={{ pointerEvents: isVisible ? 'auto' : 'none' }}
+      transition={{ duration: 0.3, ease: 'easeInOut' }}
     >
       <div className="flex flex-col items-center space-y-4 sm:space-y-6 px-4">
         {/* Animated Logo/Icon */}
         <motion.div
           className="relative"
           animate={{
-            rotate: isVisible ? 360 : 0,
-            scale: isVisible ? [1, 1.1, 1] : 1,
+            rotate: 360,
+            scale: [1, 1.1, 1],
           }}
           transition={{
             rotate: { duration: 2, repeat: Infinity, ease: 'linear' },
@@ -42,20 +49,32 @@ export function LoadingScreen({ isVisible, progress = 0, className = '' }: Loadi
           </div>
         </motion.div>
 
-        {/* Progress Bar */}
+        {/* Loading Message */}
         <motion.div
-          className="w-48 sm:w-64 h-1 bg-muted rounded-full overflow-hidden"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: isVisible ? 1 : 0, scale: isVisible ? 1 : 0.8 }}
+          className="text-center space-y-2"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
         >
-          <motion.div
-            className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 rounded-full"
-            initial={{ width: '0%' }}
-            animate={{ width: `${progress}%` }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-          />
+          <p className="text-sm text-muted-foreground">{message}</p>
         </motion.div>
+
+        {/* Progress Bar */}
+        {progress > 0 && (
+          <motion.div
+            className="w-48 sm:w-64 h-1 bg-muted rounded-full overflow-hidden"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+          >
+            <motion.div
+              className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 rounded-full"
+              initial={{ width: '0%' }}
+              animate={{ width: `${progress}%` }}
+              transition={{ duration: 0.5, ease: 'easeOut' }}
+            />
+          </motion.div>
+        )}
 
         {/* Floating Dots Animation */}
         <div className="flex space-x-1 sm:space-x-2">
@@ -63,14 +82,10 @@ export function LoadingScreen({ isVisible, progress = 0, className = '' }: Loadi
             <motion.div
               key={i}
               className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary rounded-full"
-              animate={
-                isVisible
-                  ? {
-                      y: [0, -8, 0],
-                      opacity: [0.5, 1, 0.5],
-                    }
-                  : {}
-              }
+              animate={{
+                y: [0, -8, 0],
+                opacity: [0.5, 1, 0.5],
+              }}
               transition={{
                 duration: 1.5,
                 repeat: Infinity,
@@ -83,4 +98,4 @@ export function LoadingScreen({ isVisible, progress = 0, className = '' }: Loadi
       </div>
     </motion.div>
   );
-}
+} 
