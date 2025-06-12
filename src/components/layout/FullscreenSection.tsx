@@ -11,25 +11,25 @@ interface FullscreenSectionProps {
   centerContent?: boolean;
 }
 
-export function FullscreenSection({ 
-  children, 
-  className, 
+export function FullscreenSection({
+  children,
+  className,
   id,
   background = 'default',
-  centerContent = true
+  centerContent = true,
 }: FullscreenSectionProps) {
   const backgroundClasses = {
     default: '',
     muted: 'bg-muted/30',
-    gradient: 'bg-gradient-to-br from-background via-background to-accent/5'
+    gradient: 'bg-gradient-to-br from-background via-background to-accent/5',
   };
 
   return (
-    <section 
+    <section
       id={id}
       className={cn(
-        "relative min-h-screen w-full overflow-hidden",
-        centerContent && "flex items-center justify-center",
+        'relative min-h-screen w-full overflow-hidden',
+        centerContent && 'flex items-center justify-center',
         backgroundClasses[background],
         className
       )}
@@ -37,4 +37,4 @@ export function FullscreenSection({
       {children}
     </section>
   );
-} 
+}

@@ -1,7 +1,7 @@
 import { getAllPosts } from '@/lib/mdx';
 import { getTranslations } from 'next-intl/server';
 import { BlogLink } from '@/components/transitions/BlogLink';
-import { ArrowRight, Calendar, Clock, BookOpen, Sparkles } from 'lucide-react';
+import { ArrowRight, Calendar, Clock, BookOpen } from 'lucide-react';
 import { FullscreenSection } from '@/components/layout/FullscreenSection';
 
 interface BlogPreviewProps {
@@ -57,13 +57,13 @@ export async function BlogPreview({ locale }: BlogPreviewProps) {
       <div className="absolute inset-0">
         {/* Gradient mesh background */}
         <div className="absolute inset-0 bg-gradient-to-br from-muted/30 via-background to-muted/50"></div>
-        
+
         {/* Animated geometric shapes */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-40 -left-40 w-80 h-80 bg-gradient-to-br from-primary/10 to-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
           <div className="absolute -bottom-40 -right-40 w-80 h-80 bg-gradient-to-tr from-purple-500/10 to-primary/10 rounded-full blur-3xl animate-pulse [animation-delay:2s]"></div>
         </div>
-        
+
         {/* Grid pattern overlay */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,.02)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_at_center,black_50%,transparent_100%)]"></div>
       </div>
@@ -76,13 +76,13 @@ export async function BlogPreview({ locale }: BlogPreviewProps) {
               <BookOpen className="w-4 h-4" />
               {t('latestArticles')}
             </div>
-            
+
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold bg-gradient-to-r from-foreground via-foreground to-muted-foreground bg-clip-text text-transparent">
               {t('title')}
             </h2>
-            
+
             <div className="w-20 md:w-24 h-1 bg-gradient-to-r from-primary to-blue-500 mx-auto rounded-full"></div>
-            
+
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               {t('description')}
             </p>
@@ -108,25 +108,25 @@ export async function BlogPreview({ locale }: BlogPreviewProps) {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                 <div className="relative p-6 md:p-8 h-full flex flex-col">
-                {/* Tags */}
+                  {/* Tags */}
                   {post.tags && post.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2 mb-4">
+                    <div className="flex flex-wrap gap-2 mb-4">
                       {post.tags.slice(0, 2).map(tag => (
-                    <span
-                      key={tag}
+                        <span
+                          key={tag}
                           className={`text-xs px-3 py-1.5 rounded-full border font-medium transition-all duration-200 hover:scale-105 ${getTagColor(
-                        tag
-                      )}`}
-                    >
-                      {tag}
-                    </span>
-                  ))}
+                            tag
+                          )}`}
+                        >
+                          {tag}
+                        </span>
+                      ))}
                       {post.tags.length > 2 && (
                         <span className="text-xs px-3 py-1.5 rounded-full border bg-muted text-muted-foreground font-medium">
                           +{post.tags.length - 2}
                         </span>
                       )}
-                </div>
+                    </div>
                   )}
 
                   {/* Title */}
@@ -145,16 +145,18 @@ export async function BlogPreview({ locale }: BlogPreviewProps) {
                       <div className="flex items-center gap-1.5">
                         <Calendar className="w-4 h-4" />
                         <time>
-                  {new Date(post.date).toLocaleDateString(locale, {
-                    year: 'numeric',
+                          {new Date(post.date).toLocaleDateString(locale, {
+                            year: 'numeric',
                             month: 'short',
-                    day: 'numeric',
-                  })}
-                </time>
-              </div>
+                            day: 'numeric',
+                          })}
+                        </time>
+                      </div>
                       <div className="flex items-center gap-1.5">
                         <Clock className="w-4 h-4" />
-                        <span>{calculateReadingTime(post.content || '')} {t('readTime')}</span>
+                        <span>
+                          {calculateReadingTime(post.content || '')} {t('readTime')}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -173,21 +175,19 @@ export async function BlogPreview({ locale }: BlogPreviewProps) {
         {/* Enhanced Call to Action */}
         <div className="text-center">
           <div className="max-w-2xl mx-auto space-y-6">
-            <p className="text-muted-foreground text-lg">
-              {t('discoverMore')}
-            </p>
-            
+            <p className="text-muted-foreground text-lg">{t('discoverMore')}</p>
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <BlogLink
-              href={`/${locale}/blog`}
+              <BlogLink
+                href={`/${locale}/blog`}
                 className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/25 group"
-              title="All Blog Posts"
-            >
+                title="All Blog Posts"
+              >
                 <BookOpen className="w-5 h-5" />
-              <span>{t('viewAllPosts')}</span>
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </BlogLink>
-              
+                <span>{t('viewAllPosts')}</span>
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </BlogLink>
+
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                 <span>{t('articlesCount', { count: posts.length })}</span>

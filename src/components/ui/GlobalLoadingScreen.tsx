@@ -10,11 +10,11 @@ interface GlobalLoadingScreenProps {
   className?: string;
 }
 
-export function GlobalLoadingScreen({ 
-  isVisible, 
-  progress = 0, 
-  message = 'Loading...', 
-  className = '' 
+export function GlobalLoadingScreen({
+  isVisible,
+  progress = 0,
+  message = 'Loading...',
+  className = '',
 }: GlobalLoadingScreenProps) {
   // Lock body scroll when loading screen is visible
   useBodyScrollLock(isVisible);
@@ -98,4 +98,4 @@ export function GlobalLoadingScreen({
       </div>
     </motion.div>
   );
-} 
+}

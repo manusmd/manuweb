@@ -1,31 +1,43 @@
 import { useTranslations } from 'next-intl';
 
-const companyThemes: Record<string, {
-  accentColor: string;
-}> = {
-  'Syndikat7': {
+interface Experience {
+  date: string;
+  title: string;
+  company: string;
+  description: string;
+}
+
+const companyThemes: Record<
+  string,
+  {
+    accentColor: string;
+  }
+> = {
+  Syndikat7: {
     accentColor: '#f87171',
   },
   'T-Systems': {
     accentColor: '#f472b6',
   },
-  'PRGH': {
+  PRGH: {
     accentColor: '#a78bfa',
   },
   'Neue Fische': {
     accentColor: '#fdba74',
-  }
+  },
 };
 
 export function MobileTimeline() {
   const t = useTranslations('about');
-  const experiences = t.raw('experience') as any[];
+  const experiences = t.raw('experience') as Experience[];
 
   return (
     <div className="w-full min-h-screen bg-background px-2 py-8">
       <div className="flex flex-col gap-8">
         {experiences.map((exp, i) => {
-          const themeKey = Object.keys(companyThemes).find(key => exp.company.toLowerCase().includes(key.toLowerCase()));
+          const themeKey = Object.keys(companyThemes).find(key =>
+            exp.company.toLowerCase().includes(key.toLowerCase())
+          );
           const theme = themeKey ? companyThemes[themeKey] : { accentColor: '#a78bfa' };
           return (
             <div
@@ -37,9 +49,13 @@ export function MobileTimeline() {
                 style={{ background: theme.accentColor, opacity: 0.8 }}
               />
               <div className="pl-5 flex-1 flex flex-col gap-2">
-                <span className="text-xs font-semibold text-zinc-400 tracking-wide">{exp.date}</span>
+                <span className="text-xs font-semibold text-zinc-400 tracking-wide">
+                  {exp.date}
+                </span>
                 <h3 className="text-xl font-extrabold text-white">{exp.title}</h3>
-                <p className="text-base font-semibold" style={{ color: theme.accentColor }}>{exp.company}</p>
+                <p className="text-base font-semibold" style={{ color: theme.accentColor }}>
+                  {exp.company}
+                </p>
                 <p className="text-sm text-zinc-300">{exp.description}</p>
               </div>
             </div>
@@ -48,4 +64,4 @@ export function MobileTimeline() {
       </div>
     </div>
   );
-} 
+}

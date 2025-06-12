@@ -3,12 +3,11 @@
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { AnimatedWrapper, StaggerContainer } from '@/components/animations';
-import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import type { Project } from '@/types/project';
 import { FullscreenSection } from '@/components/layout/FullscreenSection';
-import { ExternalLink, Github, Star, Code2, Zap } from 'lucide-react';
+import { Github, Star, Code2, Zap } from 'lucide-react';
 import { ProjectCard } from '@/components/projects/ProjectCard';
 
 // Lazy load the ProjectModal for better performance
@@ -20,20 +19,9 @@ const ProjectModal = dynamic(
   }
 );
 
-// Tech stack color mapping
-const techColors: Record<string, { bg: string; text: string }> = {
-  'Next.js': { bg: 'bg-black', text: 'text-white' },
-  TypeScript: { bg: 'bg-[#007ACC]', text: 'text-white' },
-  'Tailwind CSS': { bg: 'bg-[#38B2AC]', text: 'text-white' },
-  PWA: { bg: 'bg-[#5A0FC8]', text: 'text-white' },
-  'Offline-First': { bg: 'bg-[#FF9900]', text: 'text-black' },
-};
-
 export function ProjectsSection() {
   const t = useTranslations('projects');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [hoveredProject, setHoveredProject] = useState<Project | null>(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isDesktop, setIsDesktop] = useState(false);
 
   const projects: Project[] = [
@@ -60,34 +48,13 @@ export function ProjectsSection() {
     return () => window.removeEventListener('resize', checkIsDesktop);
   }, []);
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    if (hoveredProject && isDesktop) {
-      document.addEventListener('mousemove', handleMouseMove);
-    }
-
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, [hoveredProject, isDesktop]);
-
-  const handleProjectHover = (project: Project | null) => {
-    // Only set hover state on desktop
-    if (isDesktop) {
-      setHoveredProject(project);
-    }
-  };
-
   return (
     <FullscreenSection id="projects" className="relative overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0">
         {/* Gradient mesh background */}
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-background"></div>
-        
+
         {/* Animated geometric shapes */}
         <div className="absolute inset-0 overflow-hidden">
           <motion.div
@@ -100,7 +67,7 @@ export function ProjectsSection() {
             transition={{
               duration: 20,
               repeat: Infinity,
-              ease: "easeInOut"
+              ease: 'easeInOut',
             }}
           />
           <motion.div
@@ -113,10 +80,10 @@ export function ProjectsSection() {
             transition={{
               duration: 25,
               repeat: Infinity,
-              ease: "easeInOut"
+              ease: 'easeInOut',
             }}
           />
-          
+
           {/* Floating code symbols */}
           <div className="absolute inset-0 pointer-events-none">
             {[...Array(6)].map((_, i) => (
@@ -124,8 +91,8 @@ export function ProjectsSection() {
                 key={i}
                 className="absolute text-muted-foreground/20"
                 style={{
-                  left: `${20 + (i * 15)}%`,
-                  top: `${10 + (i * 12)}%`,
+                  left: `${20 + i * 15}%`,
+                  top: `${10 + i * 12}%`,
                 }}
                 animate={{
                   y: [0, -20, 0],
@@ -135,25 +102,31 @@ export function ProjectsSection() {
                 transition={{
                   duration: 8 + i * 2,
                   repeat: Infinity,
-                  ease: "easeInOut",
+                  ease: 'easeInOut',
                   delay: i * 0.5,
                 }}
               >
-                {i % 3 === 0 ? <Code2 size={24} /> : i % 3 === 1 ? <Zap size={20} /> : <Star size={18} />}
+                {i % 3 === 0 ? (
+                  <Code2 size={24} />
+                ) : i % 3 === 1 ? (
+                  <Zap size={20} />
+                ) : (
+                  <Star size={18} />
+                )}
               </motion.div>
             ))}
           </div>
         </div>
-        
+
         {/* Grid pattern overlay */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.02)_1px,transparent_1px)] bg-[size:100px_100px] [mask-image:radial-gradient(ellipse_at_center,black_50%,transparent_100%)]"></div>
       </div>
 
-      <AnimatedWrapper className='w-full relative z-10'>
+      <AnimatedWrapper className="w-full relative z-10">
         <div className="w-full px-4 py-8 md:py-16">
           <StaggerContainer className="space-y-8 md:space-y-16">
             {/* Enhanced Header */}
-            <motion.div 
+            <motion.div
               className="text-center space-y-4 md:space-y-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -169,37 +142,33 @@ export function ProjectsSection() {
                   <Star className="w-3 h-3 md:w-4 md:h-4" />
                   Featured Work
                 </motion.div>
-                
+
                 <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold bg-gradient-to-r from-foreground via-foreground to-muted-foreground bg-clip-text text-transparent">
                   {t('title')}
                 </h2>
-                
+
                 <div className="w-16 md:w-24 h-0.5 md:h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
               </div>
-              
+
               <p className="text-base md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4">
                 {t('subtitle')}
               </p>
             </motion.div>
 
             {/* Project Gallery Grid */}
-            <motion.div 
+            <motion.div
               className="w-full max-w-6xl mx-auto px-2 md:px-0 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
             >
               {projects.map((project, index) => (
-                <ProjectCard
-                  key={project.title}
-                  project={project}
-                  delay={index * 0.1}
-                />
+                <ProjectCard key={project.title} project={project} delay={index * 0.1} />
               ))}
             </motion.div>
 
             {/* Call to action */}
-            <motion.div 
+            <motion.div
               className="text-center px-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

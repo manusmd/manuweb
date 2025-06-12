@@ -21,12 +21,12 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
     if (project) {
       // Save current scroll position
       const scrollY = window.scrollY;
-      
+
       // Lock scroll
       document.body.style.position = 'fixed';
       document.body.style.top = `-${scrollY}px`;
       document.body.style.width = '100%';
-      
+
       return () => {
         // Restore scroll
         document.body.style.position = '';
@@ -66,7 +66,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             layoutId={`project-${project.title}`}
             initial={{ borderRadius: 8 }}
             className="fixed left-[50%] top-[50%] z-50 w-[95%] max-w-3xl translate-x-[-50%] translate-y-[-50%] bg-card border border-border shadow-lg max-h-[90vh] overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
+            onClick={e => e.stopPropagation()}
           >
             <motion.div className="relative aspect-video overflow-hidden">
               <Image
@@ -90,7 +90,9 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               className="p-4 md:p-6 overflow-y-auto max-h-[50vh]"
             >
               <h2 className="text-xl md:text-2xl font-semibold mb-3 md:mb-4">{project.title}</h2>
-              <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">{project.description}</p>
+              <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">
+                {project.description}
+              </p>
 
               <div className="mb-4 md:mb-6">
                 <h3 className="text-sm font-medium mb-2">{t('techStack')}</h3>

@@ -33,12 +33,12 @@ export function KonamiCodeHandler({ onGameStart }: KonamiCodeHandlerProps) {
     if (showGameModal) {
       // Save current scroll position
       const scrollY = window.scrollY;
-      
+
       // Lock scroll
       document.body.style.position = 'fixed';
       document.body.style.top = `-${scrollY}px`;
       document.body.style.width = '100%';
-      
+
       return () => {
         // Restore scroll
         document.body.style.position = '';
@@ -136,7 +136,7 @@ export function KonamiCodeHandler({ onGameStart }: KonamiCodeHandlerProps) {
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.8, opacity: 0, y: 20 }}
               className="bg-background border border-border rounded-xl p-6 max-w-md w-full text-center"
-              onClick={(e) => e.stopPropagation()}
+              onClick={e => e.stopPropagation()}
             >
               <div className="flex justify-center mb-4">
                 <div className="relative">
