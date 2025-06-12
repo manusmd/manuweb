@@ -1,7 +1,7 @@
 'use client';
 
 import { Project } from '@/types/project';
-import { AnimatedCard } from '@/components/animations';
+import { AnimatedCard } from '@/components/animations/AnimatedCard';
 import { useTranslations } from 'next-intl';
 import { Badge } from '@/components/ui/badge';
 import { ExternalLink, Github } from 'lucide-react';

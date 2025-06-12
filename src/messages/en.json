@@ -132,6 +132,12 @@
     "readingTime": "{time} min read",
     "backToBlog": "Back to Blog",
     "backToHome": "Back to Home",
+    "latestArticles": "Latest Articles",
+    "description": "Insights, tutorials, and thoughts on modern web development, AI, and technology.",
+    "readArticle": "Read Article",
+    "discoverMore": "Discover more insights, tutorials, and deep dives into the world of modern development.",
+    "articlesCount": "{count} Articles",
+    "viewAllPosts": "View All Posts",
     "search": {
       "placeholder": "Search articles...",
       "noResults": "No articles found",
@@ -160,6 +166,14 @@
     "description": "Have a project in mind? I'd love to hear from you and discuss how we can bring your ideas to life.",
     "getInTouch": "Get In Touch",
     "sendEmail": "Send me an email",
+    "letsConnect": "Let's Connect",
+    "responseTime": "Usually responds within 24 hours",
+    "profileDescription": "Passionate about creating exceptional digital experiences",
+    "contactDescriptions": {
+      "github": "Check out my code",
+      "linkedin": "Let's connect professionally",
+      "location": "Based in Germany"
+    },
     "labels": {
       "email": "Email",
       "github": "GitHub",

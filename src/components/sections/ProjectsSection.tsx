@@ -7,6 +7,9 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import type { Project } from '@/types/project';
+import { FullscreenSection } from '@/components/layout/FullscreenSection';
+import { ExternalLink, Github, Star, Code2, Zap } from 'lucide-react';
+import { ProjectCard } from '@/components/projects/ProjectCard';
 
 // Lazy load the ProjectModal for better performance
 const ProjectModal = dynamic(
@@ -79,118 +82,159 @@ export function ProjectsSection() {
   };
 
   return (
-    <AnimatedWrapper>
-      <section id="projects" className="py-24">
-        <div className="container mx-auto px-4">
-          <StaggerContainer className="space-y-12">
-            <div className="text-center">
-              <h2 className="text-4xl font-display font-bold mb-4">{t('title')}</h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">{t('subtitle')}</p>
-            </div>
+    <FullscreenSection id="projects" className="relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="absolute inset-0">
+        {/* Gradient mesh background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-background"></div>
+        
+        {/* Animated geometric shapes */}
+        <div className="absolute inset-0 overflow-hidden">
+          <motion.div
+            className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-3xl"
+            animate={{
+              x: [0, 50, 0],
+              y: [0, -30, 0],
+              scale: [1, 1.1, 1],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          <motion.div
+            className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-cyan-500/10 to-blue-500/10 rounded-full blur-3xl"
+            animate={{
+              x: [0, -30, 0],
+              y: [0, 50, 0],
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: 25,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          
+          {/* Floating code symbols */}
+          <div className="absolute inset-0 pointer-events-none">
+            {[...Array(6)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute text-muted-foreground/20"
+                style={{
+                  left: `${20 + (i * 15)}%`,
+                  top: `${10 + (i * 12)}%`,
+                }}
+                animate={{
+                  y: [0, -20, 0],
+                  rotate: [0, 5, 0],
+                  opacity: [0.2, 0.4, 0.2],
+                }}
+                transition={{
+                  duration: 8 + i * 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: i * 0.5,
+                }}
+              >
+                {i % 3 === 0 ? <Code2 size={24} /> : i % 3 === 1 ? <Zap size={20} /> : <Star size={18} />}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+        
+        {/* Grid pattern overlay */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.02)_1px,transparent_1px)] bg-[size:100px_100px] [mask-image:radial-gradient(ellipse_at_center,black_50%,transparent_100%)]"></div>
+      </div>
 
-            {/* Projects Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {projects.map(project => (
+      <AnimatedWrapper className='w-full relative z-10'>
+        <div className="w-full px-4 py-8 md:py-16">
+          <StaggerContainer className="space-y-8 md:space-y-16">
+            {/* Enhanced Header */}
+            <motion.div 
+              className="text-center space-y-4 md:space-y-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="space-y-3 md:space-y-4">
                 <motion.div
-                  key={project.title}
-                  layoutId={`project-${project.title}`}
-                  onClick={() => setSelectedProject(project)}
-                  onMouseEnter={() => handleProjectHover(project)}
-                  onMouseLeave={() => handleProjectHover(null)}
-                  className="group relative aspect-video cursor-pointer overflow-hidden rounded-xl border bg-card"
+                  className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs md:text-sm font-medium"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.2 }}
                 >
-                  <Image
-                    src={project.image || project.thumbnail || '/placeholder-project.jpg'}
-                    alt={project.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105 rounded-xl"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/20 rounded-xl">
-                    <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                      <div className="space-y-3">
-                        <div>
-                          <h3 className="text-xl font-semibold text-white">{project.title}</h3>
-                          <p className="text-sm text-white/80 line-clamp-1 mt-1">
-                            {project.description}
-                          </p>
-                        </div>
-
-                        <div className="flex flex-wrap gap-2">
-                          {(project.tech || project.technologies?.map(t => t.name) || []).map(
-                            tech => {
-                              const colors = techColors[tech] || {
-                                bg: 'bg-primary/10',
-                                text: 'text-primary',
-                              };
-                              return (
-                                <span
-                                  key={tech}
-                                  className={`rounded-full px-2 py-0.5 text-xs ${colors.bg} ${colors.text}`}
-                                >
-                                  {tech}
-                                </span>
-                              );
-                            }
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <Star className="w-3 h-3 md:w-4 md:h-4" />
+                  Featured Work
                 </motion.div>
+                
+                <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold bg-gradient-to-r from-foreground via-foreground to-muted-foreground bg-clip-text text-transparent">
+                  {t('title')}
+                </h2>
+                
+                <div className="w-16 md:w-24 h-0.5 md:h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
+              </div>
+              
+              <p className="text-base md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4">
+                {t('subtitle')}
+              </p>
+            </motion.div>
+
+            {/* Project Gallery Grid */}
+            <motion.div 
+              className="w-full max-w-6xl mx-auto px-2 md:px-0 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+            >
+              {projects.map((project, index) => (
+                <ProjectCard
+                  key={project.title}
+                  project={project}
+                  delay={index * 0.1}
+                />
               ))}
-            </div>
+            </motion.div>
+
+            {/* Call to action */}
+            <motion.div 
+              className="text-center px-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+            >
+              <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">
+                Want to see more projects? Check out my GitHub or get in touch!
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
+                <motion.a
+                  href="https://github.com/manusmd"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-4 md:px-6 py-2.5 md:py-3 rounded-full bg-foreground text-background hover:bg-foreground/90 transition-colors font-medium text-sm md:text-base"
+                  whileHover={{ scale: isDesktop ? 1.05 : 1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Github className="w-4 h-4" />
+                  View All Projects
+                </motion.a>
+                <motion.a
+                  href="#contact"
+                  className="inline-flex items-center justify-center gap-2 px-4 md:px-6 py-2.5 md:py-3 rounded-full border border-border hover:bg-accent transition-colors font-medium text-sm md:text-base"
+                  whileHover={{ scale: isDesktop ? 1.05 : 1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Get In Touch
+                </motion.a>
+              </div>
+            </motion.div>
           </StaggerContainer>
 
           <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
         </div>
-
-        {/* Live Preview Iframe - Desktop Only */}
-        <AnimatePresence>
-          {hoveredProject && hoveredProject.liveUrl && isDesktop && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.2, ease: 'easeOut' }}
-              className="fixed z-[9999] pointer-events-none"
-              style={{
-                left: mousePosition.x + 20,
-                top: mousePosition.y - 200,
-                width: '480px',
-                height: '300px',
-              }}
-            >
-              <div className="w-full h-full bg-white rounded-lg shadow-2xl border-2 border-gray-200 overflow-hidden relative">
-                <div
-                  className="overflow-hidden rounded-lg"
-                  style={{
-                    width: '480px',
-                    height: '300px',
-                  }}
-                >
-                  <iframe
-                    src={hoveredProject.liveUrl}
-                    className="border-0"
-                    title={`Preview of ${hoveredProject.title}`}
-                    loading="lazy"
-                    sandbox="allow-scripts allow-same-origin"
-                    style={{
-                      width: '1920px',
-                      height: '1200px',
-                      transform: 'scale(0.25)',
-                      transformOrigin: 'top left',
-                    }}
-                  />
-                </div>
-                <div className="absolute top-2 left-2 bg-black/70 text-white text-xs px-2 py-1 rounded z-10">
-                  Live Preview
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </section>
-    </AnimatedWrapper>
+      </AnimatedWrapper>
+    </FullscreenSection>
   );
 }

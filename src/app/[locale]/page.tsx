@@ -31,7 +31,7 @@ const ContactSection = dynamic(
     import('@/components/sections/ContactSection').then(mod => ({ default: mod.ContactSection })),
   {
     loading: () => (
-      <div className="min-h-[400px] flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
       </div>
     ),

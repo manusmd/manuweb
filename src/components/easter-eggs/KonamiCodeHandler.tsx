@@ -28,6 +28,27 @@ export function KonamiCodeHandler({ onGameStart }: KonamiCodeHandlerProps) {
     }
   }, []);
 
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (showGameModal) {
+      // Save current scroll position
+      const scrollY = window.scrollY;
+      
+      // Lock scroll
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      
+      return () => {
+        // Restore scroll
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [showGameModal]);
+
   useEffect(() => {
     // The classic Konami code sequence
     const konamiCode = [
@@ -44,6 +65,12 @@ export function KonamiCodeHandler({ onGameStart }: KonamiCodeHandlerProps) {
     ];
 
     const handleKeyDown = (event: KeyboardEvent) => {
+      // Handle Escape key to close modal
+      if (event.key === 'Escape' && showGameModal) {
+        setShowGameModal(false);
+        return;
+      }
+
       const newSequence = [...sequence, event.code].slice(-konamiCode.length);
       setSequence(newSequence);
 
@@ -77,7 +104,7 @@ export function KonamiCodeHandler({ onGameStart }: KonamiCodeHandlerProps) {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [sequence, isGameUnlocked, onGameStart]);
+  }, [sequence, isGameUnlocked, onGameStart, showGameModal]);
 
   const handlePlayGame = () => {
     setShowGameModal(false);
@@ -102,12 +129,14 @@ export function KonamiCodeHandler({ onGameStart }: KonamiCodeHandlerProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={handleCloseModal}
           >
             <motion.div
               initial={{ scale: 0.8, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.8, opacity: 0, y: 20 }}
               className="bg-background border border-border rounded-xl p-6 max-w-md w-full text-center"
+              onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-center mb-4">
                 <div className="relative">

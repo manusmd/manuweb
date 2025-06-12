@@ -37,6 +37,27 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
 
   const t = useTranslations('easterEggs.snakeGame');
 
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      // Save current scroll position
+      const scrollY = window.scrollY;
+      
+      // Lock scroll
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      
+      return () => {
+        // Restore scroll
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [isOpen]);
+
   const generateFood = useCallback(() => {
     const newFood = {
       x: Math.floor(Math.random() * GRID_SIZE),
@@ -108,6 +129,12 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
 
   const handleKeyPress = useCallback(
     (e: KeyboardEvent) => {
+      // Handle Escape key to close modal
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+        return;
+      }
+
       // Prevent default for game-related keys when modal is open
       if (isOpen && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
         e.preventDefault();
@@ -130,7 +157,7 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
           break;
       }
     },
-    [changeDirection, isPlaying, gameOver, isOpen]
+    [changeDirection, isPlaying, gameOver, isOpen, onClose]
   );
 
   // Touch controls
@@ -198,15 +225,8 @@ export function PortfolioSnakeGame({ isOpen, onClose }: SnakeGameProps) {
 
   useEffect(() => {
     if (isOpen) {
-      // Prevent scrolling when game is open
-      document.body.style.overflow = 'hidden';
-
-      window.addEventListener('keydown', handleKeyPress);
-      return () => {
-        // Restore scrolling when game closes
-        document.body.style.overflow = 'unset';
-        window.removeEventListener('keydown', handleKeyPress);
-      };
+      document.addEventListener('keydown', handleKeyPress);
+      return () => document.removeEventListener('keydown', handleKeyPress);
     }
   }, [isOpen, handleKeyPress]);
 

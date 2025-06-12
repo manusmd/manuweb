@@ -136,6 +136,11 @@
     "contents": "Inhalt",
     "sectionsCount": "{count} Abschnitte",
     "readingTime": "{time} Min. Lesezeit",
+    "latestArticles": "Neueste Artikel",
+    "description": "Einblicke, Tutorials und Gedanken zur modernen Webentwicklung, KI und Technologie.",
+    "readArticle": "Artikel lesen",
+    "discoverMore": "Entdecke weitere Einblicke, Tutorials und tiefe Einblicke in die Welt der modernen Entwicklung.",
+    "articlesCount": "{count} Artikel",
     "search": {
       "placeholder": "Artikel suchen...",
       "noResults": "Keine Artikel gefunden",
@@ -165,6 +170,14 @@
     "description": "Hast du ein Projekt im Kopf? Ich würde gerne von dir hören und besprechen, wie wir deine Ideen zum Leben erwecken können.",
     "getInTouch": "Melde dich",
     "sendEmail": "Schreib mir eine E-Mail",
+    "letsConnect": "Lass uns vernetzen",
+    "responseTime": "Antwortet normalerweise innerhalb von 24 Stunden",
+    "profileDescription": "Leidenschaftlich für außergewöhnliche digitale Erlebnisse",
+    "contactDescriptions": {
+      "github": "Schau dir meinen Code an",
+      "linkedin": "Lass uns professionell vernetzen",
+      "location": "Ansässig in Deutschland"
+    },
     "labels": {
       "email": "E-Mail",
       "github": "GitHub",
