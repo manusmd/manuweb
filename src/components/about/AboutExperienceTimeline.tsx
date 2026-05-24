@@ -18,15 +18,10 @@ interface AboutExperienceTimelineProps {
   experiences: ExperienceEntry[];
 }
 
-function readIsDesktop(): boolean {
-  if (typeof window === 'undefined') return false;
-  return window.matchMedia(MQ.desktop).matches;
-}
-
 export function AboutExperienceTimeline({ experiences }: AboutExperienceTimelineProps) {
   const t = useTranslations('about');
   const reduceMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
-  const [isDesktop, setIsDesktop] = useState(readIsDesktop);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useLayoutEffect(() => {
     const mq = window.matchMedia(MQ.desktop);
@@ -36,6 +31,7 @@ export function AboutExperienceTimeline({ experiences }: AboutExperienceTimeline
     return () => mq.removeEventListener('change', onChange);
   }, []);
 
+  const pinTriggerRef = useRef<HTMLDivElement>(null);
   const pinOuterRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -45,6 +41,7 @@ export function AboutExperienceTimeline({ experiences }: AboutExperienceTimeline
   const horizontalEnabled = experiences.length > 0 && !useStackedLayout;
 
   const { activeIndex, scrollProgress, scrollToIndex } = useAboutJobsHorizontalScenesScroll(
+    pinTriggerRef,
     pinOuterRef,
     viewportRef,
     trackRef,
@@ -97,42 +94,42 @@ export function AboutExperienceTimeline({ experiences }: AboutExperienceTimeline
 
   return (
     <div className="relative mt-6 w-full lg:mt-8">
-      <div
-        ref={pinOuterRef}
-        className="relative flex h-[100svh] min-h-[100svh] w-screen max-w-none flex-col items-center justify-center overflow-x-hidden ml-[calc(50%-50vw)] mr-[calc(50%-50vw)]"
-      >
-        <AboutJobsParallaxBackdrop
-          experiences={experiences}
-          scrollProgress={scrollProgress}
-          activeIndex={activeIndex}
-        />
-
-        <div className="relative z-10 flex w-full max-w-[min(1400px,94vw)] flex-col gap-3 px-4 md:gap-4 md:px-8">
-          <p className="text-center text-[11px] font-semibold uppercase tracking-[0.28em] text-muted-foreground/45">
-            {t('timeline.title')}
-          </p>
-          <AboutJobsProgress
+      <div ref={pinTriggerRef} className="pointer-events-none h-px w-full" aria-hidden />
+      <div ref={pinOuterRef} className="relative h-[100svh] min-h-[100svh] w-full">
+        <div className="relative flex h-full w-screen max-w-none flex-col items-center justify-center overflow-x-hidden ml-[calc(50%-50vw)] mr-[calc(50%-50vw)]">
+          <AboutJobsParallaxBackdrop
             experiences={experiences}
-            activeIndex={activeIndex}
             scrollProgress={scrollProgress}
-            onSelect={scrollToIndex}
+            activeIndex={activeIndex}
           />
 
-          <div
-            ref={viewportRef}
-            className="relative h-[min(72svh,680px)] overflow-hidden rounded-3xl border border-white/[0.08] bg-background/20 shadow-[0_24px_80px_-24px_rgba(0,0,0,0.55)] backdrop-blur-sm"
-          >
+          <div className="relative z-10 flex w-full max-w-[min(1400px,94vw)] flex-col gap-3 px-4 md:gap-4 md:px-8">
+            <p className="text-center text-[11px] font-semibold uppercase tracking-[0.28em] text-muted-foreground/45">
+              {t('timeline.title')}
+            </p>
+            <AboutJobsProgress
+              experiences={experiences}
+              activeIndex={activeIndex}
+              scrollProgress={scrollProgress}
+              onSelect={scrollToIndex}
+            />
+
             <div
-              ref={trackRef}
-              className="flex h-full items-stretch gap-4 py-4 pl-4 pr-6 md:gap-5 md:py-5 md:pl-5 md:pr-8"
+              ref={viewportRef}
+              className="relative h-[min(72svh,680px)] overflow-hidden rounded-3xl border border-white/[0.08] bg-background/20 shadow-[0_24px_80px_-24px_rgba(0,0,0,0.55)] backdrop-blur-sm"
             >
-              {experiences.map((exp, index) => (
-                <AboutJobScene
-                  key={`${exp.company}-${exp.date}-${String(index)}`}
-                  exp={exp}
-                  index={index}
-                />
-              ))}
+              <div
+                ref={trackRef}
+                className="flex h-full items-stretch gap-4 py-4 pl-4 pr-6 md:gap-5 md:py-5 md:pl-5 md:pr-8"
+              >
+                {experiences.map((exp, index) => (
+                  <AboutJobScene
+                    key={`${exp.company}-${exp.date}-${String(index)}`}
+                    exp={exp}
+                    index={index}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>

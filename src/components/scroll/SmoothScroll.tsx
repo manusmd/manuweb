@@ -45,6 +45,7 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
     let disposed = false;
     let tickerFn: ((time: number) => void) | null = null;
     let onResize: (() => void) | undefined;
+    let onPageshowSync: (() => void) | undefined;
 
     const setup = async () => {
       const [{ default: LenisCtor }, gsapMod, stMod] = await Promise.all([
@@ -64,6 +65,25 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
       });
       lenisRef.current = lenis;
       window.__lenis = lenis;
+
+      const syncLenisFromNativeScroll = () => {
+        const nativeScroll =
+          window.scrollY ||
+          document.documentElement.scrollTop ||
+          document.body.scrollTop ||
+          0;
+        if (Math.abs(lenis.scroll - nativeScroll) > 1) {
+          lenis.scrollTo(nativeScroll, { immediate: true });
+        }
+        ScrollTriggerLib.update();
+      };
+
+      syncLenisFromNativeScroll();
+      requestAnimationFrame(syncLenisFromNativeScroll);
+      requestAnimationFrame(() => requestAnimationFrame(syncLenisFromNativeScroll));
+      window.addEventListener('load', syncLenisFromNativeScroll, { once: true });
+      onPageshowSync = syncLenisFromNativeScroll;
+      window.addEventListener('pageshow', syncLenisFromNativeScroll);
 
       ScrollTriggerLib.scrollerProxy(document.documentElement, {
         scrollTop(value) {
@@ -106,6 +126,9 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
 
     return () => {
       disposed = true;
+      if (onPageshowSync) {
+        window.removeEventListener('pageshow', onPageshowSync);
+      }
       if (onResize) {
         window.removeEventListener('resize', onResize);
       }

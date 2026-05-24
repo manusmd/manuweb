@@ -7,6 +7,7 @@ export interface FrontMatter {
   date: string;
   description: string;
   tags?: string[];
+  coverImage?: string;
   language: 'en' | 'de';
   slug: string;
 }

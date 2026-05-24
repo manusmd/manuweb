@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type MutableRefObject } from 'react';
 import { ABOUT_JOBS_PIN_START_OFFSET_PX } from '@/components/about/aboutScroll';
 import { scrollWindowTo } from '@/lib/scrollTo';
 
@@ -61,6 +61,110 @@ function applyPanelStaging(gsap: typeof import('gsap').gsap, scene: HTMLElement,
   });
 }
 
+async function waitForLayoutSettle() {
+  if (document.fonts?.ready) {
+    await document.fonts.ready;
+  }
+  await new Promise<void>(resolve => {
+    requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+  });
+}
+
+function getNativeScrollY() {
+  return (
+    window.scrollY ||
+    document.documentElement.scrollTop ||
+    document.body.scrollTop ||
+    0
+  );
+}
+
+function getWindowScrollY() {
+  const native = getNativeScrollY();
+  const lenisScroll = window.__lenis?.scroll;
+  if (lenisScroll == null) return native;
+  if (lenisScroll < 1 && native > 1) return native;
+  return lenisScroll;
+}
+
+function syncLenisToNativeScroll() {
+  const native = getNativeScrollY();
+  const lenis = window.__lenis;
+  if (lenis && Math.abs(lenis.scroll - native) > 1) {
+    lenis.scrollTo(native, { immediate: true });
+  }
+}
+
+function isScrollLayoutConsistent(triggerEl: HTMLElement, scrollY: number) {
+  const rectTop = triggerEl.getBoundingClientRect().top;
+  if (scrollY < 80) return rectTop > 200;
+  return rectTop < window.innerHeight + 400;
+}
+
+async function waitForScrollLayoutConsistency(
+  triggerEl: HTMLElement,
+  isDisposed: () => boolean
+) {
+  for (let frame = 0; frame < 120; frame += 1) {
+    if (isDisposed()) return;
+
+    syncLenisToNativeScroll();
+    const scrollY = getWindowScrollY();
+    const consistent = isScrollLayoutConsistent(triggerEl, scrollY);
+
+    if (consistent) {
+      await waitForLayoutSettle();
+      return;
+    }
+
+    await new Promise<void>(resolve => {
+      requestAnimationFrame(() => resolve());
+    });
+  }
+}
+
+function getScrollTriggerForTrigger(
+  ScrollTrigger: typeof import('gsap/ScrollTrigger').ScrollTrigger,
+  triggerEl: HTMLElement
+) {
+  return ScrollTrigger.getAll().find(st => st.trigger === triggerEl);
+}
+
+function shouldResetToFirstJob(
+  pinOuter: HTMLElement,
+  scrollY: number,
+  stStart: number,
+  stEnd: number,
+  progress: number
+) {
+  if (stStart < 0) return true;
+  if (scrollY >= stStart - 20 && scrollY <= stEnd + 20) return false;
+  if (scrollY < 80 && progress > 0.01) return true;
+  const sectionTop = pinOuter.getBoundingClientRect().top;
+  if (sectionTop > window.innerHeight * 0.5 && progress > 0.01) return true;
+  return false;
+}
+
+function resetHorizontalJobsToStart(
+  gsap: typeof import('gsap').gsap,
+  track: HTMLElement,
+  viewport: HTMLElement,
+  itemCount: number,
+  setActiveIndex: (index: number) => void,
+  setScrollProgress: (progress: number) => void,
+  lastIdxRef: MutableRefObject<number>
+) {
+  gsap.set(track, { x: 0, overwrite: true });
+  lastIdxRef.current = 0;
+  setActiveIndex(0);
+  setScrollProgress(0);
+
+  const scenes = [...viewport.querySelectorAll<HTMLElement>('[data-about-job-scene]')];
+  scenes.forEach((scene, index) => {
+    applyPanelStaging(gsap, scene, index === 0 ? 1 : 0);
+  });
+}
+
 export type AboutJobsHorizontalScenesApi = {
   activeIndex: number;
   scrollProgress: number;
@@ -68,6 +172,7 @@ export type AboutJobsHorizontalScenesApi = {
 };
 
 export function useAboutJobsHorizontalScenesScroll(
+  pinTriggerRef: React.RefObject<HTMLElement | null>,
   pinOuterRef: React.RefObject<HTMLElement | null>,
   viewportRef: React.RefObject<HTMLElement | null>,
   trackRef: React.RefObject<HTMLElement | null>,
@@ -121,24 +226,33 @@ export function useAboutJobsHorizontalScenesScroll(
       gsap.registerPlugin(ScrollTrigger);
       if (disposed) return;
 
-      await new Promise<void>(resolve => {
-        requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
-      });
+      await waitForLayoutSettle();
       if (disposed) return;
 
+      const pinTrigger = pinTriggerRef.current;
       const pinOuter = pinOuterRef.current;
       const viewport = viewportRef.current;
       const track = trackRef.current;
-      if (!pinOuter || !viewport || !track || disposed) return;
+      if (!pinTrigger || !pinOuter || !viewport || !track || disposed) return;
+
+      await waitForScrollLayoutConsistency(pinTrigger, () => disposed);
+      if (disposed) return;
+
+      syncLenisToNativeScroll();
+      ScrollTrigger.refresh(true);
+
+      gsap.set(track, { x: 0, overwrite: true });
+      ScrollTrigger.refresh(true);
 
       const onResize = () => {
-        ScrollTrigger.refresh();
+        ScrollTrigger.refresh(true);
       };
       window.addEventListener('resize', onResize);
       let ro: ResizeObserver | undefined;
       if (typeof ResizeObserver !== 'undefined') {
         ro = new ResizeObserver(onResize);
         ro.observe(pinOuter);
+        ro.observe(pinTrigger);
       }
 
       const computeMaxTranslate = (): number =>
@@ -150,12 +264,14 @@ export function useAboutJobsHorizontalScenesScroll(
         return Math.max(maxX + window.innerHeight * 0.08, perJob * Math.max(itemCount - 1, 1));
       };
 
+      let scrollReady = false;
+
       const ctx = gsap.context(() => {
-        const tween = gsap.to(track, {
+        gsap.to(track, {
           x: () => -computeMaxTranslate(),
           ease: 'none',
           scrollTrigger: {
-            trigger: pinOuter,
+            trigger: pinTrigger,
             pin: pinOuter,
             pinSpacing: true,
             scrub: 0.55,
@@ -164,10 +280,14 @@ export function useAboutJobsHorizontalScenesScroll(
             invalidateOnRefresh: true,
             anticipatePin: 0,
             onUpdate(self) {
+              if (!scrollReady) return;
+
               const prog = clamp(self.progress, 0, 1);
               setScrollProgress(prog);
               const idx =
-                itemCount <= 1 ? 0 : clamp(Math.round(prog * (itemCount - 1)), 0, itemCount - 1);
+                itemCount <= 1
+                  ? 0
+                  : clamp(Math.round(prog * (itemCount - 1)), 0, itemCount - 1);
               if (idx !== lastIdxRef.current) {
                 lastIdxRef.current = idx;
                 setActiveIndex(idx);
@@ -196,26 +316,61 @@ export function useAboutJobsHorizontalScenesScroll(
             },
           },
         });
-
-        const st = tween.scrollTrigger;
-        if (st) {
-          scrollTriggerRef.current = { start: st.start, end: st.end };
-        }
       }, pinOuter);
 
-      ScrollTrigger.refresh();
+      ScrollTrigger.refresh(true);
+      await waitForLayoutSettle();
+      ScrollTrigger.refresh(true);
 
-      const refreshWhenLenisReady = () => {
-        if (window.__lenis) {
-          ScrollTrigger.refresh();
-          return;
+      const stInstance = getScrollTriggerForTrigger(ScrollTrigger, pinTrigger);
+      const postScrollY = getWindowScrollY();
+      const stStart = stInstance?.start ?? 0;
+      const progress = stInstance?.progress ?? 0;
+
+      if (
+        stInstance &&
+        shouldResetToFirstJob(
+          pinOuter,
+          postScrollY,
+          stStart,
+          stInstance.end,
+          progress
+        )
+      ) {
+        resetHorizontalJobsToStart(
+          gsap,
+          track,
+          viewport,
+          itemCount,
+          setActiveIndex,
+          setScrollProgress,
+          lastIdxRef
+        );
+        if (stStart >= 0) {
+          stInstance.scroll(stStart);
         }
-        requestAnimationFrame(refreshWhenLenisReady);
+        ScrollTrigger.refresh(true);
+      }
+
+      scrollReady = true;
+
+      const stAfterReset = getScrollTriggerForTrigger(ScrollTrigger, pinTrigger);
+      if (stAfterReset) {
+        scrollTriggerRef.current = { start: stAfterReset.start, end: stAfterReset.end };
+      }
+
+      const onWindowLoad = () => {
+        void waitForLayoutSettle().then(() => {
+          if (disposed) return;
+          ScrollTrigger.refresh(true);
+        });
       };
-      refreshWhenLenisReady();
+      window.addEventListener('load', onWindowLoad);
 
       const runCleanup = () => {
+        scrollReady = false;
         window.removeEventListener('resize', onResize);
+        window.removeEventListener('load', onWindowLoad);
         ro?.disconnect();
         ctx.revert();
         scrollTriggerRef.current = null;
@@ -237,7 +392,7 @@ export function useAboutJobsHorizontalScenesScroll(
         ScrollTrigger.refresh();
       });
     };
-  }, [enabled, itemCount, pinOuterRef, trackRef, viewportRef]);
+  }, [enabled, itemCount, pinTriggerRef, pinOuterRef, trackRef, viewportRef]);
 
   return { activeIndex, scrollProgress, scrollToIndex };
 }

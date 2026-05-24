@@ -1,5 +1,6 @@
 import { HeroSection } from '@/components/sections/HeroSection';
 import { BlogPreview } from '@/components/blog/BlogPreview';
+import { PROJECTS_SECTION_ENABLED } from '@/constants/features';
 import dynamic from 'next/dynamic';
 
 // Lazy load below-the-fold sections for better performance
@@ -17,13 +18,7 @@ const AboutClient = dynamic(
 const ProjectsSection = dynamic(
   () =>
     import('@/components/sections/ProjectsSection').then(mod => ({ default: mod.ProjectsSection })),
-  {
-    loading: () => (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-      </div>
-    ),
-  }
+  { loading: () => null }
 );
 
 const ContactSection = dynamic(
@@ -51,7 +46,7 @@ export default async function HomePage({ params }: HomeProps) {
     <main className="overflow-x-hidden">
       <HeroSection />
       <AboutClient />
-      <ProjectsSection />
+      {PROJECTS_SECTION_ENABLED ? <ProjectsSection /> : null}
       <BlogPreview locale={locale} />
       <ContactSection />
     </main>

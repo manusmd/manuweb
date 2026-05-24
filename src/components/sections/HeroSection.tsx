@@ -8,6 +8,7 @@ import { LoadingScreen } from '@/components/ui/LoadingScreen';
 import { useSpotlight } from '@/hooks/useSpotlight';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { use3DSceneReady } from '@/hooks/use3DSceneReady';
+import { PROJECTS_SECTION_ENABLED } from '@/constants/features';
 import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
@@ -141,10 +142,10 @@ export function HeroSection() {
                       size="lg"
                       enableGlow
                       glowColor="blue"
-                      onClick={scrollToProjects}
+                      onClick={PROJECTS_SECTION_ENABLED ? scrollToProjects : scrollToNext}
                       className="text-lg px-10 py-6 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:from-blue-600 hover:via-blue-700 hover:to-blue-800 text-white shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-200 rounded-2xl font-medium"
                     >
-                      {t('cta.projects')}
+                      {t(PROJECTS_SECTION_ENABLED ? 'cta.projects' : 'cta.about')}
                     </AnimatedButton>
                     <AnimatedButton
                       variant="outline"

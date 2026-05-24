@@ -32,6 +32,7 @@
     "scrollDown": "Scroll Down",
     "scrollNextSection": "Scroll to next section",
     "cta": {
+      "about": "About Me",
       "projects": "View Projects",
       "contact": "Get in Touch",
       "resume": "Download Resume"

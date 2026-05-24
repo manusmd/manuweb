@@ -10,6 +10,7 @@ interface FullscreenSectionProps {
   background?: 'default' | 'muted' | 'gradient';
   centerContent?: boolean;
   overflow?: 'hidden' | 'auto' | 'visible';
+  minHeight?: 'screen' | 'auto';
 }
 
 export function FullscreenSection({
@@ -19,6 +20,7 @@ export function FullscreenSection({
   background = 'default',
   centerContent = true,
   overflow = 'hidden',
+  minHeight = 'screen',
 }: FullscreenSectionProps) {
   const backgroundClasses = {
     default: '',
@@ -36,7 +38,8 @@ export function FullscreenSection({
     <section
       id={id}
       className={cn(
-        'relative min-h-screen w-full',
+        'relative w-full',
+        minHeight === 'screen' ? 'min-h-screen' : 'min-h-0',
         overflowClasses[overflow],
         centerContent && 'flex items-center justify-center',
         backgroundClasses[background],

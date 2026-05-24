@@ -1,198 +1,153 @@
+import Image from 'next/image';
 import { getAllPosts } from '@/lib/mdx';
 import { getTranslations } from 'next-intl/server';
 import { BlogLink } from '@/components/transitions/BlogLink';
-import { ArrowRight, Calendar, Clock, BookOpen } from 'lucide-react';
+import { ArrowRight, Calendar, Clock } from 'lucide-react';
 import { FullscreenSection } from '@/components/layout/FullscreenSection';
+import { SectionHeader } from '@/components/layout/SectionHeader';
+import { calculateReadingTime, getBlogTagColor } from '@/lib/blogTagColors';
+import { resolveBlogCoverImage } from '@/lib/blogPost';
+import type { BlogPost } from '@/lib/mdx';
 
 interface BlogPreviewProps {
   locale: string;
 }
 
-// Function to get tag colors (same as in blog post page)
-function getTagColor(tag: string) {
-  const tagColors: Record<string, string> = {
-    // English tags
-    ai: 'bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700',
-    coding:
-      'bg-green-100 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-700',
-    llm: 'bg-purple-100 text-purple-800 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-700',
-    programming:
-      'bg-orange-100 text-orange-800 border-orange-200 dark:bg-orange-900/30 dark:text-orange-300 dark:border-orange-700',
-    automation:
-      'bg-red-100 text-red-800 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-700',
-
-    // German tags
-    ki: 'bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700',
-    programmierung:
-      'bg-orange-100 text-orange-800 border-orange-200 dark:bg-orange-900/30 dark:text-orange-300 dark:border-orange-700',
-    automatisierung:
-      'bg-red-100 text-red-800 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-700',
-  };
-
-  return (
-    tagColors[tag.toLowerCase()] ||
-    'bg-gray-100 text-gray-800 border-gray-200 dark:bg-gray-900/30 dark:text-gray-300 dark:border-gray-700'
-  );
+function formatPostDate(date: string, locale: string) {
+  return new Date(date).toLocaleDateString(locale, {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
 }
 
-// Calculate reading time
-function calculateReadingTime(content: string): number {
-  const wordsPerMinute = 200;
-  const words = content.trim().split(/\s+/).length;
-  return Math.ceil(words / wordsPerMinute);
+function BlogPreviewCard({
+  post,
+  locale,
+  readTimeLabel,
+  readArticleLabel,
+}: {
+  post: BlogPost;
+  locale: string;
+  readTimeLabel: string;
+  readArticleLabel: string;
+}) {
+  const coverImage = resolveBlogCoverImage(post);
+
+  return (
+    <BlogLink href={`/${locale}/blog/${post.slug}`} className="group block h-full" title={post.title}>
+      <article className="flex h-full flex-col overflow-hidden rounded-3xl border border-border/40 bg-card/55 shadow-[0_22px_64px_-32px_rgba(0,0,0,0.45)] ring-1 ring-white/[0.06] backdrop-blur-xl transition-[border-color,box-shadow] duration-300 hover:border-border/70 hover:shadow-[0_28px_72px_-36px_rgba(0,0,0,0.55)]">
+        <div className="relative aspect-[16/10] overflow-hidden border-b border-border/30 bg-muted/30">
+          {coverImage ? (
+            <Image
+              src={coverImage}
+              alt={post.title}
+              fill
+              className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/15 via-background to-blue-500/10" />
+          )}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
+        </div>
+
+        <div className="flex flex-1 flex-col p-5 md:p-6">
+          {post.tags && post.tags.length > 0 ? (
+            <div className="mb-3 flex flex-wrap gap-2">
+              {post.tags.slice(0, 2).map(tag => (
+                <span
+                  key={tag}
+                  className={`rounded-full border px-2.5 py-0.5 text-[11px] font-medium md:text-xs ${getBlogTagColor(tag)}`}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          ) : null}
+
+          <h3 className="mb-2 line-clamp-2 font-display text-lg font-bold leading-tight tracking-tight text-foreground transition-colors group-hover:text-primary md:text-xl">
+            {post.title}
+          </h3>
+
+          <p className="mb-4 line-clamp-3 flex-1 text-sm leading-relaxed text-muted-foreground md:text-base">
+            {post.description}
+          </p>
+
+          <div className="mt-auto space-y-3">
+            <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground md:text-sm">
+              <div className="flex items-center gap-1.5">
+                <Calendar className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                <time>{formatPostDate(post.date, locale)}</time>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Clock className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                <span>
+                  {calculateReadingTime(post.content || '')} {readTimeLabel}
+                </span>
+              </div>
+            </div>
+
+            <span className="inline-flex items-center gap-1.5 text-sm font-medium text-primary">
+              {readArticleLabel}
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </span>
+          </div>
+        </div>
+      </article>
+    </BlogLink>
+  );
 }
 
 export async function BlogPreview({ locale }: BlogPreviewProps) {
   const t = await getTranslations('blog');
   const posts = await getAllPosts(locale);
-  const latestPosts = posts.slice(0, 3);
 
   if (posts.length === 0) {
     return null;
   }
 
+  const previewPosts = posts.slice(0, 3);
+
   return (
-    <FullscreenSection id="blog" className="relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0">
-        {/* Gradient mesh background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-muted/30 via-background to-muted/50"></div>
+    <FullscreenSection
+      id="blog"
+      centerContent={false}
+      minHeight="auto"
+      className="border-t border-border/30 py-20 md:py-28"
+    >
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="mx-auto flex max-w-6xl flex-col gap-10 md:gap-12">
+          <SectionHeader
+            label={t('latestArticles')}
+            title={t('title')}
+            description={t('description')}
+          />
 
-        {/* Animated geometric shapes */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -left-40 w-80 h-80 bg-gradient-to-br from-primary/10 to-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute -bottom-40 -right-40 w-80 h-80 bg-gradient-to-tr from-purple-500/10 to-primary/10 rounded-full blur-3xl animate-pulse [animation-delay:2s]"></div>
-        </div>
-
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,.02)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_at_center,black_50%,transparent_100%)]"></div>
-      </div>
-
-      <div className="relative z-10 container mx-auto px-4 py-12 md:py-20">
-        {/* Enhanced Header */}
-        <div className="text-center mb-12 md:mb-16">
-          <div className="space-y-4 md:space-y-6">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-4">
-              <BookOpen className="w-4 h-4" />
-              {t('latestArticles')}
-            </div>
-
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold bg-gradient-to-r from-foreground via-foreground to-muted-foreground bg-clip-text text-transparent">
-              {t('title')}
-            </h2>
-
-            <div className="w-20 md:w-24 h-1 bg-gradient-to-r from-primary to-blue-500 mx-auto rounded-full"></div>
-
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              {t('description')}
-            </p>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+            {previewPosts.map(post => (
+              <BlogPreviewCard
+                key={post.slug}
+                post={post}
+                locale={locale}
+                readTimeLabel={t('readTime')}
+                readArticleLabel={t('readArticle')}
+              />
+            ))}
           </div>
-        </div>
 
-        {/* Enhanced Blog Cards Grid */}
-        <div className="grid gap-6 md:gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-12 md:mb-16">
-          {latestPosts.map((post, index) => (
+          <div className="flex flex-col items-start gap-4 border-t border-border/30 pt-8 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm text-muted-foreground md:text-base">
+              {t('articlesCount', { count: posts.length })}
+            </p>
             <BlogLink
-              key={post.slug}
-              href={`/${locale}/blog/${post.slug}`}
-              className="group block"
-              title={post.title}
+              href={`/${locale}/blog`}
+              className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/50 px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-border hover:bg-accent/40"
+              title={t('viewAllPosts')}
             >
-              <article className="h-full bg-card/80 backdrop-blur-sm rounded-2xl overflow-hidden border border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 relative">
-                {/* Card number indicator */}
-                <div className="absolute top-4 right-4 w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary text-sm font-bold z-10">
-                  {index + 1}
-                </div>
-
-                {/* Gradient overlay for visual interest */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                <div className="relative p-6 md:p-8 h-full flex flex-col">
-                  {/* Tags */}
-                  {post.tags && post.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {post.tags.slice(0, 2).map(tag => (
-                        <span
-                          key={tag}
-                          className={`text-xs px-3 py-1.5 rounded-full border font-medium transition-all duration-200 hover:scale-105 ${getTagColor(
-                            tag
-                          )}`}
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                      {post.tags.length > 2 && (
-                        <span className="text-xs px-3 py-1.5 rounded-full border bg-muted text-muted-foreground font-medium">
-                          +{post.tags.length - 2}
-                        </span>
-                      )}
-                    </div>
-                  )}
-
-                  {/* Title */}
-                  <h3 className="text-xl md:text-2xl font-display font-bold mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2 leading-tight flex-grow-0">
-                    {post.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-muted-foreground mb-6 line-clamp-3 leading-relaxed text-sm md:text-base flex-grow">
-                    {post.description}
-                  </p>
-
-                  {/* Meta Information */}
-                  <div className="flex items-center justify-between text-xs md:text-sm text-muted-foreground mt-auto">
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center gap-1.5">
-                        <Calendar className="w-4 h-4" />
-                        <time>
-                          {new Date(post.date).toLocaleDateString(locale, {
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric',
-                          })}
-                        </time>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <Clock className="w-4 h-4" />
-                        <span>
-                          {calculateReadingTime(post.content || '')} {t('readTime')}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Read More Indicator */}
-                  <div className="flex items-center text-primary font-medium text-sm mt-4 group-hover:gap-3 gap-2 transition-all duration-300">
-                    <span>{t('readArticle')}</span>
-                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-                  </div>
-                </div>
-              </article>
+              <span>{t('viewAllPosts')}</span>
+              <ArrowRight className="h-4 w-4" />
             </BlogLink>
-          ))}
-        </div>
-
-        {/* Enhanced Call to Action */}
-        <div className="text-center">
-          <div className="max-w-2xl mx-auto space-y-6">
-            <p className="text-muted-foreground text-lg">{t('discoverMore')}</p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <BlogLink
-                href={`/${locale}/blog`}
-                className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/25 group"
-                title="All Blog Posts"
-              >
-                <BookOpen className="w-5 h-5" />
-                <span>{t('viewAllPosts')}</span>
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </BlogLink>
-
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <span>{t('articlesCount', { count: posts.length })}</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>

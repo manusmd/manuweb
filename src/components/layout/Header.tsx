@@ -7,6 +7,7 @@ import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { HeaderMobileMenu } from '@/components/layout/HeaderMobileMenu';
 import { Button } from '@/components/ui/button';
 import { NAV_SCROLL_OFFSET_PX } from '@/constants/scroll';
+import { PROJECTS_SECTION_ENABLED } from '@/constants/features';
 import { useActiveHomeSection } from '@/hooks/useSectionScroll';
 import { Menu, X, Home, User, FolderOpen, FileText, Mail } from 'lucide-react';
 import { useState, useEffect } from 'react';
@@ -36,12 +37,16 @@ export function Header() {
       section: 'about',
       icon: User,
     },
-    {
-      name: t('projects'),
-      href: `/${locale}#projects`,
-      section: 'projects',
-      icon: FolderOpen,
-    },
+    ...(PROJECTS_SECTION_ENABLED
+      ? [
+          {
+            name: t('projects'),
+            href: `/${locale}#projects`,
+            section: 'projects',
+            icon: FolderOpen,
+          },
+        ]
+      : []),
     {
       name: t('blog'),
       href: `/${locale}#blog`,
