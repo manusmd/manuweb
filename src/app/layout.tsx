@@ -1,7 +1,7 @@
 import { Inter } from 'next/font/google';
 import localFont from 'next/font/local';
 import { cn } from '@/lib/utils';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
@@ -48,13 +48,6 @@ export const metadata: Metadata = {
       'en-US': '/en',
       'de-DE': '/de',
     },
-  },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-    viewportFit: 'cover',
   },
   openGraph: {
     type: 'website',
@@ -112,6 +105,14 @@ export const metadata: Metadata = {
     google: 'your-google-verification-code', // Replace with actual verification code
   },
   category: 'technology',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: 'cover',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
