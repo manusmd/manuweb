@@ -12,6 +12,17 @@ export type TimelineDesktopTheme = {
 };
 
 export const TIMELINE_DESKTOP_THEMES: Record<string, TimelineDesktopTheme> = {
+  SecretProject: {
+    background: 'bg-gradient-to-br from-slate-950 via-violet-950/90 to-slate-900',
+    textColor: 'text-slate-100',
+    accentColor: 'text-violet-300',
+    cardBg: 'bg-violet-950/40 border-violet-500/25',
+    icon: '',
+    pattern:
+      'opacity-20 bg-[radial-gradient(ellipse_at_70%_30%,rgba(139,92,246,0.22),transparent_55%)]',
+    visualElement: 'secret',
+    borderColor: 'border-violet-400/40',
+  },
   Syndikat7: {
     background: 'bg-gradient-to-br from-gray-900 via-black to-gray-800',
     textColor: 'text-gray-100',
@@ -58,6 +69,7 @@ export const TIMELINE_DESKTOP_THEMES: Record<string, TimelineDesktopTheme> = {
 };
 
 export const TIMELINE_MOBILE_THEME_ACCENTS: Record<string, string> = {
+  SecretProject: '#a78bfa',
   Syndikat7: '#f87171',
   'T-Systems': '#f472b6',
   PRGH: '#a78bfa',
@@ -66,20 +78,43 @@ export const TIMELINE_MOBILE_THEME_ACCENTS: Record<string, string> = {
 
 export const DEFAULT_MOBILE_THEME_ACCENT = '#a78bfa';
 
+export function experienceIsSecretProject(exp: { company: string; title?: string }): boolean {
+  const c = exp.company.toLowerCase();
+  const t = (exp.title ?? '').toLowerCase();
+  return c.includes('secret') || c.includes('geheim') || t.includes('geheim');
+}
+
 export function resolveTimelineDesktopTheme(company: string): TimelineDesktopTheme {
-  const key = Object.keys(TIMELINE_DESKTOP_THEMES).find(k =>
-    company.toLowerCase().includes(k.toLowerCase())
-  );
+  const lc = company.toLowerCase();
+  if (lc.includes('secret') || lc.includes('geheim')) {
+    return TIMELINE_DESKTOP_THEMES.SecretProject;
+  }
+  const key = Object.keys(TIMELINE_DESKTOP_THEMES).find(k => lc.includes(k.toLowerCase()));
   return key ? TIMELINE_DESKTOP_THEMES[key] : TIMELINE_DESKTOP_THEMES['T-Systems'];
 }
 
 export function resolveTimelineMobileAccent(company: string): string {
-  const key = Object.keys(TIMELINE_MOBILE_THEME_ACCENTS).find(k =>
-    company.toLowerCase().includes(k.toLowerCase())
-  );
+  const lc = company.toLowerCase();
+  if (lc.includes('secret') || lc.includes('geheim')) {
+    return TIMELINE_MOBILE_THEME_ACCENTS.SecretProject;
+  }
+  const key = Object.keys(TIMELINE_MOBILE_THEME_ACCENTS).find(k => lc.includes(k.toLowerCase()));
   return key ? TIMELINE_MOBILE_THEME_ACCENTS[key] : DEFAULT_MOBILE_THEME_ACCENT;
 }
 
-export function experienceIsSecret(exp: ExperienceEntry): boolean {
-  return exp.company.toLowerCase().includes('syndikat7');
+export function getExperienceHighlights(exp: ExperienceEntry): string[] {
+  if (experienceIsSecretProject(exp)) return [];
+  if (exp.highlights?.length) return exp.highlights;
+  if (exp.description) return [exp.description];
+  return [];
+}
+
+export function getExperienceSkills(exp: ExperienceEntry): string[] {
+  if (experienceIsSecretProject(exp)) return [];
+  return exp.skills ?? [];
+}
+
+export function getExperienceLocation(exp: ExperienceEntry): string | undefined {
+  if (experienceIsSecretProject(exp)) return undefined;
+  return exp.location;
 }

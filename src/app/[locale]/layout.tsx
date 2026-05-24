@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { locales } from '@/i18n/config';
 import { Layout } from '@/components/layout/Layout';
 import { PerformanceMonitor } from '@/components/performance/PerformanceMonitor';
+import 'lenis/dist/lenis.css';
 import '../globals.css';
 
 export function generateStaticParams() {

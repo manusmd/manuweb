@@ -45,7 +45,9 @@
     "title": "About Me",
     "subtitle": "Software Developer with a passion for creating elegant solutions",
     "timeline": {
-      "title": "Experience"
+      "title": "Experience",
+      "subtitle": "From bootcamp capstone to AI-assisted product teams — shipping frontends, dashboards, and tooling with real users.",
+      "secretBadge": "Secret · NDA"
     },
     "buttons": {
       "email": "Email",
@@ -61,28 +63,54 @@
     },
     "experience": [
       {
-        "date": "Nov 2023 - present",
+        "date": "Mar 2026 – Apr 2026",
+        "title": "Software Developer",
+        "company": "Secret project"
+      },
+      {
+        "date": "Nov 2023 – Feb 2026",
         "title": "Software Developer",
         "company": "SYNDIKAT7 GmbH",
-        "description": "-"
+        "location": "Appenweier · Remote",
+        "skills": ["React", "Spring Boot", "Design systems"],
+        "highlights": [
+          "Built frontend features and interfaces for major-client web applications with React and Spring Boot.",
+          "Co-designed an automotive dashboard and a document-management app to cut manual work and errors.",
+          "Contributed to a trainee platform for clearer content and process management."
+        ]
       },
       {
-        "date": "Dec 2022 - Oct 2023",
+        "date": "Dec 2022 – Oct 2023",
         "title": "Junior Software Developer",
-        "company": "T-Systems onsite GmbH, Leinfelden-Echterdingen",
-        "description": "Learning Java, Spring Boot, Docker, Kubernetes and Agile methods. Development of a Remote Docker Service for employees."
+        "company": "T-Systems onsite GmbH",
+        "location": "Leinfelden-Echterdingen",
+        "skills": ["Java", "Spring Boot", "Docker", "Kubernetes"],
+        "highlights": [
+          "Onboarded to Java, Spring Boot, Docker, Kubernetes, and agile delivery.",
+          "Helped build a remote Docker service used by employees day to day."
+        ]
       },
       {
-        "date": "Feb 2022 - Jul 2022",
-        "title": "IT-Consultant Focus Development",
-        "company": "PRGH GmbH, Hamburg (Remote)",
-        "description": "Coaching programming beginners with focus on HTML, CSS, JavaScript and React and development of tools using no/low-code solutions."
+        "date": "Feb 2022 – Jul 2022",
+        "title": "IT-Consultant — Development focus",
+        "company": "PRGH GmbH",
+        "location": "Hamburg · Remote",
+        "skills": ["HTML", "CSS", "JavaScript", "React"],
+        "highlights": [
+          "Coached junior developers on HTML, CSS, JavaScript, and React.",
+          "Built tools with no/low-code approaches where they fit best."
+        ]
       },
       {
-        "date": "Sep - Dec 2021",
+        "date": "Sep 2021 – Dec 2021",
         "title": "Trainee Web Development",
-        "company": "neue fische - School and Pool for Digital Talent",
-        "description": "540 hours of programming practice with self-development of a web app as final project. MyStudy helps tutoring schools with the management of students, teachers, groups and school subjects."
+        "company": "neue fische — School and Pool for Digital Talent",
+        "location": "Cologne · Remote",
+        "skills": ["Web app", "Capstone project"],
+        "highlights": [
+          "540 hours of hands-on practice with a self-built web app as the capstone (digital Gesellenstück).",
+          "MyStudy helps tutoring schools manage students, teachers, groups, and subjects."
+        ]
       }
     ]
   },

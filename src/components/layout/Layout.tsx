@@ -4,6 +4,7 @@ import { Header } from './Header';
 import { Footer } from './Footer';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import { ScrollProgress } from '@/components/scroll/ScrollProgress';
+import { SmoothScroll } from '@/components/scroll/SmoothScroll';
 import { PageTransition } from '@/components/transitions/PageTransition';
 import { NavigationTracker } from '@/components/transitions/NavigationTracker';
 import { FirstBlogNotification } from '@/components/easter-eggs/FirstBlogNotification';
@@ -18,19 +19,21 @@ interface LayoutProps {
 export function Layout({ children }: LayoutProps) {
   return (
     <ThemeProvider>
-      <div className="relative min-h-screen bg-background text-foreground">
-        <NavigationTracker />
-        <Header />
-        <ScrollProgress />
-        <main className="relative">
-          <PageTransition>{children}</PageTransition>
-        </main>
-        <Footer />
-        <FirstBlogNotification />
-        <SimpleEasterEggs />
-        <PersistentGameButton />
-        <BugHuntGame />
-      </div>
+      <SmoothScroll>
+        <div className="relative min-h-screen bg-background text-foreground">
+          <NavigationTracker />
+          <Header />
+          <ScrollProgress />
+          <main className="relative">
+            <PageTransition>{children}</PageTransition>
+          </main>
+          <Footer />
+          <FirstBlogNotification />
+          <SimpleEasterEggs />
+          <PersistentGameButton />
+          <BugHuntGame />
+        </div>
+      </SmoothScroll>
     </ThemeProvider>
   );
 }
