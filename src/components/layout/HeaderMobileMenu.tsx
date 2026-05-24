@@ -1,9 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
-import { ThemeToggle } from '@/components/ThemeToggle';
 import {
   headerNavItemVariants,
   headerOverlayVariants,
@@ -32,8 +30,6 @@ export function HeaderMobileMenu({
   activeSection,
   onNavClick,
 }: HeaderMobileMenuProps) {
-  const t = useTranslations('navigation');
-
   return (
     <AnimatePresence>
       {isOpen && (
@@ -110,20 +106,9 @@ export function HeaderMobileMenu({
               variants={headerSettingsVariants}
               initial="hidden"
               animate="visible"
-              className="flex items-center gap-4 mt-6 mb-4"
+              className="mt-6 mb-4"
             >
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-white/70">{t('theme')}</span>
-                <div className="[&_button]:bg-white/10 [&_button]:border-white/20 [&_button]:text-white [&_button:hover]:bg-white/20 [&_button[data-state=on]]:bg-white/30">
-                  <ThemeToggle />
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-white/70">{t('language')}</span>
-                <div className="[&_button]:bg-white/10 [&_button]:border-white/20 [&_button]:text-white [&_button:hover]:bg-white/20 [&_button[data-variant=default]]:bg-white/30 [&_button[data-variant=default]]:text-black">
-                  <LanguageSwitcher />
-                </div>
-              </div>
+              <LanguageSwitcher />
             </motion.div>
           </div>
         </motion.div>

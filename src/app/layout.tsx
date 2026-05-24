@@ -120,7 +120,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={cn(inter.variable, calSans.variable, inter.className)}>
+    <html lang="en" className={cn('dark', inter.variable, calSans.variable, inter.className)}>
       <body className={cn('min-h-screen bg-background font-sans antialiased')}>{children}</body>
       <Analytics />
       <SpeedInsights />

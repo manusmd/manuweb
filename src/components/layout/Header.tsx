@@ -4,7 +4,6 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
-import { ThemeToggle } from '@/components/ThemeToggle';
 import { HeaderMobileMenu } from '@/components/layout/HeaderMobileMenu';
 import { Button } from '@/components/ui/button';
 import { NAV_SCROLL_OFFSET_PX } from '@/constants/scroll';
@@ -129,7 +128,6 @@ export function Header() {
 
             <div className="flex items-center space-x-3">
               <div className="hidden md:flex items-center space-x-3">
-                <ThemeToggle />
                 <LanguageSwitcher />
               </div>
 
