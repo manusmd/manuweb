@@ -1,0 +1,3 @@
+export const NAV_SCROLL_OFFSET_PX = 80;
+export const ACTIVE_SECTION_SCROLL_OFFSET_PX = 100;
+export const SHOW_BACK_TO_TOP_SCROLL_PX = 300;

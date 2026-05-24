@@ -12,7 +12,6 @@ import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 
-// Dynamically import the 3D scene to avoid SSR issues
 const DynamicScene3D = dynamic(
   () => import('@/components/three/Scene3D').then(mod => ({ default: mod.Scene3D })),
   {
@@ -21,7 +20,6 @@ const DynamicScene3D = dynamic(
   }
 );
 
-// Preload 3D components for faster loading
 if (typeof window !== 'undefined') {
   import('@/components/three/Scene3D');
   import('@/components/three/Blob3D');
@@ -32,7 +30,6 @@ export function HeroSection() {
   const isMobile = useMediaQuery('(max-width: 768px)');
   const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
 
-  // Track 3D scene loading state
   const { isSceneReady, markSphereReady, progress } = use3DSceneReady({
     sphereCount: 3,
     minLoadTime: 800,
@@ -68,20 +65,16 @@ export function HeroSection() {
 
   return (
     <>
-      {/* Loading Screen */}
       <LoadingScreen isVisible={!isSceneReady} progress={progress} />
 
       <section
         id="home"
         className="relative min-h-screen flex items-center justify-center overflow-hidden"
       >
-        {/* Spotlight Effect */}
         {!prefersReducedMotion && !isMobile && isSceneReady && <div style={spotlightStyle} />}
 
-        {/* Background Gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-accent/5" />
 
-        {/* 3D Background */}
         <motion.div
           className="absolute inset-0"
           initial={{ opacity: 0 }}
@@ -110,7 +103,6 @@ export function HeroSection() {
           </DynamicScene3D>
         </motion.div>
 
-        {/* Content */}
         <motion.div
           className="relative z-10 container mx-auto px-4 py-16"
           initial={{ opacity: 0 }}
@@ -118,7 +110,6 @@ export function HeroSection() {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <div className="flex flex-col lg:flex-row items-center justify-between min-h-[80vh]">
-            {/* Left Content */}
             <div className="flex-1 text-center lg:text-left space-y-8 lg:pr-12">
               <StaggerContainer>
                 <AnimatedWrapper animation="fadeInLeft" delay={0.2}>
@@ -196,7 +187,6 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Scroll Indicator */}
           <AnimatedWrapper
             animation="fadeInUp"
             delay={1.2}
@@ -205,7 +195,7 @@ export function HeroSection() {
             <button
               onClick={scrollToNext}
               className="flex flex-col items-center space-y-2 text-muted-foreground hover:text-primary transition-colors group"
-              aria-label="Scroll to next section"
+              aria-label={t('scrollNextSection')}
             >
               <span className="text-sm font-medium">{t('scrollDown')}</span>
               <ArrowDown className="w-6 h-6 animate-bounce group-hover:translate-y-1 transition-transform" />
@@ -213,7 +203,6 @@ export function HeroSection() {
           </AnimatedWrapper>
         </motion.div>
 
-        {/* Floating Particles Effect */}
         {!prefersReducedMotion && isSceneReady && (
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             {Array.from({ length: isMobile ? 3 : 6 }).map((_, i) => (

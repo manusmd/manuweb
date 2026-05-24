@@ -19,6 +19,9 @@
     "contact": "Kontakt",
     "language": "Sprache",
     "theme": "Design",
+    "toggleMenu": "Menü öffnen oder schließen",
+    "dotsNavigateAria": "Zum Abschnitt {section}",
+    "backToTop": "Nach oben",
     "darkMode": "Dunkler Modus",
     "lightMode": "Heller Modus"
   },
@@ -29,6 +32,7 @@
     "subtitle": "Fullstack Entwickler",
     "description": "Ich entwickle moderne Webanwendungen mit Fokus auf coole User Experiences und innovative Technologien.",
     "scrollDown": "Nach unten scrollen",
+    "scrollNextSection": "Weiter zur nächsten Sektion",
     "cta": {
       "projects": "Projekte anschauen",
       "contact": "Lass uns reden",
@@ -49,6 +53,13 @@
       "email": "E-Mail",
       "github": "GitHub",
       "linkedin": "LinkedIn"
+    },
+    "timelineIntro": {
+      "scrollContinue": "Scrollen zum Weiterkommen"
+    },
+    "timelineDesktopNav": {
+      "introTooltip": "Über mich",
+      "introShort": "Über mich"
     },
     "experience": [
       {
@@ -113,8 +124,23 @@
       "inProgress": "In Arbeit",
       "archived": "Archiviert"
     },
+    "featured": "Highlight",
+    "features": "Funktionen",
+    "backToProjects": "Zurück zu Projekten",
+    "viewLive": "Live öffnen",
+    "viewLiveAria": "Live-Demo öffnen",
+    "viewSourceAria": "Quellcode öffnen",
+    "homeSection": {
+      "featuredBadge": "Ausgewählte Arbeit",
+      "moreProjects": "Mehr sehen? Schau bei GitHub vorbei oder kontaktiere mich!",
+      "viewAllGithub": "Alle Projekte",
+      "getInTouch": "Kontakt aufnehmen"
+    },
     "clubscan": {
-      "description": "Eine moderne Web-App für Sportvereine zur Verwaltung von Mitgliederanwesenheiten. Mit Offline-Support, Echtzeit-Updates und einer benutzerfreundlichen Oberfläche."
+      "title": "ClubScan",
+      "subtitle": "Anwesenheiten für Sportvereine",
+      "description": "Eine moderne Web-App für Sportvereine zur Verwaltung von Mitgliederanwesenheiten. Mit Offline-Support, Echtzeit-Updates und einer benutzerfreundlichen Oberfläche.",
+      "longDescription": "Eine moderne Web-Anwendung für Sportvereine zur Verwaltung der Mitgliederanwesenheit. Als Progressive Web App mit Offline-First, responsivem UI und Echtzeit-Sync, damit Anwesenheiten zuverlässig erfasst werden können – auch bei schwachen Netzwerken."
     },
     "portfolio": {
       "description": "Eine moderne, responsive Portfolio-Website mit Next.js 14, flüssigen Animationen, 3D-Elementen und Dark Mode. Zeigt meine Projekte und Erfahrungen."
@@ -331,7 +357,10 @@
         "goal": "Drücke Start zum Beginnen!",
         "mobile": "Wische auf dem Spielfeld zum Steuern",
         "desktop": "Verwende Pfeiltasten zum Bewegen • Sammle Tech-Icons, um deine Schlange wachsen zu lassen!"
-      }
+      },
+      "nextFood": "Nächstes",
+      "startGame": "Spiel starten",
+      "pause": "Pause"
     },
     "bugHunt": {
       "title": "Bug-Jagd",

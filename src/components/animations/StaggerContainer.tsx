@@ -2,7 +2,7 @@
 
 import { motion, HTMLMotionProps } from 'framer-motion';
 import { forwardRef, ReactNode, createElement } from 'react';
-import { useAnimationVariants } from '@/hooks/useAnimations';
+import { useAnimationVariants } from '@/hooks/useAnimationVariants';
 import React from 'react';
 
 interface StaggerContainerProps {

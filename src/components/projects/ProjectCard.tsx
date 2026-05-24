@@ -36,7 +36,6 @@ export function ProjectCard({ project, delay = 0, featured = false }: ProjectCar
       }`}
       enableHover
     >
-      {/* Project Image */}
       <div className="relative aspect-video overflow-hidden">
         <Image
           src={project.image || project.thumbnail || '/placeholder-project.jpg'}
@@ -48,7 +47,6 @@ export function ProjectCard({ project, delay = 0, featured = false }: ProjectCar
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
 
-        {/* Quick Action Buttons */}
         <div className="absolute top-4 left-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           {project.liveUrl && (
             <a
@@ -56,7 +54,7 @@ export function ProjectCard({ project, delay = 0, featured = false }: ProjectCar
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background transition-colors"
-              aria-label="View live demo"
+              aria-label={t('viewLiveAria')}
             >
               <ExternalLink className="w-4 h-4" />
             </a>
@@ -67,7 +65,7 @@ export function ProjectCard({ project, delay = 0, featured = false }: ProjectCar
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background transition-colors"
-              aria-label="View source code"
+              aria-label={t('viewSourceAria')}
             >
               <Github className="w-4 h-4" />
             </a>
@@ -75,26 +73,21 @@ export function ProjectCard({ project, delay = 0, featured = false }: ProjectCar
         </div>
       </div>
 
-      {/* Project Content */}
       <div className="p-6 space-y-4">
-        {/* Header */}
         <div className="space-y-2">
           <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
             {project.title}
           </h3>
 
-          {/* Category Badge */}
           <Badge variant="outline" className={getCategoryColor(project.category)}>
             {t(`categories.${project.category}`)}
           </Badge>
         </div>
 
-        {/* Description */}
         <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3">
           {project.description}
         </p>
 
-        {/* Technology Stack */}
         <div className="space-y-2">
           <h4 className="text-sm font-medium text-foreground">{t('techStack')}</h4>
           <div className="flex flex-wrap gap-1">
@@ -120,7 +113,6 @@ export function ProjectCard({ project, delay = 0, featured = false }: ProjectCar
           </div>
         </div>
 
-        {/* Action Buttons */}
         <div className="flex items-center gap-3 pt-2">
           {project.liveUrl && (
             <a

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { useState, useCallback, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { useTranslations } from 'next-intl';
 import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
 
 interface BlogLinkProps {
@@ -53,16 +54,15 @@ const fullScreenOverlayVariants = {
 };
 
 function FullScreenLoader({ title }: { title?: string }) {
+  const tc = useTranslations('common');
   const [mounted, setMounted] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  // Use the new scroll lock hook
   useBodyScrollLock(true);
 
   useEffect(() => {
     setMounted(true);
 
-    // Animate progress
     const interval = setInterval(() => {
       setProgress(prev => {
         if (prev >= 100) {
@@ -71,7 +71,7 @@ function FullScreenLoader({ title }: { title?: string }) {
         }
         return prev + 2;
       });
-    }, 24); // Complete in ~1.2 seconds
+    }, 24);
 
     return () => {
       clearInterval(interval);
@@ -102,7 +102,6 @@ function FullScreenLoader({ title }: { title?: string }) {
         }}
       >
         <div className="flex flex-col items-center space-y-4 sm:space-y-6 px-4">
-          {/* Animated Logo/Icon */}
           <motion.div
             className="relative"
             animate={{
@@ -121,14 +120,13 @@ function FullScreenLoader({ title }: { title?: string }) {
             </div>
           </motion.div>
 
-          {/* Loading Text */}
           <motion.div
             className="text-center space-y-2"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            <p className="text-sm text-muted-foreground">Loading</p>
+            <p className="text-sm text-muted-foreground">{tc('loading')}</p>
             {title && (
               <h3 className="text-lg sm:text-xl font-semibold text-foreground max-w-md truncate">
                 {title}
@@ -136,7 +134,6 @@ function FullScreenLoader({ title }: { title?: string }) {
             )}
           </motion.div>
 
-          {/* Progress Bar */}
           <motion.div
             className="w-48 sm:w-64 h-1 bg-muted rounded-full overflow-hidden"
             initial={{ opacity: 0, scale: 0.8 }}
@@ -151,7 +148,6 @@ function FullScreenLoader({ title }: { title?: string }) {
             />
           </motion.div>
 
-          {/* Floating Dots Animation */}
           <div className="flex space-x-1 sm:space-x-2">
             {[0, 1, 2].map(i => (
               <motion.div

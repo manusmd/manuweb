@@ -2,7 +2,7 @@
 
 import { motion, HTMLMotionProps, Variants, Variant } from 'framer-motion';
 import { forwardRef, ReactNode } from 'react';
-import { useAnimationVariants } from '@/hooks/useAnimations';
+import { useAnimationVariants } from '@/hooks/useAnimationVariants';
 import React from 'react';
 
 interface AnimatedWrapperProps extends Omit<HTMLMotionProps<'div'>, 'children'> {

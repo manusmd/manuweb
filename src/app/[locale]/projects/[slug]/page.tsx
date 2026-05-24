@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
-import { getProjectBySlug, projects } from '@/data/projects';
+import { getProjectSlugs } from '@/data/projects';
+import { resolveProject } from '@/lib/resolveProject';
 import { ProjectDetailClient } from './ProjectDetailClient';
 
 interface ProjectDetailPageProps {
@@ -10,14 +11,14 @@ interface ProjectDetailPageProps {
 }
 
 export async function generateStaticParams() {
-  return projects.map(project => ({
-    slug: project.slug,
+  return getProjectSlugs().map(slug => ({
+    slug,
   }));
 }
 
 export async function generateMetadata({ params }: ProjectDetailPageProps) {
-  const { slug } = await params;
-  const project = getProjectBySlug(slug);
+  const { slug, locale } = await params;
+  const project = await resolveProject(locale, slug);
 
   if (!project) {
     return {
@@ -38,8 +39,8 @@ export async function generateMetadata({ params }: ProjectDetailPageProps) {
 }
 
 export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {
-  const { slug } = await params;
-  const project = getProjectBySlug(slug);
+  const { slug, locale } = await params;
+  const project = await resolveProject(locale, slug);
 
   if (!project) {
     notFound();

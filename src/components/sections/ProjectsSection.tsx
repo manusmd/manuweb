@@ -1,61 +1,35 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { AnimatedWrapper, StaggerContainer } from '@/components/animations';
 import { motion } from 'framer-motion';
-import dynamic from 'next/dynamic';
 import type { Project } from '@/types/project';
 import { FullscreenSection } from '@/components/layout/FullscreenSection';
 import { Github, Star, Code2, Zap } from 'lucide-react';
 import { ProjectCard } from '@/components/projects/ProjectCard';
-
-// Lazy load the ProjectModal for better performance
-const ProjectModal = dynamic(
-  () => import('@/components/modals/ProjectModal').then(mod => ({ default: mod.ProjectModal })),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-);
+import { MQ } from '@/constants/breakpoints';
+import { buildClubscanProject } from '@/data/projects';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 export function ProjectsSection() {
   const t = useTranslations('projects');
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [isDesktop, setIsDesktop] = useState(false);
+  const tc = useTranslations('projects.clubscan');
+  const isDesktop = useMediaQuery(MQ.desktop);
 
   const projects: Project[] = [
-    {
-      title: 'ClubScan',
-      description: t('clubscan.description'),
-      image: '/clubscandashboard.png',
-      liveUrl: 'https://www.clubscan.app',
-      tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'PWA', 'Offline-First'],
-      category: 'fullstack',
-      isApp: true,
-    },
+    buildClubscanProject({
+      title: tc('title'),
+      subtitle: tc('subtitle'),
+      description: tc('description'),
+      longDescription: tc('longDescription'),
+    }),
   ];
-
-  // Check if device is desktop (1024px and above)
-  useEffect(() => {
-    const checkIsDesktop = () => {
-      setIsDesktop(window.innerWidth >= 1024);
-    };
-
-    checkIsDesktop();
-    window.addEventListener('resize', checkIsDesktop);
-
-    return () => window.removeEventListener('resize', checkIsDesktop);
-  }, []);
 
   return (
     <FullscreenSection id="projects" className="relative overflow-hidden">
-      {/* Animated Background */}
       <div className="absolute inset-0">
-        {/* Gradient mesh background */}
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-background"></div>
 
-        {/* Animated geometric shapes */}
         <div className="absolute inset-0 overflow-hidden">
           <motion.div
             className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-3xl"
@@ -84,7 +58,6 @@ export function ProjectsSection() {
             }}
           />
 
-          {/* Floating code symbols */}
           <div className="absolute inset-0 pointer-events-none">
             {[...Array(6)].map((_, i) => (
               <motion.div
@@ -118,14 +91,12 @@ export function ProjectsSection() {
           </div>
         </div>
 
-        {/* Grid pattern overlay */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.02)_1px,transparent_1px)] bg-[size:100px_100px] [mask-image:radial-gradient(ellipse_at_center,black_50%,transparent_100%)]"></div>
       </div>
 
       <AnimatedWrapper className="w-full relative z-10">
         <div className="w-full px-4 py-8 md:py-16">
           <StaggerContainer className="space-y-8 md:space-y-16">
-            {/* Enhanced Header */}
             <motion.div
               className="text-center space-y-4 md:space-y-6"
               initial={{ opacity: 0, y: 20 }}
@@ -140,7 +111,7 @@ export function ProjectsSection() {
                   transition={{ delay: 0.2 }}
                 >
                   <Star className="w-3 h-3 md:w-4 md:h-4" />
-                  Featured Work
+                  {t('homeSection.featuredBadge')}
                 </motion.div>
 
                 <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold bg-gradient-to-r from-foreground via-foreground to-muted-foreground bg-clip-text text-transparent">
@@ -155,7 +126,6 @@ export function ProjectsSection() {
               </p>
             </motion.div>
 
-            {/* Project Gallery Grid */}
             <motion.div
               className="w-full max-w-6xl mx-auto px-2 md:px-0 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
               initial={{ opacity: 0, y: 40 }}
@@ -167,7 +137,6 @@ export function ProjectsSection() {
               ))}
             </motion.div>
 
-            {/* Call to action */}
             <motion.div
               className="text-center px-4"
               initial={{ opacity: 0, y: 20 }}
@@ -175,7 +144,7 @@ export function ProjectsSection() {
               transition={{ delay: 0.8 }}
             >
               <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">
-                Want to see more projects? Check out my GitHub or get in touch!
+                {t('homeSection.moreProjects')}
               </p>
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
                 <motion.a
@@ -187,7 +156,7 @@ export function ProjectsSection() {
                   whileTap={{ scale: 0.95 }}
                 >
                   <Github className="w-4 h-4" />
-                  View All Projects
+                  {t('homeSection.viewAllGithub')}
                 </motion.a>
                 <motion.a
                   href="#contact"
@@ -195,13 +164,11 @@ export function ProjectsSection() {
                   whileHover={{ scale: isDesktop ? 1.05 : 1 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  Get In Touch
+                  {t('homeSection.getInTouch')}
                 </motion.a>
               </div>
             </motion.div>
           </StaggerContainer>
-
-          <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
         </div>
       </AnimatedWrapper>
     </FullscreenSection>

@@ -31,6 +31,9 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
   const locale = params.locale as string;
   const [imageLoaded, setImageLoaded] = useState(false);
 
+  const statusMessageKey =
+    project.status === 'in-progress' ? 'inProgress' : (project.status ?? 'completed');
+
   const getStatusIcon = () => {
     switch (project.status) {
       case 'completed':
@@ -81,7 +84,7 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
               </div>
               <div className="flex items-center gap-2">
                 {getStatusIcon()}
-                <Badge variant="outline">{t(`status.${project.status}`)}</Badge>
+                <Badge variant="outline">{t(`status.${statusMessageKey}`)}</Badge>
               </div>
             </div>
 

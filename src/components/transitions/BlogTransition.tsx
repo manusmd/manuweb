@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
 
 interface BlogTransitionProps {
@@ -77,12 +78,12 @@ const loadingVariants = {
 
 export function BlogTransition({ children }: BlogTransitionProps) {
   const pathname = usePathname();
+  const tc = useTranslations('common');
   const [isLoading, setIsLoading] = useState(false);
   const [displayChildren, setDisplayChildren] = useState(children);
 
   const isBlogRoute = pathname.includes('/blog');
 
-  // Lock body scroll when loading
   useBodyScrollLock(isLoading && isBlogRoute);
 
   useEffect(() => {
@@ -128,7 +129,7 @@ export function BlogTransition({ children }: BlogTransitionProps) {
               transition={{ delay: 0.2 }}
               className="text-sm text-muted-foreground"
             >
-              Loading...
+              {tc('loading')}
             </motion.p>
           </div>
         </motion.div>

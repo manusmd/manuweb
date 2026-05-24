@@ -19,6 +19,9 @@
     "contact": "Contact",
     "language": "Language",
     "theme": "Theme",
+    "toggleMenu": "Toggle mobile menu",
+    "dotsNavigateAria": "Go to {section} section",
+    "backToTop": "Back to top",
     "darkMode": "Dark Mode",
     "lightMode": "Light Mode"
   },
@@ -27,6 +30,7 @@
     "title": "Fullstack Developer",
     "description": "Building modern web applications with a focus on exceptional user experiences and cutting-edge technologies.",
     "scrollDown": "Scroll Down",
+    "scrollNextSection": "Scroll to next section",
     "cta": {
       "projects": "View Projects",
       "contact": "Get in Touch",
@@ -47,6 +51,13 @@
       "email": "Email",
       "github": "GitHub",
       "linkedin": "LinkedIn"
+    },
+    "timelineIntro": {
+      "scrollContinue": "Scroll to continue"
+    },
+    "timelineDesktopNav": {
+      "introTooltip": "About Me",
+      "introShort": "About"
     },
     "experience": [
       {
@@ -111,8 +122,23 @@
       "inProgress": "In Progress",
       "archived": "Archived"
     },
+    "featured": "Featured",
+    "features": "Features",
+    "backToProjects": "Back to projects",
+    "viewLive": "View live",
+    "viewLiveAria": "View live demo",
+    "viewSourceAria": "View source code",
+    "homeSection": {
+      "featuredBadge": "Featured Work",
+      "moreProjects": "Want to see more projects? Check out my GitHub or get in touch!",
+      "viewAllGithub": "View All Projects",
+      "getInTouch": "Get In Touch"
+    },
     "clubscan": {
-      "description": "A modern web application for sports clubs to manage their member attendances. Features include offline support, real-time updates, and a user-friendly interface for tracking attendance and generating reports."
+      "title": "ClubScan",
+      "subtitle": "Attendance tracking for sports clubs",
+      "description": "A modern web application for sports clubs to manage their member attendances. Features include offline support, real-time updates, and a user-friendly interface for tracking attendance and generating reports.",
+      "longDescription": "A modern web application for sports clubs to manage their member attendances. Built as a Progressive Web App with offline-first workflows, responsive UI, and real-time synchronization so staff can reliably record attendance, review member activity, and generate reports even on unstable networks."
     },
     "portfolio": {
       "description": "A modern, responsive portfolio website built with Next.js 14, featuring smooth animations, 3D elements, and a dark mode. Showcases my projects and experience in web development."
@@ -335,7 +361,10 @@
         "goal": "Press Start to begin!",
         "mobile": "Swipe on the board to control",
         "desktop": "Use arrow keys to move • Collect tech icons to grow your snake!"
-      }
+      },
+      "nextFood": "Next",
+      "startGame": "Start Game",
+      "pause": "Pause"
     },
     "bugHunt": {
       "startHint": "Click to start Bug Hunt!",

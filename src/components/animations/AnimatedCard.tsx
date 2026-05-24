@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { forwardRef, ReactNode } from 'react';
-import { useAnimationVariants } from '@/hooks/useAnimations';
+import { useAnimationVariants } from '@/hooks/useAnimationVariants';
 
 interface AnimatedCardProps {
   children: ReactNode;
