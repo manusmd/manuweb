@@ -9,6 +9,7 @@ interface FullscreenSectionProps {
   id?: string;
   background?: 'default' | 'muted' | 'gradient';
   centerContent?: boolean;
+  overflow?: 'hidden' | 'auto' | 'visible';
 }
 
 export function FullscreenSection({
@@ -17,6 +18,7 @@ export function FullscreenSection({
   id,
   background = 'default',
   centerContent = true,
+  overflow = 'hidden',
 }: FullscreenSectionProps) {
   const backgroundClasses = {
     default: '',
@@ -24,11 +26,18 @@ export function FullscreenSection({
     gradient: 'bg-gradient-to-br from-background via-background to-accent/5',
   };
 
+  const overflowClasses = {
+    hidden: 'overflow-hidden',
+    auto: 'overflow-auto',
+    visible: 'overflow-visible',
+  };
+
   return (
     <section
       id={id}
       className={cn(
-        'relative min-h-screen w-full overflow-hidden',
+        'relative min-h-screen w-full',
+        overflowClasses[overflow],
         centerContent && 'flex items-center justify-center',
         backgroundClasses[background],
         className

@@ -5,19 +5,8 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Mail, Github, Linkedin } from 'lucide-react';
 
-// Only import and register GSAP on client side for desktop
 let gsap: GSAP | null = null;
-let ScrollTrigger: any = null;
-
-if (typeof window !== 'undefined') {
-  import('gsap').then(gsapModule => {
-    gsap = gsapModule.gsap;
-    import('gsap/ScrollTrigger').then(scrollTriggerModule => {
-      ScrollTrigger = scrollTriggerModule.ScrollTrigger;
-      gsap?.registerPlugin(ScrollTrigger);
-    });
-  });
-}
+let ScrollTrigger: typeof import('gsap/ScrollTrigger').ScrollTrigger | null = null;
 
 interface ExperienceItem {
   date: string;
@@ -90,23 +79,44 @@ export function Timeline() {
   const containerRef = useRef<HTMLDivElement>(null);
   const horizontalRef = useRef<HTMLDivElement>(null);
   const [currentPanel, setCurrentPanel] = useState(0);
-  const [isMobile, setIsMobile] = useState(true); // Start with mobile as default to prevent GSAP issues
+  const [isMobile, setIsMobile] = useState(false);
   const [isClient, setIsClient] = useState(false);
-  const [isInView, setIsInView] = useState(false); // Track if Timeline section is in view
+  const [gsapReady, setGsapReady] = useState(false);
+  const [isInView, setIsInView] = useState(false);
 
   const experiences = t.raw('experience') as ExperienceItem[];
 
-  // Client-side hydration check
   useEffect(() => {
     setIsClient(true);
+    setIsMobile(window.innerWidth < 1024);
+
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 1024);
     };
 
     checkMobile();
     window.addEventListener('resize', checkMobile);
 
     return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(
+      ([gsapModule, scrollTriggerModule]) => {
+        if (cancelled) return;
+
+        gsap = gsapModule.gsap;
+        ScrollTrigger = scrollTriggerModule.ScrollTrigger;
+        gsap.registerPlugin(ScrollTrigger);
+        setGsapReady(true);
+      }
+    );
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   // Intersection Observer to track when Timeline section is visible
@@ -158,9 +168,9 @@ export function Timeline() {
   }, [isMobile, isClient, experiences.length]);
 
   useEffect(() => {
-    // Only run GSAP code if we're on client, not mobile, and GSAP is loaded
     if (
       !isClient ||
+      !gsapReady ||
       isMobile ||
       !gsap ||
       !ScrollTrigger ||
@@ -294,7 +304,7 @@ export function Timeline() {
       }
       setCurrentPanel(0);
     };
-  }, [experiences.length, isMobile, isClient]);
+  }, [experiences.length, isMobile, isClient, gsapReady]);
 
   // Function to navigate to a specific panel
   const navigateToPanel = (panelIndex: number) => {
