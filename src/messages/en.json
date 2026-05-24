@@ -46,16 +46,13 @@
     "subtitle": "Software Developer with a passion for creating elegant solutions",
     "timeline": {
       "title": "Experience",
-      "subtitle": "From bootcamp capstone to AI-assisted product teams — shipping frontends, dashboards, and tooling with real users.",
+      "subtitle": "Five roles — from bootcamp to product teams.",
       "secretBadge": "Secret · NDA"
     },
     "buttons": {
       "email": "Email",
       "github": "GitHub",
       "linkedin": "LinkedIn"
-    },
-    "timelineIntro": {
-      "scrollContinue": "Scroll to continue"
     },
     "timelineDesktopNav": {
       "introTooltip": "About Me",

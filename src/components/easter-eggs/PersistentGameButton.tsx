@@ -2,11 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Gamepad2 } from 'lucide-react';
 import { PortfolioSnakeGame } from './PortfolioSnakeGame';
 
 export function PersistentGameButton() {
+  const pathname = usePathname();
+  const isBlogPage = pathname.includes('/blog');
   const [isGameUnlocked, setIsGameUnlocked] = useState(false);
   const [isGameOpen, setIsGameOpen] = useState(false);
 
@@ -38,7 +41,7 @@ export function PersistentGameButton() {
     };
   }, []);
 
-  if (!isGameUnlocked) {
+  if (!isBlogPage || !isGameUnlocked) {
     return null;
   }
 

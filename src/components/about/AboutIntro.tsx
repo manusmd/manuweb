@@ -1,5 +1,6 @@
 'use client';
 
+import { forwardRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Mail, Github, Linkedin } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -9,12 +10,18 @@ interface AboutIntroProps {
   subtitle: string;
 }
 
-export function AboutIntro({ title, subtitle }: AboutIntroProps) {
+export const AboutIntro = forwardRef<HTMLDivElement, AboutIntroProps>(function AboutIntro(
+  { title, subtitle },
+  ref
+) {
   const tc = useTranslations('contact');
   const ta = useTranslations('about');
 
   return (
-    <div className="relative min-h-[65vh] overflow-hidden rounded-3xl rounded-b-none border border-border/50 border-b-0 bg-gradient-to-br from-slate-950 via-purple-950/90 to-slate-900 text-white">
+    <div
+      ref={ref}
+      className="relative min-h-[65vh] overflow-hidden rounded-3xl border border-border/50 bg-gradient-to-br from-slate-950 via-purple-950/90 to-slate-900 text-white"
+    >
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
         <div
           data-about-parallax="0.12"
@@ -93,19 +100,7 @@ export function AboutIntro({ title, subtitle }: AboutIntroProps) {
             </a>
           </Button>
         </div>
-
-        <div className="pt-4">
-          <div className="relative mx-auto h-10 w-6 rounded-full border-2 border-gray-400">
-            <div className="absolute left-1/2 top-2 h-3 w-1 -translate-x-1/2 animate-bounce rounded-full bg-gradient-to-b from-blue-400 to-purple-400" />
-          </div>
-          <p className="mt-2 text-sm text-gray-400">{ta('timelineIntro.scrollContinue')}</p>
-        </div>
       </div>
-
-      <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-slate-950/90"
-        aria-hidden
-      />
     </div>
   );
-}
+});

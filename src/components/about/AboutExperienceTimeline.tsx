@@ -6,6 +6,7 @@ import type { ExperienceEntry } from '@/types/experience';
 import { AboutExperienceCard } from '@/components/about/AboutExperienceCard';
 import { AboutJobScene } from '@/components/about/AboutJobScene';
 import { AboutJobsNav } from '@/components/about/AboutJobsNav';
+import { AboutJobsParallaxBackdrop } from '@/components/about/AboutJobsParallaxBackdrop';
 import { AboutJobsProgress } from '@/components/about/AboutJobsProgress';
 import { scrollToAboutExperienceCard } from '@/components/about/aboutScroll';
 import { useAboutJobsHorizontalScenesScroll } from '@/hooks/useAboutJobsHorizontalScenesScroll';
@@ -56,7 +57,7 @@ export function AboutExperienceTimeline({ experiences }: AboutExperienceTimeline
     useStackedLayout ? experiences.length : 0
   );
 
-  const header = (
+  const stackedHeader = (
     <div className="relative mb-8 max-w-2xl px-4 md:mb-10 md:px-6 lg:px-8">
       <div className="pointer-events-none absolute -left-24 top-[-3rem] h-48 w-72 rounded-full bg-gradient-to-tr from-primary/18 via-fuchsia-600/10 to-transparent blur-3xl" />
       <h2 className="font-display bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-3xl font-bold tracking-tight text-transparent md:text-[2.25rem] md:leading-[1.15]">
@@ -71,7 +72,7 @@ export function AboutExperienceTimeline({ experiences }: AboutExperienceTimeline
   if (useStackedLayout) {
     return (
       <div className="relative mt-10 w-full lg:mt-14">
-        {header}
+        {stackedHeader}
         <div className="flex flex-col gap-10 px-4 md:px-6 lg:px-8">
           <div ref={stackColumnRef} className="flex flex-col gap-10">
             {experiences.map((exp, index) => (
@@ -95,19 +96,21 @@ export function AboutExperienceTimeline({ experiences }: AboutExperienceTimeline
   }
 
   return (
-    <div className="relative mt-10 w-full lg:mt-14">
-      {header}
-
+    <div className="relative mt-6 w-full lg:mt-8">
       <div
         ref={pinOuterRef}
-        className="relative flex min-h-[calc(100svh-5rem)] w-screen max-w-none flex-col items-center justify-center px-4 py-10 ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] md:px-8 md:py-14"
+        className="relative flex h-[100svh] min-h-[100svh] w-screen max-w-none flex-col items-center justify-center overflow-x-hidden ml-[calc(50%-50vw)] mr-[calc(50%-50vw)]"
       >
-        <div
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_40%,rgba(120,80,200,0.08),transparent_65%)]"
-          aria-hidden
+        <AboutJobsParallaxBackdrop
+          experiences={experiences}
+          scrollProgress={scrollProgress}
+          activeIndex={activeIndex}
         />
 
-        <div className="relative z-10 flex w-full max-w-[min(1400px,94vw)] flex-col gap-3 md:gap-4">
+        <div className="relative z-10 flex w-full max-w-[min(1400px,94vw)] flex-col gap-3 px-4 md:gap-4 md:px-8">
+          <p className="text-center text-[11px] font-semibold uppercase tracking-[0.28em] text-muted-foreground/45">
+            {t('timeline.title')}
+          </p>
           <AboutJobsProgress
             experiences={experiences}
             activeIndex={activeIndex}

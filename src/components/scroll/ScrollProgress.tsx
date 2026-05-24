@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { ChevronUp } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { SECTION_IDS } from '@/constants/sections';
+import { SectionScrollNav } from '@/components/scroll/SectionScrollNav';
 import { useActiveHomeSection, useBackToTopVisible } from '@/hooks/useSectionScroll';
 
 export function ScrollProgress() {
@@ -93,47 +93,12 @@ export function ScrollProgress() {
       </motion.div>
 
       {!isBlogPage && (
-        <div className="fixed right-8 top-1/2 -translate-y-1/2 z-40 hidden lg:block">
-          <div className="flex flex-col space-y-6">
-            {SECTION_IDS.map((sectionId, index) => {
-              const label = tNav(sectionId);
-
-              return (
-                <motion.button
-                  key={sectionId}
-                  type="button"
-                  onClick={() => {
-                    const element = document.getElementById(sectionId);
-                    element?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  className="w-4 h-4 rounded-full border-2 border-muted-foreground/30 hover:border-primary transition-all duration-300 relative group cursor-pointer"
-                  whileHover={{ scale: 1.3 }}
-                  whileTap={{ scale: 0.9 }}
-                  aria-label={tNav('dotsNavigateAria', { section: label })}
-                >
-                  <motion.div
-                    className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"
-                    initial={{ scale: 0 }}
-                    animate={{
-                      scale: index <= activeIndex ? 1 : 0,
-                    }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                  />
-
-                  <motion.div
-                    className="absolute inset-0 rounded-full bg-primary/20"
-                    initial={{ scale: 0, opacity: 0 }}
-                    whileHover={{ scale: 1.2, opacity: 1 }}
-                    transition={{ duration: 0.2 }}
-                  />
-
-                  <div className="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-3 py-2 bg-background/95 backdrop-blur-sm border rounded-lg text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap shadow-lg">
-                    {label}
-                  </div>
-                </motion.button>
-              );
-            })}
-          </div>
+        <div className="fixed right-6 top-1/2 z-40 hidden -translate-y-1/2 lg:block">
+          <SectionScrollNav
+            activeIndex={activeIndex}
+            getLabel={sectionId => tNav(sectionId)}
+            getAriaLabel={sectionId => tNav('dotsNavigateAria', { section: tNav(sectionId) })}
+          />
         </div>
       )}
     </>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { NAV_SCROLL_OFFSET_PX } from '@/constants/scroll';
+import { ABOUT_JOBS_PIN_START_OFFSET_PX } from '@/components/about/aboutScroll';
 import { scrollWindowTo } from '@/lib/scrollTo';
 
 function clamp(n: number, min: number, max: number): number {
@@ -159,7 +159,7 @@ export function useAboutJobsHorizontalScenesScroll(
             pin: pinOuter,
             pinSpacing: true,
             scrub: 0.55,
-            start: () => `top top+=${String(NAV_SCROLL_OFFSET_PX)}`,
+            start: () => `top top+=${String(ABOUT_JOBS_PIN_START_OFFSET_PX)}`,
             end: () => `+=${String(computeEndPx())}`,
             invalidateOnRefresh: true,
             anticipatePin: 0,

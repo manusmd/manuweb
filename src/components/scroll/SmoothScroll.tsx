@@ -7,6 +7,31 @@ interface SmoothScrollProps {
   children: React.ReactNode;
 }
 
+function restoreNativeScrollProxy(): void {
+  void Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(
+    ([{ gsap }, { ScrollTrigger }]) => {
+      gsap.registerPlugin(ScrollTrigger);
+      ScrollTrigger.scrollerProxy(document.documentElement, {
+        scrollTop(value) {
+          if (arguments.length && typeof value === 'number') {
+            window.scrollTo(0, value);
+          }
+          return window.scrollY;
+        },
+        getBoundingClientRect() {
+          return {
+            top: 0,
+            left: 0,
+            width: window.innerWidth,
+            height: window.innerHeight,
+          };
+        },
+      });
+      ScrollTrigger.refresh();
+    }
+  );
+}
+
 export function SmoothScroll({ children }: SmoothScrollProps) {
   const pathname = usePathname();
   const lenisRef = useRef<InstanceType<(typeof import('lenis'))['default']> | null>(null);
@@ -92,10 +117,7 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
       lenisRef.current?.destroy();
       lenisRef.current = null;
       delete window.__lenis;
-      void import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
-        ScrollTrigger.scrollerProxy(document.documentElement, {});
-        ScrollTrigger.refresh();
-      });
+      restoreNativeScrollProxy();
     };
   }, []);
 
@@ -105,9 +127,12 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
 
     const id = requestAnimationFrame(() => {
       lenisRef.current?.resize();
-      void import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
-        ScrollTrigger.refresh();
-      });
+      void Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(
+        ([{ gsap }, { ScrollTrigger }]) => {
+          gsap.registerPlugin(ScrollTrigger);
+          ScrollTrigger.refresh();
+        }
+      );
     });
     return () => cancelAnimationFrame(id);
   }, [pathname]);

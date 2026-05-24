@@ -15,11 +15,8 @@ export function AboutSection() {
   const experiences = t.raw('experience') as ExperienceEntry[];
 
   return (
-    <div className="relative w-full overflow-x-hidden pb-24 pt-8 lg:pb-28">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[480px] bg-gradient-to-b from-purple-950/20 via-transparent to-transparent" />
-      <div ref={parallaxRootRef} className="relative px-4 md:px-6 lg:px-8">
-        <AboutIntro title={t('title')} subtitle={t('subtitle')} />
-      </div>
+    <div className="relative w-full overflow-x-hidden px-4 pb-24 pt-8 md:px-6 lg:px-8 lg:pb-28">
+      <AboutIntro ref={parallaxRootRef} title={t('title')} subtitle={t('subtitle')} />
       <AboutExperienceTimeline experiences={experiences} />
     </div>
   );

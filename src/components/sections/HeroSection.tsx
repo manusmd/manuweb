@@ -69,7 +69,7 @@ export function HeroSection() {
 
       <section
         id="home"
-        className="relative min-h-screen flex items-center justify-center overflow-hidden"
+        className="relative flex min-h-[calc(100svh-4rem)] flex-col overflow-x-hidden"
       >
         {!prefersReducedMotion && !isMobile && isSceneReady && <div style={spotlightStyle} />}
 
@@ -104,12 +104,12 @@ export function HeroSection() {
         </motion.div>
 
         <motion.div
-          className="relative z-10 container mx-auto px-4 py-16"
+          className="relative z-10 flex flex-1 items-center container mx-auto px-4 py-12 md:py-16"
           initial={{ opacity: 0 }}
           animate={{ opacity: isSceneReady ? 1 : 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <div className="flex flex-col lg:flex-row items-center justify-between min-h-[80vh]">
+          <div className="flex w-full flex-col lg:flex-row items-center justify-between">
             <div className="flex-1 text-center lg:text-left space-y-8 lg:pr-12">
               <StaggerContainer>
                 <AnimatedWrapper animation="fadeInLeft" delay={0.2}>
@@ -186,22 +186,22 @@ export function HeroSection() {
               </StaggerContainer>
             </div>
           </div>
-
-          <AnimatedWrapper
-            animation="fadeInUp"
-            delay={1.2}
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-          >
-            <button
-              onClick={scrollToNext}
-              className="flex flex-col items-center space-y-2 text-muted-foreground hover:text-primary transition-colors group"
-              aria-label={t('scrollNextSection')}
-            >
-              <span className="text-sm font-medium">{t('scrollDown')}</span>
-              <ArrowDown className="w-6 h-6 animate-bounce group-hover:translate-y-1 transition-transform" />
-            </button>
-          </AnimatedWrapper>
         </motion.div>
+
+        <AnimatedWrapper
+          animation="fadeInUp"
+          delay={1.2}
+          className="relative z-20 flex shrink-0 justify-center pb-8 pt-2"
+        >
+          <button
+            onClick={scrollToNext}
+            className="flex flex-col items-center space-y-2 text-muted-foreground hover:text-primary transition-colors group"
+            aria-label={t('scrollNextSection')}
+          >
+            <span className="text-sm font-medium">{t('scrollDown')}</span>
+            <ArrowDown className="w-6 h-6 animate-bounce group-hover:translate-y-1 transition-transform" />
+          </button>
+        </AnimatedWrapper>
 
         {!prefersReducedMotion && isSceneReady && (
           <div className="absolute inset-0 overflow-hidden pointer-events-none">

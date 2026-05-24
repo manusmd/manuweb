@@ -48,16 +48,13 @@
     "subtitle": "Software-Entwickler mit Leidenschaft für elegante Lösungen",
     "timeline": {
       "title": "Erfahrung",
-      "subtitle": "Vom Bootcamp-Abschlussprojekt bis zu KI-gestützten Produktteams — Frontends, Dashboards und Tools mit echten Nutzerinnen und Nutzern.",
+      "subtitle": "Fünf Rollen — vom Bootcamp bis zu Produktteams.",
       "secretBadge": "Geheim · NDA"
     },
     "buttons": {
       "email": "E-Mail",
       "github": "GitHub",
       "linkedin": "LinkedIn"
-    },
-    "timelineIntro": {
-      "scrollContinue": "Scrollen zum Weiterkommen"
     },
     "timelineDesktopNav": {
       "introTooltip": "Über mich",
