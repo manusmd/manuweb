@@ -145,7 +145,7 @@ export function ScrollProgress() {
 
       {/* Floating Progress Dots - Only show on non-blog pages */}
       {!isBlogPage && (
-        <div className="fixed left-8 top-1/2 -translate-y-1/2 z-40 hidden lg:block">
+        <div className="fixed right-8 top-1/2 -translate-y-1/2 z-40 hidden lg:block">
           <div className="flex flex-col space-y-6">
             {['home', 'about', 'projects', 'blog', 'contact'].map((section, index) => (
               <motion.button
@@ -177,7 +177,7 @@ export function ScrollProgress() {
                 />
 
                 {/* Tooltip */}
-                <div className="absolute left-8 top-1/2 -translate-y-1/2 px-3 py-2 bg-background/95 backdrop-blur-sm border rounded-lg text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap shadow-lg">
+                <div className="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-3 py-2 bg-background/95 backdrop-blur-sm border rounded-lg text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap shadow-lg">
                   {section.charAt(0).toUpperCase() + section.slice(1)}
                 </div>
               </motion.button>

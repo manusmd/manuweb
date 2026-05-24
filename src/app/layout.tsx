@@ -5,7 +5,10 @@ import type { Metadata, Viewport } from 'next';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+});
 
 const calSans = localFont({
   src: '../../node_modules/cal-sans/fonts/webfonts/CalSans-SemiBold.woff2',
@@ -117,7 +120,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={cn(inter.className, calSans.variable)}>
+    <html lang="en" className={cn(inter.variable, calSans.variable, inter.className)}>
       <body className={cn('min-h-screen bg-background font-sans antialiased')}>{children}</body>
       <Analytics />
       <SpeedInsights />
