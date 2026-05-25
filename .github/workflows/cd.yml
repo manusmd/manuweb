@@ -28,7 +28,7 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-version: latest
           vercel-build: true
-          vercel-args: '--prod'
+          target: production
           working-directory: ./
 
   notify:
