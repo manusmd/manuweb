@@ -62,3 +62,9 @@ jobs:
 
       - name: Check for vulnerabilities
         run: npm audit --audit-level=high --production
+
+  deploy:
+    needs: [ci, security]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    uses: ./.github/workflows/cd.yml
+    secrets: inherit

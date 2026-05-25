@@ -1,16 +1,11 @@
 name: CD
 
 on:
-  workflow_run:
-    workflows: ['CI']
-    types:
-      - completed
-    branches: [main]
+  workflow_call:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: Checkout code
@@ -29,7 +24,6 @@ jobs:
         run: npm run build
 
       - name: Deploy to Vercel
-        if: ${{ secrets.VERCEL_TOKEN != '' && secrets.VERCEL_ORG_ID != '' && secrets.VERCEL_PROJECT_ID != '' }}
         uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
@@ -37,13 +31,6 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-args: '--prod'
           working-directory: ./
-
-      - name: Skip Vercel deploy (secrets not configured)
-        if: ${{ secrets.VERCEL_TOKEN == '' || secrets.VERCEL_ORG_ID == '' || secrets.VERCEL_PROJECT_ID == '' }}
-        run: |
-          echo "::notice::Skipping Vercel deploy — GitHub repository secrets are not configured."
-          echo "Add VERCEL_TOKEN, VERCEL_ORG_ID, and VERCEL_PROJECT_ID under Settings → Secrets and variables → Actions."
-          echo "If the repo is linked in the Vercel dashboard, pushes to main may still deploy via Vercel Git integration."
 
   notify:
     runs-on: ubuntu-latest
