@@ -49,7 +49,7 @@
     "subtitle": "Software-Entwickler mit Leidenschaft für elegante Lösungen",
     "timeline": {
       "title": "Erfahrung",
-      "subtitle": "Fünf Rollen — vom Bootcamp bis zu Produktteams.",
+      "subtitle": "Vier Rollen — vom Bootcamp bis zu Produktteams.",
       "secretBadge": "Geheim · NDA"
     },
     "buttons": {
@@ -63,12 +63,7 @@
     },
     "experience": [
       {
-        "date": "März 2026 – Apr 2026",
-        "title": "Software Developer",
-        "company": "Geheimes Projekt"
-      },
-      {
-        "date": "Nov 2023 – Feb 2026",
+        "date": "Nov 2023 – heute",
         "title": "Software Developer",
         "company": "SYNDIKAT7 GmbH",
         "location": "Appenweier · Remote",
@@ -187,6 +182,8 @@
     "share": "Teilen",
     "contents": "Inhalt",
     "sectionsCount": "{count} Abschnitte",
+    "showContents": "Inhalt anzeigen",
+    "collapseContents": "Inhalt ausblenden",
     "readingTime": "{time} Min. Lesezeit",
     "latestArticles": "Neueste Artikel",
     "description": "Einblicke, Tutorials und Gedanken zur modernen Webentwicklung, KI und Technologie.",

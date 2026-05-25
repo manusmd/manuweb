@@ -2,6 +2,12 @@
 
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef } from 'react';
+import { scrollWindowToTop } from '@/lib/scrollTo';
+
+function isBlogArticlePath(path: string) {
+  const normalized = path.split('?')[0]?.split('#')[0] ?? path;
+  return /\/blog\/[^/]+$/.test(normalized.replace(/\/$/, '') || '/');
+}
 
 interface SmoothScrollProps {
   children: React.ReactNode;
@@ -147,6 +153,10 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    if (isBlogArticlePath(pathname)) {
+      scrollWindowToTop();
+    }
 
     const id = requestAnimationFrame(() => {
       lenisRef.current?.resize();

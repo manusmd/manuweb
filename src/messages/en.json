@@ -47,7 +47,7 @@
     "subtitle": "Software Developer with a passion for creating elegant solutions",
     "timeline": {
       "title": "Experience",
-      "subtitle": "Five roles — from bootcamp to product teams.",
+      "subtitle": "Four roles — from bootcamp to product teams.",
       "secretBadge": "Secret · NDA"
     },
     "buttons": {
@@ -61,12 +61,7 @@
     },
     "experience": [
       {
-        "date": "Mar 2026 – Apr 2026",
-        "title": "Software Developer",
-        "company": "Secret project"
-      },
-      {
-        "date": "Nov 2023 – Feb 2026",
+        "date": "Nov 2023 – Present",
         "title": "Software Developer",
         "company": "SYNDIKAT7 GmbH",
         "location": "Appenweier · Remote",
@@ -181,6 +176,8 @@
     "share": "Share",
     "contents": "Contents",
     "sectionsCount": "{count} sections",
+    "showContents": "Show contents",
+    "collapseContents": "Hide contents",
     "readingTime": "{time} min read",
     "backToBlog": "Back to Blog",
     "backToHome": "Back to Home",

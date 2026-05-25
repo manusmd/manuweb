@@ -14,6 +14,14 @@ function createHeadingId(text: string): string {
     .trim();
 }
 
+function isHeroImage(src: string, alt: string) {
+  return (
+    alt.toLowerCase().includes('title') ||
+    /\/title\.(png|jpe?g|webp|avif)$/i.test(src) ||
+    src.includes('/title.')
+  );
+}
+
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     h1: ({ children, ...props }) => {
@@ -101,11 +109,21 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         </Link>
       );
     },
-    img: ({ src = '', alt = '', ...props }) => {
+    img: ({ src = '', alt = '' }) => {
+      const hero = isHeroImage(src, alt);
+
       return (
         <span className="block my-8">
           <span className="block relative w-full h-[400px] rounded-lg overflow-hidden border border-border">
-            <Image src={src} alt={alt} fill className="object-cover" {...props} />
+            <Image
+              src={src}
+              alt={alt}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+              priority={hero}
+              loading={hero ? 'eager' : 'lazy'}
+            />
           </span>
           {alt && (
             <span className="block text-sm text-muted-foreground text-center mt-2 italic">

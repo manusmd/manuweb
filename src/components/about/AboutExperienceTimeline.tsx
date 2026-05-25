@@ -81,12 +81,14 @@ export function AboutExperienceTimeline({ experiences }: AboutExperienceTimeline
               />
             ))}
           </div>
-          <AboutJobsNav
-            experiences={experiences}
-            activeIndex={stackedActive}
-            mode="stacked"
-            onSelect={scrollToAboutExperienceCard}
-          />
+          {reduceMotion && isDesktop ? (
+            <AboutJobsNav
+              experiences={experiences}
+              activeIndex={stackedActive}
+              mode="stacked"
+              onSelect={scrollToAboutExperienceCard}
+            />
+          ) : null}
         </div>
       </div>
     );
