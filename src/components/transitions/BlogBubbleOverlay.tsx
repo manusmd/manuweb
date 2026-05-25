@@ -40,11 +40,7 @@ function runAnimation(
   };
 }
 
-function bubbleStyle(
-  origin: BlogBubbleOrigin,
-  maxRadius: number,
-  diameter: number
-): CSSProperties {
+function bubbleStyle(origin: BlogBubbleOrigin, maxRadius: number, diameter: number): CSSProperties {
   return {
     position: 'absolute',
     left: origin.x,
@@ -59,8 +55,7 @@ function bubbleStyle(
     pointerEvents: 'none',
     willChange: 'transform, filter',
     background: 'hsl(var(--background))',
-    boxShadow:
-      '0 0 0 1px hsl(var(--border) / 0.45), 0 40px 100px -32px rgba(0, 0, 0, 0.45)',
+    boxShadow: '0 0 0 1px hsl(var(--border) / 0.45), 0 40px 100px -32px rgba(0, 0, 0, 0.45)',
   };
 }
 

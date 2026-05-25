@@ -103,7 +103,7 @@ export function TableOfContents() {
       collapsedWidthRef.current = measured;
       setCollapsedWidth(measured);
     }
-  }, [t, toc.length]);
+  }, [shellOpen, t, toc.length]);
 
   const syncCollapsedWidth = () => {
     const nav = navRef.current;
@@ -308,9 +308,7 @@ export function TableOfContents() {
                   initial={false}
                   animate={{
                     fontSize: layoutOpen ? '0.875rem' : '0.75rem',
-                    color: layoutOpen
-                      ? 'hsl(var(--foreground))'
-                      : 'hsl(var(--muted-foreground))',
+                    color: layoutOpen ? 'hsl(var(--foreground))' : 'hsl(var(--muted-foreground))',
                   }}
                   transition={transition}
                   className="whitespace-nowrap px-1 font-semibold tracking-tight"

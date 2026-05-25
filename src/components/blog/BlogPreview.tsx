@@ -35,7 +35,11 @@ function BlogPreviewCard({
   const coverImage = resolveBlogCoverImage(post);
 
   return (
-    <BlogLink href={`/${locale}/blog/${post.slug}`} className="group block h-full" title={post.title}>
+    <BlogLink
+      href={`/${locale}/blog/${post.slug}`}
+      className="group block h-full"
+      title={post.title}
+    >
       <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-border/40 bg-card/55 shadow-[0_22px_64px_-32px_rgba(0,0,0,0.45)] ring-1 ring-white/[0.06] backdrop-blur-xl transition-[border-color,box-shadow] duration-300 hover:border-border/70 hover:shadow-[0_28px_72px_-36px_rgba(0,0,0,0.55)]">
         <div className="relative aspect-[16/9] overflow-hidden border-b border-border/30 bg-muted/30">
           {coverImage ? (

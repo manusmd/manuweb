@@ -27,6 +27,15 @@ type BlogTransitionState = {
   phase: BlogBubblePhase;
 };
 
+function createIdleTransitionState(): BlogTransitionState {
+  return {
+    active: false,
+    href: null,
+    origin: { x: 0, y: 0 },
+    phase: 'idle',
+  };
+}
+
 type BlogTransitionContextValue = {
   startBlogTransition: (href: string, origin: BlogBubbleOrigin) => void;
   isTransitioning: boolean;
@@ -74,14 +83,8 @@ export function BlogTransitionProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const timeoutRef = useRef<number | null>(null);
   const coveredHoldRef = useRef<number | null>(null);
-  const stateRef = useRef<BlogTransitionState>({
-    active: false,
-    href: null,
-    origin: { x: 0, y: 0 },
-    phase: 'idle',
-  });
-
-  const [state, setState] = useState<BlogTransitionState>(stateRef.current);
+  const stateRef = useRef(createIdleTransitionState());
+  const [state, setState] = useState(createIdleTransitionState);
   const portalRoot = useTransitionPortalRoot(state.active);
 
   const syncState = useCallback((next: BlogTransitionState) => {
@@ -90,14 +93,14 @@ export function BlogTransitionProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const clearNavigationTimeout = useCallback(() => {
-    if (timeoutRef.current != null) {
+    if (timeoutRef.current !== null) {
       window.clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
   }, []);
 
   const clearCoveredHold = useCallback(() => {
-    if (coveredHoldRef.current != null) {
+    if (coveredHoldRef.current !== null) {
       window.clearTimeout(coveredHoldRef.current);
       coveredHoldRef.current = null;
     }

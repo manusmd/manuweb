@@ -71,18 +71,13 @@ async function waitForLayoutSettle() {
 }
 
 function getNativeScrollY() {
-  return (
-    window.scrollY ||
-    document.documentElement.scrollTop ||
-    document.body.scrollTop ||
-    0
-  );
+  return window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
 }
 
 function getWindowScrollY() {
   const native = getNativeScrollY();
   const lenisScroll = window.__lenis?.scroll;
-  if (lenisScroll == null) return native;
+  if (lenisScroll === undefined) return native;
   if (lenisScroll < 1 && native > 1) return native;
   return lenisScroll;
 }
@@ -101,10 +96,7 @@ function isScrollLayoutConsistent(triggerEl: HTMLElement, scrollY: number) {
   return rectTop < window.innerHeight + 400;
 }
 
-async function waitForScrollLayoutConsistency(
-  triggerEl: HTMLElement,
-  isDisposed: () => boolean
-) {
+async function waitForScrollLayoutConsistency(triggerEl: HTMLElement, isDisposed: () => boolean) {
   for (let frame = 0; frame < 120; frame += 1) {
     if (isDisposed()) return;
 
@@ -285,9 +277,7 @@ export function useAboutJobsHorizontalScenesScroll(
               const prog = clamp(self.progress, 0, 1);
               setScrollProgress(prog);
               const idx =
-                itemCount <= 1
-                  ? 0
-                  : clamp(Math.round(prog * (itemCount - 1)), 0, itemCount - 1);
+                itemCount <= 1 ? 0 : clamp(Math.round(prog * (itemCount - 1)), 0, itemCount - 1);
               if (idx !== lastIdxRef.current) {
                 lastIdxRef.current = idx;
                 setActiveIndex(idx);
@@ -329,13 +319,7 @@ export function useAboutJobsHorizontalScenesScroll(
 
       if (
         stInstance &&
-        shouldResetToFirstJob(
-          pinOuter,
-          postScrollY,
-          stStart,
-          stInstance.end,
-          progress
-        )
+        shouldResetToFirstJob(pinOuter, postScrollY, stStart, stInstance.end, progress)
       ) {
         resetHorizontalJobsToStart(
           gsap,

@@ -74,10 +74,7 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
 
       const syncLenisFromNativeScroll = () => {
         const nativeScroll =
-          window.scrollY ||
-          document.documentElement.scrollTop ||
-          document.body.scrollTop ||
-          0;
+          window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
         if (Math.abs(lenis.scroll - nativeScroll) > 1) {
           lenis.scrollTo(nativeScroll, { immediate: true });
         }
