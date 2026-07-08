@@ -233,6 +233,9 @@
       "outro": {
         "step": "05 — Dein Rechner",
         "boundaryLabel": "nichts verlässt diese Box",
+        "blockedLabel": "Cloud-KI · OAuth · E-Mail-Forwarding",
+        "blockedBadge": "blockiert",
+        "machineLabel": "localhost",
         "heading": "Überzeug dich selbst",
         "sub": "Eine öffentliche Demo, die bei jedem Besuch zurückgesetzt wird. Kein Account nötig."
       }

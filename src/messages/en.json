@@ -231,6 +231,9 @@
       "outro": {
         "step": "05 — Your machine",
         "boundaryLabel": "nothing leaves this box",
+        "blockedLabel": "Cloud AI · OAuth · email forwarding",
+        "blockedBadge": "blocked",
+        "machineLabel": "localhost",
         "heading": "See it for yourself",
         "sub": "A public demo, reset on every visit. No account needed."
       }
