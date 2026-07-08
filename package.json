@@ -66,6 +66,12 @@
   "overrides": {
     "@types/react": "19.2.15",
     "@types/react-dom": "19.2.3",
-    "postcss": "8.5.10"
+    "postcss": "8.5.10",
+    "js-yaml": "^4.3.0",
+    "gray-matter": {
+      "js-yaml": "^3.15.0"
+    },
+    "tar": "^7.5.17",
+    "@babel/core": "^7.29.7"
   }
 }
