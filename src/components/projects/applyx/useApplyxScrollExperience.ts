@@ -61,21 +61,6 @@ export function useApplyxScrollExperience(
         });
       };
 
-      const countUp = (el: HTMLElement) => {
-        const target = Number.parseFloat(el.dataset.countTo ?? '0');
-        const decimals = Number.parseInt(el.dataset.countDecimals ?? '0', 10);
-        const suffix = el.dataset.countSuffix ?? '';
-        const obj = { v: 0 };
-        gsap.to(obj, {
-          v: target,
-          duration: 1.4,
-          ease: 'power2.out',
-          onUpdate: () => {
-            el.textContent = obj.v.toFixed(decimals) + suffix;
-          },
-        });
-      };
-
       const ctx = gsap.context(() => {
         const mm = gsap.matchMedia();
 
@@ -87,11 +72,13 @@ export function useApplyxScrollExperience(
           gsap.set(q('[data-status="classified"]') ?? [], { opacity: 1 });
           gsap.set(q('[data-redaction]') ?? [], { xPercent: 100, opacity: 0 });
           gsap.set(q('[data-revealed]') ?? [], { opacity: 1 });
-          qa<HTMLElement>('[data-count-to]').forEach(el => {
-            const decimals = Number.parseInt(el.dataset.countDecimals ?? '0', 10);
-            el.textContent =
-              Number.parseFloat(el.dataset.countTo ?? '0').toFixed(decimals) +
-              (el.dataset.countSuffix ?? '');
+          gsap.set(qa('[data-response-bar]'), { scaleY: 1 });
+          gsap.set(qa('[data-spark]'), { scaleY: 1 });
+          qa<HTMLElement>('[data-gauge-arc]').forEach(el => {
+            gsap.set(el, { strokeDashoffset: Number(el.dataset.gaugeOffset ?? 0) });
+          });
+          qa<HTMLElement>('[data-donut-arc]').forEach(el => {
+            gsap.set(el, { drawSVG: `${el.dataset.drawFrom ?? 0}% ${el.dataset.drawTo ?? 0}%` });
           });
         });
 
@@ -286,7 +273,8 @@ export function useApplyxScrollExperience(
               gsap.set(q('[data-redaction]') ?? [], { xPercent: 100, opacity: 0 });
             }
 
-            // --- STATS: funnel bars draw, numbers count up, confetti once ---
+            // --- STATS: funnel segments grow, donut arcs draw, response bars
+            //     rise, confetti once. (Numbers self-animate via <CountUp/>.) ---
             const statsSection = q('[data-scene="stats"]');
             if (statsSection) {
               ScrollTrigger.create({
@@ -294,18 +282,51 @@ export function useApplyxScrollExperience(
                 start: 'top 65%',
                 once: true,
                 onEnter: () => {
-                  qa<HTMLElement>('[data-count-to]').forEach(countUp);
-                  gsap.to('[data-bar]', {
-                    scaleY: (i, el: HTMLElement) => Number.parseFloat(el.dataset.bar ?? '1'),
+                  gsap.to('[data-spark]', {
+                    scaleY: 1,
                     transformOrigin: 'bottom',
-                    stagger: 0.1,
-                    duration: 1,
+                    stagger: 0.05,
+                    duration: 0.7,
                     ease: 'power3.out',
+                  });
+                  qa<HTMLElement>('[data-gauge-arc]').forEach(el => {
+                    gsap.to(el, {
+                      strokeDashoffset: Number(el.dataset.gaugeOffset ?? 0),
+                      duration: 1.4,
+                      ease: 'power2.out',
+                    });
+                  });
+                  gsap.from('[data-funnel-seg]', {
+                    scaleY: 0,
+                    opacity: 0,
+                    transformOrigin: 'top',
+                    stagger: 0.12,
+                    duration: 0.6,
+                    ease: 'power3.out',
+                  });
+                  gsap.from('[data-response-bar]', {
+                    scaleY: 0,
+                    transformOrigin: 'bottom',
+                    stagger: 0.08,
+                    duration: 0.6,
+                    ease: 'power3.out',
+                  });
+                  qa<HTMLElement>('[data-donut-arc]').forEach((el, i) => {
+                    gsap.fromTo(
+                      el,
+                      { drawSVG: `${el.dataset.drawFrom ?? 0}% ${el.dataset.drawFrom ?? 0}%` },
+                      {
+                        drawSVG: `${el.dataset.drawFrom ?? 0}% ${el.dataset.drawTo ?? 0}%`,
+                        duration: 0.9,
+                        delay: i * 0.12,
+                        ease: 'power2.out',
+                      }
+                    );
                   });
                 },
               });
               ScrollTrigger.create({
-                trigger: q('[data-wrapped]') ?? statsSection,
+                trigger: q('[data-funnel]') ?? statsSection,
                 start: 'top 70%',
                 once: true,
                 onEnter: fireConfetti,
