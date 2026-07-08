@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import confetti from 'canvas-confetti';
 
@@ -10,17 +9,7 @@ interface MouseEasterEggsProps {
 }
 
 export function MouseEasterEggs({ showEasterEggDiscovery }: MouseEasterEggsProps) {
-  const [logoClickCount, setLogoClickCount] = useState(0);
-  const [showLogoHint, setShowLogoHint] = useState(false);
-
   const t = useTranslations('easterEggs.notifications');
-  const tHint = useTranslations('easterEggs.logoHint');
-
-  // Initialize logo click count from localStorage
-  useEffect(() => {
-    const savedCount = parseInt(localStorage.getItem('logo-clicks') || '0');
-    setLogoClickCount(savedCount);
-  }, []);
 
   // Easter Egg: Triple click anywhere to show hearts
   useEffect(() => {
@@ -55,69 +44,5 @@ export function MouseEasterEggs({ showEasterEggDiscovery }: MouseEasterEggsProps
     };
   }, [showEasterEggDiscovery, t]);
 
-  // Logo click handler
-  const handleLogoClick = useCallback(() => {
-    const logoClickCount = parseInt(localStorage.getItem('logo-clicks') || '0') + 1;
-    localStorage.setItem('logo-clicks', logoClickCount.toString());
-    setLogoClickCount(logoClickCount);
-
-    // Show hint after first click
-    if (logoClickCount === 1) {
-      setShowLogoHint(true);
-      setTimeout(() => setShowLogoHint(false), 5000);
-    }
-
-    if (logoClickCount % 10 === 0) {
-      confetti({
-        particleCount: 75,
-        spread: 60,
-        origin: { y: 1.0 },
-        colors: ['#ffd700', '#ffed4e', '#fbbf24'],
-      });
-      showEasterEggDiscovery(
-        t('logoMaster.title'),
-        t('logoMaster.message', { count: logoClickCount }),
-        '🏆'
-      );
-    }
-  }, [showEasterEggDiscovery, t]);
-
-  // Attach logo click handler to any element with data-logo attribute
-  useEffect(() => {
-    const logoElements = document.querySelectorAll('[data-logo]');
-
-    logoElements.forEach(element => {
-      element.addEventListener('click', handleLogoClick);
-    });
-
-    return () => {
-      logoElements.forEach(element => {
-        element.removeEventListener('click', handleLogoClick);
-      });
-    };
-  }, [handleLogoClick]);
-
-  return (
-    <>
-      {/* Logo Click Hint */}
-      <AnimatePresence>
-        {showLogoHint && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: -20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: -20 }}
-            className="fixed top-16 left-1/2 transform -translate-x-1/2 z-50 bg-gradient-to-r from-yellow-500 to-orange-500 text-white p-4 rounded-lg shadow-2xl max-w-sm border-2 border-yellow-300"
-          >
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-2xl">👆</span>
-              <span className="font-bold text-lg">{tHint('title')}</span>
-            </div>
-            <p className="text-sm opacity-95 font-medium">
-              {tHint('message', { current: logoClickCount })}
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
-  );
+  return null;
 }
