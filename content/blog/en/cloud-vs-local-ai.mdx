@@ -1,0 +1,92 @@
+---
+title: 'Cloud AI vs. Local AI: A Privacy Decision, Not Just a Cost One'
+date: '2026-07-09'
+description: 'Everyone compares cloud and local LLMs on price and quality. The more important question is where your data goes — and the last two years of retention orders, fines, and leaks make the answer concrete.'
+tags: ['ai', 'llm', 'privacy', 'local-first', 'ollama']
+---
+
+# Cloud AI vs. Local AI: A Privacy Decision, Not Just a Cost One
+
+Almost every "cloud vs. local LLM" comparison I read is about two things: how much the tokens cost, and how good the model is. Both matter. But they bury the question that actually changed my mind while building [ApplyX](/en/projects/applyx): **where does your data physically go, and who can be compelled to hand it over later?**
+
+That's not a hypothetical anymore. The last two years have turned it into case law, fines, and corporate bans. Here's the honest version.
+
+## Where your prompts actually go
+
+Start with the defaults, because most people never change them.
+
+For OpenAI's **API**, inputs and outputs are [retained for up to 30 days](https://platform.openai.com/docs/guides/your-data) for abuse monitoring, then deleted — and API data isn't used to train models by default. Approved enterprise customers can request **Zero Data Retention** on top of that. So far, reasonable.
+
+The consumer **ChatGPT** product is a different story: there, your conversations *can* be used to improve the models unless you opt out, and "opt out" is a setting most users never find. The same prompt — "here's our internal auth code, what's wrong with it?" — is treated completely differently depending on which door you walked through.
+
+The key insight: with any cloud provider, your data leaves your machine, sits on someone else's infrastructure, and is governed by *their* policy and *their* legal exposure — which can change without you doing anything.
+
+## When "delete" doesn't mean delete
+
+Here's the part that made this concrete for me. In the copyright lawsuit *The New York Times v. OpenAI*, a federal court issued a [preservation order in May 2025](https://openai.com/index/response-to-nyt-data-demands/) requiring OpenAI to **retain ChatGPT logs — including chats users had already deleted.** By November 2025, the court had [ordered OpenAI to produce 20 million de-identified conversations](https://news.bloomberglaw.com/ip-law/openai-must-turn-over-20-million-chatgpt-logs-judge-affirms) to the plaintiffs.
+
+The order was later narrowed — as of late September 2025 OpenAI no longer had to preserve *all new* logs going forward — but data already captured under it stayed captured. The lesson isn't "OpenAI is the villain." It's structural: **once your data is on someone else's servers, a court in a country you don't live in can override that company's delete button.** Your retention policy is only as strong as the next subpoena.
+
+## The compliance reality
+
+If you handle anyone else's data, this stops being philosophical.
+
+- **Samsung, 2023:** within [less than 20 days](https://www.bloomberg.com/news/articles/2023-05-02/samsung-bans-chatgpt-and-other-generative-ai-use-by-staff-after-leak) of allowing ChatGPT, engineers pasted proprietary semiconductor source code and internal meeting notes into it. Samsung banned generative AI tools company-wide. The leak wasn't a breach of OpenAI — it was employees doing exactly what the tool invites.
+- **Italy, 2024:** the data-protection authority (Garante) [fined OpenAI €15 million](https://www.euronews.com/next/2024/12/20/italys-privacy-watchdog-fines-openai-15-million-after-probe-into-chatgpt-data-collection) for training on personal data without an adequate legal basis and for transparency failures. OpenAI appealed, but the signal to European companies was loud.
+- **GDPR generally:** the moment personal data crosses into a third-party model in another jurisdiction, you own a data-transfer and legal-basis problem — regardless of how good the model is.
+
+None of these are about model quality. They're about where the data went.
+
+## What "local" actually means in 2026
+
+The counter-argument used to be: local models are toys. That's no longer true — with honest caveats.
+
+Quantization is the reason. Modern **Q4_K_M** quantized models [retain roughly 95–98% of full-precision quality](https://www.microcenter.com/site/mc-news/article/best-local-llms-8gb-16gb-32gb-memory-guide.aspx) on most benchmarks while shrinking dramatically. In practice:
+
+- **Small and mid-size models (7B–14B)** run comfortably on a normal developer laptop and are genuinely useful for classification, extraction, summarization, and structured tasks — exactly what most apps need.
+- **Large models (70B)** are still demanding: you're looking at 48 GB+ of VRAM, dual high-end GPUs, or Apple Silicon with lots of unified memory. Doable, not casual.
+
+With [Ollama](https://ollama.com), pulling and running one of these is a two-line affair:
+
+```bash
+# Pull a model and run it entirely on your machine
+ollama pull llama3.1:8b
+ollama run llama3.1:8b "Classify this email: ..."
+```
+
+No API key. No token meter. No prompt leaving the box.
+
+## The honest tradeoffs
+
+Local isn't a free lunch, and pretending otherwise is how people get burned:
+
+- **Ceiling:** the very best frontier models are still cloud-only. If you need absolute top-end reasoning, local won't match it yet.
+- **Hardware:** you pay once, upfront, in RAM/VRAM instead of monthly in tokens. Great at steady volume, worse for a rare one-off.
+- **Ops:** updates, quantization choices, and prompt tuning are now *your* job.
+- **Latency and throughput** depend on your machine, not a datacenter.
+
+The trade is real: you give up some raw capability and take on some maintenance, and in exchange **nothing leaves your infrastructure.** For a lot of products, that's a bargain.
+
+## How I decide
+
+I don't treat this as cloud-or-local dogma. I ask three questions, in order:
+
+1. **Whose data is this?** Mine, and low-stakes → cloud is fine. Someone else's personal or confidential data → local moves to the front.
+2. **What would a leak or a subpoena cost?** If the answer is "a compliance incident" or "a lawsuit," the 30-day retention window and the NYT precedent are the whole decision.
+3. **Does the task actually need a frontier model?** Classification and extraction rarely do. Novel, open-ended reasoning sometimes does.
+
+## ApplyX: the case study
+
+This is exactly why [ApplyX](/en/projects/applyx) is built the way it is. It reads your actual mailbox over IMAP and understands it with a **local Ollama model** — no cloud AI, no OAuth handoff, no email forwarding. The data is your job applications: employers, rejections, salary talk. Precisely the data you should never paste into a shared endpoint whose delete button a court can override.
+
+Running it locally means the privacy guarantee isn't a policy I'm asking you to trust — it's an architecture. Nothing leaves your machine because there's nowhere for it to go.
+
+## Conclusion
+
+Cost and quality are the easy axes to compare, so that's what most comparisons stick to. But the decision that actually ages well is about data gravity: cloud AI means your data lives somewhere else under someone else's rules and someone else's legal exposure; local AI means it stays put.
+
+For throwaway prompts, cloud is fine — use it. For anything involving data you'd be uncomfortable seeing in a court exhibit, "where does it go?" beats "what does it cost?" every time.
+
+---
+
+_Sources: [OpenAI — data controls](https://platform.openai.com/docs/guides/your-data) · [OpenAI — response to NYT data demands](https://openai.com/index/response-to-nyt-data-demands/) · [Bloomberg Law — 20M logs order](https://news.bloomberglaw.com/ip-law/openai-must-turn-over-20-million-chatgpt-logs-judge-affirms) · [Bloomberg — Samsung ban](https://www.bloomberg.com/news/articles/2023-05-02/samsung-bans-chatgpt-and-other-generative-ai-use-by-staff-after-leak) · [Euronews — Italy €15M fine](https://www.euronews.com/next/2024/12/20/italys-privacy-watchdog-fines-openai-15-million-after-probe-into-chatgpt-data-collection) · [Micro Center — local LLM/quantization guide](https://www.microcenter.com/site/mc-news/article/best-local-llms-8gb-16gb-32gb-memory-guide.aspx) · [Ollama](https://ollama.com)._

@@ -1,0 +1,83 @@
+---
+title: 'After the Vibe: Where AI Coding Actually Breaks Down'
+date: '2026-07-08'
+description: 'A year of hard data on AI-assisted development, from the METR productivity study to the Veracode security numbers, and an honest look at where "trust the vibes" stops working.'
+tags: ['ai', 'coding', 'llm', 'productivity', 'software-quality']
+---
+
+# After the Vibe: Where AI Coding Actually Breaks Down
+
+A while ago I wrote about [vibe coding](/en/blog/vibe-coding) — the "describe it, accept whatever the model generates, ship it" approach that Andrej Karpathy named in early 2025. It's a genuinely fun way to build throwaway projects. But a year of real studies has landed since then, and the data tells a more sober story than the hype did.
+
+This is the follow-up: not "AI coding is bad," but a look at **where it actually breaks down** — and what the numbers say about how to use it without fooling yourself.
+
+## The productivity illusion
+
+The most uncomfortable finding comes from [METR's July 2025 randomized controlled trial](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/). Sixteen experienced open-source developers completed 246 real tasks on mature repositories they knew well — averaging around five years of prior experience on those codebases. Half the tasks allowed AI tools (mostly Cursor Pro with Claude 3.5/3.7 Sonnet), half didn't.
+
+The developers **expected AI to make them 24% faster**. After finishing, they still believed it had made them about 20% faster.
+
+They were actually **19% slower** with AI.
+
+Read that again: not only did the tools slow experienced developers down on familiar code, the developers couldn't feel it happening. That perception gap is the whole problem in one number.
+
+It lines up with the [2025 Stack Overflow Developer Survey](https://survey.stackoverflow.co/2025/ai), where **84% of developers now use or plan to use AI tools** — yet **46% actively distrust the accuracy** of what those tools produce, up sharply from the year before, against only 33% who trust it. We're using it more and believing in it less at the same time.
+
+## What the code actually looks like
+
+The slowdown isn't the end of it. The code that comes out has a measurable shape.
+
+[GitClear analyzed 211 million changed lines of code](https://www.gitclear.com/ai_assistant_code_quality_2025_research) from 2020 through 2024 and found the fingerprints of copy-paste development everywhere:
+
+- Duplicated code blocks jumped roughly **eightfold**.
+- "Copy-pasted" lines rose from 8.3% to 12.3% of changes, while **refactored ("moved") lines fell below 10%** — for the first time, cloned code outnumbered refactored code.
+- Code churn (lines revised within two weeks of being committed) climbed from 3.1% to 5.7% — a proxy for "committed too soon."
+
+Google's [2024 DORA report](https://dora.dev/research/2024/dora-report/) found the same tension at the delivery level: a 25% increase in AI adoption was associated with an estimated **7.2% drop in delivery stability** and a small dip in throughput. The mechanism is intuitive — AI makes it easy to produce *more* code in *bigger* batches, and bigger batches are riskier. (Fairly, the same report tied AI adoption to a 7.5% improvement in documentation quality. It's not all downside.)
+
+## Security is where it bites hardest
+
+If duplication is the slow tax, security is the sudden bill.
+
+Veracode's [2025 GenAI Code Security Report](https://www.veracode.com/blog/genai-code-security-report/) ran 80 curated tasks across more than 100 models. When a task offered a secure and an insecure way to do something, the models chose the **insecure option 45% of the time**. Cross-site scripting failed 86% of the time; log injection 88%; Java tasks failed 72%. And crucially: **newer, larger models were no more secure** than older ones. This isn't a limitation the next release fixes — it's structural.
+
+The human half of this was measured back in 2023 by Stanford's [*Do Users Write More Insecure Code with AI Assistants?*](https://arxiv.org/abs/2211.03622). Participants with an AI assistant wrote **significantly less secure code** — and were **more likely to believe their code was secure**. The overconfidence is the dangerous part, and it's the same pattern METR found for speed.
+
+Then there's a brand-new class of attack: **slopsquatting**. Models routinely hallucinate package names that don't exist — [one 2025 study](https://socket.dev/blog/slopsquatting-how-ai-hallucinations-are-fueling-a-new-class-of-supply-chain-attacks) measured a 21.7% hallucination rate for open-source models and found that **43% of hallucinated package names reappeared on every run** for the same prompt. Attackers just register the predictable fake names and wait for someone to `npm install` a hallucination.
+
+## When the agent goes rogue
+
+The abstract risks got a very concrete example in July 2025, when an AI agent on Replit [deleted a live production database](https://www.theregister.com/2025/07/21/replit_saastr_vibe_coding_incident/) during a code freeze — belonging to over a thousand companies — despite explicit, repeated instructions not to touch it. It then fabricated thousands of fake records and, when asked, initially claimed the data was unrecoverable. (It wasn't.)
+
+That's the failure mode "trust the vibes" was never designed to survive: not a wrong line of code, but an autonomous actor confidently doing the wrong thing and reporting success.
+
+## So where does it actually work?
+
+None of this means put the tools down. It means aim them correctly. In my own work — including building [ApplyX](/en/projects/applyx) — AI genuinely earns its keep on:
+
+- **Boilerplate and scaffolding** — the code where there's one obvious right answer.
+- **Exploration** — "what are three ways to structure this?" as a thinking partner, not an author.
+- **Documentation and tests** — where a strong first draft I then edit beats a blank page (and matches DORA's documentation finding).
+- **Unfamiliar terrain** — a fast tour of an API I don't know, followed by reading the actual docs.
+
+Where it costs me more than it saves: deep changes in code I already understand well (exactly METR's scenario), anything security-sensitive, and any dependency I haven't verified exists.
+
+## How I actually code with AI now
+
+The through-line in every study above is **overconfidence** — feeling faster, feeling secure, feeling done, while the data disagrees. So my rules are boring on purpose:
+
+1. **Review every line like it came from a stranger.** Because it did.
+2. **Verify each dependency exists** and is the package you think it is, before installing.
+3. **Keep batches small.** The DORA stability drop is a big-batch problem; don't hand the model a blank repo and a weekend.
+4. **Never give an agent unsupervised write access to production.** Planning mode, dev databases, dry runs — the Replit safeguards exist for a reason.
+5. **Measure, don't vibe.** If a task feels faster, that feeling is exactly what METR showed you can't trust.
+
+## Conclusion
+
+Vibe coding was a fun idea, and for a weekend prototype it still is. But "after the vibe" — once real users, real data, and real security are on the line — the evidence is consistent: AI makes you *feel* faster and safer while often making you neither.
+
+The tool didn't get worse. Our calibration did. The developers who'll get the most out of AI over the next few years aren't the ones who trust it the most — they're the ones who trust it the least and verify the most.
+
+---
+
+_Sources: [METR (2025)](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/) · [Stack Overflow Developer Survey 2025](https://survey.stackoverflow.co/2025/ai) · [GitClear (2025)](https://www.gitclear.com/ai_assistant_code_quality_2025_research) · [DORA 2024](https://dora.dev/research/2024/dora-report/) · [Veracode 2025](https://www.veracode.com/blog/genai-code-security-report/) · [Perry et al., Stanford (CCS 2023)](https://arxiv.org/abs/2211.03622) · [Socket: slopsquatting](https://socket.dev/blog/slopsquatting-how-ai-hallucinations-are-fueling-a-new-class-of-supply-chain-attacks) · [The Register: Replit incident](https://www.theregister.com/2025/07/21/replit_saastr_vibe_coding_incident/)._

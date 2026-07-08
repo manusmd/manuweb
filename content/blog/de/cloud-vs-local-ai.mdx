@@ -1,0 +1,92 @@
+---
+title: 'Cloud-KI vs. lokale KI: eine Datenschutz-Entscheidung, nicht nur eine Kostenfrage'
+date: '2026-07-09'
+description: 'Jeder vergleicht Cloud- und lokale LLMs nach Preis und Qualität. Die wichtigere Frage ist, wohin deine Daten gehen – und die letzten zwei Jahre voller Aufbewahrungs-Anordnungen, Bußgelder und Leaks machen die Antwort konkret.'
+tags: ['ki', 'llm', 'datenschutz', 'local-first', 'ollama']
+---
+
+# Cloud-KI vs. lokale KI: eine Datenschutz-Entscheidung, nicht nur eine Kostenfrage
+
+Fast jeder „Cloud vs. lokales LLM"-Vergleich, den ich lese, dreht sich um zwei Dinge: was die Tokens kosten und wie gut das Modell ist. Beides ist wichtig. Aber sie verdecken die Frage, die mich beim Bau von [ApplyX](/de/projects/applyx) tatsächlich umgestimmt hat: **Wohin gehen deine Daten physisch – und wer kann später gezwungen werden, sie herauszugeben?**
+
+Das ist längst kein Gedankenspiel mehr. Die letzten zwei Jahre haben daraus Rechtsprechung, Bußgelder und Konzern-Verbote gemacht. Hier die ehrliche Version.
+
+## Wohin deine Prompts wirklich gehen
+
+Fangen wir bei den Standardeinstellungen an, denn die meisten Leute ändern sie nie.
+
+Bei OpenAIs **API** werden Ein- und Ausgaben [bis zu 30 Tage aufbewahrt](https://platform.openai.com/docs/guides/your-data) (zur Missbrauchserkennung) und dann gelöscht – und API-Daten werden standardmäßig nicht zum Training genutzt. Freigeschaltete Enterprise-Kunden können zusätzlich **Zero Data Retention** beantragen. So weit vernünftig.
+
+Das Consumer-Produkt **ChatGPT** ist eine andere Geschichte: Dort *können* deine Konversationen zur Verbesserung der Modelle genutzt werden, sofern du nicht widersprichst – und dieses „Widersprechen" ist eine Einstellung, die die meisten Nutzer nie finden. Derselbe Prompt – „hier ist unser interner Auth-Code, was stimmt nicht damit?" – wird völlig unterschiedlich behandelt, je nachdem, durch welche Tür du gegangen bist.
+
+Die zentrale Erkenntnis: Bei jedem Cloud-Anbieter verlässt deine Daten dein Gerät, liegt auf fremder Infrastruktur und unterliegt *deren* Richtlinie und *deren* rechtlichem Risiko – das sich ändern kann, ohne dass du irgendetwas tust.
+
+## Wenn „löschen" nicht löschen heißt
+
+Das ist der Teil, der es für mich konkret gemacht hat. Im Urheberrechts-Prozess *The New York Times gegen OpenAI* erließ ein Bundesgericht im [Mai 2025 eine Aufbewahrungs-Anordnung](https://openai.com/index/response-to-nyt-data-demands/), die OpenAI verpflichtete, **ChatGPT-Logs aufzubewahren – einschließlich Chats, die Nutzer bereits gelöscht hatten.** Bis November 2025 hatte das Gericht [OpenAI angewiesen, 20 Millionen anonymisierte Konversationen herauszugeben](https://news.bloomberglaw.com/ip-law/openai-must-turn-over-20-million-chatgpt-logs-judge-affirms).
+
+Die Anordnung wurde später eingeschränkt – seit Ende September 2025 musste OpenAI nicht mehr *alle neuen* Logs fortlaufend aufbewahren – aber die bereits erfassten Daten blieben erfasst. Die Lehre ist nicht „OpenAI ist der Böse". Sie ist strukturell: **Sobald deine Daten auf fremden Servern liegen, kann ein Gericht in einem Land, in dem du nicht lebst, den Löschknopf dieses Unternehmens außer Kraft setzen.** Deine Aufbewahrungs-Richtlinie ist nur so stark wie die nächste Vorladung.
+
+## Die Compliance-Realität
+
+Wenn du mit den Daten anderer Menschen arbeitest, hört das auf, philosophisch zu sein.
+
+- **Samsung, 2023:** binnen [weniger als 20 Tagen](https://www.bloomberg.com/news/articles/2023-05-02/samsung-bans-chatgpt-and-other-generative-ai-use-by-staff-after-leak) nach Freigabe von ChatGPT fügten Ingenieure proprietären Halbleiter-Quellcode und interne Meeting-Notizen hinein. Samsung verbot generative KI konzernweit. Der Leak war kein Einbruch bei OpenAI – es waren Mitarbeiter, die genau das taten, wozu das Tool einlädt.
+- **Italien, 2024:** die Datenschutzbehörde (Garante) [verhängte gegen OpenAI ein Bußgeld von 15 Millionen Euro](https://www.euronews.com/next/2024/12/20/italys-privacy-watchdog-fines-openai-15-million-after-probe-into-chatgpt-data-collection) – wegen Training mit personenbezogenen Daten ohne ausreichende Rechtsgrundlage und wegen Transparenzmängeln. OpenAI legte Berufung ein, aber das Signal an europäische Firmen war laut.
+- **DSGVO allgemein:** In dem Moment, in dem personenbezogene Daten in ein Drittanbieter-Modell in einer anderen Jurisdiktion wandern, hast du ein Datentransfer- und Rechtsgrundlagen-Problem – egal wie gut das Modell ist.
+
+Nichts davon dreht sich um Modellqualität. Es dreht sich darum, wohin die Daten gegangen sind.
+
+## Was „lokal" 2026 tatsächlich bedeutet
+
+Das Gegenargument war früher: lokale Modelle sind Spielzeug. Das stimmt nicht mehr – mit ehrlichen Einschränkungen.
+
+Der Grund ist Quantisierung. Moderne **Q4_K_M**-quantisierte Modelle [behalten rund 95–98 % der Qualität voller Präzision](https://www.microcenter.com/site/mc-news/article/best-local-llms-8gb-16gb-32gb-memory-guide.aspx) in den meisten Benchmarks – bei drastisch geringerer Größe. In der Praxis:
+
+- **Kleine und mittlere Modelle (7B–14B)** laufen bequem auf einem normalen Entwickler-Laptop und sind wirklich brauchbar für Klassifikation, Extraktion, Zusammenfassung und strukturierte Aufgaben – genau das, was die meisten Apps brauchen.
+- **Große Modelle (70B)** sind weiterhin anspruchsvoll: Du brauchst 48 GB+ VRAM, zwei High-End-GPUs oder Apple Silicon mit viel Unified Memory. Machbar, aber nicht nebenbei.
+
+Mit [Ollama](https://ollama.com) ist das Herunterladen und Starten eine Zwei-Zeilen-Sache:
+
+```bash
+# Ein Modell holen und komplett auf deiner Maschine laufen lassen
+ollama pull llama3.1:8b
+ollama run llama3.1:8b "Klassifiziere diese E-Mail: ..."
+```
+
+Kein API-Key. Kein Token-Zähler. Kein Prompt, der die Box verlässt.
+
+## Die ehrlichen Kompromisse
+
+Lokal ist kein Gratis-Mittagessen, und etwas anderes zu behaupten ist der Weg, auf dem sich Leute die Finger verbrennen:
+
+- **Obergrenze:** die allerbesten Frontier-Modelle sind weiterhin nur in der Cloud. Wenn du absolutes Spitzen-Reasoning brauchst, kommt lokal noch nicht mit.
+- **Hardware:** du zahlst einmal, vorab, in RAM/VRAM statt monatlich in Tokens. Toll bei konstantem Volumen, schlechter für den seltenen Einzelfall.
+- **Betrieb:** Updates, Quantisierungs-Entscheidungen und Prompt-Tuning sind jetzt *dein* Job.
+- **Latenz und Durchsatz** hängen an deiner Maschine, nicht an einem Rechenzentrum.
+
+Der Tausch ist real: du gibst etwas rohe Leistungsfähigkeit ab und übernimmst etwas Wartung, und im Gegenzug **verlässt nichts deine Infrastruktur.** Für viele Produkte ist das ein guter Deal.
+
+## Wie ich entscheide
+
+Ich behandle das nicht als Cloud-oder-lokal-Dogma. Ich stelle drei Fragen, in dieser Reihenfolge:
+
+1. **Wessen Daten sind das?** Meine, und harmlos → Cloud ist okay. Fremde personenbezogene oder vertrauliche Daten → lokal rückt nach vorn.
+2. **Was würde ein Leak oder eine Vorladung kosten?** Wenn die Antwort „ein Compliance-Vorfall" oder „eine Klage" ist, sind das 30-Tage-Fenster und der NYT-Präzedenzfall die ganze Entscheidung.
+3. **Braucht die Aufgabe wirklich ein Frontier-Modell?** Klassifikation und Extraktion selten. Neuartiges, offenes Reasoning manchmal.
+
+## ApplyX: die Fallstudie
+
+Genau deshalb ist [ApplyX](/de/projects/applyx) so gebaut, wie es ist. Es liest dein echtes Postfach per IMAP und versteht es mit einem **lokalen Ollama-Modell** – keine Cloud-KI, kein OAuth-Handoff, kein E-Mail-Forwarding. Die Daten sind deine Bewerbungen: Arbeitgeber, Absagen, Gehaltsgespräche. Exakt die Daten, die man nie in einen geteilten Endpunkt einfügen sollte, dessen Löschknopf ein Gericht außer Kraft setzen kann.
+
+Es lokal laufen zu lassen bedeutet: die Datenschutz-Garantie ist keine Richtlinie, der du vertrauen sollst – sie ist Architektur. Nichts verlässt deine Maschine, weil es nirgendwohin gehen kann.
+
+## Fazit
+
+Kosten und Qualität sind die einfachen Achsen zum Vergleichen, also bleiben die meisten Vergleiche dabei. Aber die Entscheidung, die wirklich gut altert, dreht sich um Daten-Gravitation: Cloud-KI heißt, deine Daten leben woanders, unter fremden Regeln und fremdem rechtlichem Risiko; lokale KI heißt, sie bleiben, wo sie sind.
+
+Für Wegwerf-Prompts ist Cloud okay – nutz sie. Für alles, was Daten betrifft, die du ungern als Gerichtsbeweis sehen würdest, schlägt „wohin geht es?" jedes Mal die Frage „was kostet es?".
+
+---
+
+_Quellen: [OpenAI – Datenkontrollen](https://platform.openai.com/docs/guides/your-data) · [OpenAI – Antwort auf die NYT-Datenforderungen](https://openai.com/index/response-to-nyt-data-demands/) · [Bloomberg Law – Anordnung über 20 Mio. Logs](https://news.bloomberglaw.com/ip-law/openai-must-turn-over-20-million-chatgpt-logs-judge-affirms) · [Bloomberg – Samsung-Verbot](https://www.bloomberg.com/news/articles/2023-05-02/samsung-bans-chatgpt-and-other-generative-ai-use-by-staff-after-leak) · [Euronews – Italien 15-Mio.-Bußgeld](https://www.euronews.com/next/2024/12/20/italys-privacy-watchdog-fines-openai-15-million-after-probe-into-chatgpt-data-collection) · [Micro Center – Leitfaden lokale LLMs/Quantisierung](https://www.microcenter.com/site/mc-news/article/best-local-llms-8gb-16gb-32gb-memory-guide.aspx) · [Ollama](https://ollama.com)._

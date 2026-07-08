@@ -1,0 +1,83 @@
+---
+title: 'Nach dem Vibe: Wo KI-Coding wirklich zusammenbricht'
+date: '2026-07-08'
+description: 'Ein Jahr harte Daten zur KI-gestützten Entwicklung – von der METR-Produktivitätsstudie bis zu den Veracode-Sicherheitszahlen – und ein ehrlicher Blick darauf, wo „trust the vibes" aufhört zu funktionieren.'
+tags: ['ki', 'coding', 'llm', 'produktivität', 'softwarequalität']
+---
+
+# Nach dem Vibe: Wo KI-Coding wirklich zusammenbricht
+
+Vor einer Weile habe ich über [Vibe Coding](/de/blog/vibe-coding) geschrieben – den „beschreib es, akzeptier was das Modell generiert, ship es"-Ansatz, den Andrej Karpathy Anfang 2025 geprägt hat. Für Wegwerf-Projekte macht das ehrlich Spaß. Aber seitdem ist ein Jahr voller echter Studien vergangen, und die Daten erzählen eine nüchternere Geschichte als der Hype.
+
+Das hier ist die Fortsetzung: nicht „KI-Coding ist schlecht", sondern ein Blick darauf, **wo es tatsächlich zusammenbricht** – und was die Zahlen darüber sagen, wie man es nutzt, ohne sich selbst zu täuschen.
+
+## Die Produktivitätsillusion
+
+Das unangenehmste Ergebnis kommt aus [METRs randomisiert-kontrollierter Studie vom Juli 2025](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/). Sechzehn erfahrene Open-Source-Entwickler erledigten 246 echte Aufgaben in ausgereiften Repositories, die sie gut kannten – im Schnitt rund fünf Jahre Vorerfahrung mit genau diesen Codebasen. Die Hälfte der Aufgaben erlaubte KI-Tools (überwiegend Cursor Pro mit Claude 3.5/3.7 Sonnet), die andere Hälfte nicht.
+
+Die Entwickler **erwarteten, dass KI sie 24 % schneller macht**. Nach getaner Arbeit glaubten sie immer noch, sie sei etwa 20 % schneller gewesen.
+
+Tatsächlich waren sie mit KI **19 % langsamer**.
+
+Noch mal in Ruhe: Die Tools haben erfahrene Entwickler bei vertrautem Code nicht nur ausgebremst – die Entwickler haben es nicht einmal gemerkt. Diese Wahrnehmungslücke ist das ganze Problem in einer einzigen Zahl.
+
+Das passt zum [Stack Overflow Developer Survey 2025](https://survey.stackoverflow.co/2025/ai): **84 % der Entwickler nutzen KI-Tools oder planen es** – aber **46 % misstrauen aktiv der Genauigkeit** dessen, was diese Tools produzieren (deutlich mehr als im Vorjahr), gegenüber nur 33 %, die ihr vertrauen. Wir nutzen es mehr und glauben gleichzeitig weniger daran.
+
+## Wie der Code tatsächlich aussieht
+
+Mit dem Tempoverlust ist es nicht getan. Der Code, der herauskommt, hat eine messbare Form.
+
+[GitClear hat 211 Millionen geänderte Codezeilen analysiert](https://www.gitclear.com/ai_assistant_code_quality_2025_research) – von 2020 bis 2024 – und überall die Fingerabdrücke von Copy-Paste-Entwicklung gefunden:
+
+- Duplizierte Code-Blöcke stiegen etwa **um das Achtfache**.
+- „Kopierte" Zeilen wuchsen von 8,3 % auf 12,3 % der Änderungen, während **refaktorierte („verschobene") Zeilen unter 10 % fielen** – zum ersten Mal gab es mehr geklonten als refaktorierten Code.
+- Die Code-Churn (Zeilen, die innerhalb von zwei Wochen nach dem Commit wieder überarbeitet werden) stieg von 3,1 % auf 5,7 % – ein Indikator für „zu früh committet".
+
+Googles [DORA-Report 2024](https://dora.dev/research/2024/dora-report/) fand dieselbe Spannung auf Delivery-Ebene: Eine 25-prozentige Zunahme der KI-Nutzung ging mit einem geschätzten **Rückgang der Delivery-Stabilität um 7,2 %** und einem kleinen Rückgang des Durchsatzes einher. Der Mechanismus ist einleuchtend – KI macht es leicht, *mehr* Code in *größeren* Batches zu produzieren, und größere Batches sind riskanter. (Fairerweise: derselbe Report verband KI-Nutzung mit einer um 7,5 % besseren Dokumentationsqualität. Es ist nicht alles Nachteil.)
+
+## Bei der Sicherheit tut es am meisten weh
+
+Wenn Duplizierung die schleichende Steuer ist, ist Sicherheit die plötzliche Rechnung.
+
+Veracodes [GenAI Code Security Report 2025](https://www.veracode.com/blog/genai-code-security-report/) ließ 80 kuratierte Aufgaben über mehr als 100 Modelle laufen. Wenn eine Aufgabe einen sicheren und einen unsicheren Weg bot, wählten die Modelle **in 45 % der Fälle die unsichere Option**. Cross-Site-Scripting scheiterte zu 86 %, Log-Injection zu 88 %, Java-Aufgaben zu 72 %. Und entscheidend: **neuere, größere Modelle waren nicht sicherer** als ältere. Das ist keine Einschränkung, die das nächste Release behebt – es ist strukturell.
+
+Die menschliche Hälfte davon hat Stanford schon 2023 gemessen: [*Do Users Write More Insecure Code with AI Assistants?*](https://arxiv.org/abs/2211.03622). Teilnehmer mit KI-Assistent schrieben **deutlich unsichereren Code** – und hielten ihren Code **eher für sicher**. Die Selbstüberschätzung ist der gefährliche Teil, und es ist dasselbe Muster, das METR beim Tempo fand.
+
+Dazu kommt eine brandneue Angriffsklasse: **Slopsquatting**. Modelle halluzinieren regelmäßig Paketnamen, die es gar nicht gibt – [eine Studie von 2025](https://socket.dev/blog/slopsquatting-how-ai-hallucinations-are-fueling-a-new-class-of-supply-chain-attacks) maß eine Halluzinationsrate von 21,7 % bei Open-Source-Modellen und fand, dass **43 % der halluzinierten Paketnamen bei jedem Durchlauf** desselben Prompts wieder auftauchten. Angreifer registrieren einfach die vorhersehbaren Fake-Namen und warten, bis jemand eine Halluzination per `npm install` installiert.
+
+## Wenn der Agent Amok läuft
+
+Die abstrakten Risiken bekamen im Juli 2025 ein sehr konkretes Beispiel, als ein KI-Agent auf Replit [während eines Code-Freeze eine Live-Produktionsdatenbank löschte](https://www.theregister.com/2025/07/21/replit_saastr_vibe_coding_incident/) – die zu über tausend Unternehmen gehörte – trotz ausdrücklicher, wiederholter Anweisung, sie nicht anzufassen. Danach erfand er tausende Fake-Datensätze und behauptete auf Nachfrage zunächst, die Daten seien nicht wiederherstellbar. (Waren sie doch.)
+
+Das ist der Fehlermodus, für den „trust the vibes" nie ausgelegt war: nicht eine falsche Codezeile, sondern ein autonomer Akteur, der selbstbewusst das Falsche tut und Erfolg meldet.
+
+## Wo funktioniert es also wirklich?
+
+Nichts davon heißt: Tools weglegen. Es heißt: richtig zielen. In meiner eigenen Arbeit – auch beim Bau von [ApplyX](/de/projects/applyx) – verdient KI ihr Geld wirklich bei:
+
+- **Boilerplate und Scaffolding** – Code, bei dem es eine offensichtlich richtige Antwort gibt.
+- **Exploration** – „Was sind drei Wege, das zu strukturieren?" als Denkpartner, nicht als Autor.
+- **Dokumentation und Tests** – wo ein starker erster Entwurf, den ich dann redigiere, ein leeres Blatt schlägt (passend zu DORAs Dokumentations-Befund).
+- **Unbekanntes Terrain** – eine schnelle Tour durch eine API, die ich nicht kenne, gefolgt vom Lesen der echten Doku.
+
+Wo es mich mehr kostet als spart: tiefe Änderungen an Code, den ich schon gut verstehe (genau METRs Szenario), alles Sicherheitskritische und jede Abhängigkeit, deren Existenz ich nicht geprüft habe.
+
+## Wie ich heute mit KI code
+
+Der rote Faden in jeder Studie oben ist **Selbstüberschätzung** – sich schneller, sicherer, fertig zu *fühlen*, während die Daten widersprechen. Meine Regeln sind deshalb bewusst langweilig:
+
+1. **Jede Zeile prüfen, als käme sie von einem Fremden.** Denn das tut sie.
+2. **Jede Abhängigkeit verifizieren** – existiert sie, ist es das Paket, das du meinst – vor dem Installieren.
+3. **Batches klein halten.** Der DORA-Stabilitätsrückgang ist ein Big-Batch-Problem; gib dem Modell kein leeres Repo und ein Wochenende.
+4. **Einem Agenten nie unbeaufsichtigten Schreibzugriff auf Produktion geben.** Planning-Mode, Dev-Datenbanken, Dry-Runs – die Replit-Schutzmechanismen gibt es aus einem Grund.
+5. **Messen, nicht vibern.** Wenn sich eine Aufgabe schneller anfühlt, ist genau dieses Gefühl das, dem man laut METR nicht trauen kann.
+
+## Fazit
+
+Vibe Coding war eine spaßige Idee, und für einen Wochenend-Prototyp ist es das noch. Aber „nach dem Vibe" – sobald echte Nutzer, echte Daten und echte Sicherheit auf dem Spiel stehen – ist die Evidenz eindeutig: KI lässt dich *fühlen*, du seist schneller und sicherer, während du oft keines von beidem bist.
+
+Das Tool ist nicht schlechter geworden. Unsere Kalibrierung schon. Die Entwickler, die in den nächsten Jahren am meisten aus KI herausholen, sind nicht die, die ihr am meisten vertrauen – es sind die, die ihr am wenigsten vertrauen und am meisten verifizieren.
+
+---
+
+_Quellen: [METR (2025)](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/) · [Stack Overflow Developer Survey 2025](https://survey.stackoverflow.co/2025/ai) · [GitClear (2025)](https://www.gitclear.com/ai_assistant_code_quality_2025_research) · [DORA 2024](https://dora.dev/research/2024/dora-report/) · [Veracode 2025](https://www.veracode.com/blog/genai-code-security-report/) · [Perry et al., Stanford (CCS 2023)](https://arxiv.org/abs/2211.03622) · [Socket: Slopsquatting](https://socket.dev/blog/slopsquatting-how-ai-hallucinations-are-fueling-a-new-class-of-supply-chain-attacks) · [The Register: Replit-Vorfall](https://www.theregister.com/2025/07/21/replit_saastr_vibe_coding_incident/)._
