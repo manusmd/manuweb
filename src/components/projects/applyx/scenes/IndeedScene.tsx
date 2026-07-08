@@ -9,7 +9,7 @@ export function IndeedScene() {
     <section data-scene="indeed" className="relative">
       <div
         data-pin="indeed"
-        className="flex min-h-[100svh] items-center border-t border-border/30 px-4 py-16"
+        className="flex items-center border-t border-border/30 px-4 py-20 lg:min-h-[100svh]"
       >
         <div className="mx-auto grid w-full max-w-5xl items-center gap-10 lg:grid-cols-2">
           <div>
