@@ -1,5 +1,6 @@
 import { HeroSection } from '@/components/sections/HeroSection';
 import { BlogPreview } from '@/components/blog/BlogPreview';
+import { HashScrollHandler } from '@/components/scroll/HashScrollHandler';
 import { PROJECTS_SECTION_ENABLED } from '@/constants/features';
 import dynamic from 'next/dynamic';
 
@@ -44,6 +45,7 @@ export default async function HomePage({ params }: HomeProps) {
 
   return (
     <main className="overflow-x-hidden">
+      <HashScrollHandler />
       <HeroSection />
       <AboutClient />
       {PROJECTS_SECTION_ENABLED ? <ProjectsSection /> : null}

@@ -57,7 +57,7 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
   return (
     <AnimatedWrapper>
       <div className="container mx-auto px-4 py-8">
-        <Button variant="ghost" className="mb-6" onClick={() => router.push(`/${locale}/projects`)}>
+        <Button variant="ghost" className="mb-6" onClick={() => router.push(`/${locale}#projects`)}>
           <ArrowLeft className="mr-2 h-4 w-4" />
           {t('backToProjects')}
         </Button>
