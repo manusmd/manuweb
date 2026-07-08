@@ -4,16 +4,13 @@ import { HashScrollHandler } from '@/components/scroll/HashScrollHandler';
 import { PROJECTS_SECTION_ENABLED } from '@/constants/features';
 import dynamic from 'next/dynamic';
 
-// Lazy load below-the-fold sections for better performance
+// Below-the-fold sections are code-split but SSR-rendered, so their content
+// streams into the initial HTML. Using a spinner as the Suspense fallback made
+// it flash on screen (visible whenever the hero loading screen isn't covering,
+// e.g. client-side navigation to home), so render nothing until content resolves.
 const AboutClient = dynamic(
   () => import('@/components/sections/AboutClient').then(mod => ({ default: mod.AboutClient })),
-  {
-    loading: () => (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-      </div>
-    ),
-  }
+  { loading: () => null }
 );
 
 const ProjectsSection = dynamic(
@@ -25,13 +22,7 @@ const ProjectsSection = dynamic(
 const ContactSection = dynamic(
   () =>
     import('@/components/sections/ContactSection').then(mod => ({ default: mod.ContactSection })),
-  {
-    loading: () => (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-      </div>
-    ),
-  }
+  { loading: () => null }
 );
 
 interface HomeProps {
