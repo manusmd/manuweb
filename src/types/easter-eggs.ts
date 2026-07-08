@@ -1,4 +1,4 @@
-export interface NotificationAction {
+interface NotificationAction {
   label: string;
   onClick: () => void;
 }

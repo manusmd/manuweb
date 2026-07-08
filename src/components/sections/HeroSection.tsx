@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import { AnimatedWrapper, StaggerContainer } from '@/components/animations';
 import { AnimatedButton } from '@/components/animations/AnimatedButton';
@@ -42,6 +43,19 @@ export function HeroSection() {
     color: 'rgba(59, 130, 246, 0.15)',
     enabled: !prefersReducedMotion && !isMobile && isSceneReady,
   });
+
+  // Generate floating-dot positions once (stable across re-renders) instead of
+  // calling Math.random() in render on every paint.
+  const floatingDots = useMemo(
+    () =>
+      Array.from({ length: isMobile ? 3 : 6 }, () => ({
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        animationDelay: `${Math.random() * 3}s`,
+        animationDuration: `${3 + Math.random() * 2}s`,
+      })),
+    [isMobile]
+  );
 
   const scrollToNext = () => {
     const nextSection = document.getElementById('about');
@@ -206,15 +220,15 @@ export function HeroSection() {
 
         {!prefersReducedMotion && isSceneReady && (
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {Array.from({ length: isMobile ? 3 : 6 }).map((_, i) => (
+            {floatingDots.map((dot, i) => (
               <div
                 key={i}
                 className="absolute w-2 h-2 bg-accent-blue/20 rounded-full animate-float"
                 style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 3}s`,
-                  animationDuration: `${3 + Math.random() * 2}s`,
+                  left: dot.left,
+                  top: dot.top,
+                  animationDelay: dot.animationDelay,
+                  animationDuration: dot.animationDuration,
                 }}
               />
             ))}

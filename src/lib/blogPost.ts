@@ -1,6 +1,6 @@
 const MARKDOWN_IMAGE_REGEX = /!\[[^\]]*\]\(([^)]+)\)/;
 
-export function extractBlogCoverImage(content: string): string | null {
+function extractBlogCoverImage(content: string): string | null {
   const match = content.trim().match(MARKDOWN_IMAGE_REGEX);
   return match?.[1] ?? null;
 }

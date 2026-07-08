@@ -1,4 +1,5 @@
 import { MDXRemote } from 'next-mdx-remote/rsc';
+import remarkGfm from 'remark-gfm';
 import { useMDXComponents } from '../../mdx-components';
 
 interface MDXContentProps {
@@ -14,7 +15,7 @@ export function MDXContent({ source }: MDXContentProps) {
       components={components}
       options={{
         mdxOptions: {
-          remarkPlugins: [],
+          remarkPlugins: [remarkGfm],
           rehypePlugins: [],
         },
       }}

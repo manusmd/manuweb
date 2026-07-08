@@ -4,19 +4,19 @@ export interface ProjectTech {
   icon?: string;
 }
 
-export interface ProjectLink {
+interface ProjectLink {
   type: 'live' | 'github' | 'npm' | 'docs' | 'figma' | 'other';
   url: string;
   label: string;
 }
 
-export interface ProjectImage {
+interface ProjectImage {
   src: string;
   alt: string;
   caption?: string;
 }
 
-export interface ProjectFeature {
+interface ProjectFeature {
   title: string;
   description: string;
   icon?: string;

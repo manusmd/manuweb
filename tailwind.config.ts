@@ -17,50 +17,7 @@ const config: Config = {
       },
     },
     extend: {
-      colors: {
-        // Portfolio dark theme colors
-        background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
-
-        // Custom portfolio colors
-        dark: {
-          50: '#f8f9fa',
-          100: '#f1f3f4',
-          200: '#e8eaed',
-          300: '#dadce0',
-          400: '#bdc1c6',
-          500: '#9aa0a6',
-          600: '#80868b',
-          700: '#5f6368',
-          800: '#3c4043',
-          900: '#202124',
-          950: '#0f0f11', // Main dark background
-        },
-        accent: {
-          blue: '#4285f4',
-          violet: '#8b5cf6',
-          green: '#34d399',
-          glow: 'rgba(66, 133, 244, 0.3)',
-        },
-
-        // shadcn/ui colors
-        card: 'hsl(var(--card))',
-        'card-foreground': 'hsl(var(--card-foreground))',
-        popover: 'hsl(var(--popover))',
-        'popover-foreground': 'hsl(var(--popover-foreground))',
-        primary: 'hsl(var(--primary))',
-        'primary-foreground': 'hsl(var(--primary-foreground))',
-        secondary: 'hsl(var(--secondary))',
-        'secondary-foreground': 'hsl(var(--secondary-foreground))',
-        muted: 'hsl(var(--muted))',
-        'muted-foreground': 'hsl(var(--muted-foreground))',
-        border: 'hsl(var(--border))',
-        input: 'hsl(var(--input))',
-        ring: 'hsl(var(--ring))',
-        destructive: 'hsl(var(--destructive))',
-        'destructive-foreground': 'hsl(var(--destructive-foreground))',
-      },
-
+      // Colors are the single source of truth in globals.css `@theme`.
       fontFamily: {
         sans: ['var(--font-sans)', ...defaultTheme.fontFamily.sans],
         display: ['var(--font-display)', ...defaultTheme.fontFamily.sans],
@@ -173,11 +130,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [
-    require('tailwindcss-animate'),
-    require('@tailwindcss/typography'),
-    require('@tailwindcss/line-clamp'),
-  ],
+  plugins: [require('@tailwindcss/typography')],
 } satisfies Config;
 
 export default config;

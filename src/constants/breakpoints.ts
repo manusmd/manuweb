@@ -1,4 +1,4 @@
-export const BREAKPOINT_PX = {
+const BREAKPOINT_PX = {
   narrowMobile: 640,
   md: 768,
   lg: 1024,

@@ -10,7 +10,7 @@ import {
 import type { LucideIcon } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 
-export type HeaderNavItem = {
+type HeaderNavItem = {
   name: string;
   href: string;
   section: string;
