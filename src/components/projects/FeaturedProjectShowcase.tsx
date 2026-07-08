@@ -4,7 +4,8 @@ import type { Project } from '@/types/project';
 import { Badge } from '@/components/ui/badge';
 import { ExternalLink, Github } from 'lucide-react';
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import Link from 'next/link';
+import { useLocale, useTranslations } from 'next-intl';
 
 interface FeaturedProjectShowcaseProps {
   project: Project;
@@ -12,18 +13,30 @@ interface FeaturedProjectShowcaseProps {
 
 export function FeaturedProjectShowcase({ project }: FeaturedProjectShowcaseProps) {
   const t = useTranslations('projects');
+  const locale = useLocale();
 
   const techItems = project.tech || project.technologies?.map(item => item.name) || [];
+  const detailHref = project.slug ? `/${locale}/projects/${project.slug}` : undefined;
 
   return (
-    <article className="overflow-hidden rounded-3xl border border-border/40 bg-card/55 shadow-[0_22px_64px_-32px_rgba(0,0,0,0.45)] backdrop-blur-xl ring-1 ring-white/[0.06]">
+    <article className="group relative overflow-hidden rounded-3xl border border-border/40 bg-card/55 shadow-[0_22px_64px_-32px_rgba(0,0,0,0.45)] ring-1 ring-white/[0.06] backdrop-blur-xl transition-shadow duration-300 hover:shadow-[0_28px_80px_-32px_rgba(0,0,0,0.6)]">
+      {/* Stretched link: clicking anywhere on the card (except the action
+          buttons below, which sit at a higher z-index) opens the detail page. */}
+      {detailHref ? (
+        <Link
+          href={detailHref}
+          aria-label={t('viewProject')}
+          className="absolute inset-0 z-10 rounded-3xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+        />
+      ) : null}
+
       <div className="grid lg:grid-cols-[1.05fr_1fr] lg:items-stretch">
         <div className="relative aspect-[16/10] overflow-hidden lg:aspect-auto lg:min-h-[22rem]">
           <Image
             src={project.image || project.thumbnail || '/placeholder-project.jpg'}
             alt={project.title}
             fill
-            className="object-cover object-top"
+            className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
             sizes="(max-width: 1024px) 100vw, 55vw"
             priority
           />
@@ -39,7 +52,7 @@ export function FeaturedProjectShowcase({ project }: FeaturedProjectShowcaseProp
               {t(`categories.${project.category}`)}
             </Badge>
             <div className="space-y-2">
-              <h3 className="font-display text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+              <h3 className="font-display text-2xl font-bold tracking-tight text-foreground transition-colors group-hover:text-primary md:text-3xl">
                 {project.title}
               </h3>
               {project.subtitle ? (
@@ -66,7 +79,7 @@ export function FeaturedProjectShowcase({ project }: FeaturedProjectShowcaseProp
             </div>
           ) : null}
 
-          <div className="flex flex-col gap-3 pt-1 sm:flex-row">
+          <div className="relative z-20 flex flex-col gap-3 pt-1 sm:flex-row">
             {project.liveUrl ? (
               <a
                 href={project.liveUrl}

@@ -157,11 +157,70 @@
       "viewAllGithub": "Alle Projekte",
       "getInTouch": "Kontakt aufnehmen"
     },
-    "clubscan": {
-      "title": "ClubScan",
-      "subtitle": "Anwesenheiten für Sportvereine",
-      "description": "Eine moderne Web-App für Sportvereine zur Verwaltung von Mitgliederanwesenheiten. Mit Offline-Support, Echtzeit-Updates und einer benutzerfreundlichen Oberfläche.",
-      "longDescription": "Eine moderne Web-Anwendung für Sportvereine zur Verwaltung der Mitgliederanwesenheit. Als Progressive Web App mit Offline-First, responsivem UI und Echtzeit-Sync, damit Anwesenheiten zuverlässig erfasst werden können – auch bei schwachen Netzwerken."
+    "applyx": {
+      "title": "ApplyX",
+      "subtitle": "Local-first Bewerbungs-Tracker",
+      "description": "Ein local-first Bewerbungs-Tracker, der dein eigenes Postfach per IMAP liest und mit einem lokalen Ollama-Modell versteht — keine Cloud-KI, kein E-Mail-Forwarding, nichts verlässt deinen Rechner.",
+      "longDescription": "Ein local-first Bewerbungs-Tracker, der dein eigenes Postfach per IMAP liest und mit einem lokalen Ollama-Modell klassifiziert — kein OAuth, kein E-Mail-Forwarding, keine Cloud-KI, die je deinen Posteingang sieht. Er verfolgt die gesamte Pipeline von Beworben bis Angebot, erkennt sanfte Absagen, rekonstruiert versteckte Arbeitgebernamen von Indeed und bietet einen abgesicherten öffentlichen Demo-Modus. Durchgängig auf Deutsch und Englisch, mit Verschlüsselung pro Nutzer."
+    },
+    "applyxDetail": {
+      "eyebrow": "Local-first · IMAP + Ollama",
+      "heroLead": "Dein Posteingang wird zur Pipeline —",
+      "heroLeadEmphasis": "und nichts verlässt je deinen Rechner.",
+      "scrollCue": "Scrollen zum Entdecken",
+      "ingest": {
+        "step": "01 — Erfassen",
+        "heading": "Aus einer E-Mail wird eine Bewerbung",
+        "reading": "Lese per IMAP…",
+        "classifying": "Klassifiziere lokal…",
+        "classified": "Klassifiziert",
+        "model": "Ollama · auf deinem Rechner",
+        "emailFrom": "no-reply@acme.io",
+        "emailSubject": "Danke für deine Bewerbung bei Acme",
+        "emailBody": "Wir haben deine Bewerbung für die Stelle als Frontend Engineer in Berlin erhalten und melden uns bald.",
+        "fieldCompany": "Firma",
+        "fieldRole": "Rolle",
+        "fieldLocation": "Ort",
+        "company": "Acme",
+        "role": "Frontend Engineer",
+        "location": "Berlin",
+        "tracked": "Erfasst"
+      },
+      "pipeline": {
+        "step": "02 — Pipeline",
+        "heading": "Sieh zu, wie sie wandert — mit echtem Signal",
+        "stageApplied": "Beworben",
+        "stageReview": "In Prüfung",
+        "stageInterview": "Interview",
+        "stageOffer": "Angebot",
+        "captionApplied": "Aus der Bestätigungs-E-Mail erkannt und automatisch einsortiert.",
+        "captionReview": "Sanfte Absagen wie \"wir behalten dein Profil\" werden genau hier erkannt.",
+        "captionInterview": "Termin-E-Mails bewegen sie von allein weiter.",
+        "captionOffer": "Und wenn eine geschlossene wieder aufgeht, geht ApplyX mit."
+      },
+      "indeed": {
+        "step": "03 — Das Indeed-Problem",
+        "heading": "Den Arbeitgeber sichtbar machen, den Indeed verbirgt",
+        "sub": "Indeeds Bestätigungs-E-Mails nennen die Firma nie. Also schaut ApplyX sie nach.",
+        "redacted": "Arbeitgeber",
+        "scanning": "Durchsuche Nachrichten-Center…",
+        "revealed": "Northwind Labs"
+      },
+      "stats": {
+        "step": "04 — Signal statt Deko",
+        "heading": "Statistiken, die wirklich etwas bedeuten",
+        "applications": "Bewerbungen",
+        "replyRate": "Antwortquote",
+        "interviews": "Interviews",
+        "medianReply": "Tage bis zur ersten Antwort",
+        "wrapped": "Dein Jahr, Wrapped"
+      },
+      "outro": {
+        "step": "05 — Dein Rechner",
+        "boundaryLabel": "nichts verlässt diese Box",
+        "heading": "Überzeug dich selbst",
+        "sub": "Eine öffentliche Demo, die bei jedem Besuch zurückgesetzt wird. Kein Account nötig."
+      }
     },
     "portfolio": {
       "description": "Eine moderne, responsive Portfolio-Website mit Next.js 14, flüssigen Animationen, 3D-Elementen und Dark Mode. Zeigt meine Projekte und Erfahrungen."

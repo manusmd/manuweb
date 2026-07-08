@@ -1,44 +1,47 @@
 import type { Project } from '@/types/project';
 
-export const CLUB_SCAN_SLUG = 'clubscan';
+export const APPLYX_SLUG = 'applyx';
 
-const clubscanBase: Omit<Project, 'title' | 'subtitle' | 'description' | 'longDescription'> = {
-  id: 'clubscan',
-  slug: CLUB_SCAN_SLUG,
-  image: '/clubscandashboard.png',
-  thumbnail: '/clubscandashboard.png',
-  liveUrl: 'https://www.clubscan.app',
+const applyxBase: Omit<Project, 'title' | 'subtitle' | 'description' | 'longDescription'> = {
+  id: 'applyx',
+  slug: APPLYX_SLUG,
+  image: '/applyxdashboard.png',
+  thumbnail: '/applyxdashboard.png',
+  liveUrl: 'https://applyx.projects.manu-web.de',
+  githubUrl: 'https://github.com/manusmd/applyx',
+  repository: 'https://github.com/manusmd/applyx',
   category: 'fullstack',
   status: 'completed',
   featured: true,
   priority: 1,
   isApp: true,
-  tags: ['Next.js', 'TypeScript', 'PWA', 'Offline'],
-  tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'PWA', 'Offline-First'],
+  tags: ['TypeScript', 'React', 'Fastify', 'PostgreSQL', 'Ollama'],
+  tech: ['TypeScript', 'React', 'Fastify', 'PostgreSQL', 'Ollama', 'IMAP'],
   technologies: [
-    { name: 'Next.js', category: 'frontend' },
+    { name: 'React', category: 'frontend' },
     { name: 'TypeScript', category: 'frontend' },
-    { name: 'Tailwind CSS', category: 'frontend' },
-    { name: 'PWA', category: 'frontend' },
+    { name: 'Fastify', category: 'backend' },
+    { name: 'PostgreSQL', category: 'database' },
+    { name: 'Ollama', category: 'tools' },
   ],
-  startDate: '2024-01-01',
-  lastUpdated: '2025-05-01',
+  startDate: '2026-06-01',
+  lastUpdated: '2026-07-01',
 };
 
-export type ClubscanCopy = {
+export type ApplyxCopy = {
   title: string;
   subtitle: string;
   description: string;
   longDescription: string;
 };
 
-export function buildClubscanProject(copy: ClubscanCopy): Project {
+export function buildApplyxProject(copy: ApplyxCopy): Project {
   return {
-    ...clubscanBase,
+    ...applyxBase,
     ...copy,
   };
 }
 
 export function getProjectSlugs(): string[] {
-  return [CLUB_SCAN_SLUG];
+  return [APPLYX_SLUG];
 }

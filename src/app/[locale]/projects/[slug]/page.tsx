@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation';
-import { getProjectSlugs } from '@/data/projects';
+import { getProjectSlugs, APPLYX_SLUG } from '@/data/projects';
 import { resolveProject } from '@/lib/resolveProject';
 import { ProjectDetailClient } from './ProjectDetailClient';
+import { ApplyxDetail } from '@/components/projects/applyx/ApplyxDetail';
 
 interface ProjectDetailPageProps {
   params: Promise<{
@@ -44,6 +45,10 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
   if (!project) {
     notFound();
+  }
+
+  if (slug === APPLYX_SLUG) {
+    return <ApplyxDetail project={project} locale={locale} />;
   }
 
   return <ProjectDetailClient project={project} />;

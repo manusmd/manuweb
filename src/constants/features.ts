@@ -1,1 +1,1 @@
-export const PROJECTS_SECTION_ENABLED = false;
+export const PROJECTS_SECTION_ENABLED = true;

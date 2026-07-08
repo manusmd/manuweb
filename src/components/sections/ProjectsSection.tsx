@@ -5,15 +5,15 @@ import type { Project } from '@/types/project';
 import { FullscreenSection } from '@/components/layout/FullscreenSection';
 import { SectionHeader } from '@/components/layout/SectionHeader';
 import { FeaturedProjectShowcase } from '@/components/projects/FeaturedProjectShowcase';
-import { buildClubscanProject } from '@/data/projects';
+import { buildApplyxProject } from '@/data/projects';
 import { Github } from 'lucide-react';
 
 export function ProjectsSection() {
   const t = useTranslations('projects');
-  const tc = useTranslations('projects.clubscan');
+  const tc = useTranslations('projects.applyx');
 
   const projects: Project[] = [
-    buildClubscanProject({
+    buildApplyxProject({
       title: tc('title'),
       subtitle: tc('subtitle'),
       description: tc('description'),

@@ -155,11 +155,70 @@
       "viewAllGithub": "View All Projects",
       "getInTouch": "Get In Touch"
     },
-    "clubscan": {
-      "title": "ClubScan",
-      "subtitle": "Attendance tracking for sports clubs",
-      "description": "A modern web application for sports clubs to manage their member attendances. Features include offline support, real-time updates, and a user-friendly interface for tracking attendance and generating reports.",
-      "longDescription": "A modern web application for sports clubs to manage their member attendances. Built as a Progressive Web App with offline-first workflows, responsive UI, and real-time synchronization so staff can reliably record attendance, review member activity, and generate reports even on unstable networks."
+    "applyx": {
+      "title": "ApplyX",
+      "subtitle": "Local-first job-application tracker",
+      "description": "A local-first job-application tracker that reads your own mailbox over IMAP and understands it with a local Ollama model — no cloud LLM, no email forwarding, nothing ever leaving your machine.",
+      "longDescription": "A local-first job-application tracker that reads your own mailbox over IMAP and classifies it with a local Ollama model — no OAuth, no email forwarding, no cloud LLM ever seeing your inbox. It follows the full pipeline from applied to offer with real signal, catches soft rejections, recovers hidden employer names from Indeed, and ships a hardened public demo mode. Fully localized in German and English, with per-user encryption at rest."
+    },
+    "applyxDetail": {
+      "eyebrow": "Local-first · IMAP + Ollama",
+      "heroLead": "Your inbox becomes your pipeline —",
+      "heroLeadEmphasis": "and nothing ever leaves your machine.",
+      "scrollCue": "Scroll to explore",
+      "ingest": {
+        "step": "01 — Ingest",
+        "heading": "An email becomes an application",
+        "reading": "Reading over IMAP…",
+        "classifying": "Classifying locally…",
+        "classified": "Classified",
+        "model": "Ollama · on your machine",
+        "emailFrom": "no-reply@acme.io",
+        "emailSubject": "Thanks for applying to Acme",
+        "emailBody": "We received your application for the Frontend Engineer role in Berlin and will be in touch soon.",
+        "fieldCompany": "Company",
+        "fieldRole": "Role",
+        "fieldLocation": "Location",
+        "company": "Acme",
+        "role": "Frontend Engineer",
+        "location": "Berlin",
+        "tracked": "Tracked"
+      },
+      "pipeline": {
+        "step": "02 — Pipeline",
+        "heading": "Watch it move — with real signal",
+        "stageApplied": "Applied",
+        "stageReview": "Under review",
+        "stageInterview": "Interview",
+        "stageOffer": "Offer",
+        "captionApplied": "Detected from the confirmation email and slotted in automatically.",
+        "captionReview": "Soft rejections like \"we'll keep your profile on file\" get caught right here.",
+        "captionInterview": "Scheduling emails move it forward on their own.",
+        "captionOffer": "And if a closed one reopens, ApplyX reopens with it."
+      },
+      "indeed": {
+        "step": "03 — The Indeed problem",
+        "heading": "Recover the employer Indeed hides",
+        "sub": "Indeed's apply-confirmation emails never name the company. So ApplyX looks it up.",
+        "redacted": "Employer",
+        "scanning": "Scraping message center…",
+        "revealed": "Northwind Labs"
+      },
+      "stats": {
+        "step": "04 — Signal, not vanity",
+        "heading": "Stats that actually mean something",
+        "applications": "Applications",
+        "replyRate": "Reply rate",
+        "interviews": "Interviews",
+        "medianReply": "days to first reply",
+        "wrapped": "Your year, Wrapped"
+      },
+      "outro": {
+        "step": "05 — Your machine",
+        "boundaryLabel": "nothing leaves this box",
+        "heading": "See it for yourself",
+        "sub": "A public demo, reset on every visit. No account needed."
+      }
     },
     "portfolio": {
       "description": "A modern, responsive portfolio website built with Next.js 14, featuring smooth animations, 3D elements, and a dark mode. Showcases my projects and experience in web development."

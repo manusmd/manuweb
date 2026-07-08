@@ -330,13 +330,57 @@ body {
   z-index: 1;
 }
 
+/* ApplyX privacy-boundary data flow */
+@keyframes applyx-flow {
+  0% {
+    transform: scaleX(0);
+    transform-origin: left;
+    opacity: 0.2;
+  }
+  50% {
+    transform: scaleX(1);
+    transform-origin: left;
+    opacity: 0.9;
+  }
+  50.01% {
+    transform-origin: right;
+  }
+  100% {
+    transform: scaleX(0);
+    transform-origin: right;
+    opacity: 0.2;
+  }
+}
+
+.applyx-flow {
+  animation: applyx-flow 2.6s ease-in-out infinite;
+}
+
+/* Prevent a first-paint flash of the ApplyX hero intro: these elements start
+   hidden and are revealed by GSAP. Fallbacks keep them visible when motion is
+   reduced or scripting is unavailable. */
+.applyx-detail [data-hero-hidden] {
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .applyx-detail [data-hero-hidden] {
+    opacity: 1;
+  }
+}
+@media (scripting: none) {
+  .applyx-detail [data-hero-hidden] {
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-glow,
   .animate-float,
   .animate-fade-in-up,
   .animate-blog-slide-in,
   .animate-blog-slide-out,
-  .animate-shimmer {
+  .animate-shimmer,
+  .applyx-flow {
     animation: none;
   }
 
