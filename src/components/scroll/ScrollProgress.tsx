@@ -11,8 +11,10 @@ export function ScrollProgress() {
   const pathname = usePathname();
   const tNav = useTranslations('navigation');
   const isBlogPage = pathname.includes('/blog');
+  const isProjectDetailPage = pathname.includes('/projects/');
+  const showSectionNav = !isBlogPage && !isProjectDetailPage;
 
-  const { activeIndex } = useActiveHomeSection(!isBlogPage, 'midpoint');
+  const { activeIndex } = useActiveHomeSection(showSectionNav, 'midpoint');
   const isVisible = useBackToTopVisible(true);
 
   const { scrollYProgress } = useScroll();
@@ -92,7 +94,7 @@ export function ScrollProgress() {
         </motion.button>
       </motion.div>
 
-      {!isBlogPage && (
+      {showSectionNav && (
         <div className="fixed right-6 top-1/2 z-40 hidden -translate-y-1/2 lg:block">
           <SectionScrollNav
             activeIndex={activeIndex}

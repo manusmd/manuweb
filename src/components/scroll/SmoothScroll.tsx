@@ -4,11 +4,6 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { scrollWindowToTop } from '@/lib/scrollTo';
 
-function isBlogArticlePath(path: string) {
-  const normalized = path.split('?')[0]?.split('#')[0] ?? path;
-  return /\/blog\/[^/]+$/.test(normalized.replace(/\/$/, '') || '/');
-}
-
 interface SmoothScrollProps {
   children: React.ReactNode;
 }
@@ -149,11 +144,14 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    if (isBlogArticlePath(pathname)) {
+    // Every navigation should start at the top of the page — unless the URL
+    // targets an in-page anchor (e.g. /en#projects), which the hash scroller owns.
+    if (!window.location.hash) {
       scrollWindowToTop();
     }
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const id = requestAnimationFrame(() => {
       lenisRef.current?.resize();
