@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b0f17"/>
+      <stop offset="1" stop-color="#080a10"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.8" cy="0.3" r="0.6">
+      <stop offset="0" stop-color="#8b5cf6" stop-opacity="0.26"/>
+      <stop offset="1" stop-color="#8b5cf6" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0.85" cy="0.75" r="0.5">
+      <stop offset="0" stop-color="#3b82f6" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#3b82f6" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse">
+      <path d="M44 0H0V44" fill="none" stroke="#182031" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="wave" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#60a5fa"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#grid)" opacity="0.5"/>
+  <rect width="1200" height="675" fill="url(#glow)"/>
+  <rect width="1200" height="675" fill="url(#glow2)"/>
+
+  <!-- motif: code brackets + a "vibe" waveform passing through -->
+  <g transform="translate(720 200)">
+    <text x="-4" y="168" fill="#2f3a54" font-size="200" font-weight="800" font-family="monospace">&lt;</text>
+    <text x="330" y="168" fill="#2f3a54" font-size="200" font-weight="800" font-family="monospace">&gt;</text>
+    <path d="M70 90 q30 -70 60 0 t60 0 t60 0 t60 0"
+          fill="none" stroke="url(#wave)" stroke-width="7" stroke-linecap="round"/>
+    <path d="M70 150 q30 60 60 0 t60 0 t60 0 t60 0"
+          fill="none" stroke="#8b5cf6" stroke-width="4" stroke-linecap="round" opacity="0.45"/>
+    <circle cx="250" cy="90" r="8" fill="#a78bfa"/>
+  </g>
+
+  <!-- text -->
+  <text x="80" y="250" fill="#9b7bf0" font-size="24" font-weight="600" letter-spacing="7">ESSAY · AI &amp; CODING</text>
+  <text x="78" y="352" fill="#f4f7fb" font-size="86" font-weight="800" letter-spacing="-2">Vibe Coding</text>
+  <text x="80" y="418" fill="#9aa4b8" font-size="31" font-weight="500">Programming with AI vibes</text>
+
+  <line x1="82" y1="588" x2="122" y2="588" stroke="#8b5cf6" stroke-width="3"/>
+  <text x="138" y="596" fill="#6b7488" font-size="23" font-weight="600" letter-spacing="2">manu-web.de · Blog</text>
+</svg>

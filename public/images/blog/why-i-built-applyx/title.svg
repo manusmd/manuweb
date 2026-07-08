@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b0f17"/>
+      <stop offset="1" stop-color="#080a10"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.8" cy="0.35" r="0.6">
+      <stop offset="0" stop-color="#3b82f6" stop-opacity="0.24"/>
+      <stop offset="1" stop-color="#3b82f6" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0.85" cy="0.75" r="0.5">
+      <stop offset="0" stop-color="#34d399" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#34d399" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse">
+      <path d="M44 0H0V44" fill="none" stroke="#182031" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#grid)" opacity="0.5"/>
+  <rect width="1200" height="675" fill="url(#glow)"/>
+  <rect width="1200" height="675" fill="url(#glow2)"/>
+
+  <!-- motif: sealed machine, IMAP -> Ollama -> Postgres -->
+  <g transform="translate(700 190)">
+    <rect x="0" y="0" width="420" height="300" rx="26" fill="#0e1420" stroke="#3b82f6" stroke-width="3" opacity="0.95"/>
+    <rect x="0" y="0" width="420" height="52" rx="26" fill="#3b82f6" opacity="0.10"/>
+    <circle cx="28" cy="26" r="5" fill="#4b5568"/>
+    <circle cx="46" cy="26" r="5" fill="#4b5568"/>
+    <text x="398" y="32" text-anchor="end" fill="#7c86a0" font-size="17" font-weight="600" font-family="monospace">localhost</text>
+
+    <!-- nodes -->
+    <g transform="translate(0 60)">
+      <!-- IMAP -->
+      <rect x="34" y="86" width="86" height="86" rx="18" fill="#131a28" stroke="#39435a" stroke-width="2.5"/>
+      <path d="M52 116 h50 v34 h-50 z M52 116 l25 20 l25 -20" fill="none" stroke="#9aa4b8" stroke-width="3.5" stroke-linejoin="round"/>
+      <text x="77" y="196" text-anchor="middle" fill="#8a93a7" font-size="16" font-weight="600" font-family="monospace">IMAP</text>
+
+      <!-- wire -->
+      <line x1="120" y1="129" x2="168" y2="129" stroke="#3b82f6" stroke-width="4"/>
+
+      <!-- Ollama (cpu) -->
+      <rect x="168" y="80" width="98" height="98" rx="20" fill="#1a1430" stroke="#8b5cf6" stroke-width="3"/>
+      <rect x="192" y="104" width="50" height="50" rx="9" fill="none" stroke="#a78bfa" stroke-width="4"/>
+      <rect x="205" y="117" width="24" height="24" rx="4" fill="#a78bfa"/>
+      <g stroke="#a78bfa" stroke-width="4" stroke-linecap="round">
+        <line x1="205" y1="80" x2="205" y2="70"/><line x1="229" y1="80" x2="229" y2="70"/>
+        <line x1="205" y1="188" x2="205" y2="178"/><line x1="229" y1="188" x2="229" y2="178"/>
+      </g>
+      <text x="217" y="200" text-anchor="middle" fill="#a78bfa" font-size="16" font-weight="700" font-family="monospace">Ollama</text>
+
+      <!-- wire -->
+      <line x1="266" y1="129" x2="314" y2="129" stroke="#3b82f6" stroke-width="4"/>
+
+      <!-- Postgres (db) -->
+      <rect x="314" y="86" width="86" height="86" rx="18" fill="#131a28" stroke="#39435a" stroke-width="2.5"/>
+      <g fill="none" stroke="#9aa4b8" stroke-width="3.5">
+        <ellipse cx="357" cy="116" rx="22" ry="8"/>
+        <path d="M335 116 v30 a22 8 0 0 0 44 0 v-30"/>
+        <path d="M335 131 a22 8 0 0 0 44 0"/>
+      </g>
+      <text x="357" y="196" text-anchor="middle" fill="#8a93a7" font-size="15" font-weight="600" font-family="monospace">Postgres</text>
+    </g>
+  </g>
+
+  <!-- lock caption under box -->
+  <g transform="translate(842 512)" opacity="0.9">
+    <rect x="0" y="6" width="16" height="13" rx="3" fill="none" stroke="#34d399" stroke-width="2.5"/>
+    <path d="M3 6 v-3 a5 5 0 0 1 10 0 v3" fill="none" stroke="#34d399" stroke-width="2.5"/>
+    <text x="26" y="18" fill="#37c393" font-size="17" font-weight="600" letter-spacing="1">nothing leaves your machine</text>
+  </g>
+
+  <!-- text -->
+  <text x="80" y="250" fill="#37c393" font-size="24" font-weight="600" letter-spacing="6">PROJECT · BUILD LOG</text>
+  <text x="78" y="348" fill="#f4f7fb" font-size="76" font-weight="800" letter-spacing="-2">Why I Built ApplyX</text>
+  <text x="80" y="414" fill="#9aa4b8" font-size="30" font-weight="500">A local-first job-application tracker</text>
+
+  <line x1="82" y1="588" x2="122" y2="588" stroke="#34d399" stroke-width="3"/>
+  <text x="138" y="596" fill="#6b7488" font-size="23" font-weight="600" letter-spacing="2">manu-web.de · Blog</text>
+</svg>

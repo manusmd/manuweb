@@ -1,0 +1,78 @@
+---
+title: 'Why I Built ApplyX: A Local-First Job-Application Tracker'
+date: '2026-07-09'
+description: 'A build log for ApplyX — a job-application tracker that reads your inbox over IMAP and understands it with a local Ollama model, so none of your application data ever leaves your machine.'
+tags: ['local-first', 'ollama', 'llm', 'privacy', 'typescript']
+---
+
+![Why I Built ApplyX](/images/blog/why-i-built-applyx/title.svg)
+
+# Why I Built ApplyX: A Local-First Job-Application Tracker
+
+Every job hunt ends the same way: a spreadsheet with forty half-remembered rows, three statuses that all mean "waiting," and no idea which of those companies actually rejected you three weeks ago in a polite email you never re-read. I got tired of being my own unreliable database, so I built [ApplyX](/en/projects/applyx).
+
+This is the why — and the handful of engineering problems that turned out to be more interesting than I expected.
+
+## The itch
+
+Your inbox already knows everything about your job search. Every application confirmation, every "we'd love to schedule a call," every "we've decided to move forward with other candidates" is sitting right there. The information isn't missing — it's just unstructured and scattered across hundreds of emails.
+
+So the obvious idea: instead of me copying data into a tracker by hand, let something **read my inbox and build the tracker for me.** Applied, in review, interview, offer, rejected — all reconstructed from the emails I already have.
+
+The moment I sketched that out, I hit the wall that shaped the whole project.
+
+## The privacy problem
+
+To read your inbox and understand it, a normal SaaS would do two things: ask for OAuth access to your Gmail, and send the email text to a cloud AI to classify it. Think about what that means for *this* data specifically. Your job search is some of the most sensitive information you have — which companies you're talking to, who rejected you, what salary was discussed, the fact that you're looking at all while still employed.
+
+I did **not** want to be a service that funnels that through someone else's servers. I'd also just watched the industry learn this lesson the hard way — [Samsung banning ChatGPT after engineers pasted source code into it](/en/blog/cloud-vs-local-ai), courts ordering AI providers to retain "deleted" logs. I wrote a whole post on [why that's a privacy decision, not a cost one](/en/blog/cloud-vs-local-ai). ApplyX is that post, turned into architecture.
+
+So the constraint became the product: **nothing leaves your machine.**
+
+## How it works
+
+The whole pipeline runs locally:
+
+- **IMAP, not OAuth.** ApplyX connects to your mailbox with plain IMAP credentials you control — no Google sign-in, no third-party token, no email forwarding to some ingestion address.
+- **A local Ollama model, not cloud AI.** The classification and extraction happen with a model running on your own hardware through [Ollama](https://ollama.com). The email text is understood on the same box it's stored on.
+- **PostgreSQL** holds the structured result, encrypted per user.
+
+```text
+Your inbox ──IMAP──▶ ApplyX ──▶ local Ollama ──▶ Postgres
+                       └─────── nothing leaves this box ───────┘
+```
+
+The stack itself is deliberately boring so the interesting parts could be reliable: TypeScript end to end, a Fastify backend, a React frontend, PostgreSQL, and Ollama for the model. Boring stack, opinionated architecture.
+
+## The parts that were actually hard
+
+Two problems made this more than a CRUD app.
+
+**Reconstructing hidden employer names.** Job boards like Indeed love to route mail through their own domains and hide who the employer actually is behind "a company on Indeed." A tracker that just files those under "Indeed" is useless. Teaching the pipeline to dig the real employer back out of the surrounding context — signatures, thread history, subject lines — was the single most satisfying puzzle in the project.
+
+**Detecting the soft rejection.** The clear rejections are easy. The hard ones are the emails that never say no: "we'll keep your CV on file," "we've decided to proceed with candidates whose profile more closely matches." A human reads that as a rejection instantly. Getting a local model to reliably distinguish a genuine pause from a gentle brush-off — without a giant frontier model — took real prompt and evaluation work, and it's exactly the kind of narrow classification task where a small local model earns its place.
+
+## The decisions I'm happy with
+
+A few choices I'd make again:
+
+- **Local-first as a hard rule, not a feature.** Because there's no cloud path, the privacy promise isn't something you have to trust — it's structural. There's nowhere for your data to go.
+- **A safe public demo.** I wanted people to actually try it without handing over their inbox, so there's a sandboxed demo mode that resets on every visit. Showing a real, data-driven app publicly without leaking anyone's data is its own small engineering problem.
+- **Bilingual from day one.** The whole app works in German and English, because job hunting doesn't happen in one language.
+- **Encryption per user.** Even locally, application data is stored encrypted per user rather than sitting in plaintext.
+
+## What it reinforced
+
+Building ApplyX changed how I default. I used to reach for a cloud API for anything involving a model. Now my first question is "whose data is this, and does this task actually need a frontier model?" For classification and extraction — which is most of what real apps need — a local model on modest hardware is not a compromise. It's often the better answer, and it comes with a privacy guarantee you can't buy from an API.
+
+The job-tracking app was the excuse. The real lesson was that **local-first AI is genuinely practical now**, and for sensitive data it should probably be the default.
+
+## Try it
+
+ApplyX is live with a reset-on-visit demo, and the code is open:
+
+- **Live demo:** [applyx.projects.manu-web.de](https://applyx.projects.manu-web.de)
+- **Source:** [github.com/manusmd/applyx](https://github.com/manusmd/applyx)
+- **Project write-up:** [the ApplyX project page](/en/projects/applyx)
+
+If you're between jobs and drowning in a tracking spreadsheet, point it at your inbox and let your own machine do the filing.

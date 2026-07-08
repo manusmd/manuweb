@@ -1,0 +1,78 @@
+---
+title: 'Warum ich ApplyX gebaut habe: ein Local-first Bewerbungs-Tracker'
+date: '2026-07-09'
+description: 'Ein Build-Log zu ApplyX – einem Bewerbungs-Tracker, der dein Postfach per IMAP liest und mit einem lokalen Ollama-Modell versteht, sodass keine deiner Bewerbungsdaten je deinen Rechner verlässt.'
+tags: ['local-first', 'ollama', 'llm', 'datenschutz', 'typescript']
+---
+
+![Warum ich ApplyX gebaut habe](/images/blog/why-i-built-applyx/title.svg)
+
+# Warum ich ApplyX gebaut habe: ein Local-first Bewerbungs-Tracker
+
+Jede Jobsuche endet gleich: eine Tabelle mit vierzig halb erinnerten Zeilen, drei Status, die alle „Warten" bedeuten, und keine Ahnung, welche dieser Firmen dich eigentlich vor drei Wochen in einer höflichen Mail abgesagt hat, die du nie wieder gelesen hast. Ich hatte es satt, meine eigene unzuverlässige Datenbank zu sein – also habe ich [ApplyX](/de/projects/applyx) gebaut.
+
+Das hier ist das Warum – und die Handvoll Engineering-Probleme, die sich als interessanter herausstellten, als ich erwartet hatte.
+
+## Der Auslöser
+
+Dein Postfach weiß bereits alles über deine Jobsuche. Jede Eingangsbestätigung, jedes „wir würden gerne einen Call vereinbaren", jedes „wir haben uns für andere Kandidaten entschieden" liegt genau dort. Die Information fehlt nicht – sie ist nur unstrukturiert und über Hunderte E-Mails verstreut.
+
+Also die naheliegende Idee: Statt dass ich Daten von Hand in einen Tracker kopiere, soll etwas **mein Postfach lesen und den Tracker für mich bauen.** Beworben, in Prüfung, Interview, Angebot, Absage – alles rekonstruiert aus den E-Mails, die ich ohnehin schon habe.
+
+In dem Moment, als ich das skizziert hatte, stieß ich auf die Wand, die das ganze Projekt geprägt hat.
+
+## Das Datenschutz-Problem
+
+Um dein Postfach zu lesen und zu verstehen, würde ein normales SaaS zwei Dinge tun: OAuth-Zugriff auf dein Gmail verlangen und den E-Mail-Text zur Klassifikation an eine Cloud-KI schicken. Denk mal darüber nach, was das speziell für *diese* Daten bedeutet. Deine Jobsuche gehört zu den sensibelsten Informationen, die du hast – mit welchen Firmen du sprichst, wer dich abgesagt hat, welches Gehalt besprochen wurde, die Tatsache, dass du überhaupt suchst, während du noch angestellt bist.
+
+Ich wollte **nicht** der Dienst sein, der genau das durch fremde Server leitet. Und ich hatte gerade die Branche diese Lektion auf die harte Tour lernen sehen – [Samsung, das ChatGPT verbot, nachdem Ingenieure Quellcode hineingefügt hatten](/de/blog/cloud-vs-local-ai), Gerichte, die KI-Anbieter zwingen, „gelöschte" Logs aufzubewahren. Ich habe einen ganzen Beitrag darüber geschrieben, [warum das eine Datenschutz-Entscheidung ist, keine Kostenfrage](/de/blog/cloud-vs-local-ai). ApplyX ist dieser Beitrag, in Architektur übersetzt.
+
+Die Einschränkung wurde also zum Produkt: **nichts verlässt deinen Rechner.**
+
+## Wie es funktioniert
+
+Die ganze Pipeline läuft lokal:
+
+- **IMAP, nicht OAuth.** ApplyX verbindet sich per einfachen IMAP-Zugangsdaten, die du kontrollierst, mit deinem Postfach – kein Google-Login, kein Drittanbieter-Token, kein E-Mail-Forwarding an irgendeine Ingest-Adresse.
+- **Ein lokales Ollama-Modell, keine Cloud-KI.** Klassifikation und Extraktion passieren mit einem Modell, das auf deiner eigenen Hardware über [Ollama](https://ollama.com) läuft. Der E-Mail-Text wird auf derselben Box verstanden, auf der er gespeichert ist.
+- **PostgreSQL** hält das strukturierte Ergebnis, verschlüsselt pro Nutzer.
+
+```text
+Dein Postfach ──IMAP──▶ ApplyX ──▶ lokales Ollama ──▶ Postgres
+                          └────── nichts verlässt diese Box ──────┘
+```
+
+Der Stack selbst ist bewusst langweilig, damit die interessanten Teile zuverlässig sein konnten: durchgängig TypeScript, ein Fastify-Backend, ein React-Frontend, PostgreSQL und Ollama für das Modell. Langweiliger Stack, klare Architektur.
+
+## Die Teile, die wirklich schwer waren
+
+Zwei Probleme machten daraus mehr als eine CRUD-App.
+
+**Versteckte Arbeitgebernamen rekonstruieren.** Jobbörsen wie Indeed leiten Mails gern über ihre eigenen Domains und verstecken, wer der Arbeitgeber tatsächlich ist, hinter „ein Unternehmen auf Indeed". Ein Tracker, der die einfach unter „Indeed" ablegt, ist nutzlos. Der Pipeline beizubringen, den echten Arbeitgeber wieder aus dem Kontext herauszugraben – Signaturen, Thread-Verlauf, Betreffzeilen – war das befriedigendste Rätsel im ganzen Projekt.
+
+**Die sanfte Absage erkennen.** Die klaren Absagen sind einfach. Die schweren sind die Mails, die nie Nein sagen: „wir behalten deinen Lebenslauf in Erinnerung", „wir haben uns entschieden, mit Kandidaten fortzufahren, deren Profil besser passt". Ein Mensch liest das sofort als Absage. Ein lokales Modell verlässlich zwischen einer echten Pause und einer freundlichen Abfuhr unterscheiden zu lassen – ohne ein riesiges Frontier-Modell – erforderte echte Prompt- und Evaluationsarbeit, und es ist genau die Art enger Klassifikationsaufgabe, bei der ein kleines lokales Modell seinen Platz verdient.
+
+## Die Entscheidungen, mit denen ich zufrieden bin
+
+Ein paar Entscheidungen, die ich wieder so treffen würde:
+
+- **Local-first als harte Regel, nicht als Feature.** Weil es keinen Cloud-Pfad gibt, ist das Datenschutz-Versprechen nichts, dem du vertrauen musst – es ist strukturell. Deine Daten haben keinen Ort, an den sie gehen könnten.
+- **Eine sichere öffentliche Demo.** Ich wollte, dass Leute es tatsächlich ausprobieren, ohne ihr Postfach herzugeben – also gibt es einen abgesicherten Demo-Modus, der bei jedem Besuch zurückgesetzt wird. Eine echte, datengetriebene App öffentlich zu zeigen, ohne die Daten von jemandem zu leaken, ist ein eigenes kleines Engineering-Problem.
+- **Zweisprachig von Tag eins.** Die ganze App funktioniert auf Deutsch und Englisch, weil Jobsuche nicht in einer Sprache stattfindet.
+- **Verschlüsselung pro Nutzer.** Auch lokal werden Bewerbungsdaten pro Nutzer verschlüsselt gespeichert statt im Klartext.
+
+## Was es bestätigt hat
+
+ApplyX zu bauen hat meinen Standard verändert. Früher griff ich für alles mit einem Modell zur Cloud-API. Jetzt ist meine erste Frage: „Wessen Daten sind das, und braucht diese Aufgabe wirklich ein Frontier-Modell?" Für Klassifikation und Extraktion – also das meiste, was echte Apps brauchen – ist ein lokales Modell auf bescheidener Hardware kein Kompromiss. Oft ist es die bessere Antwort, und es kommt mit einer Datenschutz-Garantie, die man von keiner API kaufen kann.
+
+Die Job-Tracking-App war der Vorwand. Die eigentliche Lehre war, dass **local-first KI heute wirklich praktikabel ist** – und für sensible Daten wahrscheinlich der Standard sein sollte.
+
+## Ausprobieren
+
+ApplyX ist live mit einer Demo, die bei jedem Besuch zurückgesetzt wird, und der Code ist offen:
+
+- **Live-Demo:** [applyx.projects.manu-web.de](https://applyx.projects.manu-web.de)
+- **Quellcode:** [github.com/manusmd/applyx](https://github.com/manusmd/applyx)
+- **Projekt-Seite:** [die ApplyX-Projektseite](/de/projects/applyx)
+
+Wenn du zwischen zwei Jobs steckst und in einer Tracking-Tabelle ertrinkst: richte es auf dein Postfach und lass deine eigene Maschine die Ablage machen.
