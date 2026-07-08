@@ -82,10 +82,7 @@ export function HeroSection() {
     <>
       <LoadingScreen isVisible={!isSceneReady} progress={progress} />
 
-      <section
-        id="home"
-        className="relative flex min-h-[calc(100svh-4rem)] flex-col overflow-x-hidden"
-      >
+      <section id="home" className="relative -mt-16 flex min-h-[100svh] flex-col overflow-x-hidden">
         {!prefersReducedMotion && !isMobile && isSceneReady && <div style={spotlightStyle} />}
 
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-accent/5" />
