@@ -7,11 +7,16 @@ interface Use3DSceneReadyProps {
   minLoadTime?: number;
 }
 
+// Persists across client-side navigations (the module stays loaded); only resets
+// on a full page reload. This lets the loading screen appear on the initial load
+// but not on subsequent page transitions when the hero remounts.
+let sceneReadyOnce = false;
+
 export function use3DSceneReady({
   sphereCount = 3,
   minLoadTime = 1000,
 }: Use3DSceneReadyProps = {}) {
-  const [isSceneReady, setIsSceneReady] = useState(false);
+  const [isSceneReady, setIsSceneReady] = useState(() => sceneReadyOnce);
   const [readySpheres, setReadySpheres] = useState(0);
   const [startTime] = useState(() => Date.now());
 
@@ -25,17 +30,20 @@ export function use3DSceneReady({
   }, []);
 
   useEffect(() => {
+    if (isSceneReady) return;
+
     if (readySpheres >= sphereCount) {
       const elapsed = Date.now() - startTime;
       const remainingTime = Math.max(0, minLoadTime - elapsed);
 
       const timer = setTimeout(() => {
         setIsSceneReady(true);
+        sceneReadyOnce = true;
       }, remainingTime);
 
       return () => clearTimeout(timer);
     }
-  }, [readySpheres, sphereCount, startTime, minLoadTime]);
+  }, [isSceneReady, readySpheres, sphereCount, startTime, minLoadTime]);
 
   return {
     isSceneReady,
