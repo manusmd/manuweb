@@ -19,15 +19,15 @@ Start with the defaults, because most people never change them.
 
 For OpenAI's **API**, inputs and outputs are [retained for up to 30 days](https://platform.openai.com/docs/guides/your-data) for abuse monitoring, then deleted — and API data isn't used to train models by default. Approved enterprise customers can request **Zero Data Retention** on top of that. So far, reasonable.
 
-The consumer **ChatGPT** product is a different story: there, your conversations *can* be used to improve the models unless you opt out, and "opt out" is a setting most users never find. The same prompt — "here's our internal auth code, what's wrong with it?" — is treated completely differently depending on which door you walked through.
+The consumer **ChatGPT** product is a different story: there, your conversations _can_ be used to improve the models unless you opt out, and "opt out" is a setting most users never find. The same prompt — "here's our internal auth code, what's wrong with it?" — is treated completely differently depending on which door you walked through.
 
-The key insight: with any cloud provider, your data leaves your machine, sits on someone else's infrastructure, and is governed by *their* policy and *their* legal exposure — which can change without you doing anything.
+The key insight: with any cloud provider, your data leaves your machine, sits on someone else's infrastructure, and is governed by _their_ policy and _their_ legal exposure — which can change without you doing anything.
 
 ## When "delete" doesn't mean delete
 
-Here's the part that made this concrete for me. In the copyright lawsuit *The New York Times v. OpenAI*, a federal court issued a [preservation order in May 2025](https://openai.com/index/response-to-nyt-data-demands/) requiring OpenAI to **retain ChatGPT logs — including chats users had already deleted.** By November 2025, the court had [ordered OpenAI to produce 20 million de-identified conversations](https://news.bloomberglaw.com/ip-law/openai-must-turn-over-20-million-chatgpt-logs-judge-affirms) to the plaintiffs.
+Here's the part that made this concrete for me. In the copyright lawsuit _The New York Times v. OpenAI_, a federal court issued a [preservation order in May 2025](https://openai.com/index/response-to-nyt-data-demands/) requiring OpenAI to **retain ChatGPT logs — including chats users had already deleted.** By November 2025, the court had [ordered OpenAI to produce 20 million de-identified conversations](https://news.bloomberglaw.com/ip-law/openai-must-turn-over-20-million-chatgpt-logs-judge-affirms) to the plaintiffs.
 
-The order was later narrowed — as of late September 2025 OpenAI no longer had to preserve *all new* logs going forward — but data already captured under it stayed captured. The lesson isn't "OpenAI is the villain." It's structural: **once your data is on someone else's servers, a court in a country you don't live in can override that company's delete button.** Your retention policy is only as strong as the next subpoena.
+The order was later narrowed — as of late September 2025 OpenAI no longer had to preserve _all new_ logs going forward — but data already captured under it stayed captured. The lesson isn't "OpenAI is the villain." It's structural: **once your data is on someone else's servers, a court in a country you don't live in can override that company's delete button.** Your retention policy is only as strong as the next subpoena.
 
 ## The compliance reality
 
@@ -64,7 +64,7 @@ Local isn't a free lunch, and pretending otherwise is how people get burned:
 
 - **Ceiling:** the very best frontier models are still cloud-only. If you need absolute top-end reasoning, local won't match it yet.
 - **Hardware:** you pay once, upfront, in RAM/VRAM instead of monthly in tokens. Great at steady volume, worse for a rare one-off.
-- **Ops:** updates, quantization choices, and prompt tuning are now *your* job.
+- **Ops:** updates, quantization choices, and prompt tuning are now _your_ job.
 - **Latency and throughput** depend on your machine, not a datacenter.
 
 The trade is real: you give up some raw capability and take on some maintenance, and in exchange **nothing leaves your infrastructure.** For a lot of products, that's a bargain.

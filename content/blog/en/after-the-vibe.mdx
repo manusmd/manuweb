@@ -35,7 +35,7 @@ The slowdown isn't the end of it. The code that comes out has a measurable shape
 - "Copy-pasted" lines rose from 8.3% to 12.3% of changes, while **refactored ("moved") lines fell below 10%** — for the first time, cloned code outnumbered refactored code.
 - Code churn (lines revised within two weeks of being committed) climbed from 3.1% to 5.7% — a proxy for "committed too soon."
 
-Google's [2024 DORA report](https://dora.dev/research/2024/dora-report/) found the same tension at the delivery level: a 25% increase in AI adoption was associated with an estimated **7.2% drop in delivery stability** and a small dip in throughput. The mechanism is intuitive — AI makes it easy to produce *more* code in *bigger* batches, and bigger batches are riskier. (Fairly, the same report tied AI adoption to a 7.5% improvement in documentation quality. It's not all downside.)
+Google's [2024 DORA report](https://dora.dev/research/2024/dora-report/) found the same tension at the delivery level: a 25% increase in AI adoption was associated with an estimated **7.2% drop in delivery stability** and a small dip in throughput. The mechanism is intuitive — AI makes it easy to produce _more_ code in _bigger_ batches, and bigger batches are riskier. (Fairly, the same report tied AI adoption to a 7.5% improvement in documentation quality. It's not all downside.)
 
 ## Security is where it bites hardest
 
@@ -43,7 +43,7 @@ If duplication is the slow tax, security is the sudden bill.
 
 Veracode's [2025 GenAI Code Security Report](https://www.veracode.com/blog/genai-code-security-report/) ran 80 curated tasks across more than 100 models. When a task offered a secure and an insecure way to do something, the models chose the **insecure option 45% of the time**. Cross-site scripting failed 86% of the time; log injection 88%; Java tasks failed 72%. And crucially: **newer, larger models were no more secure** than older ones. This isn't a limitation the next release fixes — it's structural.
 
-The human half of this was measured back in 2023 by Stanford's [*Do Users Write More Insecure Code with AI Assistants?*](https://arxiv.org/abs/2211.03622). Participants with an AI assistant wrote **significantly less secure code** — and were **more likely to believe their code was secure**. The overconfidence is the dangerous part, and it's the same pattern METR found for speed.
+The human half of this was measured back in 2023 by Stanford's [_Do Users Write More Insecure Code with AI Assistants?_](https://arxiv.org/abs/2211.03622). Participants with an AI assistant wrote **significantly less secure code** — and were **more likely to believe their code was secure**. The overconfidence is the dangerous part, and it's the same pattern METR found for speed.
 
 Then there's a brand-new class of attack: **slopsquatting**. Models routinely hallucinate package names that don't exist — [one 2025 study](https://socket.dev/blog/slopsquatting-how-ai-hallucinations-are-fueling-a-new-class-of-supply-chain-attacks) measured a 21.7% hallucination rate for open-source models and found that **43% of hallucinated package names reappeared on every run** for the same prompt. Attackers just register the predictable fake names and wait for someone to `npm install` a hallucination.
 
@@ -76,7 +76,7 @@ The through-line in every study above is **overconfidence** — feeling faster, 
 
 ## Conclusion
 
-Vibe coding was a fun idea, and for a weekend prototype it still is. But "after the vibe" — once real users, real data, and real security are on the line — the evidence is consistent: AI makes you *feel* faster and safer while often making you neither.
+Vibe coding was a fun idea, and for a weekend prototype it still is. But "after the vibe" — once real users, real data, and real security are on the line — the evidence is consistent: AI makes you _feel_ faster and safer while often making you neither.
 
 The tool didn't get worse. Our calibration did. The developers who'll get the most out of AI over the next few years aren't the ones who trust it the most — they're the ones who trust it the least and verify the most.
 

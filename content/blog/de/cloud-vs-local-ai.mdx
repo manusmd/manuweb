@@ -19,15 +19,15 @@ Fangen wir bei den Standardeinstellungen an, denn die meisten Leute ändern sie 
 
 Bei OpenAIs **API** werden Ein- und Ausgaben [bis zu 30 Tage aufbewahrt](https://platform.openai.com/docs/guides/your-data) (zur Missbrauchserkennung) und dann gelöscht – und API-Daten werden standardmäßig nicht zum Training genutzt. Freigeschaltete Enterprise-Kunden können zusätzlich **Zero Data Retention** beantragen. So weit vernünftig.
 
-Das Consumer-Produkt **ChatGPT** ist eine andere Geschichte: Dort *können* deine Konversationen zur Verbesserung der Modelle genutzt werden, sofern du nicht widersprichst – und dieses „Widersprechen" ist eine Einstellung, die die meisten Nutzer nie finden. Derselbe Prompt – „hier ist unser interner Auth-Code, was stimmt nicht damit?" – wird völlig unterschiedlich behandelt, je nachdem, durch welche Tür du gegangen bist.
+Das Consumer-Produkt **ChatGPT** ist eine andere Geschichte: Dort _können_ deine Konversationen zur Verbesserung der Modelle genutzt werden, sofern du nicht widersprichst – und dieses „Widersprechen" ist eine Einstellung, die die meisten Nutzer nie finden. Derselbe Prompt – „hier ist unser interner Auth-Code, was stimmt nicht damit?" – wird völlig unterschiedlich behandelt, je nachdem, durch welche Tür du gegangen bist.
 
-Die zentrale Erkenntnis: Bei jedem Cloud-Anbieter verlässt deine Daten dein Gerät, liegt auf fremder Infrastruktur und unterliegt *deren* Richtlinie und *deren* rechtlichem Risiko – das sich ändern kann, ohne dass du irgendetwas tust.
+Die zentrale Erkenntnis: Bei jedem Cloud-Anbieter verlässt deine Daten dein Gerät, liegt auf fremder Infrastruktur und unterliegt _deren_ Richtlinie und _deren_ rechtlichem Risiko – das sich ändern kann, ohne dass du irgendetwas tust.
 
 ## Wenn „löschen" nicht löschen heißt
 
-Das ist der Teil, der es für mich konkret gemacht hat. Im Urheberrechts-Prozess *The New York Times gegen OpenAI* erließ ein Bundesgericht im [Mai 2025 eine Aufbewahrungs-Anordnung](https://openai.com/index/response-to-nyt-data-demands/), die OpenAI verpflichtete, **ChatGPT-Logs aufzubewahren – einschließlich Chats, die Nutzer bereits gelöscht hatten.** Bis November 2025 hatte das Gericht [OpenAI angewiesen, 20 Millionen anonymisierte Konversationen herauszugeben](https://news.bloomberglaw.com/ip-law/openai-must-turn-over-20-million-chatgpt-logs-judge-affirms).
+Das ist der Teil, der es für mich konkret gemacht hat. Im Urheberrechts-Prozess _The New York Times gegen OpenAI_ erließ ein Bundesgericht im [Mai 2025 eine Aufbewahrungs-Anordnung](https://openai.com/index/response-to-nyt-data-demands/), die OpenAI verpflichtete, **ChatGPT-Logs aufzubewahren – einschließlich Chats, die Nutzer bereits gelöscht hatten.** Bis November 2025 hatte das Gericht [OpenAI angewiesen, 20 Millionen anonymisierte Konversationen herauszugeben](https://news.bloomberglaw.com/ip-law/openai-must-turn-over-20-million-chatgpt-logs-judge-affirms).
 
-Die Anordnung wurde später eingeschränkt – seit Ende September 2025 musste OpenAI nicht mehr *alle neuen* Logs fortlaufend aufbewahren – aber die bereits erfassten Daten blieben erfasst. Die Lehre ist nicht „OpenAI ist der Böse". Sie ist strukturell: **Sobald deine Daten auf fremden Servern liegen, kann ein Gericht in einem Land, in dem du nicht lebst, den Löschknopf dieses Unternehmens außer Kraft setzen.** Deine Aufbewahrungs-Richtlinie ist nur so stark wie die nächste Vorladung.
+Die Anordnung wurde später eingeschränkt – seit Ende September 2025 musste OpenAI nicht mehr _alle neuen_ Logs fortlaufend aufbewahren – aber die bereits erfassten Daten blieben erfasst. Die Lehre ist nicht „OpenAI ist der Böse". Sie ist strukturell: **Sobald deine Daten auf fremden Servern liegen, kann ein Gericht in einem Land, in dem du nicht lebst, den Löschknopf dieses Unternehmens außer Kraft setzen.** Deine Aufbewahrungs-Richtlinie ist nur so stark wie die nächste Vorladung.
 
 ## Die Compliance-Realität
 
@@ -64,7 +64,7 @@ Lokal ist kein Gratis-Mittagessen, und etwas anderes zu behaupten ist der Weg, a
 
 - **Obergrenze:** die allerbesten Frontier-Modelle sind weiterhin nur in der Cloud. Wenn du absolutes Spitzen-Reasoning brauchst, kommt lokal noch nicht mit.
 - **Hardware:** du zahlst einmal, vorab, in RAM/VRAM statt monatlich in Tokens. Toll bei konstantem Volumen, schlechter für den seltenen Einzelfall.
-- **Betrieb:** Updates, Quantisierungs-Entscheidungen und Prompt-Tuning sind jetzt *dein* Job.
+- **Betrieb:** Updates, Quantisierungs-Entscheidungen und Prompt-Tuning sind jetzt _dein_ Job.
 - **Latenz und Durchsatz** hängen an deiner Maschine, nicht an einem Rechenzentrum.
 
 Der Tausch ist real: du gibst etwas rohe Leistungsfähigkeit ab und übernimmst etwas Wartung, und im Gegenzug **verlässt nichts deine Infrastruktur.** Für viele Produkte ist das ein guter Deal.
