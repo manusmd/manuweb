@@ -2,7 +2,7 @@
 
 import type { Project } from '@/types/project';
 import { Badge } from '@/components/ui/badge';
-import { ExternalLink, Github } from 'lucide-react';
+import { ArrowRight, ExternalLink, Github } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
@@ -19,13 +19,14 @@ export function FeaturedProjectShowcase({ project }: FeaturedProjectShowcaseProp
   const detailHref = project.slug ? `/${locale}/projects/${project.slug}` : undefined;
 
   return (
-    <article className="group relative overflow-hidden rounded-3xl border border-border/40 bg-card/55 shadow-[0_22px_64px_-32px_rgba(0,0,0,0.45)] ring-1 ring-white/[0.06] backdrop-blur-xl transition-shadow duration-300 hover:shadow-[0_28px_80px_-32px_rgba(0,0,0,0.6)]">
+    <article className="group relative overflow-hidden rounded-3xl border border-border/40 bg-card/55 shadow-[0_22px_64px_-32px_rgba(0,0,0,0.45)] ring-1 ring-white/[0.06] backdrop-blur-xl transition-[box-shadow,border-color] duration-300 hover:border-primary/40 hover:shadow-[0_28px_80px_-32px_rgba(0,0,0,0.6)]">
       {/* Stretched link: clicking anywhere on the card (except the action
-          buttons below, which sit at a higher z-index) opens the detail page. */}
+          buttons below, which sit at a higher z-index) opens the detail page.
+          The visible "take the tour" cues below label where it leads. */}
       {detailHref ? (
         <Link
           href={detailHref}
-          aria-label={t('viewProject')}
+          aria-label={t('takeTour')}
           className="absolute inset-0 z-10 rounded-3xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
         />
       ) : null}
@@ -77,6 +78,19 @@ export function FeaturedProjectShowcase({ project }: FeaturedProjectShowcaseProp
                 </Badge>
               ))}
             </div>
+          ) : null}
+
+          {/* Persistent, visible cue that labels the whole-card link. It sits in
+              normal flow (below the stretched link), so it isn't a separate
+              click target — clicking it still triggers the card link. */}
+          {detailHref ? (
+            <span
+              aria-hidden="true"
+              className="inline-flex w-fit items-center gap-1.5 text-sm font-semibold text-primary decoration-primary/40 underline-offset-4 group-hover:underline"
+            >
+              {t('takeTour')}
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </span>
           ) : null}
 
           <div className="relative z-20 flex flex-col gap-3 pt-1 sm:flex-row">
