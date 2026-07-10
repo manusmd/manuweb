@@ -2,7 +2,18 @@
 
 import { useEffect } from 'react';
 
-export const SCENES = ['hero', 'ingest', 'pipeline', 'indeed', 'stats', 'outro'] as const;
+export const SCENES = [
+  'hero',
+  'ingest',
+  'pipeline',
+  'indeed',
+  'stats',
+  'local',
+  'jobposting',
+  'ask',
+  'assistant',
+  'outro',
+] as const;
 
 /**
  * Sets up the GSAP-choreographed, scroll-driven experience for the ApplyX detail
@@ -74,12 +85,26 @@ export function useApplyxScrollExperience(
           gsap.set(q('[data-revealed]') ?? [], { opacity: 1 });
           gsap.set(qa('[data-response-bar]'), { scaleY: 1 });
           gsap.set(qa('[data-spark]'), { scaleY: 1 });
+          gsap.set(qa('[data-stage-card]'), { opacity: 1, y: 0 });
+          qa('[data-stage]').forEach(s => gsap.set(s, { '--lit': 1 }));
+          gsap.set(q('[data-marker]') ?? [], { left: '100%' });
+          gsap.set(q('[data-pipe-fill]') ?? [], { scaleX: 1, transformOrigin: 'left center' });
           qa<HTMLElement>('[data-gauge-arc]').forEach(el => {
             gsap.set(el, { strokeDashoffset: Number(el.dataset.gaugeOffset ?? 0) });
           });
           qa<HTMLElement>('[data-donut-arc]').forEach(el => {
             gsap.set(el, { drawSVG: `${el.dataset.drawFrom ?? 0}% ${el.dataset.drawTo ?? 0}%` });
           });
+          gsap.set(qa('[data-gate-reveal]'), { opacity: 1, y: 0 });
+          qa('[data-gate-fill]').forEach(el =>
+            gsap.set(el, { scaleX: 1, transformOrigin: 'left' })
+          );
+          gsap.set(qa('[data-gate-lock]'), { scale: 1, opacity: 1 });
+          gsap.set(qa('[data-jp-board]'), { opacity: 1, y: 0, scale: 1 });
+          gsap.set(qa('[data-jp-opening]'), { opacity: 1, x: 0 });
+          gsap.set(qa('[data-jp-field]'), { opacity: 1, y: 0 });
+          gsap.set(qa('[data-asst-card]'), { opacity: 1, y: 0, scale: 1 });
+          gsap.set(qa('[data-asst-icon]'), { scale: 1 });
         });
 
         // ---- Full experience (desktop pin + mobile light) ----
@@ -176,6 +201,10 @@ export function useApplyxScrollExperience(
                     pin: true,
                     anticipatePin: 1,
                     invalidateOnRefresh: true,
+                    // Stacked pins must refresh top-to-bottom so each one's
+                    // start is measured after the pins above it have inserted
+                    // their spacers. Higher priority = refreshed first.
+                    refreshPriority: 6,
                   },
                 });
 
@@ -207,13 +236,17 @@ export function useApplyxScrollExperience(
                   );
               }
 
-              // --- PIPELINE (pinned, scrubbed): stages light up + captions swap ---
+              // --- PIPELINE (pinned, scrubbed): stages light up in turn, a fill
+              //     grows to the marker, and each stage's signal card lands and
+              //     stays — the detected signals accumulate into a full picture ---
               const pipePin = q('[data-pin="pipeline"]');
               const stages = qa<HTMLElement>('[data-stage]');
-              const captions = qa<HTMLElement>('[data-caption]');
+              const cards = qa<HTMLElement>('[data-stage-card]');
+              const pipeFill = q('[data-pipe-fill]');
               if (pipePin && stages.length) {
-                gsap.set(captions, { opacity: 0, y: 12 });
-                gsap.set(captions[0] ?? [], { opacity: 1, y: 0 });
+                gsap.set(cards, { opacity: 0, y: 16 });
+                gsap.set(cards[0] ?? [], { opacity: 1, y: 0 });
+                if (pipeFill) gsap.set(pipeFill, { scaleX: 0, transformOrigin: 'left center' });
                 const tl = gsap.timeline({
                   scrollTrigger: {
                     trigger: pipePin,
@@ -223,6 +256,7 @@ export function useApplyxScrollExperience(
                     pin: true,
                     anticipatePin: 1,
                     invalidateOnRefresh: true,
+                    refreshPriority: 5,
                   },
                 });
                 const marker = q('[data-marker]');
@@ -236,10 +270,17 @@ export function useApplyxScrollExperience(
                   if (marker && stage.dataset.pos) {
                     tl.to(marker, { left: stage.dataset.pos, duration: 0.25 }, at);
                   }
-                  if (captions[i] && i > 0) {
-                    tl.to(captions[i - 1] ?? [], { opacity: 0, y: -12, duration: 0.2 }, at).to(
-                      captions[i] ?? [],
-                      { opacity: 1, y: 0, duration: 0.2 },
+                  if (pipeFill && stage.dataset.pos) {
+                    tl.to(
+                      pipeFill,
+                      { scaleX: parseFloat(stage.dataset.pos) / 100, duration: 0.25 },
+                      at
+                    );
+                  }
+                  if (cards[i] && i > 0) {
+                    tl.to(
+                      cards[i] ?? [],
+                      { opacity: 1, y: 0, duration: 0.3, ease: 'back.out(1.4)' },
                       at + 0.02
                     );
                   }
@@ -258,6 +299,7 @@ export function useApplyxScrollExperience(
                     pin: true,
                     anticipatePin: 1,
                     invalidateOnRefresh: true,
+                    refreshPriority: 4,
                   },
                 });
                 tl.to('[data-scanbar]', { scaleX: 1, duration: 0.5 }, 0.1)
@@ -265,71 +307,374 @@ export function useApplyxScrollExperience(
                   .from('[data-revealed]', { opacity: 0, scale: 0.9, duration: 0.35 }, 0.55)
                   .to('[data-scanbar]', { opacity: 0, duration: 0.2 }, 0.85);
               }
+
+              // --- JOBPOSTING (pinned, scrubbed): an email's ATS link resolves to a
+              //     board, its openings populate, the role title normalises, the scan
+              //     lands on the match, the confidence bar fills past the 0.60 gate, a
+              //     lock snaps in, and the extracted fields slide out. ---
+              const jobPin = q('[data-pin="jobposting"]');
+              if (jobPin) {
+                const scoreEl = q('[data-gate-score]');
+                if (scoreEl) scoreEl.textContent = '0.00';
+                const counter = { v: 0 };
+                const gateCard = q('[data-gate-card]');
+                const fillAt = 0.75;
+                const fillDur = 0.6;
+                const tl = gsap.timeline({
+                  scrollTrigger: {
+                    trigger: jobPin,
+                    start: 'top top',
+                    end: '+=2000',
+                    scrub: 0.6,
+                    pin: true,
+                    anticipatePin: 1,
+                    invalidateOnRefresh: true,
+                    refreshPriority: 2,
+                  },
+                });
+                tl.fromTo(
+                  '[data-jp-link]',
+                  { backgroundColor: 'rgba(59, 130, 246, 0)' },
+                  { backgroundColor: 'rgba(59, 130, 246, 0.18)', duration: 0.25 },
+                  0.05
+                )
+                  .from(
+                    '[data-jp-board]',
+                    { opacity: 0, y: 24, scale: 0.96, duration: 0.4, ease: 'back.out(1.4)' },
+                    0.2
+                  )
+                  .from(
+                    '[data-jp-opening]',
+                    { opacity: 0, x: -12, stagger: 0.12, duration: 0.3 },
+                    0.35
+                  )
+                  .from(
+                    '[data-gate-reveal]',
+                    { opacity: 0, y: 10, stagger: 0.18, duration: 0.3 },
+                    0.55
+                  )
+                  .fromTo(
+                    '[data-jp-match]',
+                    { boxShadow: '0 0 0 0px rgba(52, 211, 153, 0)' },
+                    {
+                      boxShadow: '0 0 0 2px rgba(52, 211, 153, 0.5)',
+                      duration: 0.2,
+                      yoyo: true,
+                      repeat: 1,
+                    },
+                    0.66
+                  )
+                  .fromTo(
+                    '[data-gate-fill]',
+                    { scaleX: 0, transformOrigin: 'left' },
+                    { scaleX: 1, duration: fillDur, ease: 'power2.out' },
+                    fillAt
+                  )
+                  .to(
+                    counter,
+                    {
+                      v: 0.82,
+                      duration: fillDur,
+                      ease: 'power2.out',
+                      onUpdate: () => {
+                        if (scoreEl) scoreEl.textContent = counter.v.toFixed(2);
+                      },
+                    },
+                    fillAt
+                  )
+                  .to(
+                    '[data-gate-marker]',
+                    { scaleY: 1.8, duration: 0.14, yoyo: true, repeat: 1, ease: 'power1.inOut' },
+                    fillAt + fillDur * (60 / 82)
+                  )
+                  .from(
+                    '[data-gate-lock]',
+                    { scale: 0, opacity: 0, duration: 0.3, ease: 'back.out(2.2)' },
+                    1.15
+                  )
+                  .fromTo(
+                    gateCard ?? [],
+                    { boxShadow: '0 0 0 0px rgba(59, 130, 246, 0)' },
+                    {
+                      boxShadow: '0 0 0 2px rgba(59, 130, 246, 0.45)',
+                      duration: 0.25,
+                      yoyo: true,
+                      repeat: 1,
+                    },
+                    1.15
+                  )
+                  .from(
+                    '[data-jp-field]',
+                    { opacity: 0, y: 14, stagger: 0.15, duration: 0.3 },
+                    1.35
+                  );
+              }
+
+              // --- ASK (pinned, scrubbed + snapped): scrolling steps through questions.
+              //     Each panel's question types in char-by-char (data-ask-q) and its typed
+              //     block reveals (data-ask-reveal); only one panel shows at a time. Snap
+              //     lands on each question so it never rests mid-transition. The embedding
+              //     retrieval lines draw over the first segment. ---
+              const askPin = q('[data-pin="ask"]');
+              if (askPin) {
+                const panels = qa('[data-ask-panel]');
+                const qSpans = qa('[data-ask-q]');
+                const reveals = qa('[data-ask-reveal]');
+                const N = panels.length;
+                if (N > 0) {
+                  const fulls = qSpans.map(s => s.textContent ?? '');
+                  gsap.set(panels, { opacity: 0 });
+                  gsap.set(panels[0]!, { opacity: 1 });
+                  gsap.set(reveals, { opacity: 0 });
+                  gsap.set(reveals[0]!, { opacity: 1 });
+                  // Panels 1..N-1 type in on scroll — start them empty.
+                  qSpans.forEach((s, i) => {
+                    if (i > 0) s.textContent = '';
+                  });
+
+                  const tl = gsap.timeline({
+                    scrollTrigger: {
+                      trigger: askPin,
+                      start: 'top top',
+                      end: `+=${(N - 1) * 520}`,
+                      scrub: 0.5,
+                      pin: true,
+                      anticipatePin: 1,
+                      invalidateOnRefresh: true,
+                      refreshPriority: 1,
+                      snap: {
+                        snapTo: 1 / (N - 1),
+                        duration: { min: 0.15, max: 0.35 },
+                        ease: 'power2.inOut',
+                        directional: false,
+                      },
+                    },
+                  });
+
+                  // Embedding retrieval draws over the first segment.
+                  tl.from(
+                    '[data-embed-query]',
+                    { attr: { r: 0 }, opacity: 0, duration: 0.15, ease: 'back.out(2)' },
+                    0.05
+                  )
+                    .from(
+                      '[data-embed-dot]',
+                      { attr: { r: 0 }, opacity: 0, stagger: 0.02, duration: 0.15 },
+                      0.1
+                    )
+                    .from(
+                      '[data-embed-line]',
+                      { drawSVG: '0%', stagger: 0.06, duration: 0.25 },
+                      0.2
+                    );
+
+                  // Each subsequent question: swap panel, type its text, reveal its block.
+                  for (let i = 1; i < N; i++) {
+                    const base = i - 1;
+                    const full = fulls[i] ?? '';
+                    const counter = { v: 0 };
+                    // Hold the previous question through the first ~36% of the segment,
+                    // then crossfade panels (old out as new in — no hard cut), type
+                    // the new question, and reveal its block.
+                    tl.to(
+                      panels[i - 1]!,
+                      { opacity: 0, duration: 0.22, ease: 'power1.inOut' },
+                      base + 0.36
+                    )
+                      .to(
+                        panels[i]!,
+                        { opacity: 1, duration: 0.22, ease: 'power1.inOut' },
+                        base + 0.4
+                      )
+                      .to(
+                        counter,
+                        {
+                          v: full.length,
+                          duration: 0.32,
+                          ease: 'none',
+                          onUpdate: () => {
+                            const el = qSpans[i];
+                            if (el) el.textContent = full.slice(0, Math.round(counter.v));
+                          },
+                        },
+                        base + 0.44
+                      )
+                      .fromTo(
+                        reveals[i]!,
+                        { opacity: 0 },
+                        { opacity: 1, duration: 0.2 },
+                        base + 0.78
+                      );
+                  }
+                }
+              }
             } else {
               // --- Mobile: no pinning/scrubbing. Show each pinned scene's resolved
               //     end-state; entrances are handled by the [data-fade] fade-ups. ---
               gsap.set(q('[data-status="reading"]') ?? [], { opacity: 0 });
               gsap.set(q('[data-status="classified"]') ?? [], { opacity: 1 });
               gsap.set(q('[data-redaction]') ?? [], { xPercent: 100, opacity: 0 });
+              gsap.set(q('[data-jp-board]') ?? [], { opacity: 1, y: 0, scale: 1 });
+              gsap.set(qa('[data-jp-opening]'), { opacity: 1, x: 0 });
+              gsap.set(qa('[data-gate-reveal]'), { opacity: 1, y: 0 });
+              qa('[data-gate-fill]').forEach(el =>
+                gsap.set(el, { scaleX: 1, transformOrigin: 'left' })
+              );
+              gsap.set(qa('[data-gate-lock]'), { scale: 1, opacity: 1 });
+              gsap.set(qa('[data-jp-field]'), { opacity: 1, y: 0 });
             }
 
-            // --- STATS: funnel segments grow, donut arcs draw, response bars
-            //     rise, confetti once. (Numbers self-animate via <CountUp/>.) ---
-            const statsSection = q('[data-scene="stats"]');
-            if (statsSection) {
-              ScrollTrigger.create({
-                trigger: statsSection,
-                start: 'top 65%',
-                once: true,
-                onEnter: () => {
-                  gsap.to('[data-spark]', {
-                    scaleY: 1,
-                    transformOrigin: 'bottom',
-                    stagger: 0.05,
-                    duration: 0.7,
-                    ease: 'power3.out',
-                  });
-                  qa<HTMLElement>('[data-gauge-arc]').forEach(el => {
-                    gsap.to(el, {
-                      strokeDashoffset: Number(el.dataset.gaugeOffset ?? 0),
-                      duration: 1.4,
-                      ease: 'power2.out',
-                    });
-                  });
-                  gsap.from('[data-funnel-seg]', {
+            // --- STATS (pinned, scrubbed on desktop): the dashboard assembles as you
+            //     scroll — KPI numbers count up, sparklines + funnel + bars grow, the
+            //     reply gauge and outcomes donut draw, and confetti fires once when the
+            //     funnel reaches the offer. Mobile/reduced show the resolved end-state. ---
+            const statsPin = q('[data-pin="stats"]');
+            if (statsPin) {
+              const counts = qa<HTMLElement>('[data-stat-count]');
+              const setFinal = (el: HTMLElement) => {
+                el.textContent = `${el.dataset.to ?? ''}${el.dataset.suffix ?? ''}`;
+              };
+
+              if (isDesktop) {
+                counts.forEach(el => {
+                  el.textContent = `0${el.dataset.suffix ?? ''}`;
+                });
+                let confettiFired = false;
+                const tl = gsap.timeline({
+                  scrollTrigger: {
+                    trigger: statsPin,
+                    start: 'top top',
+                    end: '+=1700',
+                    scrub: 0.6,
+                    pin: true,
+                    anticipatePin: 1,
+                    invalidateOnRefresh: true,
+                    refreshPriority: 3,
+                  },
+                });
+
+                counts.forEach(el => {
+                  const to = Number(el.dataset.to ?? 0);
+                  const suffix = el.dataset.suffix ?? '';
+                  const c = { v: 0 };
+                  tl.to(
+                    c,
+                    {
+                      v: to,
+                      duration: 0.3,
+                      ease: 'power1.out',
+                      onUpdate: () => {
+                        el.textContent = `${Math.round(c.v)}${suffix}`;
+                      },
+                    },
+                    0.05
+                  );
+                });
+                tl.to(
+                  '[data-spark]',
+                  { scaleY: 1, transformOrigin: 'bottom', stagger: 0.02, duration: 0.3 },
+                  0.05
+                );
+                qa<HTMLElement>('[data-gauge-arc]').forEach(el => {
+                  tl.to(
+                    el,
+                    { strokeDashoffset: Number(el.dataset.gaugeOffset ?? 0), duration: 0.35 },
+                    0.1
+                  );
+                });
+                tl.from(
+                  '[data-funnel-seg]',
+                  {
                     scaleY: 0,
                     opacity: 0,
                     transformOrigin: 'top',
-                    stagger: 0.12,
+                    stagger: 0.1,
+                    duration: 0.3,
+                    ease: 'power3.out',
+                  },
+                  0.3
+                );
+                tl.call(
+                  () => {
+                    if (!confettiFired) {
+                      confettiFired = true;
+                      fireConfetti();
+                    }
+                  },
+                  [],
+                  0.66
+                );
+                qa<HTMLElement>('[data-donut-arc]').forEach((el, i) => {
+                  tl.fromTo(
+                    el,
+                    { drawSVG: `${el.dataset.drawFrom ?? 0}% ${el.dataset.drawFrom ?? 0}%` },
+                    {
+                      drawSVG: `${el.dataset.drawFrom ?? 0}% ${el.dataset.drawTo ?? 0}%`,
+                      duration: 0.3,
+                    },
+                    0.55 + i * 0.05
+                  );
+                });
+                tl.from(
+                  '[data-response-bar]',
+                  { scaleY: 0, transformOrigin: 'bottom', stagger: 0.05, duration: 0.3 },
+                  0.72
+                );
+              } else {
+                // Mobile: resolved end-state (no pin/scrub).
+                counts.forEach(setFinal);
+                gsap.set('[data-spark]', { scaleY: 1 });
+                qa<HTMLElement>('[data-gauge-arc]').forEach(el =>
+                  gsap.set(el, { strokeDashoffset: Number(el.dataset.gaugeOffset ?? 0) })
+                );
+                qa<HTMLElement>('[data-donut-arc]').forEach(el =>
+                  gsap.set(el, {
+                    drawSVG: `${el.dataset.drawFrom ?? 0}% ${el.dataset.drawTo ?? 0}%`,
+                  })
+                );
+              }
+            }
+
+            // --- ASSISTANT (not pinned): the calmer beat before the finale. Cards
+            //     cascade in, icons pop, and the queue's open-count ticks up — played
+            //     once on enter (like the stats reveal). Runs on desktop and mobile. ---
+            const asstSection = q('[data-scene="assistant"]');
+            if (asstSection) {
+              const asstCountEl = q('[data-asst-count]');
+              gsap.set('[data-asst-card]', { opacity: 0, y: 34, scale: 0.96 });
+              gsap.set('[data-asst-icon]', { scale: 0 });
+              if (asstCountEl) asstCountEl.textContent = '0';
+              ScrollTrigger.create({
+                trigger: asstSection,
+                start: 'top 72%',
+                once: true,
+                onEnter: () => {
+                  gsap.to('[data-asst-card]', {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    stagger: 0.1,
                     duration: 0.6,
                     ease: 'power3.out',
                   });
-                  gsap.from('[data-response-bar]', {
-                    scaleY: 0,
-                    transformOrigin: 'bottom',
-                    stagger: 0.08,
-                    duration: 0.6,
-                    ease: 'power3.out',
+                  gsap.to('[data-asst-icon]', {
+                    scale: 1,
+                    stagger: 0.1,
+                    delay: 0.15,
+                    duration: 0.45,
+                    ease: 'back.out(1.7)',
                   });
-                  qa<HTMLElement>('[data-donut-arc]').forEach((el, i) => {
-                    gsap.fromTo(
-                      el,
-                      { drawSVG: `${el.dataset.drawFrom ?? 0}% ${el.dataset.drawFrom ?? 0}%` },
-                      {
-                        drawSVG: `${el.dataset.drawFrom ?? 0}% ${el.dataset.drawTo ?? 0}%`,
-                        duration: 0.9,
-                        delay: i * 0.12,
-                        ease: 'power2.out',
-                      }
-                    );
+                  const asstCounter = { v: 0 };
+                  gsap.to(asstCounter, {
+                    v: 3,
+                    duration: 0.8,
+                    delay: 0.5,
+                    ease: 'power1.out',
+                    onUpdate: () => {
+                      if (asstCountEl) asstCountEl.textContent = String(Math.round(asstCounter.v));
+                    },
                   });
                 },
-              });
-              ScrollTrigger.create({
-                trigger: q('[data-funnel]') ?? statsSection,
-                start: 'top 70%',
-                once: true,
-                onEnter: fireConfetti,
               });
             }
 

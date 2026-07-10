@@ -18,10 +18,7 @@ export function IngestScene() {
 
   return (
     <section data-scene="ingest" className="relative">
-      <div
-        data-pin="ingest"
-        className="flex flex-col justify-center border-t border-border/30 px-4 py-20 lg:min-h-[100svh]"
-      >
+      <div data-pin="ingest" className="flex flex-col justify-center px-4 py-20 lg:min-h-[100svh]">
         <div className="mx-auto w-full max-w-5xl">
           <div className="text-center">
             <SceneStep>{td('ingest.step')}</SceneStep>

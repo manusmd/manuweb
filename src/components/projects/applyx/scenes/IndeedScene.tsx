@@ -7,10 +7,7 @@ export function IndeedScene() {
 
   return (
     <section data-scene="indeed" className="relative">
-      <div
-        data-pin="indeed"
-        className="flex items-center border-t border-border/30 px-4 py-20 lg:min-h-[100svh]"
-      >
+      <div data-pin="indeed" className="flex items-center px-4 py-20 lg:min-h-[100svh]">
         <div className="mx-auto grid w-full max-w-5xl items-center gap-10 lg:grid-cols-2">
           <div>
             <SceneStep>{td('indeed.step')}</SceneStep>

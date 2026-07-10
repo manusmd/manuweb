@@ -11,6 +11,10 @@ import { IngestScene } from '@/components/projects/applyx/scenes/IngestScene';
 import { PipelineScene } from '@/components/projects/applyx/scenes/PipelineScene';
 import { IndeedScene } from '@/components/projects/applyx/scenes/IndeedScene';
 import { StatsScene } from '@/components/projects/applyx/scenes/StatsScene';
+import { LocalScene } from '@/components/projects/applyx/scenes/LocalScene';
+import { JobPostingScene } from '@/components/projects/applyx/scenes/JobPostingScene';
+import { AskScene } from '@/components/projects/applyx/scenes/AskScene';
+import { AssistantScene } from '@/components/projects/applyx/scenes/AssistantScene';
 import { OutroScene } from '@/components/projects/applyx/scenes/OutroScene';
 
 interface ApplyxDetailProps {
@@ -52,6 +56,10 @@ export function ApplyxDetail({ project, locale }: ApplyxDetailProps) {
       <PipelineScene />
       <IndeedScene />
       <StatsScene />
+      <LocalScene />
+      <JobPostingScene />
+      <AskScene />
+      <AssistantScene />
       <OutroScene project={project} locale={locale} />
     </div>
   );
