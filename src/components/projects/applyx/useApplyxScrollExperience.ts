@@ -721,6 +721,15 @@ export function useApplyxScrollExperience(
       window.addEventListener('resize', onResize);
       ScrollTrigger.refresh();
 
+      // Web fonts load after this first pass, and Calsans/Inter render taller
+      // than the fallback — which grows the pinned scenes past the viewport.
+      // Refresh once fonts are ready so pin measurements and the fit-to-viewport
+      // scaling account for the final text height.
+      const fontSet = (document as Document & { fonts?: FontFaceSet }).fonts;
+      fontSet?.ready.then(() => {
+        if (!disposed) ScrollTrigger.refresh();
+      });
+
       cleanup = () => {
         window.removeEventListener('resize', onResize);
         ctx.revert();
