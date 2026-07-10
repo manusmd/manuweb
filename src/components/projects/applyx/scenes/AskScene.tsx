@@ -3,7 +3,7 @@ import { Mail, Search } from 'lucide-react';
 import { SceneStep } from '@/components/projects/applyx/SceneParts';
 
 const CARD =
-  'rounded-2xl border border-border/40 bg-card/50 p-6 ring-1 ring-white/[0.04] backdrop-blur md:p-8';
+  'rounded-2xl border border-border/40 bg-card/50 p-5 ring-1 ring-white/[0.04] backdrop-blur';
 const SECTION_LABEL = 'text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground';
 
 // Each question the scrub reveals, in order, with the block type it resolves to.
@@ -167,10 +167,10 @@ export function AskScene() {
             </p>
           </div>
 
-          <div className="mt-8 grid gap-5 lg:grid-cols-2 lg:items-stretch">
+          <div className="mt-5 grid gap-4 lg:grid-cols-2 lg:items-stretch">
             {/* LEFT: one question panel visible at a time */}
             <div className={`flex flex-col ${CARD}`}>
-              <div className="relative min-h-[300px] flex-1">
+              <div className="relative min-h-[260px] flex-1">
                 {QUESTIONS.map((type, i) => (
                   <div
                     key={type}
@@ -185,7 +185,7 @@ export function AskScene() {
                       </span>
                       <span className="ml-0.5 h-4 w-px animate-pulse bg-primary" aria-hidden />
                     </div>
-                    <div data-ask-reveal className="mt-4" style={{ opacity: i === 0 ? 1 : 0 }}>
+                    <div data-ask-reveal className="mt-3" style={{ opacity: i === 0 ? 1 : 0 }}>
                       <div className="flex items-start justify-between gap-3">
                         <p className="text-base text-foreground">{td(`ask.a_${type}`)}</p>
                         <span className="mt-0.5 shrink-0 rounded-md border border-primary/40 bg-primary/10 px-2 py-0.5 font-mono text-[11px] text-primary">
@@ -200,7 +200,7 @@ export function AskScene() {
                 ))}
               </div>
 
-              <div className="mt-5 border-t border-border/40 pt-4">
+              <div className="mt-4 border-t border-border/40 pt-3.5">
                 <span className={SECTION_LABEL}>{td('ask.blocksLabel')}</span>
                 <div className="mt-2 flex flex-wrap gap-1.5">
                   {QUESTIONS.map(type => (

@@ -12,7 +12,7 @@ import {
 import { SceneStep } from '@/components/projects/applyx/SceneParts';
 
 const CARD =
-  'rounded-2xl border border-border/40 bg-card/50 p-6 ring-1 ring-white/[0.04] backdrop-blur md:p-8';
+  'rounded-2xl border border-border/40 bg-card/50 p-5 ring-1 ring-white/[0.04] backdrop-blur';
 const SECTION_LABEL = 'text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground';
 
 // The five ATS boards ApplyX recognises (see web/ats.ts). Proper nouns — same in both locales.
@@ -42,7 +42,7 @@ export function JobPostingScene() {
       {/* Pinned + scrubbed investigation: link → board → openings → match → gate → lock → fields */}
       <div
         data-pin="jobposting"
-        className="flex flex-col justify-center px-4 py-20 lg:min-h-[100svh]"
+        className="flex flex-col justify-center px-4 py-12 lg:min-h-[100svh]"
       >
         <div className="mx-auto w-full max-w-5xl">
           <div className="text-center lg:text-left">
@@ -56,7 +56,7 @@ export function JobPostingScene() {
           </div>
 
           {/* ATS chips */}
-          <div className="mt-8 flex flex-wrap items-center gap-2">
+          <div className="mt-5 flex flex-wrap items-center gap-2">
             <span className={`${SECTION_LABEL} mr-1`}>{td('jobposting.atsLabel')}</span>
             {ATS.map(name => (
               <span
@@ -69,20 +69,20 @@ export function JobPostingScene() {
             ))}
           </div>
 
-          <div className="mt-6 grid gap-5 lg:grid-cols-2 lg:items-start">
+          <div className="mt-4 grid gap-4 lg:grid-cols-2 lg:items-start">
             {/* LEFT: the trail — an email's ATS link resolves to a board + its openings */}
-            <div className="space-y-4">
-              <div className="rounded-2xl border border-border/50 bg-card/60 p-5 shadow-xl backdrop-blur">
-                <div className="flex items-center gap-2 border-b border-border/40 pb-3 text-xs text-muted-foreground">
+            <div className="space-y-3">
+              <div className="rounded-2xl border border-border/50 bg-card/60 p-4 shadow-xl backdrop-blur">
+                <div className="flex items-center gap-2 border-b border-border/40 pb-2.5 text-xs text-muted-foreground">
                   <Mail className="h-4 w-4 text-primary" />
                   {td('jobposting.emailFrom')}
                 </div>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">
                   {td('jobposting.emailBody')}
                 </p>
                 <span
                   data-jp-link
-                  className="mt-3 inline-flex items-center gap-1.5 rounded-md border border-border/60 bg-background/50 px-2.5 py-1 font-mono text-xs text-primary"
+                  className="mt-2.5 inline-flex items-center gap-1.5 rounded-md border border-border/60 bg-background/50 px-2.5 py-1 font-mono text-xs text-primary"
                 >
                   <Link2 className="h-3.5 w-3.5" />
                   boards.greenhouse.io/acme
@@ -92,7 +92,7 @@ export function JobPostingScene() {
               {/* detected board + its live openings */}
               <div
                 data-jp-board
-                className="rounded-2xl border-2 border-primary/30 bg-card/50 p-5 backdrop-blur"
+                className="rounded-2xl border-2 border-primary/30 bg-card/50 p-4 backdrop-blur"
               >
                 <div className="flex items-center justify-between">
                   <span className={SECTION_LABEL}>{td('jobposting.detected')}</span>
@@ -100,7 +100,7 @@ export function JobPostingScene() {
                     Greenhouse · acme
                   </span>
                 </div>
-                <ul className="mt-3 space-y-1.5">
+                <ul className="mt-2.5 space-y-1.5">
                   {board.map(o => (
                     <li
                       key={o.title}
@@ -135,7 +135,7 @@ export function JobPostingScene() {
                 <span className={SECTION_LABEL}>{td('jobposting.matchTitle')}</span>
               </div>
 
-              <div className="mt-5 space-y-3 font-mono text-sm">
+              <div className="mt-4 space-y-2.5 font-mono text-sm">
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <span className="truncate">{td('jobposting.roleRaw')}</span>
                 </div>
@@ -156,7 +156,7 @@ export function JobPostingScene() {
               </div>
 
               {/* Confidence gate */}
-              <div className="mt-6">
+              <div className="mt-5">
                 <div className="relative h-2.5 w-full rounded-full bg-muted">
                   <div
                     data-gate-fill
@@ -180,11 +180,11 @@ export function JobPostingScene() {
                     {td('jobposting.gate')} 0.60
                   </span>
                 </div>
-                <p className="mt-3 text-sm text-muted-foreground">{td('jobposting.matchNote')}</p>
+                <p className="mt-2.5 text-sm text-muted-foreground">{td('jobposting.matchNote')}</p>
               </div>
 
               {/* Extracted fields (revealed at the end of the scrub) */}
-              <div className="mt-5 space-y-3 border-t border-border/40 pt-4 text-sm">
+              <div className="mt-4 space-y-2.5 border-t border-border/40 pt-3.5 text-sm">
                 <div data-jp-field>
                   <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground/70">
                     {td('jobposting.responsibilities')}
