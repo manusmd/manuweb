@@ -116,6 +116,11 @@ export function useApplyxScrollExperience(
           context => {
             const { isDesktop } = context.conditions as { isDesktop: boolean; isMobile: boolean };
 
+            // Scale each pinned scene's content to the viewport height so the
+            // designed compositions never overflow on shorter screens. Assigned
+            // in the desktop branch, cleaned up when the breakpoint changes.
+            let fitPinned: (() => void) | undefined;
+
             // Rail: which scene is active.
             SCENES.forEach((_, i) => {
               const el = q(`[data-scene="${SCENES[i]}"]`);
@@ -188,6 +193,26 @@ export function useApplyxScrollExperience(
             });
 
             if (isDesktop) {
+              // --- Fit-to-viewport for pinned scenes. Each pin holds a single
+              //     content wrapper (its first child). If that wrapper is taller
+              //     than the available height, scale it down uniformly so it sits
+              //     fully on screen, centered, clearing the fixed nav. Transform
+              //     only — layout height is untouched, so pin spacers stay exact.
+              //     Runs on every ScrollTrigger refresh (initial load + resize). ---
+              fitPinned = () => {
+                const avail = window.innerHeight - 140;
+                qa<HTMLElement>('[data-pin]').forEach(pin => {
+                  const el = pin.firstElementChild as HTMLElement | null;
+                  if (!el) return;
+                  el.style.transformOrigin = 'center center';
+                  el.style.transform = '';
+                  const h = el.getBoundingClientRect().height;
+                  const scale = Math.min(1, avail / h);
+                  if (scale < 1) el.style.transform = `scale(${scale})`;
+                });
+              };
+              ScrollTrigger.addEventListener('refresh', fitPinned);
+
               // --- INGEST (pinned, scrubbed): the model reads the email and a
               //     structured application lifts out of it ---
               const ingestPin = q('[data-pin="ingest"]');
@@ -679,6 +704,13 @@ export function useApplyxScrollExperience(
             }
 
             return () => {
+              if (fitPinned) ScrollTrigger.removeEventListener('refresh', fitPinned);
+              // Inline scale transforms aren't GSAP tweens, so clear them by hand
+              // when leaving the desktop breakpoint.
+              qa<HTMLElement>('[data-pin]').forEach(pin => {
+                const el = pin.firstElementChild as HTMLElement | null;
+                if (el) el.style.transform = '';
+              });
               split?.revert();
             };
           }

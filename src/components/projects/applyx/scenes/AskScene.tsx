@@ -154,7 +154,7 @@ export function AskScene() {
           one panel is shown at a time (data-ask-panel), so there's never any bleed. */}
       <div
         data-pin="ask"
-        className="flex flex-col justify-center px-4 py-16 lg:min-h-[100svh] lg:justify-start lg:pt-28"
+        className="flex flex-col justify-center px-4 py-16 lg:min-h-[100svh] lg:py-20"
       >
         <div className="mx-auto w-full max-w-5xl">
           <div className="text-center lg:text-left">
