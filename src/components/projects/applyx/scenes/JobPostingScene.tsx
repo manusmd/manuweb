@@ -69,9 +69,9 @@ export function JobPostingScene() {
             ))}
           </div>
 
-          <div className="mt-4 grid gap-4 lg:grid-cols-2 lg:items-start">
+          <div className="mt-4 grid gap-4 lg:grid-cols-2 lg:items-stretch">
             {/* LEFT: the trail — an email's ATS link resolves to a board + its openings */}
-            <div className="space-y-3">
+            <div className="flex flex-col gap-3">
               <div className="rounded-2xl border border-border/50 bg-card/60 p-4 shadow-xl backdrop-blur">
                 <div className="flex items-center gap-2 border-b border-border/40 pb-2.5 text-xs text-muted-foreground">
                   <Mail className="h-4 w-4 text-primary" />
@@ -92,7 +92,7 @@ export function JobPostingScene() {
               {/* detected board + its live openings */}
               <div
                 data-jp-board
-                className="rounded-2xl border-2 border-primary/30 bg-card/50 p-4 backdrop-blur"
+                className="flex flex-1 flex-col rounded-2xl border-2 border-primary/30 bg-card/50 p-4 backdrop-blur"
               >
                 <div className="flex items-center justify-between">
                   <span className={SECTION_LABEL}>{td('jobposting.detected')}</span>
@@ -100,7 +100,7 @@ export function JobPostingScene() {
                     Greenhouse · acme
                   </span>
                 </div>
-                <ul className="mt-2.5 space-y-1.5">
+                <ul className="mt-2.5 flex flex-1 flex-col justify-center gap-1.5">
                   {board.map(o => (
                     <li
                       key={o.title}
@@ -135,7 +135,7 @@ export function JobPostingScene() {
                 <span className={SECTION_LABEL}>{td('jobposting.matchTitle')}</span>
               </div>
 
-              <div className="mt-4 space-y-2.5 font-mono text-sm">
+              <div className="mt-3 space-y-2 font-mono text-sm">
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <span className="truncate">{td('jobposting.roleRaw')}</span>
                 </div>
@@ -156,7 +156,7 @@ export function JobPostingScene() {
               </div>
 
               {/* Confidence gate */}
-              <div className="mt-5">
+              <div className="mt-4">
                 <div className="relative h-2.5 w-full rounded-full bg-muted">
                   <div
                     data-gate-fill
@@ -180,25 +180,25 @@ export function JobPostingScene() {
                     {td('jobposting.gate')} 0.60
                   </span>
                 </div>
-                <p className="mt-2.5 text-sm text-muted-foreground">{td('jobposting.matchNote')}</p>
+                <p className="mt-2 text-sm text-muted-foreground">{td('jobposting.matchNote')}</p>
               </div>
 
               {/* Extracted fields (revealed at the end of the scrub) */}
-              <div className="mt-4 space-y-2.5 border-t border-border/40 pt-3.5 text-sm">
-                <div data-jp-field>
-                  <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground/70">
+              <div className="mt-3 space-y-2 border-t border-border/40 pt-3 text-sm">
+                <div data-jp-field className="flex items-start gap-2">
+                  <span className="mt-0.5 shrink-0 text-xs font-semibold uppercase tracking-wider text-muted-foreground/70">
                     {td('jobposting.responsibilities')}
-                  </p>
-                  <ul className="space-y-1">
+                  </span>
+                  <ul className="flex flex-wrap gap-x-3 gap-y-0.5">
                     {responsibilities.map(r => (
-                      <li key={r} className="flex gap-2 text-foreground">
-                        <span className="mt-1 h-1 w-1 shrink-0 rounded-full bg-accent-violet" />
+                      <li key={r} className="flex items-center gap-1.5 text-foreground">
+                        <span className="h-1 w-1 shrink-0 rounded-full bg-accent-violet" />
                         {r}
                       </li>
                     ))}
                   </ul>
                 </div>
-                <div data-jp-field className="flex flex-wrap gap-2 pt-1">
+                <div data-jp-field className="flex flex-wrap gap-2">
                   <span className="inline-flex items-center gap-1.5 rounded-lg border border-border/50 bg-background/40 px-2.5 py-1 text-xs text-foreground">
                     <Wallet className="h-3.5 w-3.5 text-accent-green" />
                     {td('jobposting.salary')}
