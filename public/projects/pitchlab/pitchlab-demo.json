@@ -1,0 +1,203 @@
+{
+  "featured": {
+    "home": {
+      "code": "FRA",
+      "en": "France",
+      "de": "Frankreich",
+      "bg": "#1e3a8a",
+      "fg": "#ffffff"
+    },
+    "away": {
+      "code": "ESP",
+      "en": "Spain",
+      "de": "Spanien",
+      "bg": "#c8102e",
+      "fg": "#ffdf00"
+    },
+    "p": [51, 25, 24],
+    "xg": [1.72, 1.13],
+    "likely": [1, 1],
+    "conf": "Medium",
+    "matrix": [
+      [0.06328, 0.05944, 0.03669, 0.0138, 0.00389, 0.00088],
+      [0.09387, 0.11783, 0.06329, 0.0238, 0.00671, 0.00151],
+      [0.0858, 0.09679, 0.05459, 0.02052, 0.00579, 0.00131],
+      [0.04934, 0.05565, 0.03139, 0.0118, 0.00333, 0.00075],
+      [0.02128, 0.024, 0.01354, 0.00509, 0.00144, 0.00032],
+      [0.00734, 0.00828, 0.00467, 0.00176, 0.0005, 0.00011]
+    ],
+    "matrixNoDc": [
+      [0.05767, 0.06505, 0.03669, 0.0138, 0.00389, 0.00088],
+      [0.09948, 0.11222, 0.06329, 0.0238, 0.00671, 0.00151],
+      [0.0858, 0.09679, 0.05459, 0.02052, 0.00579, 0.00131],
+      [0.04934, 0.05565, 0.03139, 0.0118, 0.00333, 0.00075],
+      [0.02128, 0.024, 0.01354, 0.00509, 0.00144, 0.00032],
+      [0.00734, 0.00828, 0.00467, 0.00176, 0.0005, 0.00011]
+    ],
+    "rho": -0.05
+  },
+  "strengths": [
+    {
+      "code": "BRA",
+      "en": "Brazil",
+      "de": "Brasilien",
+      "bg": "#ffdf00",
+      "fg": "#00913f",
+      "attack": 95,
+      "defence": 95,
+      "elo": 1698,
+      "trend": -46
+    },
+    {
+      "code": "ARG",
+      "en": "Argentina",
+      "de": "Argentinien",
+      "bg": "#75aadb",
+      "fg": "#0b3d91",
+      "attack": 92,
+      "defence": 95,
+      "elo": 1698,
+      "trend": 77
+    },
+    {
+      "code": "FRA",
+      "en": "France",
+      "de": "Frankreich",
+      "bg": "#1e3a8a",
+      "fg": "#ffffff",
+      "attack": 85,
+      "defence": 88,
+      "elo": 1590,
+      "trend": -37
+    },
+    {
+      "code": "BEL",
+      "en": "Belgium",
+      "de": "Belgien",
+      "bg": "#e30613",
+      "fg": "#ffce00",
+      "attack": 82,
+      "defence": 73,
+      "elo": 1561,
+      "trend": 169
+    },
+    {
+      "code": "ESP",
+      "en": "Spain",
+      "de": "Spanien",
+      "bg": "#c8102e",
+      "fg": "#ffdf00",
+      "attack": 82,
+      "defence": 77,
+      "elo": 1559,
+      "trend": -6
+    },
+    {
+      "code": "GER",
+      "en": "Germany",
+      "de": "Deutschland",
+      "bg": "#1a1a1a",
+      "fg": "#ffce00",
+      "attack": 85,
+      "defence": 79,
+      "elo": 1556,
+      "trend": 6
+    },
+    {
+      "code": "ENG",
+      "en": "England",
+      "de": "England",
+      "bg": "#f4f4f4",
+      "fg": "#cf142b",
+      "attack": 81,
+      "defence": 90,
+      "elo": 1549,
+      "trend": 68
+    },
+    {
+      "code": "CRO",
+      "en": "Croatia",
+      "de": "Kroatien",
+      "bg": "#d32030",
+      "fg": "#ffffff",
+      "attack": 84,
+      "defence": 77,
+      "elo": 1503,
+      "trend": -13
+    }
+  ],
+  "sim": {
+    "iterations": 10000,
+    "title": [
+      {
+        "code": "BRA",
+        "en": "Brazil",
+        "de": "Brasilien",
+        "bg": "#ffdf00",
+        "fg": "#00913f",
+        "pct": 27.8
+      },
+      {
+        "code": "ARG",
+        "en": "Argentina",
+        "de": "Argentinien",
+        "bg": "#75aadb",
+        "fg": "#0b3d91",
+        "pct": 18.9
+      },
+      {
+        "code": "POR",
+        "en": "Portugal",
+        "de": "Portugal",
+        "bg": "#006600",
+        "fg": "#ffffff",
+        "pct": 7.8
+      },
+      {
+        "code": "FRA",
+        "en": "France",
+        "de": "Frankreich",
+        "bg": "#1e3a8a",
+        "fg": "#ffffff",
+        "pct": 7.2
+      },
+      {
+        "code": "MEX",
+        "en": "Mexico",
+        "de": "Mexiko",
+        "bg": "#006847",
+        "fg": "#ffffff",
+        "pct": 7.0
+      },
+      {
+        "code": "NGA",
+        "en": "Nigeria",
+        "de": "Nigeria",
+        "bg": "#008751",
+        "fg": "#ffffff",
+        "pct": 5.0
+      }
+    ]
+  },
+  "calibration": {
+    "points": [
+      [15, 16],
+      [25, 20],
+      [35, 39],
+      [45, 45],
+      [55, 64],
+      [65, 79],
+      [75, 55]
+    ],
+    "brier": 0.198,
+    "hitRate": 53.8,
+    "reliabilityGap": 7.8,
+    "logloss": 0.994,
+    "n": 240
+  },
+  "backtest": {
+    "labels": ["2019", "2020", "2021", "2022", "2023", "2024", "2025"],
+    "model": [0.202, 0.198, 0.216, 0.201, 0.19, 0.18, 0.199],
+    "market": [0.208, 0.204, 0.222, 0.207, 0.196, 0.186, 0.205]
+  }
+}

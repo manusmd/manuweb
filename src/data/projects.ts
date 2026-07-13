@@ -84,6 +84,41 @@ export function buildFingermatchProject(copy: ProjectCopy): Project {
   };
 }
 
+export const PITCHLAB_SLUG = 'pitchlab';
+
+const pitchlabBase: Omit<Project, 'title' | 'subtitle' | 'description' | 'longDescription'> = {
+  id: 'pitchlab',
+  slug: PITCHLAB_SLUG,
+  image: '/projects/pitchlab/card.png',
+  thumbnail: '/projects/pitchlab/card.png',
+  liveUrl: 'https://pitchlab.projects.manu-web.de',
+  githubUrl: 'https://github.com/manusmd/soccerlab',
+  repository: 'https://github.com/manusmd/soccerlab',
+  category: 'fullstack',
+  status: 'completed',
+  featured: true,
+  priority: 3,
+  isApp: true,
+  tags: ['Python', 'FastAPI', 'NumPy', 'React', 'TypeScript'],
+  tech: ['Python', 'FastAPI', 'NumPy', 'React', 'TypeScript'],
+  technologies: [
+    { name: 'Python', category: 'backend' },
+    { name: 'FastAPI', category: 'backend' },
+    { name: 'NumPy', category: 'tools' },
+    { name: 'React', category: 'frontend' },
+    { name: 'TypeScript', category: 'frontend' },
+  ],
+  startDate: '2026-06-20',
+  lastUpdated: '2026-07-13',
+};
+
+export function buildPitchlabProject(copy: ProjectCopy): Project {
+  return {
+    ...pitchlabBase,
+    ...copy,
+  };
+}
+
 export function getProjectSlugs(): string[] {
-  return [APPLYX_SLUG, FINGERMATCH_SLUG];
+  return [APPLYX_SLUG, FINGERMATCH_SLUG, PITCHLAB_SLUG];
 }

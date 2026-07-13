@@ -429,6 +429,77 @@
         "cta": "Try it live"
       }
     },
+    "pitchlab": {
+      "title": "PitchLab",
+      "subtitle": "Football predictions with a custom model",
+      "description": "A from-scratch prediction model — Poisson attack/defence, Dixon-Coles, Elo and a Monte-Carlo tournament simulation — on api-football data. No black box: every probability is derived and checked.",
+      "longDescription": "PitchLab predicts match outcomes and title odds with a model built entirely from scratch: multiplicative Poisson strengths (attack/defence via iterative scaling), the Dixon-Coles low-score correction, Elo, and a 10,000-run Monte-Carlo tournament simulation — on raw api-football data. The model grades its own predictions (calibration, Brier against a naive market) and runs fully offline in seed mode."
+    },
+    "pitchlabDetail": {
+      "eyebrow": "Custom model · api-football",
+      "heroLead": "Not a black-box model —",
+      "heroLeadEmphasis": "every probability is derived, and checked.",
+      "scrollCue": "Scroll",
+      "heroTag": "Top match",
+      "draw": "Draw",
+      "xgLabel": "Expected goals",
+      "confidence": "Confidence",
+      "confHigh": "High",
+      "confMedium": "Medium",
+      "confLow": "Low",
+      "strengths": {
+        "step": "01 — Strengths",
+        "heading": "Attack and defence, derived",
+        "sub": "Iterative scaling estimates each team's attack and defence from match history — nothing hardcoded.",
+        "team": "Team",
+        "attack": "Attack",
+        "defence": "Defence",
+        "note": "Attack/defence as 0–100 (percentile), Elo updated chronologically."
+      },
+      "matchmodel": {
+        "step": "02 — The match model",
+        "heading": "From two λ to a result",
+        "sub": "Two expected-goal rates give a probability matrix over every scoreline. Dixon-Coles corrects the low scores.",
+        "dcNote": "corrects the dependence in tight scores (0-0, 1-0, 0-1, 1-1)."
+      },
+      "montecarlo": {
+        "step": "03 — Monte-Carlo",
+        "heading": "10,000 tournaments, played out",
+        "sub": "Each run plays out groups and knockouts from the model. Title odds are how often a team wins.",
+        "simulations": "Simulations",
+        "team": "Team",
+        "titleOdds": "Title odds"
+      },
+      "modelcheck": {
+        "step": "04 — Model check",
+        "heading": "Predictions that grade themselves",
+        "sub": "We don't just predict — we measure how well. Calibration, Brier score, and a comparison against a naive market.",
+        "calibration": "Calibration · predicted vs. observed",
+        "predicted": "Predicted %",
+        "observed": "Observed %",
+        "backtest": "Brier per period",
+        "model": "Model",
+        "market": "Market",
+        "brier": "Brier score",
+        "hitRate": "Hit rate",
+        "gap": "Calibration gap",
+        "matches": "Matches checked"
+      },
+      "product": {
+        "step": "05 — The app",
+        "heading": "The full analysis cockpit",
+        "sub": "Title race, groups, match analysis and model check — live in demo mode.",
+        "cta": "Try it live"
+      },
+      "outro": {
+        "step": "06 — Honest",
+        "heading": "A model, not an oracle",
+        "sub": "PitchLab produces transparent probabilities — not a betting tip, not certainty.",
+        "does1": "Every number derived from the model",
+        "does2": "Predictions checked against real outcomes",
+        "doesnt": "Doesn't predict single games with certainty"
+      }
+    },
     "portfolio": {
       "description": "A modern, responsive portfolio website built with Next.js 14, featuring smooth animations, 3D elements, and a dark mode. Showcases my projects and experience in web development."
     }

@@ -1,9 +1,10 @@
 import { notFound } from 'next/navigation';
-import { getProjectSlugs, APPLYX_SLUG, FINGERMATCH_SLUG } from '@/data/projects';
+import { getProjectSlugs, APPLYX_SLUG, FINGERMATCH_SLUG, PITCHLAB_SLUG } from '@/data/projects';
 import { resolveProject } from '@/lib/resolveProject';
 import { ProjectDetailClient } from './ProjectDetailClient';
 import { ApplyxDetail } from '@/components/projects/applyx/ApplyxDetail';
 import { FingermatchDetail } from '@/components/projects/fingermatch/FingermatchDetail';
+import { PitchlabDetail } from '@/components/projects/pitchlab/PitchlabDetail';
 
 interface ProjectDetailPageProps {
   params: Promise<{
@@ -54,6 +55,10 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
   if (slug === FINGERMATCH_SLUG) {
     return <FingermatchDetail project={project} locale={locale} />;
+  }
+
+  if (slug === PITCHLAB_SLUG) {
+    return <PitchlabDetail project={project} locale={locale} />;
   }
 
   return <ProjectDetailClient project={project} />;
