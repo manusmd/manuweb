@@ -3,12 +3,19 @@
 import { useEffect } from 'react';
 import { DEMO } from './tokens';
 
-export const SCENES = ['hero', 'enhance', 'skeleton', 'minutiae', 'singular', 'match'] as const;
+export const SCENES = [
+  'hero',
+  'enhance',
+  'skeleton',
+  'minutiae',
+  'singular',
+  'match',
+  'cockpit',
+] as const;
 
 const RIDGE_TOTAL = DEMO.A.minutiae.filter(
   m => m.type === 'ending' || m.type === 'bifurcation'
 ).length;
-const SCORE = DEMO.match.score;
 
 /**
  * GSAP scroll choreography for the FingerMatch detail page. Same shape as the
@@ -80,20 +87,11 @@ export function useFingermatchScrollExperience(
           gsap.set(qa('[data-cn-case]'), { opacity: 1, y: 0 });
           gsap.set(qa('[data-min-marker]'), { scale: 1, opacity: 1 });
           gsap.set(qa('[data-sing-marker]'), { scale: 1, opacity: 1 });
-          gsap.set(qa('[data-match-dot]'), { opacity: 1 });
-          gsap.set(qa('[data-pertype-row]'), { opacity: 1, x: 0 });
-          gsap.set(q('[data-score-arc]') ?? [], {
-            strokeDashoffset: 2 * Math.PI * 26 * (1 - SCORE / 100),
-          });
-          gsap.set(q('[data-score-verdict]') ?? [], { opacity: 1 });
+          gsap.set(q('[data-fm-scan]') ?? [], { opacity: 0 });
           setText('[data-min-count]', String(RIDGE_TOTAL));
-          setText('[data-score-num]', String(SCORE));
           setText('[data-spur-count]', '0');
           setText('[data-poincare-loop-deg]', '+180°');
           setText('[data-poincare-delta-deg]', '−180°');
-          qa<HTMLElement>('[data-pertype-matched]').forEach(el => {
-            el.textContent = el.dataset.to ?? '0';
-          });
         });
 
         mm.add(
@@ -332,74 +330,19 @@ export function useFingermatchScrollExperience(
                 tl.to(markers[1] ?? [], { scale: 1, opacity: 1, duration: 0.2 }, 0.9);
               }
 
-              // --- MATCH: RANSAC flicker, pair lines, score, per-type ---
-              const matchPin = q('[data-pin="match"]');
-              if (matchPin) {
-                const dots = qa('[data-match-dot]');
-                const bars = qa('[data-pertype-bar]');
-                gsap.set(dots, { opacity: 0 });
-                gsap.set(bars, { scaleX: 0 });
-                const score = { v: 0 };
-                const tl = gsap.timeline({
-                  scrollTrigger: {
-                    trigger: matchPin,
-                    start: 'top top',
-                    end: '+=2000',
-                    scrub: 0.6,
-                    pin: true,
-                    anticipatePin: 1,
-                    invalidateOnRefresh: true,
-                    refreshPriority: 2,
-                  },
+              // --- MATCH (not pinned): a scan line sweeps down the real match
+              //     screenshot on enter, once, to signal "analysis". ---
+              const scanEl = q('[data-fm-scan]');
+              if (scanEl) {
+                gsap.set(scanEl, { yPercent: -100, opacity: 0 });
+                gsap.to(scanEl, {
+                  keyframes: [
+                    { opacity: 1, yPercent: -100, duration: 0.01 },
+                    { yPercent: 100, duration: 1.4, ease: 'power1.inOut' },
+                    { opacity: 0, duration: 0.2 },
+                  ],
+                  scrollTrigger: { trigger: '[data-scene="match"]', start: 'top 60%', once: true },
                 });
-                tl.to(
-                  '[data-hypo]',
-                  { opacity: 0.7, stagger: 0.05, duration: 0.12, yoyo: true, repeat: 1 },
-                  0.05
-                );
-                tl.to(dots, { opacity: 1, stagger: 0.01, duration: 0.2 }, 0.2);
-                tl.from(
-                  '[data-pair-line]',
-                  { drawSVG: '0%', stagger: 0.04, duration: 0.3, ease: 'none' },
-                  0.32
-                );
-                qa<HTMLElement>('[data-pertype-matched]').forEach(el => {
-                  const to = Number(el.dataset.to ?? 0);
-                  const c = { v: 0 };
-                  tl.to(
-                    c,
-                    {
-                      v: to,
-                      duration: 0.3,
-                      ease: 'none',
-                      onUpdate: () => {
-                        el.textContent = String(Math.round(c.v));
-                      },
-                    },
-                    0.55
-                  );
-                });
-                tl.to(bars, { scaleX: 1, stagger: 0.05, duration: 0.3 }, 0.55);
-                tl.to(
-                  '[data-score-arc]',
-                  {
-                    strokeDashoffset: 2 * Math.PI * 26 * (1 - SCORE / 100),
-                    duration: 0.4,
-                    ease: 'power1.out',
-                  },
-                  0.7
-                );
-                tl.to(
-                  score,
-                  {
-                    v: SCORE,
-                    duration: 0.4,
-                    ease: 'none',
-                    onUpdate: () => setText('[data-score-num]', String(Math.round(score.v))),
-                  },
-                  0.7
-                );
-                tl.to('[data-score-verdict]', { opacity: 1, duration: 0.2 }, 0.94);
               }
             } else {
               // Mobile: resolved end-states, no pin/scrub.
@@ -409,19 +352,11 @@ export function useFingermatchScrollExperience(
               gsap.set(qa('[data-cn-case]'), { opacity: 1, y: 0 });
               gsap.set(qa('[data-min-marker]'), { scale: 1, opacity: 1 });
               gsap.set(qa('[data-sing-marker]'), { scale: 1, opacity: 1 });
-              gsap.set(qa('[data-match-dot]'), { opacity: 1 });
-              gsap.set(q('[data-score-arc]') ?? [], {
-                strokeDashoffset: 2 * Math.PI * 26 * (1 - SCORE / 100),
-              });
-              gsap.set(q('[data-score-verdict]') ?? [], { opacity: 1 });
+              gsap.set(q('[data-fm-scan]') ?? [], { opacity: 0 });
               setText('[data-min-count]', String(RIDGE_TOTAL));
-              setText('[data-score-num]', String(SCORE));
               setText('[data-spur-count]', '0');
               setText('[data-poincare-loop-deg]', '+180°');
               setText('[data-poincare-delta-deg]', '−180°');
-              qa<HTMLElement>('[data-pertype-matched]').forEach(el => {
-                el.textContent = el.dataset.to ?? '0';
-              });
             }
 
             return () => {

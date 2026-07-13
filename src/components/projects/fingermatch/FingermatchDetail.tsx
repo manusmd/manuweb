@@ -9,6 +9,7 @@ import { SkeletonScene } from './scenes/SkeletonScene';
 import { MinutiaeScene } from './scenes/MinutiaeScene';
 import { SingularScene } from './scenes/SingularScene';
 import { MatchScene } from './scenes/MatchScene';
+import { CockpitScene } from './scenes/CockpitScene';
 import { LimitsScene } from './scenes/LimitsScene';
 
 /**
@@ -45,6 +46,7 @@ export function FingermatchDetail({ project }: { project: Project; locale: strin
       <MinutiaeScene />
       <SingularScene />
       <MatchScene />
+      <CockpitScene project={project} />
       <LimitsScene project={project} />
     </div>
   );

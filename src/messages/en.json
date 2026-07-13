@@ -397,7 +397,9 @@
         "typeBifurcation": "Bifurcation",
         "typeEnding": "Ending",
         "typeLoop": "Loop",
-        "typeDelta": "Delta"
+        "typeDelta": "Delta",
+        "sub": "Two prints are aligned with RANSAC, orientation-consistent minutiae are paired, and a score is computed — shown here in the real analysis cockpit.",
+        "note": "Score 55% — “Likely identical”. A similarity value, not a court-admissible identification."
       },
       "limits": {
         "step": "06 — Limits",
@@ -411,6 +413,12 @@
         "classical": "Classical pipeline — all four marker types",
         "minutiaenet": "Experimental: localizes with a net, classifies classically",
         "detectorNote": "The model localizes; the classical logic classifies."
+      },
+      "cockpit": {
+        "step": "06 — The cockpit",
+        "heading": "The full analysis cockpit",
+        "sub": "Load two prints, filter markers by type, zoom and pan — and compare live.",
+        "cta": "Try it live"
       }
     },
     "portfolio": {

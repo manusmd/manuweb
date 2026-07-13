@@ -399,7 +399,9 @@
         "typeBifurcation": "Gabelung",
         "typeEnding": "Ende",
         "typeLoop": "Schleife",
-        "typeDelta": "Delta"
+        "typeDelta": "Delta",
+        "sub": "Zwei Abdrücke werden per RANSAC ausgerichtet, orientierungs-konsistente Minutien gepaart und ein Score berechnet — hier im echten Analyse-Cockpit.",
+        "note": "Score 55 % — „Wahrscheinlich identisch“. Ein Ähnlichkeitswert, keine gerichtsfeste Identifikation."
       },
       "limits": {
         "step": "06 — Grenzen",
@@ -413,6 +415,12 @@
         "classical": "Klassische Pipeline — alle vier Markertypen",
         "minutiaenet": "Experimentell: lokalisiert per Netz, klassifiziert klassisch",
         "detectorNote": "Das Modell lokalisiert; die klassische Logik klassifiziert."
+      },
+      "cockpit": {
+        "step": "06 — Das Cockpit",
+        "heading": "Das komplette Analyse-Cockpit",
+        "sub": "Zwei Abdrücke laden, Marker nach Typ filtern, zoomen und pannen — und live vergleichen.",
+        "cta": "Live ausprobieren"
       }
     },
     "portfolio": {
