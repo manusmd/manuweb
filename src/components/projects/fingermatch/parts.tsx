@@ -145,6 +145,59 @@ export function FingerprintFrame({
   );
 }
 
+/** The four L-shaped reticle corners of a scanner frame. */
+export function ReticleCorners() {
+  const base = 'pointer-events-none absolute h-5 w-5 border-primary/60';
+  return (
+    <>
+      <span className={`${base} left-3 top-3 rounded-tl border-l-2 border-t-2`} />
+      <span className={`${base} right-3 top-3 rounded-tr border-r-2 border-t-2`} />
+      <span className={`${base} bottom-3 left-3 rounded-bl border-b-2 border-l-2`} />
+      <span className={`${base} bottom-3 right-3 rounded-br border-b-2 border-r-2`} />
+    </>
+  );
+}
+
+/**
+ * A biometric-scanner frame for the educational fingerprint stages: a glowing,
+ * accent-bordered panel with a faint scan grid, corner reticle, and an optional
+ * status chip — echoing the hero so the pipeline scenes feel of a piece. Children
+ * render absolutely inside the square (image layers + SVG overlays).
+ */
+export function ScannerFrame({
+  children,
+  label,
+  className = '',
+}: {
+  children: ReactNode;
+  label?: ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={`relative mx-auto aspect-square w-full max-w-[420px] ${className}`}>
+      <div className="absolute -inset-3 rounded-[2rem] bg-primary/10 blur-2xl" />
+      <div className="relative h-full w-full overflow-hidden rounded-[1.75rem] border border-primary/20 bg-black shadow-[0_0_55px_-18px_hsl(var(--primary))]">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.07]"
+          style={{
+            backgroundImage:
+              'linear-gradient(hsl(var(--primary)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px)',
+            backgroundSize: '26px 26px',
+          }}
+        />
+        {children}
+        <ReticleCorners />
+      </div>
+      {label ? (
+        <div className="absolute -bottom-3 left-1/2 inline-flex -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-full border border-primary/30 bg-black/85 px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-widest text-primary backdrop-blur">
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
+          {label}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 /**
  * A macOS-style browser window that frames a real app screenshot so it reads as
  * "the actual product". Optional children overlay on top of the shot (e.g. a

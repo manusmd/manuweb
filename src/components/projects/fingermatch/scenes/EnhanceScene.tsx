@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element -- layered stage images with absolute positioning + SVG coordinate overlays; next/image is unsuitable here */
 import { useTranslations } from 'next-intl';
-import { SceneStep } from '../parts';
+import { SceneStep, ScannerFrame } from '../parts';
 import { ASSET, DEMO } from '../tokens';
 
 const STEPS = ['stepNormalize', 'stepOrientation', 'stepGabor', 'stepBinarize'] as const;
@@ -14,7 +14,7 @@ export function EnhanceScene() {
       <div data-pin="enhance" className="flex flex-col justify-center px-4 py-14 lg:min-h-[100svh]">
         <div className="mx-auto grid w-full max-w-5xl items-center gap-8 lg:grid-cols-2">
           {/* The morphing print */}
-          <div className="relative mx-auto aspect-square w-full max-w-[440px] overflow-hidden rounded-2xl border border-white/10 bg-black">
+          <ScannerFrame label={td('enhance.scanLabel')}>
             <img src={ASSET('raw-a.png')} alt="" className="absolute inset-0 h-full w-full" />
             <img
               data-enh-layer="norm"
@@ -63,7 +63,7 @@ export function EnhanceScene() {
                 );
               })}
             </svg>
-          </div>
+          </ScannerFrame>
 
           {/* The steps */}
           <div>

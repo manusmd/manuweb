@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element -- layered stage images with absolute positioning + SVG coordinate overlays; next/image is unsuitable here */
 import { useTranslations } from 'next-intl';
-import { SceneStep } from '../parts';
+import { SceneStep, ScannerFrame } from '../parts';
 import { ASSET } from '../tokens';
 
 // A few plausible spur spots (viewBox 0..100) that retract as they're pruned.
@@ -29,7 +29,35 @@ export function SkeletonScene() {
             <p className="mt-3 max-w-md text-sm text-muted-foreground md:text-base">
               {td('skeleton.sub')}
             </p>
-            <div className="mt-6 inline-flex items-center gap-3 rounded-xl border border-border/50 bg-card/40 px-4 py-3">
+
+            {/* before → after: a thick ridge collapses to a 1px line */}
+            <div className="mt-6 grid max-w-md grid-cols-[1fr_auto_1fr] items-center gap-3">
+              <div className="rounded-xl border border-border/50 bg-card/40 p-4">
+                <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+                  {td('skeleton.before')}
+                </span>
+                <div className="mt-3 flex h-6 items-center">
+                  <span className="h-2.5 w-full rounded-full bg-white/75" />
+                </div>
+                <span className="mt-2 block text-xs text-muted-foreground">
+                  {td('skeleton.beforeCaption')}
+                </span>
+              </div>
+              <span className="font-mono text-lg text-primary">→</span>
+              <div className="rounded-xl border border-primary/30 bg-primary/5 p-4">
+                <span className="font-mono text-[10px] uppercase tracking-widest text-primary">
+                  {td('skeleton.after')}
+                </span>
+                <div className="mt-3 flex h-6 items-center">
+                  <span className="h-px w-full bg-white shadow-[0_0_8px_1px_rgba(255,255,255,0.6)]" />
+                </div>
+                <span className="mt-2 block text-xs text-muted-foreground">
+                  {td('skeleton.afterCaption')}
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-4 inline-flex items-center gap-3 rounded-xl border border-red-500/25 bg-red-500/[0.06] px-4 py-3">
               <span className="font-mono text-2xl font-bold text-red-400" data-spur-count>
                 4
               </span>
@@ -37,7 +65,7 @@ export function SkeletonScene() {
             </div>
           </div>
 
-          <div className="relative mx-auto aspect-square w-full max-w-[440px] overflow-hidden rounded-2xl border border-white/10 bg-black">
+          <ScannerFrame label={td('skeleton.scanLabel')}>
             <img src={ASSET('binary-a.png')} alt="" className="absolute inset-0 h-full w-full" />
             <img
               data-skel
@@ -60,7 +88,7 @@ export function SkeletonScene() {
                 />
               ))}
             </svg>
-          </div>
+          </ScannerFrame>
         </div>
       </div>
     </section>

@@ -369,13 +369,19 @@
         "stepNormalize": "Normalisieren",
         "stepOrientation": "Orientierungsfeld",
         "stepGabor": "Gabor-Verstärkung",
-        "stepBinarize": "Binarisieren"
+        "stepBinarize": "Binarisieren",
+        "scanLabel": "Verstärkung läuft"
       },
       "skeleton": {
         "step": "02 — Skelett",
         "heading": "Auf eine Linie gebracht",
         "sub": "Die Rillen werden auf 1 Pixel ausgedünnt. Kurze Fortsätze (Spurs) werden entfernt, damit keine falschen Minutien entstehen.",
-        "spursLabel": "Spurs entfernt"
+        "spursLabel": "Spurs entfernt",
+        "scanLabel": "Skelettierung",
+        "before": "Vorher",
+        "after": "Nachher",
+        "beforeCaption": "~6 px Rille",
+        "afterCaption": "1 px Skelett"
       },
       "minutiae": {
         "step": "03 — Minutien",
@@ -390,7 +396,8 @@
         "heading": "Das Zentrum des Musters",
         "sub": "Poincaré-Index: die Orientierung entlang einer Schleife aufsummieren — +180° ergibt eine Schleife (Core), −180° ein Delta.",
         "typeLoop": "Schleife",
-        "typeDelta": "Delta"
+        "typeDelta": "Delta",
+        "scanLabel": "Core · Delta"
       },
       "match": {
         "step": "05 — Vergleich",

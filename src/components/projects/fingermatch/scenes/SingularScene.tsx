@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element -- layered stage image + SVG coordinate overlay; next/image is unsuitable here */
 import { useTranslations } from 'next-intl';
-import { SceneStep, MinutiaMarker, Glyph } from '../parts';
+import { SceneStep, MinutiaMarker, Glyph, ScannerFrame } from '../parts';
 import { ASSET, DEMO } from '../tokens';
 
 const LOOP = DEMO.A.minutiae.find(m => m.type === 'loop');
@@ -45,7 +45,7 @@ export function SingularScene() {
             </div>
           </div>
 
-          <div className="relative mx-auto aspect-square w-full max-w-[420px] overflow-hidden rounded-2xl border border-white/10 bg-black">
+          <ScannerFrame label={td('singular.scanLabel')}>
             <img
               src={ASSET('skeleton-a.png')}
               alt=""
@@ -76,7 +76,7 @@ export function SingularScene() {
                 </g>
               ) : null}
             </svg>
-          </div>
+          </ScannerFrame>
         </div>
       </div>
     </section>

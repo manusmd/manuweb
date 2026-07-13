@@ -367,13 +367,19 @@
         "stepNormalize": "Normalize",
         "stepOrientation": "Orientation field",
         "stepGabor": "Gabor enhancement",
-        "stepBinarize": "Binarize"
+        "stepBinarize": "Binarize",
+        "scanLabel": "Enhancing"
       },
       "skeleton": {
         "step": "02 — Skeleton",
         "heading": "Thinned to a single line",
         "sub": "The ridges are thinned to 1 pixel wide. Short spurs are pruned so they don't become false minutiae.",
-        "spursLabel": "spurs pruned"
+        "spursLabel": "spurs pruned",
+        "scanLabel": "Skeletonizing",
+        "before": "Before",
+        "after": "After",
+        "beforeCaption": "~6px ridge",
+        "afterCaption": "1px skeleton"
       },
       "minutiae": {
         "step": "03 — Minutiae",
@@ -388,7 +394,8 @@
         "heading": "The heart of the pattern",
         "sub": "Poincaré index: sum the orientation around a loop — +180° is a loop (core), −180° a delta.",
         "typeLoop": "Loop",
-        "typeDelta": "Delta"
+        "typeDelta": "Delta",
+        "scanLabel": "Core · Delta"
       },
       "match": {
         "step": "05 — The match",

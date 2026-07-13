@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element -- layered stage images with absolute positioning + SVG coordinate overlays; next/image is unsuitable here */
 import { useTranslations } from 'next-intl';
-import { SceneStep, MinutiaMarker, Glyph } from '../parts';
+import { SceneStep, MinutiaMarker, Glyph, ScannerFrame } from '../parts';
 import { ASSET, DEMO } from '../tokens';
 
 const RIDGE = DEMO.A.minutiae.filter(m => m.type === 'ending' || m.type === 'bifurcation');
@@ -96,7 +96,7 @@ export function MinutiaeScene() {
             </div>
 
             {/* The print with markers */}
-            <div className="relative mx-auto aspect-square w-full max-w-[420px] overflow-hidden rounded-2xl border border-white/10 bg-black">
+            <ScannerFrame>
               <img
                 src={ASSET('skeleton-a.png')}
                 alt=""
@@ -110,7 +110,7 @@ export function MinutiaeScene() {
               <div className="absolute bottom-3 right-3 rounded-lg bg-black/70 px-2.5 py-1 font-mono text-sm text-foreground backdrop-blur">
                 <span data-min-count>0</span> {td('minutiae.found')}
               </div>
-            </div>
+            </ScannerFrame>
           </div>
         </div>
       </div>
