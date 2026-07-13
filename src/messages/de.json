@@ -350,6 +350,71 @@
         "sub": "Eine öffentliche Demo, die bei jedem Besuch zurückgesetzt wird. Kein Account nötig."
       }
     },
+    "fingermatch": {
+      "title": "FingerMatch",
+      "subtitle": "Forensischer Minutien-Vergleich — echte Computer Vision",
+      "description": "Zwei Fingerabdrücke, eine klassische CV-Pipeline: Minutien und Singularpunkte erkennen, ausrichten und einen Match-Score berechnen — keine Modell-Blackbox.",
+      "longDescription": "FingerMatch bildet die klassische daktyloskopische Pipeline nach — Gabor-Verstärkung, Skelettierung, Crossing-Number-Minutien, Poincaré-Singularpunkte und ein RANSAC-Matcher — mit OpenCV/scikit-image im FastAPI-Backend und einem React-Frontend. Ein Lern- und Analysewerkzeug, kein gerichtsfestes AFIS."
+    },
+    "fingermatchDetail": {
+      "eyebrow": "Klassische Computer Vision",
+      "heroLead": "Zwei Abdrücke rein, ein Score raus —",
+      "heroLeadEmphasis": "jeder Schritt echte Mathematik, sichtbar gemacht.",
+      "scrollCue": "Scrollen",
+      "enhance": {
+        "step": "01 — Enhancement",
+        "heading": "Erst lesbar machen",
+        "sub": "Rohbild normalisieren, das Orientierungsfeld schätzen, mit Gabor-Filtern die Rillen verstärken und binarisieren.",
+        "stepNormalize": "Normalisieren",
+        "stepOrientation": "Orientierungsfeld",
+        "stepGabor": "Gabor-Verstärkung",
+        "stepBinarize": "Binarisieren"
+      },
+      "skeleton": {
+        "step": "02 — Skelett",
+        "heading": "Auf eine Linie gebracht",
+        "sub": "Die Rillen werden auf 1 Pixel ausgedünnt. Kurze Fortsätze (Spurs) werden entfernt, damit keine falschen Minutien entstehen.",
+        "spursLabel": "Spurs entfernt"
+      },
+      "minutiae": {
+        "step": "03 — Minutien",
+        "heading": "Wo Linien enden und sich gabeln",
+        "sub": "Crossing-Number: für jedes Skelett-Pixel die acht Nachbarn zählen. 1 Übergang = Ende, 3 = Gabelung.",
+        "typeEnding": "Ende",
+        "typeBifurcation": "Gabelung",
+        "found": "Minutien"
+      },
+      "singular": {
+        "step": "04 — Singularpunkte",
+        "heading": "Das Zentrum des Musters",
+        "sub": "Poincaré-Index: die Orientierung entlang einer Schleife aufsummieren — +180° ergibt eine Schleife (Core), −180° ein Delta.",
+        "typeLoop": "Schleife",
+        "typeDelta": "Delta"
+      },
+      "match": {
+        "step": "05 — Vergleich",
+        "heading": "Passt es zusammen?",
+        "scoreLabel": "Score",
+        "verdict": "Wahrscheinlich derselbe Finger",
+        "typeBifurcation": "Gabelung",
+        "typeEnding": "Ende",
+        "typeLoop": "Schleife",
+        "typeDelta": "Delta"
+      },
+      "limits": {
+        "step": "06 — Grenzen",
+        "heading": "Ein Score — keine Identifikation",
+        "sub": "FingerMatch liefert einen Ähnlichkeits-Score als Lern- und Analysewerkzeug.",
+        "does1": "Erkennt Minutien und Singularpunkte mit echter CV",
+        "does2": "Richtet zwei Abdrücke aus und bewertet die Ähnlichkeit",
+        "doesnt1": "Kein gerichtsfestes AFIS, keine Identifikation",
+        "doesnt2": "Ersetzt keine forensische Begutachtung",
+        "detectorLabel": "Austauschbarer Detektor",
+        "classical": "Klassische Pipeline — alle vier Markertypen",
+        "minutiaenet": "Experimentell: lokalisiert per Netz, klassifiziert klassisch",
+        "detectorNote": "Das Modell lokalisiert; die klassische Logik klassifiziert."
+      }
+    },
     "portfolio": {
       "description": "Eine moderne, responsive Portfolio-Website mit Next.js 14, flüssigen Animationen, 3D-Elementen und Dark Mode. Zeigt meine Projekte und Erfahrungen."
     }

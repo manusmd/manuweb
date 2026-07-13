@@ -5,12 +5,13 @@ import type { Project } from '@/types/project';
 import { FullscreenSection } from '@/components/layout/FullscreenSection';
 import { SectionHeader } from '@/components/layout/SectionHeader';
 import { FeaturedProjectShowcase } from '@/components/projects/FeaturedProjectShowcase';
-import { buildApplyxProject } from '@/data/projects';
+import { buildApplyxProject, buildFingermatchProject } from '@/data/projects';
 import { Github } from 'lucide-react';
 
 export function ProjectsSection() {
   const t = useTranslations('projects');
   const tc = useTranslations('projects.applyx');
+  const tf = useTranslations('projects.fingermatch');
 
   const projects: Project[] = [
     buildApplyxProject({
@@ -19,9 +20,13 @@ export function ProjectsSection() {
       description: tc('description'),
       longDescription: tc('longDescription'),
     }),
+    buildFingermatchProject({
+      title: tf('title'),
+      subtitle: tf('subtitle'),
+      description: tf('description'),
+      longDescription: tf('longDescription'),
+    }),
   ];
-
-  const featuredProject = projects[0];
 
   return (
     <FullscreenSection
@@ -38,7 +43,11 @@ export function ProjectsSection() {
             description={t('subtitle')}
           />
 
-          {featuredProject ? <FeaturedProjectShowcase project={featuredProject} /> : null}
+          <div className="flex flex-col gap-10 md:gap-14">
+            {projects.map(project => (
+              <FeaturedProjectShowcase key={project.slug} project={project} />
+            ))}
+          </div>
 
           <div className="flex flex-col items-start gap-3 border-t border-border/30 pt-8 sm:flex-row sm:items-center sm:justify-between">
             <p className="max-w-xl text-sm text-muted-foreground md:text-base">

@@ -348,6 +348,71 @@
         "sub": "A public demo, reset on every visit. No account needed."
       }
     },
+    "fingermatch": {
+      "title": "FingerMatch",
+      "subtitle": "Forensic minutiae matching — real computer vision",
+      "description": "Two fingerprints, one classical CV pipeline: detect minutiae and singular points, align them, and compute a match score — no black-box model.",
+      "longDescription": "FingerMatch reproduces the classical dactyloscopy pipeline — Gabor enhancement, skeletonization, crossing-number minutiae, Poincaré singular points and a RANSAC matcher — with OpenCV/scikit-image in a FastAPI backend and a React frontend. A learning and analysis tool, not a court-admissible AFIS."
+    },
+    "fingermatchDetail": {
+      "eyebrow": "Classical computer vision",
+      "heroLead": "Two prints in, one score out —",
+      "heroLeadEmphasis": "every step real math, made visible.",
+      "scrollCue": "Scroll",
+      "enhance": {
+        "step": "01 — Enhancement",
+        "heading": "Make it legible first",
+        "sub": "Normalize the raw image, estimate the orientation field, sharpen the ridges with Gabor filters, and binarize.",
+        "stepNormalize": "Normalize",
+        "stepOrientation": "Orientation field",
+        "stepGabor": "Gabor enhancement",
+        "stepBinarize": "Binarize"
+      },
+      "skeleton": {
+        "step": "02 — Skeleton",
+        "heading": "Thinned to a single line",
+        "sub": "The ridges are thinned to 1 pixel wide. Short spurs are pruned so they don't become false minutiae.",
+        "spursLabel": "spurs pruned"
+      },
+      "minutiae": {
+        "step": "03 — Minutiae",
+        "heading": "Where ridges end and fork",
+        "sub": "Crossing number: count the eight neighbours of each skeleton pixel. 1 transition = ending, 3 = bifurcation.",
+        "typeEnding": "Ending",
+        "typeBifurcation": "Bifurcation",
+        "found": "minutiae"
+      },
+      "singular": {
+        "step": "04 — Singular points",
+        "heading": "The heart of the pattern",
+        "sub": "Poincaré index: sum the orientation around a loop — +180° is a loop (core), −180° a delta.",
+        "typeLoop": "Loop",
+        "typeDelta": "Delta"
+      },
+      "match": {
+        "step": "05 — The match",
+        "heading": "Do they line up?",
+        "scoreLabel": "Score",
+        "verdict": "Likely the same finger",
+        "typeBifurcation": "Bifurcation",
+        "typeEnding": "Ending",
+        "typeLoop": "Loop",
+        "typeDelta": "Delta"
+      },
+      "limits": {
+        "step": "06 — Limits",
+        "heading": "A score — not an identification",
+        "sub": "FingerMatch produces a similarity score as a learning and analysis tool.",
+        "does1": "Detects minutiae and singular points with real CV",
+        "does2": "Aligns two prints and scores their similarity",
+        "doesnt1": "Not a court-admissible AFIS, not an identification",
+        "doesnt2": "Does not replace forensic examination",
+        "detectorLabel": "Swappable detector",
+        "classical": "Classical pipeline — all four marker types",
+        "minutiaenet": "Experimental: localizes with a net, classifies classically",
+        "detectorNote": "The model localizes; the classical logic classifies."
+      }
+    },
     "portfolio": {
       "description": "A modern, responsive portfolio website built with Next.js 14, featuring smooth animations, 3D elements, and a dark mode. Showcases my projects and experience in web development."
     }
