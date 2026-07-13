@@ -1,8 +1,20 @@
-/* eslint-disable @next/next/no-img-element -- layered stage images with absolute positioning + SVG coordinate overlays; next/image is unsuitable here */
+/* eslint-disable @next/next/no-img-element -- layered scanner image with SVG overlay; next/image is unsuitable here */
 import { useTranslations } from 'next-intl';
 import { ExternalLink, Github, Fingerprint } from 'lucide-react';
 import type { Project } from '@/types/project';
-import { ASSET } from '../tokens';
+import { MinutiaMarker } from '../parts';
+import { ASSET, DEMO } from '../tokens';
+
+// A spread-out handful of real minutiae to pulse over the hero scanner.
+const HERO_MARKERS = (() => {
+  const ms = DEMO.A.minutiae;
+  const step = Math.max(1, Math.floor(ms.length / 14));
+  return ms.filter((_, i) => i % step === 0).slice(0, 14);
+})();
+
+function Corner({ className }: { className: string }) {
+  return <span className={`absolute h-5 w-5 border-primary/70 ${className}`} />;
+}
 
 export function HeroScene({ project }: { project: Project }) {
   const t = useTranslations('projects');
@@ -22,17 +34,51 @@ export function HeroScene({ project }: { project: Project }) {
         data-parallax="0.2"
         className="pointer-events-none absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-accent-violet/20 blur-[120px]"
       />
-      <div className="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-2">
-        {/* The print */}
+
+      <div className="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-2">
+        {/* The biometric scanner */}
         <div data-hero-print data-hero-hidden className="order-2 lg:order-1">
-          <div className="relative mx-auto aspect-square w-full max-w-[420px] overflow-hidden rounded-3xl border border-white/10 bg-black">
-            <img
-              src={ASSET('raw-a.png')}
-              alt="Fingerprint"
-              className="absolute inset-0 h-full w-full object-cover opacity-90"
-            />
-            <div data-hero-scan className="pointer-events-none absolute inset-x-0 top-0 h-16">
-              <div className="h-px w-full bg-gradient-to-r from-transparent via-primary to-transparent shadow-[0_0_18px_2px_hsl(var(--primary))]" />
+          <div className="relative mx-auto aspect-square w-full max-w-[420px]">
+            <div className="absolute inset-8 rounded-full bg-primary/25 blur-[80px]" />
+            <div className="relative h-full w-full overflow-hidden rounded-[2rem] border border-primary/25 bg-black shadow-[0_0_70px_-18px_hsl(var(--primary))]">
+              <img
+                src={ASSET('raw-a.png')}
+                alt="Fingerprint scan"
+                className="absolute inset-0 h-full w-full object-cover opacity-80"
+              />
+              {/* subtle scan grid */}
+              <div
+                className="pointer-events-none absolute inset-0 opacity-[0.12]"
+                style={{
+                  backgroundImage:
+                    'linear-gradient(hsl(var(--primary)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px)',
+                  backgroundSize: '28px 28px',
+                }}
+              />
+              {/* real minutiae, gently pulsing */}
+              <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full">
+                {HERO_MARKERS.map((m, i) => (
+                  <g
+                    key={m.id}
+                    className="fm-minutia"
+                    style={{ animationDelay: `${(i % 7) * 0.25}s` }}
+                  >
+                    <MinutiaMarker m={m} size={3} />
+                  </g>
+                ))}
+              </svg>
+              {/* sweeping scan line */}
+              <div className="fm-scanline pointer-events-none absolute inset-x-0 h-px bg-primary shadow-[0_0_18px_3px_hsl(var(--primary))]" />
+              {/* corner reticle */}
+              <Corner className="left-3 top-3 border-l-2 border-t-2 rounded-tl" />
+              <Corner className="right-3 top-3 border-r-2 border-t-2 rounded-tr" />
+              <Corner className="bottom-3 left-3 border-b-2 border-l-2 rounded-bl" />
+              <Corner className="bottom-3 right-3 border-b-2 border-r-2 rounded-br" />
+            </div>
+            {/* status chip */}
+            <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-black/85 px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-widest text-primary backdrop-blur">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
+              {td('heroScanLabel')}
             </div>
           </div>
         </div>

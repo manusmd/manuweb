@@ -80,8 +80,8 @@ export function MinutiaMarker({
       <line
         x1={cx}
         y1={cy}
-        x2={cx + Math.cos(m.angle) * (r + 2.4)}
-        y2={cy + Math.sin(m.angle) * (r + 2.4)}
+        x2={Math.round((cx + Math.cos(m.angle) * (r + 2.4)) * 1000) / 1000}
+        y2={Math.round((cy + Math.sin(m.angle) * (r + 2.4)) * 1000) / 1000}
         stroke={c}
         strokeWidth={0.6}
         strokeLinecap="round"

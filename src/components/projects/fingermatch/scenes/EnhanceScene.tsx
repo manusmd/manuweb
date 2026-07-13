@@ -42,6 +42,8 @@ export function EnhanceScene() {
               preserveAspectRatio="none"
             >
               {DEMO.orientation.map((o, i) => {
+                // Round so SSR and client serialize identical attribute strings.
+                const r = (n: number) => Math.round(n * 1000) / 1000;
                 const cx = o.x * 100;
                 const cy = o.y * 100;
                 const dx = Math.cos(o.angle) * L;
@@ -50,10 +52,10 @@ export function EnhanceScene() {
                   <line
                     key={i}
                     data-orient-line
-                    x1={cx - dx}
-                    y1={cy - dy}
-                    x2={cx + dx}
-                    y2={cy + dy}
+                    x1={r(cx - dx)}
+                    y1={r(cy - dy)}
+                    x2={r(cx + dx)}
+                    y2={r(cy + dy)}
                     stroke="#58a6ff"
                     strokeWidth={0.6}
                     strokeLinecap="round"

@@ -143,16 +143,6 @@ export function useFingermatchScrollExperience(
               { opacity: 1, y: 0, stagger: 0.08, duration: 0.6 },
               0.15
             );
-            // Scan line sweep over the print
-            const scan = q('[data-hero-scan]');
-            if (scan)
-              gsap.to(scan, {
-                yPercent: 560,
-                duration: 2.6,
-                repeat: -1,
-                ease: 'none',
-                delay: 0.6,
-              });
 
             // Generic fade-ups
             qa<HTMLElement>('[data-fade]').forEach(el => {

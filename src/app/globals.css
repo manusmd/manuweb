@@ -364,6 +364,60 @@ body {
   animation: applyx-flow 2.6s ease-in-out infinite;
 }
 
+/* FingerMatch hero scanner: a sweeping scan line + gently pulsing minutiae. */
+@keyframes fm-scan {
+  0% {
+    top: -6%;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+@keyframes fm-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+.fm-scanline {
+  animation: fm-scan 3.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+.fm-minutia {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: fm-pulse 2.8s ease-in-out infinite;
+}
+.fingermatch-detail [data-hero-hidden] {
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .fm-scanline,
+  .fm-minutia {
+    animation: none;
+  }
+  .fingermatch-detail [data-hero-hidden] {
+    opacity: 1;
+  }
+}
+@media (scripting: none) {
+  .fingermatch-detail [data-hero-hidden] {
+    opacity: 1;
+  }
+}
+
 /* Prevent a first-paint flash of the ApplyX hero intro: these elements start
    hidden and are revealed by GSAP. Fallbacks keep them visible when motion is
    reduced or scripting is unavailable. */
