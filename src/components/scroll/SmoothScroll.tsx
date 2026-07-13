@@ -101,9 +101,23 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
         pinType: 'transform',
       });
 
+      // Re-broadcast Lenis scroll as a native window `scroll` event so plain
+      // listeners (Header, reading progress, section nav) update during smooth
+      // scroll. Lenis itself listens to native scroll, so without care the
+      // synthetic event re-enters this handler and recurses until the stack
+      // overflows. Two guards prevent that: a re-entrancy flag (guarantees the
+      // synthetic event never fires a second one), and preventNextNativeScrollEvent
+      // (tells Lenis to ignore the synthetic event so it doesn't re-sync/jitter).
+      let dispatchingScroll = false;
       lenis.on('scroll', () => {
         ScrollTriggerLib.update();
+        if (dispatchingScroll) return;
+        dispatchingScroll = true;
+        (
+          lenis as unknown as { preventNextNativeScrollEvent?: () => void }
+        ).preventNextNativeScrollEvent?.();
         window.dispatchEvent(new Event('scroll'));
+        dispatchingScroll = false;
       });
 
       tickerFn = (time: number) => {
