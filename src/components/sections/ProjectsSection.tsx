@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import type { Project } from '@/types/project';
 import { FullscreenSection } from '@/components/layout/FullscreenSection';
 import { SectionHeader } from '@/components/layout/SectionHeader';
-import { FeaturedProjectShowcase } from '@/components/projects/FeaturedProjectShowcase';
+import { ProjectCard } from '@/components/projects/ProjectCard';
 import { buildApplyxProject, buildFingermatchProject } from '@/data/projects';
 import { Github } from 'lucide-react';
 
@@ -43,9 +43,9 @@ export function ProjectsSection() {
             description={t('subtitle')}
           />
 
-          <div className="flex flex-col gap-10 md:gap-14">
+          <div className="grid gap-6 sm:grid-cols-2">
             {projects.map(project => (
-              <FeaturedProjectShowcase key={project.slug} project={project} />
+              <ProjectCard key={project.slug} project={project} />
             ))}
           </div>
 

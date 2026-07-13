@@ -47,8 +47,8 @@ export const FINGERMATCH_SLUG = 'fingermatch';
 const fingermatchBase: Omit<Project, 'title' | 'subtitle' | 'description' | 'longDescription'> = {
   id: 'fingermatch',
   slug: FINGERMATCH_SLUG,
-  image: '/projects/fingermatch/raw-a.png',
-  thumbnail: '/projects/fingermatch/raw-a.png',
+  image: '/projects/fingermatch/card.png',
+  thumbnail: '/projects/fingermatch/card.png',
   liveUrl: 'https://fingermatch.projects.manu-web.de',
   githubUrl: 'https://github.com/manusmd/fingermatch',
   repository: 'https://github.com/manusmd/fingermatch',
