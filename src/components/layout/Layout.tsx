@@ -12,23 +12,23 @@ import { SimpleEasterEggs } from '@/components/easter-eggs/SimpleEasterEggs';
 import { PersistentGameButton } from '@/components/easter-eggs/PersistentGameButton';
 import { BugHuntGame } from '@/components/easter-eggs/BugHuntGame';
 import type {
-  HeaderFeaturedProject,
+  HeaderProjectPreview,
   HeaderPostPreview,
 } from '@/components/layout/headerNavPreview.types';
 
 interface LayoutProps {
   children: React.ReactNode;
   latestPosts?: HeaderPostPreview[];
-  featuredProject?: HeaderFeaturedProject;
+  projects?: HeaderProjectPreview[];
 }
 
-export function Layout({ children, latestPosts, featuredProject }: LayoutProps) {
+export function Layout({ children, latestPosts, projects }: LayoutProps) {
   return (
     <BlogTransitionProvider>
       <SmoothScroll>
         <div className="relative min-h-screen bg-background text-foreground">
           <NavigationTracker />
-          <Header latestPosts={latestPosts} featuredProject={featuredProject} />
+          <Header latestPosts={latestPosts} projects={projects} />
           <ScrollProgress />
           <main className="relative pt-16">
             <PageTransition>{children}</PageTransition>

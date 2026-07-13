@@ -13,7 +13,7 @@ import { Menu, X, Home, User, FolderOpen, FileText, Mail } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import type {
-  HeaderFeaturedProject,
+  HeaderProjectPreview,
   HeaderPostPreview,
 } from '@/components/layout/headerNavPreview.types';
 
@@ -22,10 +22,10 @@ const DROPDOWN_CLOSE_DELAY_MS = 150;
 
 interface HeaderProps {
   latestPosts?: HeaderPostPreview[];
-  featuredProject?: HeaderFeaturedProject;
+  projects?: HeaderProjectPreview[];
 }
 
-export function Header({ latestPosts, featuredProject }: HeaderProps) {
+export function Header({ latestPosts, projects }: HeaderProps) {
   const t = useTranslations('navigation');
   const params = useParams();
   const pathname = usePathname();
@@ -237,7 +237,7 @@ export function Header({ latestPosts, featuredProject }: HeaderProps) {
                         <HeaderNavDropdown
                           kind={item.section as 'blog' | 'projects'}
                           latestPosts={latestPosts}
-                          featuredProject={featuredProject}
+                          projects={projects}
                           onNavigate={() => setOpenDropdown(null)}
                         />
                       </motion.div>
