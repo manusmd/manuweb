@@ -2,13 +2,13 @@
 
 import { useEffect } from 'react';
 
-export const SCENES = ['hero', 'tenancy', 'matrix', 'datalayer', 'domain', 'product'] as const;
+export const SCENES = ['hero', 'tour', 'roles', 'tech'] as const;
 
 /**
  * GSAP scroll choreography for the afterhive detail page. Same scaffold as the
  * other project pages (bounded fonts/rAF waits, fit-to-viewport, deferred
- * refreshes); only the permission matrix is pinned+scrubbed — everything else
- * reveals on enter.
+ * refreshes); only the product tour is pinned+scrubbed — the stops crossfade
+ * as you scroll, everything else reveals on enter.
  */
 export function useAfterhiveScrollExperience(
   rootRef: React.RefObject<HTMLDivElement | null>,
@@ -59,11 +59,7 @@ export function useAfterhiveScrollExperience(
         mm.add('(prefers-reduced-motion: reduce)', () => {
           gsap.set(qa('[data-fade]'), { opacity: 1, y: 0 });
           gsap.set(qa('[data-hero-hidden]'), { opacity: 1, y: 0 });
-          gsap.set(qa('[data-mx-cell]'), { opacity: 1, scale: 1 });
-          gsap.set(qa('[data-dm-chip]'), { opacity: 1 });
-          qa<HTMLElement>('[data-dm-count]').forEach(el => {
-            el.textContent = el.dataset.to ?? '0';
-          });
+          gsap.set(qa('[data-tour-stop]'), { autoAlpha: 1, y: 0 });
         });
 
         mm.add(
@@ -123,31 +119,6 @@ export function useAfterhiveScrollExperience(
               });
             });
 
-            // Domain: count-ups + model-chip cascade (once, on enter)
-            if (q('[data-dm-count]')) {
-              qa<HTMLElement>('[data-dm-count]').forEach(el => {
-                const to = Number(el.dataset.to ?? 0);
-                const c = { v: 0 };
-                gsap.to(c, {
-                  v: to,
-                  duration: 1.1,
-                  ease: 'power1.out',
-                  onUpdate: () => {
-                    el.textContent = String(Math.round(c.v));
-                  },
-                  scrollTrigger: { trigger: '[data-scene="domain"]', start: 'top 70%', once: true },
-                });
-              });
-              gsap.from('[data-dm-chip]', {
-                opacity: 0,
-                scale: 0.7,
-                stagger: 0.012,
-                duration: 0.3,
-                ease: 'back.out(1.4)',
-                scrollTrigger: { trigger: '[data-scene="domain"]', start: 'top 60%', once: true },
-              });
-            }
-
             if (isDesktop) {
               fitPinned = () => {
                 const avail = window.innerHeight - 120;
@@ -163,33 +134,44 @@ export function useAfterhiveScrollExperience(
               };
               ScrollTrigger.addEventListener('refresh', fitPinned);
 
-              // --- MATRIX (pinned scrub): the SSOT fills in row by row ---
-              const mxPin = q('[data-pin="matrix"]');
-              if (mxPin) {
-                gsap.set('[data-mx-cell]', { opacity: 0, scale: 0.6, transformOrigin: 'center' });
-                gsap
-                  .timeline({
-                    scrollTrigger: {
-                      trigger: mxPin,
-                      start: 'top top',
-                      end: '+=1600',
-                      scrub: 0.6,
-                      pin: true,
-                      anticipatePin: 1,
-                      invalidateOnRefresh: true,
-                      refreshPriority: 3,
-                    },
-                  })
-                  .to('[data-mx-cell]', {
-                    opacity: 1,
-                    scale: 1,
-                    stagger: 0.012,
-                    duration: 0.25,
-                    ease: 'back.out(1.3)',
-                  });
+              // --- TOUR (pinned scrub): stops crossfade station by station ---
+              const tourPin = q('[data-pin="tour"]');
+              const stops = qa<HTMLElement>('[data-tour-stop]');
+              const tabs = qa<HTMLElement>('[data-tour-tab]');
+              if (tourPin && stops.length > 1) {
+                gsap.set(stops.slice(1), { autoAlpha: 0, y: 30 });
+                gsap.set(tabs.slice(1), { opacity: 0.4 });
+
+                const tl = gsap.timeline({
+                  scrollTrigger: {
+                    trigger: tourPin,
+                    start: 'top top',
+                    end: `+=${stops.length * 420}`,
+                    scrub: 0.6,
+                    pin: true,
+                    anticipatePin: 1,
+                    invalidateOnRefresh: true,
+                    refreshPriority: 3,
+                  },
+                });
+                stops.forEach((stop, i) => {
+                  if (i === 0) return;
+                  const pos = i * 1.5;
+                  tl.to(stops[i - 1], { autoAlpha: 0, y: -30, duration: 0.5 }, pos);
+                  tl.fromTo(
+                    stop,
+                    { autoAlpha: 0, y: 30 },
+                    { autoAlpha: 1, y: 0, duration: 0.5 },
+                    pos + 0.35
+                  );
+                  if (tabs[i - 1]) tl.to(tabs[i - 1], { opacity: 0.4, duration: 0.3 }, pos);
+                  if (tabs[i]) tl.to(tabs[i], { opacity: 1, duration: 0.3 }, pos);
+                });
+                // hold the last stop for a beat before unpinning
+                tl.to({}, { duration: 1 });
               }
             } else {
-              gsap.set(qa('[data-mx-cell]'), { opacity: 1, scale: 1 });
+              gsap.set(qa('[data-tour-stop]'), { autoAlpha: 1, y: 0 });
             }
 
             return () => {

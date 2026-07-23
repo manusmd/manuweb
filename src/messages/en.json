@@ -437,9 +437,9 @@
     },
     "afterhive": {
       "title": "afterhive",
-      "subtitle": "Club management as multi-tenant SaaS",
-      "description": "Self-hostable club management: members, dues, teams and events — multi-tenant, with a permission matrix from a single source of truth.",
-      "longDescription": "afterhive is a multi-tenant SaaS platform for sports clubs: member management, dues runs, teams, attendance and calendar in one app. Every permission comes from a single source of truth in the shared package, and ZenStack enforces access rules directly at the data layer — an ESLint rule keeps the raw Prisma client out of request code entirely."
+      "subtitle": "The all-in-one club app",
+      "description": "Members, dues, training, communication and the club's own website — the whole club in one app.",
+      "longDescription": "afterhive bundles everyday club life: member management with membership applications, automatic dues runs with SEPA, calendar and attendance, communication — and a club website that publishes with one click. Five roles govern who sees what; built multi-tenant and self-hostable."
     },
     "pitchlabDetail": {
       "eyebrow": "Custom model · api-football",
@@ -507,57 +507,92 @@
       }
     },
     "afterhiveDetail": {
-      "eyebrow": "Multi-tenant SaaS for clubs",
-      "heroLead": "Members, dues, teams and events — one instance, many clubs. ",
-      "heroLeadEmphasis": "Every permission comes from a single source of truth.",
-      "scrollCue": "Scroll to see the architecture",
-      "tenancy": {
-        "step": "Multi-tenancy",
-        "heading": "One instance. Many clubs.",
-        "sub": "Each club lives as its own tenant inside the same deployment — with its own members, roles and settings.",
-        "instance": "One afterhive instance",
-        "members": "members",
-        "isolation": "No query ever leaves its tenant: the organization ID is part of every access rule — not part of developer discipline."
+      "eyebrow": "The app for clubs",
+      "heroLead": "Members, dues, training, communication and the club's own website — ",
+      "heroLeadEmphasis": "the whole club in one app.",
+      "scrollCue": "Scroll to explore the features",
+      "tour": {
+        "step": "Product tour",
+        "heading": "A walk through the app.",
+        "sub": "Six stops — all real screens from the public demo.",
+        "dashboard": {
+          "title": "Everything at a glance",
+          "desc": "The dashboard shows how the club is doing: members, open dues, attendance and what's coming up next.",
+          "f1": "Live metrics",
+          "f2": "New applications",
+          "f3": "Upcoming events"
+        },
+        "members": {
+          "title": "Members under control",
+          "desc": "Profiles, divisions and membership applications in one place — from joining to leaving.",
+          "f1": "Complete profiles",
+          "f2": "Divisions & teams",
+          "f3": "Membership applications"
+        },
+        "dues": {
+          "title": "Dues that run themselves",
+          "desc": "Define tariffs, start a dues run, done: afterhive bills automatically and keeps an eye on open items.",
+          "f1": "Dues runs",
+          "f2": "SEPA direct debit",
+          "f3": "Open items"
+        },
+        "calendar": {
+          "title": "The club calendar",
+          "desc": "Trainings, matches and events across all divisions — everyone sees the dates that concern them.",
+          "f1": "Trainings & matches",
+          "f2": "Recurring events",
+          "f3": "Locations & rooms"
+        },
+        "attendance": {
+          "title": "Attendance in seconds",
+          "desc": "Coaches check off participation right at the training — the club sees rates instead of paperwork.",
+          "f1": "One tap per member",
+          "f2": "History & rates",
+          "f3": "Per team & session"
+        },
+        "website": {
+          "title": "The club's own website",
+          "desc": "One click and the club is online: a homepage built from real club data — customize, publish, done. Join form included.",
+          "f1": "Colors, logo & images",
+          "f2": "Bilingual",
+          "f3": "Join form"
+        }
       },
-      "matrix": {
-        "step": "Permission matrix",
-        "heading": "The full permission matrix — from one file.",
-        "sub": "10 modules × 5 roles × 4 levels. Defined in packages/shared — backend policies, frontend guards and this page read the same source.",
-        "level_none": "none",
+      "roles": {
+        "step": "Roles",
+        "heading": "Everyone sees exactly the right thing.",
+        "sub": "From the board to the members: five roles govern who sees and does what.",
+        "club_admin": "Sees everything, can do everything — manages club, roles and settings.",
+        "treasurer": "Full control over dues and finances — member data read-only.",
+        "division_admin": "Runs their own division: teams, events and attendance.",
+        "coach": "Tracks attendance and communicates with their own team.",
+        "member": "Sees their own data, events and dues — nothing more.",
+        "note": "The dots show the real access levels across all ten modules — defined once, enforced everywhere automatically.",
+        "level_none": "no access",
         "level_read": "read",
         "level_write": "write",
-        "level_admin": "admin",
-        "source": "Real data: exported from packages/shared/src/permissions.ts"
+        "level_admin": "admin"
       },
-      "datalayer": {
-        "step": "Data layer",
-        "heading": "Access rules you cannot forget.",
-        "sub": "ZenStack compiles the permission matrix into policies at the data layer. Bypassing the rule means getting past the linter.",
-        "flowTitle": "Every request runs through the policies",
-        "lintRule": "ESLint boundary rule: the raw Prisma client is banned from request handlers — only the enhanced client gets through.",
-        "queryTitle": "The same query, filtered by role",
-        "roleTrainer": "Role: Coach",
-        "queryNote": "A coach only sees members of their own division — not because the handler filters, but because the data layer enforces it."
-      },
-      "domain": {
-        "step": "Domain model",
-        "heading": "A club is one big data model.",
-        "sub": "From member to dues run to SEPA mandate: the schema maps the real world of running a club.",
-        "models": "data models",
-        "modules": "modules",
-        "roles": "roles",
-        "docs": "docs pages",
-        "source": "Counted from the repo's schema.zmodel and docs/"
-      },
-      "product": {
-        "step": "Product",
-        "heading": "The finished product.",
-        "sub": "Real screens from the public demo at afterhive.de — roles & permissions, members and dues management."
+      "tech": {
+        "step": "Under the hood",
+        "heading": "Built to last.",
+        "tenant": {
+          "title": "Multi-tenant",
+          "desc": "Many clubs, one platform — each club strictly separated from the others."
+        },
+        "host": {
+          "title": "Self-hostable",
+          "desc": "Runs on your own infrastructure — club data stays with the club."
+        },
+        "rules": {
+          "title": "Central access rules",
+          "desc": "Permissions defined once — enforced automatically in app and API."
+        }
       },
       "outro": {
-        "step": "Wrap-up",
-        "heading": "Built docs-first. Secured policy-first.",
-        "sub": "afterhive is designed as a self-hostable platform: documented architecture, enforced access rules and a demo anyone can try.",
+        "step": "Try it",
+        "heading": "The best way: click through it yourself.",
+        "sub": "afterhive runs as a public demo with real sample data — no sign-up, right in the browser.",
         "cta": "Try the demo"
       }
     },

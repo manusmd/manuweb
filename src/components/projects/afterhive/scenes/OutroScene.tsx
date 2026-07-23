@@ -1,40 +1,7 @@
 import { useTranslations } from 'next-intl';
 import { ExternalLink } from 'lucide-react';
 import type { Project } from '@/types/project';
-import { SceneStep, BrowserFrame } from '../parts';
-import { ASSET } from '../tokens';
-
-export function ProductScene() {
-  const td = useTranslations('projects.afterhiveDetail');
-
-  return (
-    <section data-scene="product" className="relative px-4 py-20 md:py-28">
-      <div className="mx-auto w-full max-w-5xl">
-        <div className="text-center">
-          <SceneStep>{td('product.step')}</SceneStep>
-          <h2 className="mx-auto max-w-2xl font-display text-3xl font-bold tracking-tight text-foreground md:text-5xl">
-            {td('product.heading')}
-          </h2>
-          <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground md:text-base">
-            {td('product.sub')}
-          </p>
-        </div>
-
-        <div data-fade className="mt-8">
-          <BrowserFrame src={ASSET('rollen.png')} alt="Rollen & Rechte — Rechte-Matrix" />
-        </div>
-        <div className="mt-4 grid gap-4 md:grid-cols-2">
-          <div data-fade>
-            <BrowserFrame src={ASSET('mitglieder.png')} alt="Mitgliederverwaltung" />
-          </div>
-          <div data-fade>
-            <BrowserFrame src={ASSET('beitraege.png')} alt="Beiträge" />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
+import { SceneStep } from '../parts';
 
 export function OutroScene({ project }: { project: Project }) {
   const t = useTranslations('projects');

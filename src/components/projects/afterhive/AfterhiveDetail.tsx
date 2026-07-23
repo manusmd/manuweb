@@ -4,19 +4,18 @@ import { useRef, useState } from 'react';
 import type { Project } from '@/types/project';
 import { SCENES, useAfterhiveScrollExperience } from './useAfterhiveScrollExperience';
 import { HeroScene } from './scenes/HeroScene';
-import { TenancyScene } from './scenes/TenancyScene';
-import { MatrixScene } from './scenes/MatrixScene';
-import { DataLayerScene } from './scenes/DataLayerScene';
-import { DomainScene } from './scenes/DomainScene';
-import { ProductScene, OutroScene } from './scenes/ProductScene';
+import { TourScene } from './scenes/TourScene';
+import { RolesScene } from './scenes/RolesScene';
+import { TechScene } from './scenes/TechScene';
+import { OutroScene } from './scenes/OutroScene';
 
 /**
- * Scroll-driven story for afterhive: a self-hosted, multi-tenant SaaS for
- * sports clubs — told through its engineering. The permission matrix and the
- * domain stats come straight from the repo's SSOT (packages/shared) and
- * schema.zmodel; the app screens are real captures of the public demo.
+ * Scroll-driven story for afterhive, feature-first: a pinned product tour
+ * through real demo screens (dashboard, members, dues, calendar, attendance,
+ * club website), a humanized roles section powered by the app's real
+ * permission data, and one slim technical strip.
  */
-export function AfterhiveDetail({ project, locale }: { project: Project; locale: string }) {
+export function AfterhiveDetail({ project }: { project: Project; locale?: string }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const [activeScene, setActiveScene] = useState(0);
 
@@ -39,11 +38,9 @@ export function AfterhiveDetail({ project, locale }: { project: Project; locale:
       </nav>
 
       <HeroScene project={project} />
-      <TenancyScene />
-      <MatrixScene locale={locale} />
-      <DataLayerScene />
-      <DomainScene />
-      <ProductScene />
+      <TourScene />
+      <RolesScene />
+      <TechScene project={project} />
       <OutroScene project={project} />
     </div>
   );

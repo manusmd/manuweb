@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 
 /** Section eyebrow. */
 export function SceneStep({ children }: { children: ReactNode }) {
@@ -13,13 +13,15 @@ export function SceneStep({ children }: { children: ReactNode }) {
 export function GlassCard({
   children,
   className = '',
+  ...rest
 }: {
   children: ReactNode;
   className?: string;
-}) {
+} & HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={`rounded-2xl border border-white/10 bg-white/[0.04] shadow-[0_20px_60px_-24px_rgba(0,0,0,0.7)] ring-1 ring-white/[0.05] backdrop-blur-xl ${className}`}
+      {...rest}
     >
       {children}
     </div>

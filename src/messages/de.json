@@ -439,9 +439,9 @@
     },
     "afterhive": {
       "title": "afterhive",
-      "subtitle": "Vereinsverwaltung als Multi-Tenant-SaaS",
-      "description": "Self-hostbare Vereinsverwaltung: Mitglieder, Beiträge, Teams und Termine — mandantenfähig, mit Rechte-Matrix aus einer Single Source of Truth.",
-      "longDescription": "afterhive ist eine Multi-Tenant-SaaS-Plattform für Sportvereine: Mitgliederverwaltung, Beitragsläufe, Teams, Anwesenheit und Kalender in einer App. Jede Berechtigung stammt aus einer Single Source of Truth im Shared-Package, und ZenStack erzwingt die Zugriffsregeln direkt auf der Datenschicht — eine ESLint-Regel verhindert, dass der rohe Prisma-Client jemals Request-Code erreicht."
+      "subtitle": "Die All-in-One-App für Vereine",
+      "description": "Mitglieder, Beiträge, Training, Kommunikation und die eigene Vereins-Website — der ganze Verein in einer App.",
+      "longDescription": "afterhive bündelt den ganzen Vereinsalltag: Mitgliederverwaltung mit Aufnahme-Anfragen, automatische Beitragsläufe mit SEPA, Kalender und Anwesenheit, Kommunikation — und eine eigene Vereins-Website, die sich per Klick veröffentlichen lässt. Fünf Rollen regeln, wer was sieht; mandantenfähig und self-hostbar gebaut."
     },
     "pitchlabDetail": {
       "eyebrow": "Eigenes Modell · api-football",
@@ -509,57 +509,92 @@
       }
     },
     "afterhiveDetail": {
-      "eyebrow": "Multi-Tenant SaaS für Vereine",
-      "heroLead": "Mitglieder, Beiträge, Teams und Termine — eine Instanz, viele Vereine. ",
-      "heroLeadEmphasis": "Jede Berechtigung kommt aus einer Single Source of Truth.",
-      "scrollCue": "Scrollen, um die Architektur zu sehen",
-      "tenancy": {
-        "step": "Mandantenfähigkeit",
-        "heading": "Eine Instanz. Viele Vereine.",
-        "sub": "Jeder Verein lebt als eigener Mandant in derselben Deployment-Instanz — mit eigenen Mitgliedern, Rollen und Einstellungen.",
-        "instance": "Eine afterhive-Instanz",
-        "members": "Mitglieder",
-        "isolation": "Kein Query verlässt den eigenen Mandanten: Die Organisation-ID ist Teil jeder Zugriffsregel — nicht Teil der Disziplin des Entwicklers."
+      "eyebrow": "Die App für Vereine",
+      "heroLead": "Mitglieder, Beiträge, Training, Kommunikation und die eigene Website — ",
+      "heroLeadEmphasis": "der ganze Verein in einer App.",
+      "scrollCue": "Scrollen und Features entdecken",
+      "tour": {
+        "step": "Produkt-Tour",
+        "heading": "Ein Rundgang durch die App.",
+        "sub": "Sechs Stationen — alles echte Screens aus der öffentlichen Demo.",
+        "dashboard": {
+          "title": "Alles auf einen Blick",
+          "desc": "Das Dashboard zeigt, wie es dem Verein geht: Mitglieder, offene Beiträge, Anwesenheit und was als Nächstes ansteht.",
+          "f1": "Live-Kennzahlen",
+          "f2": "Neue Anträge",
+          "f3": "Anstehende Termine"
+        },
+        "members": {
+          "title": "Mitglieder im Griff",
+          "desc": "Profile, Abteilungen und Aufnahme-Anfragen an einem Ort — vom Eintritt bis zum Austritt.",
+          "f1": "Vollständige Profile",
+          "f2": "Abteilungen & Teams",
+          "f3": "Aufnahme-Anfragen"
+        },
+        "dues": {
+          "title": "Beiträge wie von selbst",
+          "desc": "Tarife definieren, Beitragslauf starten, fertig: afterhive rechnet ab und behält offene Posten im Blick.",
+          "f1": "Beitragsläufe",
+          "f2": "SEPA-Lastschrift",
+          "f3": "Offene Posten"
+        },
+        "calendar": {
+          "title": "Der Vereinskalender",
+          "desc": "Trainings, Spiele und Events für alle Abteilungen — jeder sieht die Termine, die ihn betreffen.",
+          "f1": "Trainings & Spiele",
+          "f2": "Serientermine",
+          "f3": "Orte & Räume"
+        },
+        "attendance": {
+          "title": "Anwesenheit in Sekunden",
+          "desc": "Trainer haken die Teilnahme direkt im Training ab — der Verein sieht Quoten statt Zettelwirtschaft.",
+          "f1": "Ein Tap pro Mitglied",
+          "f2": "Historie & Quoten",
+          "f3": "Je Team & Training"
+        },
+        "website": {
+          "title": "Die eigene Vereins-Website",
+          "desc": "Ein Klick, und der Verein ist online: Startseite aus echten Vereinsdaten, anpassen, veröffentlichen — inklusive Mitglied-werden-Formular.",
+          "f1": "Farben, Logo & Bilder",
+          "f2": "Zweisprachig",
+          "f3": "Mitglied-werden-Formular"
+        }
       },
-      "matrix": {
-        "step": "Rechte-Matrix",
-        "heading": "Die komplette Rechte-Matrix — aus einer Datei.",
-        "sub": "10 Module × 5 Rollen × 4 Stufen. Definiert in packages/shared — Backend-Policies, Frontend-Guards und diese Seite lesen dieselbe Quelle.",
-        "level_none": "kein",
+      "roles": {
+        "step": "Rollen",
+        "heading": "Jeder sieht genau das Richtige.",
+        "sub": "Vom Vorstand bis zum Mitglied: Fünf Rollen regeln, wer was sieht und darf.",
+        "club_admin": "Sieht alles, kann alles — verwaltet Verein, Rollen und Einstellungen.",
+        "treasurer": "Volle Kontrolle über Beiträge und Finanzen — Mitgliederdaten nur lesend.",
+        "division_admin": "Führt die eigene Abteilung: Teams, Termine und Anwesenheit.",
+        "coach": "Erfasst Anwesenheit und kommuniziert mit dem eigenen Team.",
+        "member": "Sieht die eigenen Daten, Termine und Beiträge — mehr nicht.",
+        "note": "Die Punkte zeigen die echten Zugriffsstufen über alle zehn Module — einmal zentral definiert, überall automatisch durchgesetzt.",
+        "level_none": "kein Zugriff",
         "level_read": "lesen",
         "level_write": "schreiben",
-        "level_admin": "admin",
-        "source": "Echte Daten: exportiert aus packages/shared/src/permissions.ts"
+        "level_admin": "admin"
       },
-      "datalayer": {
-        "step": "Datenschicht",
-        "heading": "Zugriffsregeln, die man nicht vergessen kann.",
-        "sub": "ZenStack kompiliert die Rechte-Matrix in Policies auf der Datenschicht. Wer die Regel umgehen will, muss am Linter vorbei.",
-        "flowTitle": "Jeder Request läuft durch die Policies",
-        "lintRule": "ESLint-Boundary-Regel: Der rohe Prisma-Client ist in Request-Handlern verboten — nur der enhanced Client kommt durch.",
-        "queryTitle": "Dieselbe Query, gefiltert nach Rolle",
-        "roleTrainer": "Rolle: Trainer",
-        "queryNote": "Ein Trainer sieht nur Mitglieder der eigenen Abteilung — nicht, weil der Handler filtert, sondern weil die Datenschicht es erzwingt."
-      },
-      "domain": {
-        "step": "Domänenmodell",
-        "heading": "Ein Verein ist ein großes Datenmodell.",
-        "sub": "Vom Mitglied über Beitragslauf bis SEPA-Mandat: Das Schema bildet die echte Vereinswelt ab.",
-        "models": "Datenmodelle",
-        "modules": "Module",
-        "roles": "Rollen",
-        "docs": "Doku-Seiten",
-        "source": "Gezählt aus schema.zmodel und docs/ des Repos"
-      },
-      "product": {
-        "step": "Produkt",
-        "heading": "Das fertige Produkt.",
-        "sub": "Echte Screens aus der öffentlichen Demo auf afterhive.de — Rollen & Rechte, Mitglieder und Beitragsverwaltung."
+      "tech": {
+        "step": "Unter der Haube",
+        "heading": "Solide gebaut.",
+        "tenant": {
+          "title": "Mandantenfähig",
+          "desc": "Viele Vereine, eine Plattform — jeder Verein streng von den anderen getrennt."
+        },
+        "host": {
+          "title": "Self-hostbar",
+          "desc": "Läuft auf eigener Infrastruktur — die Vereinsdaten bleiben im Verein."
+        },
+        "rules": {
+          "title": "Zentrale Zugriffsregeln",
+          "desc": "Berechtigungen einmal definiert — in App und API automatisch erzwungen."
+        }
       },
       "outro": {
-        "step": "Fazit",
-        "heading": "Docs-first gebaut. Policy-first abgesichert.",
-        "sub": "afterhive ist als self-hostbare Plattform angelegt: dokumentierte Architektur, erzwungene Zugriffsregeln und eine Demo, die jeder ausprobieren kann.",
+        "step": "Ausprobieren",
+        "heading": "Der beste Weg: selbst klicken.",
+        "sub": "afterhive läuft als öffentliche Demo mit echten Beispieldaten — ohne Anmeldung, direkt im Browser.",
         "cta": "Demo ausprobieren"
       }
     },
