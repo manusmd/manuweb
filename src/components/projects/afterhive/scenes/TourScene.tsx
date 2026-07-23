@@ -1,5 +1,5 @@
 import { useTranslations } from 'next-intl';
-import { LayoutDashboard, Users, Euro, CalendarDays, ClipboardCheck, Globe } from 'lucide-react';
+import { LayoutDashboard, Users, Inbox, CalendarDays, Megaphone, ListChecks } from 'lucide-react';
 import { SceneStep, BrowserFrame } from '../parts';
 import { ASSET } from '../tokens';
 
@@ -7,10 +7,10 @@ import { ASSET } from '../tokens';
 export const TOUR_STOPS = [
   { key: 'dashboard', img: 'dashboard.png', icon: LayoutDashboard },
   { key: 'members', img: 'mitglieder.png', icon: Users },
-  { key: 'dues', img: 'beitraege.png', icon: Euro },
+  { key: 'applications', img: 'anfragen.png', icon: Inbox },
   { key: 'calendar', img: 'kalender.png', icon: CalendarDays },
-  { key: 'attendance', img: 'anwesenheit.png', icon: ClipboardCheck },
-  { key: 'website', img: 'website.png', icon: Globe },
+  { key: 'communication', img: 'kommunikation.png', icon: Megaphone },
+  { key: 'tasks', img: 'aufgaben.png', icon: ListChecks },
 ] as const;
 
 /**
@@ -35,7 +35,7 @@ export function TourScene() {
           </div>
 
           {/* Stop labels — active one is highlighted by the scroll timeline. */}
-          <div className="mt-8 hidden items-center justify-center gap-2 lg:flex">
+          <div className="mt-8 hidden flex-wrap items-center justify-center gap-2 lg:flex">
             {TOUR_STOPS.map(({ key, icon: Icon }, i) => (
               <span
                 key={key}

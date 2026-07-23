@@ -439,7 +439,7 @@
       "title": "afterhive",
       "subtitle": "The all-in-one club app",
       "description": "Members, dues, training, communication and the club's own website — the whole club in one app.",
-      "longDescription": "afterhive bundles everyday club life: member management with membership applications, automatic dues runs with SEPA, calendar and attendance, communication — and a club website that publishes with one click. Five roles govern who sees what; built multi-tenant and self-hostable."
+      "longDescription": "afterhive bundles everyday club life: member management with membership applications, automatic dues runs with open items in view, calendar and attendance, communication and tasks — and a club website that publishes with one click. Five roles govern who sees what; built multi-tenant and self-hostable."
     },
     "pitchlabDetail": {
       "eyebrow": "Custom model · api-football",
@@ -524,17 +524,17 @@
         },
         "members": {
           "title": "Members under control",
-          "desc": "Profiles, divisions and membership applications in one place — from joining to leaving.",
+          "desc": "Profiles, divisions and memberships in one place — from joining to leaving.",
           "f1": "Complete profiles",
           "f2": "Divisions & teams",
-          "f3": "Membership applications"
+          "f3": "Custom data fields"
         },
-        "dues": {
-          "title": "Dues that run themselves",
-          "desc": "Define tariffs, start a dues run, done: afterhive bills automatically and keeps an eye on open items.",
-          "f1": "Dues runs",
-          "f2": "SEPA direct debit",
-          "f3": "Open items"
+        "applications": {
+          "title": "Joining without paperwork",
+          "desc": "New members apply through the public join page — the board asks questions, reviews and confirms with one click.",
+          "f1": "Public join link",
+          "f2": "Chat with applicants",
+          "f3": "Admit with one click"
         },
         "calendar": {
           "title": "The club calendar",
@@ -543,20 +543,51 @@
           "f2": "Recurring events",
           "f3": "Locations & rooms"
         },
-        "attendance": {
-          "title": "Attendance in seconds",
-          "desc": "Coaches check off participation right at the training — the club sees rates instead of paperwork.",
-          "f1": "One tap per member",
-          "f2": "History & rates",
-          "f3": "Per team & session"
+        "communication": {
+          "title": "Reach everyone — without chaos",
+          "desc": "Announcements to the whole club or targeted at teams and divisions — everyone only gets what concerns them.",
+          "f1": "Announcements",
+          "f2": "Audiences per team",
+          "f3": "320 recipients, one click"
         },
-        "website": {
-          "title": "The club's own website",
-          "desc": "One click and the club is online: a homepage built from real club data — customize, publish, done. Join form included.",
-          "f1": "Colors, logo & images",
-          "f2": "Bilingual",
-          "f3": "Join form"
+        "tasks": {
+          "title": "Board work as a checklist",
+          "desc": "Assign tasks, set priorities, tick them off — afterhive even creates routine tasks automatically.",
+          "f1": "Priorities & due dates",
+          "f2": "Assign to people",
+          "f3": "Automatic tasks"
         }
+      },
+      "dues": {
+        "step": "Dues",
+        "heading": "Dues that manage themselves.",
+        "sub": "Define tariffs, start a dues run — afterhive issues the invoices and keeps an eye on open items.",
+        "runTitle": "Dues run Q3 2026",
+        "statusDone": "Run completed",
+        "invoicesLabel": "Invoices issued",
+        "openLabel": "Open dues",
+        "note": "Real numbers from the demo club: 320 members, €5,409 in open dues."
+      },
+      "attendance": {
+        "step": "Attendance",
+        "heading": "Attendance in seconds.",
+        "sub": "Coaches check off participation right at the training — the club sees rates instead of paperwork.",
+        "session": "Handball · Training · 6:30 pm",
+        "countSuffix": "of 6 here",
+        "note": "The demo club's attendance is at 81% this month — the number from the dashboard."
+      },
+      "website": {
+        "step": "Club website",
+        "heading": "From zero to online.",
+        "sub": "The club's own website: generated from real club data, customized in the editor, published with one click.",
+        "s1t": "Activate",
+        "s1d": "afterhive generates the homepage automatically from the club data — divisions included.",
+        "s2t": "Customize",
+        "s2d": "Colors, logo, hero image and copy — live in the editor, bilingual if you want.",
+        "s3t": "Publish",
+        "s3d": "One click and the page is public — including a join form that feeds straight into the membership applications.",
+        "publish": "Publish",
+        "online": "Online"
       },
       "roles": {
         "step": "Roles",

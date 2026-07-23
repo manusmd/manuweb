@@ -441,7 +441,7 @@
       "title": "afterhive",
       "subtitle": "Die All-in-One-App für Vereine",
       "description": "Mitglieder, Beiträge, Training, Kommunikation und die eigene Vereins-Website — der ganze Verein in einer App.",
-      "longDescription": "afterhive bündelt den ganzen Vereinsalltag: Mitgliederverwaltung mit Aufnahme-Anfragen, automatische Beitragsläufe mit SEPA, Kalender und Anwesenheit, Kommunikation — und eine eigene Vereins-Website, die sich per Klick veröffentlichen lässt. Fünf Rollen regeln, wer was sieht; mandantenfähig und self-hostbar gebaut."
+      "longDescription": "afterhive bündelt den ganzen Vereinsalltag: Mitgliederverwaltung mit Aufnahme-Anfragen, automatische Beitragsläufe mit offenen Posten im Blick, Kalender und Anwesenheit, Kommunikation und Aufgaben — und eine eigene Vereins-Website, die sich per Klick veröffentlichen lässt. Fünf Rollen regeln, wer was sieht; mandantenfähig und self-hostbar gebaut."
     },
     "pitchlabDetail": {
       "eyebrow": "Eigenes Modell · api-football",
@@ -526,17 +526,17 @@
         },
         "members": {
           "title": "Mitglieder im Griff",
-          "desc": "Profile, Abteilungen und Aufnahme-Anfragen an einem Ort — vom Eintritt bis zum Austritt.",
+          "desc": "Profile, Abteilungen und Mitgliedschaften an einem Ort — vom Eintritt bis zum Austritt.",
           "f1": "Vollständige Profile",
           "f2": "Abteilungen & Teams",
-          "f3": "Aufnahme-Anfragen"
+          "f3": "Eigene Datenfelder"
         },
-        "dues": {
-          "title": "Beiträge wie von selbst",
-          "desc": "Tarife definieren, Beitragslauf starten, fertig: afterhive rechnet ab und behält offene Posten im Blick.",
-          "f1": "Beitragsläufe",
-          "f2": "SEPA-Lastschrift",
-          "f3": "Offene Posten"
+        "applications": {
+          "title": "Aufnahme ohne Papierkram",
+          "desc": "Neue Mitglieder bewerben sich über die öffentliche Beitritts-Seite — der Vorstand fragt nach, prüft und bestätigt mit einem Klick.",
+          "f1": "Öffentlicher Beitritts-Link",
+          "f2": "Chat mit Bewerbern",
+          "f3": "Aufnehmen per Klick"
         },
         "calendar": {
           "title": "Der Vereinskalender",
@@ -545,20 +545,51 @@
           "f2": "Serientermine",
           "f3": "Orte & Räume"
         },
-        "attendance": {
-          "title": "Anwesenheit in Sekunden",
-          "desc": "Trainer haken die Teilnahme direkt im Training ab — der Verein sieht Quoten statt Zettelwirtschaft.",
-          "f1": "Ein Tap pro Mitglied",
-          "f2": "Historie & Quoten",
-          "f3": "Je Team & Training"
+        "communication": {
+          "title": "Alle erreichen — ohne Chaos",
+          "desc": "Ankündigungen an den ganzen Verein oder gezielt an Teams und Abteilungen — jeder bekommt nur, was ihn betrifft.",
+          "f1": "Ankündigungen",
+          "f2": "Zielgruppen je Team",
+          "f3": "320 Empfänger, ein Klick"
         },
-        "website": {
-          "title": "Die eigene Vereins-Website",
-          "desc": "Ein Klick, und der Verein ist online: Startseite aus echten Vereinsdaten, anpassen, veröffentlichen — inklusive Mitglied-werden-Formular.",
-          "f1": "Farben, Logo & Bilder",
-          "f2": "Zweisprachig",
-          "f3": "Mitglied-werden-Formular"
+        "tasks": {
+          "title": "Vorstandsarbeit als Checkliste",
+          "desc": "Aufgaben zuweisen, Prioritäten setzen, abhaken — Routineaufgaben legt afterhive sogar automatisch an.",
+          "f1": "Prioritäten & Fristen",
+          "f2": "Zuweisen an Personen",
+          "f3": "Automatische Aufgaben"
         }
+      },
+      "dues": {
+        "step": "Beiträge",
+        "heading": "Beiträge, die sich selbst verwalten.",
+        "sub": "Tarife festlegen, Beitragslauf starten — afterhive stellt die Rechnungen und behält offene Posten im Blick.",
+        "runTitle": "Beitragslauf Q3 2026",
+        "statusDone": "Lauf abgeschlossen",
+        "invoicesLabel": "Rechnungen gestellt",
+        "openLabel": "Offene Beiträge",
+        "note": "Echte Zahlen aus dem Demo-Verein: 320 Mitglieder, 5.409 € offene Beiträge."
+      },
+      "attendance": {
+        "step": "Anwesenheit",
+        "heading": "Anwesenheit in Sekunden.",
+        "sub": "Trainer haken die Teilnahme direkt im Training ab — der Verein sieht Quoten statt Zettelwirtschaft.",
+        "session": "Handball · Training · 18:30",
+        "countSuffix": "von 6 da",
+        "note": "Im Demo-Verein liegt die Anwesenheit diesen Monat bei 81 % — die Zahl vom Dashboard."
+      },
+      "website": {
+        "step": "Vereins-Website",
+        "heading": "Von null auf online.",
+        "sub": "Die eigene Vereins-Website: aus echten Vereinsdaten erzeugt, im Editor angepasst, mit einem Klick veröffentlicht.",
+        "s1t": "Aktivieren",
+        "s1d": "afterhive erzeugt die Startseite automatisch aus den Vereinsdaten — Abteilungen inklusive.",
+        "s2t": "Anpassen",
+        "s2d": "Farben, Logo, Titelbild und Texte — live im Editor, auf Wunsch zweisprachig.",
+        "s3t": "Veröffentlichen",
+        "s3d": "Ein Klick, und die Seite ist öffentlich — inklusive Mitglied-werden-Formular, das direkt in die Aufnahme-Anfragen fließt.",
+        "publish": "Veröffentlichen",
+        "online": "Online"
       },
       "roles": {
         "step": "Rollen",

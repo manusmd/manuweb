@@ -2,13 +2,14 @@
 
 import { useEffect } from 'react';
 
-export const SCENES = ['hero', 'tour', 'roles', 'tech'] as const;
+export const SCENES = ['hero', 'tour', 'dues', 'attendance', 'website', 'roles', 'tech'] as const;
 
 /**
  * GSAP scroll choreography for the afterhive detail page. Same scaffold as the
  * other project pages (bounded fonts/rAF waits, fit-to-viewport, deferred
- * refreshes); only the product tour is pinned+scrubbed — the stops crossfade
- * as you scroll, everything else reveals on enter.
+ * refreshes). Three pinned scenes — product tour, attendance check-in, website
+ * publish — with refreshPriority descending down the page; dues animates with
+ * a scrubbed progress bar and count-ups on enter.
  */
 export function useAfterhiveScrollExperience(
   rootRef: React.RefObject<HTMLDivElement | null>,
@@ -25,6 +26,15 @@ export function useAfterhiveScrollExperience(
       root.querySelector<T>(sel) ?? undefined;
     const qa = <T extends Element = HTMLElement>(sel: string) =>
       Array.from(root.querySelectorAll<T>(sel));
+
+    const setCountsToFinal = () => {
+      qa<HTMLElement>('[data-dues-count]').forEach(el => {
+        const to = Number(el.dataset.to ?? 0);
+        el.textContent = to.toLocaleString('de-DE') + (el.dataset.suffix ?? '');
+      });
+      const num = q('[data-att-num]');
+      if (num) num.textContent = String(qa('[data-att-check][data-present]').length);
+    };
 
     void (async () => {
       const [{ gsap }, { ScrollTrigger }, { SplitText }] = await Promise.all([
@@ -60,6 +70,10 @@ export function useAfterhiveScrollExperience(
           gsap.set(qa('[data-fade]'), { opacity: 1, y: 0 });
           gsap.set(qa('[data-hero-hidden]'), { opacity: 1, y: 0 });
           gsap.set(qa('[data-tour-stop]'), { autoAlpha: 1, y: 0 });
+          gsap.set(qa('[data-att-check]'), { opacity: 1, scale: 1 });
+          gsap.set(qa('[data-ws-img="1"], [data-ws-url="1"], [data-ws-online]'), { opacity: 1 });
+          gsap.set(qa('[data-ws-url="0"], [data-ws-publish]'), { opacity: 0 });
+          setCountsToFinal();
         });
 
         mm.add(
@@ -119,6 +133,46 @@ export function useAfterhiveScrollExperience(
               });
             });
 
+            // --- DUES: scrubbed progress bar + count-ups on enter (all sizes) ---
+            const duesScene = q('[data-scene="dues"]');
+            if (duesScene) {
+              gsap.fromTo(
+                '[data-dues-bar]',
+                { scaleX: 0 },
+                {
+                  scaleX: 1,
+                  ease: 'none',
+                  scrollTrigger: {
+                    trigger: duesScene,
+                    start: 'top 75%',
+                    end: 'center 45%',
+                    scrub: 0.5,
+                  },
+                }
+              );
+              gsap.from('[data-dues-done]', {
+                opacity: 0,
+                scale: 0.6,
+                duration: 0.4,
+                ease: 'back.out(1.6)',
+                scrollTrigger: { trigger: duesScene, start: 'center 50%', once: true },
+              });
+              qa<HTMLElement>('[data-dues-count]').forEach(el => {
+                const to = Number(el.dataset.to ?? 0);
+                const suffix = el.dataset.suffix ?? '';
+                const c = { v: 0 };
+                gsap.to(c, {
+                  v: to,
+                  duration: 1.2,
+                  ease: 'power1.out',
+                  onUpdate: () => {
+                    el.textContent = Math.round(c.v).toLocaleString('de-DE') + suffix;
+                  },
+                  scrollTrigger: { trigger: duesScene, start: 'top 65%', once: true },
+                });
+              });
+            }
+
             if (isDesktop) {
               fitPinned = () => {
                 const avail = window.innerHeight - 120;
@@ -151,7 +205,7 @@ export function useAfterhiveScrollExperience(
                     pin: true,
                     anticipatePin: 1,
                     invalidateOnRefresh: true,
-                    refreshPriority: 3,
+                    refreshPriority: 4,
                   },
                 });
                 stops.forEach((stop, i) => {
@@ -167,11 +221,103 @@ export function useAfterhiveScrollExperience(
                   if (tabs[i - 1]) tl.to(tabs[i - 1], { opacity: 0.4, duration: 0.3 }, pos);
                   if (tabs[i]) tl.to(tabs[i], { opacity: 1, duration: 0.3 }, pos);
                 });
-                // hold the last stop for a beat before unpinning
                 tl.to({}, { duration: 1 });
               }
+
+              // --- ATTENDANCE (pinned scrub): tick the roster, count climbs ---
+              const attPin = q('[data-pin="attendance"]');
+              const checks = qa<HTMLElement>('[data-att-check]');
+              const attNum = q('[data-att-num]');
+              if (attPin && checks.length) {
+                gsap.set(checks, { opacity: 0, scale: 0.3 });
+                let present = 0;
+                const tl = gsap.timeline({
+                  scrollTrigger: {
+                    trigger: attPin,
+                    start: 'top top',
+                    end: '+=1200',
+                    scrub: 0.6,
+                    pin: true,
+                    anticipatePin: 1,
+                    invalidateOnRefresh: true,
+                    refreshPriority: 3,
+                  },
+                });
+                checks.forEach((check, i) => {
+                  const isPresent = check.dataset.present === 'true';
+                  if (isPresent) present += 1;
+                  const target = present;
+                  tl.to(
+                    check,
+                    {
+                      opacity: 1,
+                      scale: 1,
+                      duration: 0.35,
+                      ease: 'back.out(2)',
+                      onStart: () => {
+                        if (attNum && isPresent) attNum.textContent = String(target);
+                      },
+                      onReverseComplete: () => {
+                        if (attNum && isPresent) attNum.textContent = String(target - 1);
+                      },
+                    },
+                    i * 0.8 + 0.4
+                  );
+                });
+                tl.to({}, { duration: 1 });
+              }
+
+              // --- WEBSITE (pinned scrub): builder publishes into the live site ---
+              const wsPin = q('[data-pin="website"]');
+              if (wsPin) {
+                const steps = qa<HTMLElement>('[data-ws-step]');
+                gsap.set('[data-ws-img="1"], [data-ws-url="1"], [data-ws-online]', { opacity: 0 });
+                gsap.set('[data-ws-publish]', { opacity: 0, scale: 0.7 });
+                gsap.set(steps.slice(1), { opacity: 0.45 });
+
+                const tl = gsap.timeline({
+                  scrollTrigger: {
+                    trigger: wsPin,
+                    start: 'top top',
+                    end: '+=1500',
+                    scrub: 0.6,
+                    pin: true,
+                    anticipatePin: 1,
+                    invalidateOnRefresh: true,
+                    refreshPriority: 2,
+                  },
+                });
+                // 01 activate → 02 customize
+                tl.to(steps[0], { opacity: 0.45, duration: 0.3 }, 0.8);
+                if (steps[1]) tl.to(steps[1], { opacity: 1, duration: 0.3 }, 0.8);
+                // publish button appears and pulses
+                tl.to(
+                  '[data-ws-publish]',
+                  { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(1.8)' },
+                  1.6
+                );
+                tl.to('[data-ws-publish]', { scale: 1.12, duration: 0.2 }, 2.2);
+                tl.to('[data-ws-publish]', { scale: 1, duration: 0.2 }, 2.4);
+                // 03 publish: crossfade to the live site, flip URL, go online
+                if (steps[1]) tl.to(steps[1], { opacity: 0.45, duration: 0.3 }, 2.8);
+                if (steps[2]) tl.to(steps[2], { opacity: 1, duration: 0.3 }, 2.8);
+                tl.to('[data-ws-publish]', { opacity: 0, scale: 0.7, duration: 0.3 }, 2.8);
+                tl.to('[data-ws-img="1"]', { opacity: 1, duration: 0.6 }, 2.9);
+                tl.to('[data-ws-url="0"]', { opacity: 0, duration: 0.4 }, 2.9);
+                tl.to('[data-ws-url="1"]', { opacity: 1, duration: 0.4 }, 3.0);
+                tl.to('[data-ws-online]', { opacity: 1, duration: 0.3 }, 3.3);
+                tl.to({}, { duration: 0.8 });
+              }
             } else {
+              // Mobile: resolved end-states, no pinning.
               gsap.set(qa('[data-tour-stop]'), { autoAlpha: 1, y: 0 });
+              gsap.set(qa('[data-att-check]'), { opacity: 1, scale: 1 });
+              gsap.set(qa('[data-ws-img="1"], [data-ws-url="1"], [data-ws-online]'), {
+                opacity: 1,
+              });
+              gsap.set(qa('[data-ws-url="0"], [data-ws-publish]'), { opacity: 0 });
+              const num = q('[data-att-num]');
+              if (num) num.textContent = String(qa('[data-att-check][data-present]').length);
             }
 
             return () => {

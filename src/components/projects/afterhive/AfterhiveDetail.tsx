@@ -5,6 +5,9 @@ import type { Project } from '@/types/project';
 import { SCENES, useAfterhiveScrollExperience } from './useAfterhiveScrollExperience';
 import { HeroScene } from './scenes/HeroScene';
 import { TourScene } from './scenes/TourScene';
+import { DuesScene } from './scenes/DuesScene';
+import { AttendanceScene } from './scenes/AttendanceScene';
+import { WebsiteScene } from './scenes/WebsiteScene';
 import { RolesScene } from './scenes/RolesScene';
 import { TechScene } from './scenes/TechScene';
 import { OutroScene } from './scenes/OutroScene';
@@ -39,6 +42,9 @@ export function AfterhiveDetail({ project }: { project: Project; locale?: string
 
       <HeroScene project={project} />
       <TourScene />
+      <DuesScene />
+      <AttendanceScene />
+      <WebsiteScene />
       <RolesScene />
       <TechScene project={project} />
       <OutroScene project={project} />
