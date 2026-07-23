@@ -119,6 +119,41 @@ export function buildPitchlabProject(copy: ProjectCopy): Project {
   };
 }
 
+export const AFTERHIVE_SLUG = 'afterhive';
+
+const afterhiveBase: Omit<Project, 'title' | 'subtitle' | 'description' | 'longDescription'> = {
+  id: 'afterhive',
+  slug: AFTERHIVE_SLUG,
+  image: '/projects/afterhive/card.png',
+  thumbnail: '/projects/afterhive/card.png',
+  liveUrl: 'https://afterhive.de',
+  githubUrl: 'https://github.com/manusmd/afterhive',
+  repository: 'https://github.com/manusmd/afterhive',
+  category: 'fullstack',
+  status: 'in-progress',
+  featured: true,
+  priority: 4,
+  isApp: true,
+  tags: ['TypeScript', 'React', 'Fastify', 'Prisma', 'ZenStack'],
+  tech: ['TypeScript', 'React', 'Fastify', 'Prisma', 'ZenStack', 'Better Auth'],
+  technologies: [
+    { name: 'TypeScript', category: 'frontend' },
+    { name: 'React', category: 'frontend' },
+    { name: 'Fastify', category: 'backend' },
+    { name: 'Prisma', category: 'database' },
+    { name: 'ZenStack', category: 'backend' },
+  ],
+  startDate: '2026-05-01',
+  lastUpdated: '2026-07-23',
+};
+
+export function buildAfterhiveProject(copy: ProjectCopy): Project {
+  return {
+    ...afterhiveBase,
+    ...copy,
+  };
+}
+
 export function getProjectSlugs(): string[] {
-  return [APPLYX_SLUG, FINGERMATCH_SLUG, PITCHLAB_SLUG];
+  return [APPLYX_SLUG, FINGERMATCH_SLUG, PITCHLAB_SLUG, AFTERHIVE_SLUG];
 }

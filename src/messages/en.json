@@ -435,6 +435,12 @@
       "description": "A from-scratch prediction model — Poisson attack/defence, Dixon-Coles, Elo and a Monte-Carlo tournament simulation — on api-football data. No black box: every probability is derived and checked.",
       "longDescription": "PitchLab predicts match outcomes and title odds with a model built entirely from scratch: multiplicative Poisson strengths (attack/defence via iterative scaling), the Dixon-Coles low-score correction, Elo, and a 10,000-run Monte-Carlo tournament simulation — on raw api-football data. The model grades its own predictions (calibration, Brier against a naive market) and runs fully offline in seed mode."
     },
+    "afterhive": {
+      "title": "afterhive",
+      "subtitle": "Club management as multi-tenant SaaS",
+      "description": "Self-hostable club management: members, dues, teams and events — multi-tenant, with a permission matrix from a single source of truth.",
+      "longDescription": "afterhive is a multi-tenant SaaS platform for sports clubs: member management, dues runs, teams, attendance and calendar in one app. Every permission comes from a single source of truth in the shared package, and ZenStack enforces access rules directly at the data layer — an ESLint rule keeps the raw Prisma client out of request code entirely."
+    },
     "pitchlabDetail": {
       "eyebrow": "Custom model · api-football",
       "heroLead": "Not a black-box model —",
@@ -498,6 +504,61 @@
         "does1": "Every number derived from the model",
         "does2": "Predictions checked against real outcomes",
         "doesnt": "Doesn't predict single games with certainty"
+      }
+    },
+    "afterhiveDetail": {
+      "eyebrow": "Multi-tenant SaaS for clubs",
+      "heroLead": "Members, dues, teams and events — one instance, many clubs. ",
+      "heroLeadEmphasis": "Every permission comes from a single source of truth.",
+      "scrollCue": "Scroll to see the architecture",
+      "tenancy": {
+        "step": "Multi-tenancy",
+        "heading": "One instance. Many clubs.",
+        "sub": "Each club lives as its own tenant inside the same deployment — with its own members, roles and settings.",
+        "instance": "One afterhive instance",
+        "members": "members",
+        "isolation": "No query ever leaves its tenant: the organization ID is part of every access rule — not part of developer discipline."
+      },
+      "matrix": {
+        "step": "Permission matrix",
+        "heading": "The full permission matrix — from one file.",
+        "sub": "10 modules × 5 roles × 4 levels. Defined in packages/shared — backend policies, frontend guards and this page read the same source.",
+        "level_none": "none",
+        "level_read": "read",
+        "level_write": "write",
+        "level_admin": "admin",
+        "source": "Real data: exported from packages/shared/src/permissions.ts"
+      },
+      "datalayer": {
+        "step": "Data layer",
+        "heading": "Access rules you cannot forget.",
+        "sub": "ZenStack compiles the permission matrix into policies at the data layer. Bypassing the rule means getting past the linter.",
+        "flowTitle": "Every request runs through the policies",
+        "lintRule": "ESLint boundary rule: the raw Prisma client is banned from request handlers — only the enhanced client gets through.",
+        "queryTitle": "The same query, filtered by role",
+        "roleTrainer": "Role: Coach",
+        "queryNote": "A coach only sees members of their own division — not because the handler filters, but because the data layer enforces it."
+      },
+      "domain": {
+        "step": "Domain model",
+        "heading": "A club is one big data model.",
+        "sub": "From member to dues run to SEPA mandate: the schema maps the real world of running a club.",
+        "models": "data models",
+        "modules": "modules",
+        "roles": "roles",
+        "docs": "docs pages",
+        "source": "Counted from the repo's schema.zmodel and docs/"
+      },
+      "product": {
+        "step": "Product",
+        "heading": "The finished product.",
+        "sub": "Real screens from the public demo at afterhive.de — roles & permissions, members and dues management."
+      },
+      "outro": {
+        "step": "Wrap-up",
+        "heading": "Built docs-first. Secured policy-first.",
+        "sub": "afterhive is designed as a self-hostable platform: documented architecture, enforced access rules and a demo anyone can try.",
+        "cta": "Try the demo"
       }
     },
     "portfolio": {

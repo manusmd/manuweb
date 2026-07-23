@@ -437,6 +437,12 @@
       "description": "Ein eigenes Vorhersagemodell — Poisson-Angriff/Abwehr, Dixon-Coles, Elo und eine Monte-Carlo-Turniersimulation — auf api-football-Daten. Keine Blackbox: jede Wahrscheinlichkeit ist hergeleitet und wird überprüft.",
       "longDescription": "PitchLab sagt Spielausgänge und Titelchancen mit einem von Grund auf selbst gebauten Modell voraus: multiplikative Poisson-Stärken (Angriff/Abwehr per iterativem Skalieren), die Dixon-Coles-Korrektur für niedrige Ergebnisse, Elo und eine 10.000-fache Monte-Carlo-Turniersimulation — auf Rohdaten von api-football. Das Modell benotet seine eigenen Prognosen (Kalibrierung, Brier gegen einen naiven Markt) und läuft komplett offline im Seed-Modus."
     },
+    "afterhive": {
+      "title": "afterhive",
+      "subtitle": "Vereinsverwaltung als Multi-Tenant-SaaS",
+      "description": "Self-hostbare Vereinsverwaltung: Mitglieder, Beiträge, Teams und Termine — mandantenfähig, mit Rechte-Matrix aus einer Single Source of Truth.",
+      "longDescription": "afterhive ist eine Multi-Tenant-SaaS-Plattform für Sportvereine: Mitgliederverwaltung, Beitragsläufe, Teams, Anwesenheit und Kalender in einer App. Jede Berechtigung stammt aus einer Single Source of Truth im Shared-Package, und ZenStack erzwingt die Zugriffsregeln direkt auf der Datenschicht — eine ESLint-Regel verhindert, dass der rohe Prisma-Client jemals Request-Code erreicht."
+    },
     "pitchlabDetail": {
       "eyebrow": "Eigenes Modell · api-football",
       "heroLead": "Kein Blackbox-Modell —",
@@ -500,6 +506,61 @@
         "does1": "Jede Zahl aus dem Modell hergeleitet",
         "does2": "Prognosen gegen echte Ergebnisse geprüft",
         "doesnt": "Sagt keine Einzelspiele mit Sicherheit voraus"
+      }
+    },
+    "afterhiveDetail": {
+      "eyebrow": "Multi-Tenant SaaS für Vereine",
+      "heroLead": "Mitglieder, Beiträge, Teams und Termine — eine Instanz, viele Vereine. ",
+      "heroLeadEmphasis": "Jede Berechtigung kommt aus einer Single Source of Truth.",
+      "scrollCue": "Scrollen, um die Architektur zu sehen",
+      "tenancy": {
+        "step": "Mandantenfähigkeit",
+        "heading": "Eine Instanz. Viele Vereine.",
+        "sub": "Jeder Verein lebt als eigener Mandant in derselben Deployment-Instanz — mit eigenen Mitgliedern, Rollen und Einstellungen.",
+        "instance": "Eine afterhive-Instanz",
+        "members": "Mitglieder",
+        "isolation": "Kein Query verlässt den eigenen Mandanten: Die Organisation-ID ist Teil jeder Zugriffsregel — nicht Teil der Disziplin des Entwicklers."
+      },
+      "matrix": {
+        "step": "Rechte-Matrix",
+        "heading": "Die komplette Rechte-Matrix — aus einer Datei.",
+        "sub": "10 Module × 5 Rollen × 4 Stufen. Definiert in packages/shared — Backend-Policies, Frontend-Guards und diese Seite lesen dieselbe Quelle.",
+        "level_none": "kein",
+        "level_read": "lesen",
+        "level_write": "schreiben",
+        "level_admin": "admin",
+        "source": "Echte Daten: exportiert aus packages/shared/src/permissions.ts"
+      },
+      "datalayer": {
+        "step": "Datenschicht",
+        "heading": "Zugriffsregeln, die man nicht vergessen kann.",
+        "sub": "ZenStack kompiliert die Rechte-Matrix in Policies auf der Datenschicht. Wer die Regel umgehen will, muss am Linter vorbei.",
+        "flowTitle": "Jeder Request läuft durch die Policies",
+        "lintRule": "ESLint-Boundary-Regel: Der rohe Prisma-Client ist in Request-Handlern verboten — nur der enhanced Client kommt durch.",
+        "queryTitle": "Dieselbe Query, gefiltert nach Rolle",
+        "roleTrainer": "Rolle: Trainer",
+        "queryNote": "Ein Trainer sieht nur Mitglieder der eigenen Abteilung — nicht, weil der Handler filtert, sondern weil die Datenschicht es erzwingt."
+      },
+      "domain": {
+        "step": "Domänenmodell",
+        "heading": "Ein Verein ist ein großes Datenmodell.",
+        "sub": "Vom Mitglied über Beitragslauf bis SEPA-Mandat: Das Schema bildet die echte Vereinswelt ab.",
+        "models": "Datenmodelle",
+        "modules": "Module",
+        "roles": "Rollen",
+        "docs": "Doku-Seiten",
+        "source": "Gezählt aus schema.zmodel und docs/ des Repos"
+      },
+      "product": {
+        "step": "Produkt",
+        "heading": "Das fertige Produkt.",
+        "sub": "Echte Screens aus der öffentlichen Demo auf afterhive.de — Rollen & Rechte, Mitglieder und Beitragsverwaltung."
+      },
+      "outro": {
+        "step": "Fazit",
+        "heading": "Docs-first gebaut. Policy-first abgesichert.",
+        "sub": "afterhive ist als self-hostbare Plattform angelegt: dokumentierte Architektur, erzwungene Zugriffsregeln und eine Demo, die jeder ausprobieren kann.",
+        "cta": "Demo ausprobieren"
       }
     },
     "portfolio": {

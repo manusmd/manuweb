@@ -5,7 +5,12 @@ import type { Project } from '@/types/project';
 import { FullscreenSection } from '@/components/layout/FullscreenSection';
 import { SectionHeader } from '@/components/layout/SectionHeader';
 import { ProjectCard } from '@/components/projects/ProjectCard';
-import { buildApplyxProject, buildFingermatchProject, buildPitchlabProject } from '@/data/projects';
+import {
+  buildApplyxProject,
+  buildFingermatchProject,
+  buildPitchlabProject,
+  buildAfterhiveProject,
+} from '@/data/projects';
 import { Github } from 'lucide-react';
 
 export function ProjectsSection() {
@@ -13,6 +18,7 @@ export function ProjectsSection() {
   const tc = useTranslations('projects.applyx');
   const tf = useTranslations('projects.fingermatch');
   const tp = useTranslations('projects.pitchlab');
+  const ta = useTranslations('projects.afterhive');
 
   const projects: Project[] = [
     buildApplyxProject({
@@ -32,6 +38,12 @@ export function ProjectsSection() {
       subtitle: tp('subtitle'),
       description: tp('description'),
       longDescription: tp('longDescription'),
+    }),
+    buildAfterhiveProject({
+      title: ta('title'),
+      subtitle: ta('subtitle'),
+      description: ta('description'),
+      longDescription: ta('longDescription'),
     }),
   ];
 
