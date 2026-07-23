@@ -16,8 +16,8 @@ export function WebsiteScene() {
 
   return (
     <section data-scene="website" className="relative px-4 py-20 lg:py-0">
-      <div data-pin="website">
-        <div className="mx-auto w-full max-w-6xl lg:flex lg:min-h-screen lg:flex-col lg:justify-center lg:py-16">
+      <div data-pin="website" className="lg:flex lg:h-screen lg:flex-col lg:justify-center">
+        <div className="mx-auto w-full max-w-6xl">
           <div className="text-center">
             <SceneStep>{td('website.step')}</SceneStep>
             <h2 className="mx-auto max-w-2xl font-display text-3xl font-bold tracking-tight text-foreground md:text-5xl">

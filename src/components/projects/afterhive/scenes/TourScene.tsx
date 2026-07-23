@@ -22,8 +22,8 @@ export function TourScene() {
 
   return (
     <section data-scene="tour" className="relative px-4 py-20 lg:py-0">
-      <div data-pin="tour">
-        <div className="mx-auto w-full max-w-6xl lg:flex lg:min-h-screen lg:flex-col lg:justify-center lg:py-16">
+      <div data-pin="tour" className="lg:flex lg:h-screen lg:flex-col lg:justify-center">
+        <div className="mx-auto w-full max-w-6xl">
           <div className="text-center">
             <SceneStep>{td('tour.step')}</SceneStep>
             <h2 className="mx-auto max-w-2xl font-display text-3xl font-bold tracking-tight text-foreground md:text-5xl">
@@ -49,7 +49,7 @@ export function TourScene() {
           </div>
 
           {/* Stage: stacked layers on desktop, stacked flow on mobile. */}
-          <div className="relative mt-10 lg:mt-8 lg:min-h-[540px] lg:flex-1">
+          <div className="relative mt-10 lg:mt-8 lg:min-h-[540px]">
             {TOUR_STOPS.map(({ key, img, icon: Icon }, i) => (
               <div
                 key={key}

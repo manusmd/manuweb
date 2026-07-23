@@ -22,8 +22,8 @@ export function AttendanceScene() {
 
   return (
     <section data-scene="attendance" className="relative px-4 py-20 lg:py-0">
-      <div data-pin="attendance">
-        <div className="mx-auto grid w-full max-w-5xl items-center gap-10 lg:min-h-screen lg:grid-cols-[0.9fr_1.1fr] lg:py-16">
+      <div data-pin="attendance" className="lg:flex lg:h-screen lg:flex-col lg:justify-center">
+        <div className="mx-auto grid w-full max-w-5xl items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
             <SceneStep>{td('attendance.step')}</SceneStep>
             <h2 className="font-display text-3xl font-bold tracking-tight text-foreground md:text-4xl">
