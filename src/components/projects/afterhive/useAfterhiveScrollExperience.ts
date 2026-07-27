@@ -310,7 +310,9 @@ export function useAfterhiveScrollExperience(
                 });
                 screens.forEach((screen, i) => {
                   if (i === 0) return;
-                  const pos = i * 1.5;
+                  // Front-loaded: the first slide starts soon after the pin
+                  // engages, so the section never feels "stuck" on screen one.
+                  const pos = 0.6 + (i - 1) * 1.5;
                   // outgoing screen slides left; incoming slides in from the right
                   tl.to(screens[i - 1], { xPercent: -100, autoAlpha: 0, duration: 0.6 }, pos);
                   tl.fromTo(
