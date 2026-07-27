@@ -8,7 +8,6 @@ import { ProjectCard } from '@/components/projects/ProjectCard';
 import {
   buildApplyxProject,
   buildFingermatchProject,
-  buildPitchlabProject,
   buildAfterhiveProject,
 } from '@/data/projects';
 import { Github } from 'lucide-react';
@@ -17,7 +16,6 @@ export function ProjectsSection() {
   const t = useTranslations('projects');
   const tc = useTranslations('projects.applyx');
   const tf = useTranslations('projects.fingermatch');
-  const tp = useTranslations('projects.pitchlab');
   const ta = useTranslations('projects.afterhive');
 
   const projects: Project[] = [
@@ -32,12 +30,6 @@ export function ProjectsSection() {
       subtitle: tf('subtitle'),
       description: tf('description'),
       longDescription: tf('longDescription'),
-    }),
-    buildPitchlabProject({
-      title: tp('title'),
-      subtitle: tp('subtitle'),
-      description: tp('description'),
-      longDescription: tp('longDescription'),
     }),
     buildAfterhiveProject({
       title: ta('title'),
