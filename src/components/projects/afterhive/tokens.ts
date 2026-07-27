@@ -2,11 +2,14 @@ import demoJson from './demo.json';
 
 export type Level = 'none' | 'read' | 'write' | 'admin';
 
+export type Scope = 'org' | 'division' | 'self';
+
 export interface AfterhiveDemo {
   modules: string[];
   levels: Level[];
   roleOrder: string[];
   roleNames: Record<string, string>;
+  roleScope: Record<string, Scope>;
   roles: Record<string, Level[]>;
   models: string[];
   docs: string[];

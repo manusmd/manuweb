@@ -444,9 +444,9 @@
       "scrollCue": "Scrollen und Features entdecken",
       "heroStatMembersValue": "320",
       "heroStatMembersLabel": "Mitglieder",
-      "heroStatDuesValue": "5.409 €",
+      "heroStatDuesValue": "8.263 €",
       "heroStatDuesLabel": "Offene Beiträge",
-      "heroStatAttendanceValue": "81 %",
+      "heroStatAttendanceValue": "78 %",
       "heroStatAttendanceLabel": "Anwesenheit",
       "chaos": {
         "step": "Warum afterhive",
@@ -492,12 +492,12 @@
           "f2": "Abteilungen & Teams",
           "f3": "Eigene Datenfelder"
         },
-        "applications": {
-          "title": "Aufnahme ohne Papierkram",
-          "desc": "Neue Mitglieder bewerben sich über die öffentliche Beitritts-Seite — der Vorstand fragt nach, prüft und bestätigt mit einem Klick.",
-          "f1": "Öffentlicher Beitritts-Link",
-          "f2": "Chat mit Bewerbern",
-          "f3": "Aufnehmen per Klick"
+        "cashbook": {
+          "title": "Vereinsfinanzen im Blick",
+          "desc": "Das Kassenbuch führt Vereinskonto und Barkasse: jede Einnahme und Ausgabe verbucht, Mitgliedsbeiträge fließen automatisch ein.",
+          "f1": "Vereinskonto & Barkasse",
+          "f2": "Automatische Buchungen",
+          "f3": "CSV-Export"
         },
         "calendar": {
           "title": "Der Vereinskalender",
@@ -524,12 +524,12 @@
       "dues": {
         "step": "Beiträge",
         "heading": "Beiträge, die sich selbst verwalten.",
-        "sub": "Tarife festlegen, Beitragslauf starten — afterhive stellt die Rechnungen und behält offene Posten im Blick.",
+        "sub": "Tarife festlegen, Beitragslauf starten — afterhive stellt die Rechnungen, zieht per SEPA-Lastschrift ein und behält offene Posten im Blick.",
         "runTitle": "Beitragslauf Q3 2026",
         "statusDone": "Lauf abgeschlossen",
-        "invoicesLabel": "Rechnungen gestellt",
-        "openLabel": "Offene Beiträge",
-        "note": "Echte Zahlen aus dem Demo-Verein: 320 Mitglieder, 5.409 € offene Beiträge."
+        "invoicesLabel": "Beiträge gestellt",
+        "openLabel": "Offen",
+        "note": "Echte Zahlen aus dem Demo-Verein: 267 zahlungspflichtige Mitglieder, 2.802 € offen — per SEPA-Lastschrift oder Überweisung."
       },
       "attendance": {
         "step": "Anwesenheit",
@@ -553,19 +553,31 @@
         "online": "Online"
       },
       "roles": {
-        "step": "Rollen",
+        "step": "Rollen & Rechte",
         "heading": "Jeder sieht genau das Richtige.",
-        "sub": "Vom Vorstand bis zum Mitglied: Fünf Rollen regeln, wer was sieht und darf.",
-        "club_admin": "Sieht alles, kann alles — verwaltet Verein, Rollen und Einstellungen.",
-        "treasurer": "Volle Kontrolle über Beiträge und Finanzen — Mitgliederdaten nur lesend.",
-        "division_admin": "Führt die eigene Abteilung: Teams, Termine und Anwesenheit.",
-        "coach": "Erfasst Anwesenheit und kommuniziert mit dem eigenen Team.",
-        "member": "Sieht die eigenen Daten, Termine und Beiträge — mehr nicht.",
-        "note": "Die Punkte zeigen die echten Zugriffsstufen über alle zehn Module — einmal zentral definiert, überall automatisch durchgesetzt.",
-        "level_none": "kein Zugriff",
+        "sub": "Fünf Rollen, zehn Bereiche: Wer was sehen und bearbeiten darf — auf einen Blick.",
+        "module": {
+          "members": "Mitglieder",
+          "dues": "Beiträge",
+          "teams": "Teams",
+          "attendance": "Anwesenheit",
+          "events": "Termine",
+          "communication": "Kommunikation",
+          "documents": "Dokumente",
+          "committees": "Gremien",
+          "settings": "Einstellungen",
+          "website": "Website"
+        },
+        "scope": {
+          "org": "Ganzer Verein",
+          "division": "Eigene Abteilung",
+          "self": "Eigene Daten"
+        },
+        "level_none": "kein",
         "level_read": "lesen",
-        "level_write": "schreiben",
-        "level_admin": "admin"
+        "level_write": "ändern",
+        "level_admin": "admin",
+        "source": "Echte Rechte-Matrix aus der App"
       },
       "trust": {
         "line": "Ein Verein, viele Vereine — und deine Daten bleiben deine."

@@ -1,5 +1,5 @@
 import { useTranslations } from 'next-intl';
-import { LayoutDashboard, Users, Inbox, CalendarDays, Megaphone, ListChecks } from 'lucide-react';
+import { LayoutDashboard, Users, Wallet, CalendarDays, Megaphone, ListChecks } from 'lucide-react';
 import { SceneStep, BrowserFrame } from '../parts';
 import { ASSET } from '../tokens';
 
@@ -7,7 +7,7 @@ import { ASSET } from '../tokens';
 export const TOUR_STOPS = [
   { key: 'dashboard', img: 'dashboard.png', icon: LayoutDashboard },
   { key: 'members', img: 'mitglieder.png', icon: Users },
-  { key: 'applications', img: 'anfragen.png', icon: Inbox },
+  { key: 'cashbook', img: 'kassenbuch.png', icon: Wallet },
   { key: 'calendar', img: 'kalender.png', icon: CalendarDays },
   { key: 'communication', img: 'kommunikation.png', icon: Megaphone },
   { key: 'tasks', img: 'aufgaben.png', icon: ListChecks },

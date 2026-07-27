@@ -47,7 +47,7 @@
       "none"
     ],
     "coach": ["none", "none", "read", "write", "read", "write", "none", "none", "none", "none"],
-    "member": ["read", "read", "read", "read", "read", "none", "read", "read", "none", "none"]
+    "member": ["read", "read", "read", "read", "read", "read", "read", "read", "none", "none"]
   },
   "models": [
     "User",
@@ -105,5 +105,12 @@
     "12-verticals",
     "13-onboarding",
     "14-landing"
-  ]
+  ],
+  "roleScope": {
+    "club_admin": "org",
+    "treasurer": "org",
+    "division_admin": "division",
+    "coach": "division",
+    "member": "self"
+  }
 }

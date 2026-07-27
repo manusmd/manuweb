@@ -71,6 +71,7 @@ export function useAfterhiveScrollExperience(
           gsap.set(qa('[data-fade]'), { opacity: 1, y: 0 });
           gsap.set(qa('[data-hero-hidden]'), { opacity: 1, y: 0 });
           gsap.set(qa('[data-chaos-tool]'), { autoAlpha: 0.12 });
+          gsap.set(qa('[data-mx-cell]'), { opacity: 1, scale: 1 });
           gsap.set(qa('[data-tour-stop]'), { autoAlpha: 1, y: 0 });
           gsap.set(qa('[data-att-check]'), { opacity: 1, scale: 1 });
           gsap.set(qa('[data-ws-img="1"], [data-ws-url="1"], [data-ws-online]'), { opacity: 1 });
@@ -186,6 +187,19 @@ export function useAfterhiveScrollExperience(
                   },
                   scrollTrigger: { trigger: duesScene, start: 'top 65%', once: true },
                 });
+              });
+            }
+
+            // --- ROLES matrix: cells cascade in on enter (all sizes) ---
+            if (q('[data-mx-cell]')) {
+              gsap.from('[data-mx-cell]', {
+                opacity: 0,
+                scale: 0.6,
+                transformOrigin: 'center',
+                stagger: { each: 0.01, from: 'start' },
+                duration: 0.3,
+                ease: 'back.out(1.4)',
+                scrollTrigger: { trigger: '[data-scene="roles"]', start: 'top 72%', once: true },
               });
             }
 

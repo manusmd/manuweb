@@ -47,7 +47,7 @@ export function DuesScene() {
               <dl className="mt-5 grid grid-cols-2 gap-4">
                 <div>
                   <dd className="font-display text-2xl font-bold text-accent-violet md:text-3xl">
-                    <span data-dues-count data-to="320">
+                    <span data-dues-count data-to="267">
                       0
                     </span>
                   </dd>
@@ -55,7 +55,7 @@ export function DuesScene() {
                 </div>
                 <div>
                   <dd className="font-display text-2xl font-bold text-foreground md:text-3xl">
-                    <span data-dues-count data-to="5409" data-suffix=" €">
+                    <span data-dues-count data-to="2802" data-suffix=" €">
                       0
                     </span>
                   </dd>

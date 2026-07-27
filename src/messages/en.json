@@ -442,9 +442,9 @@
       "scrollCue": "Scroll to explore the features",
       "heroStatMembersValue": "320",
       "heroStatMembersLabel": "Members",
-      "heroStatDuesValue": "€5,409",
+      "heroStatDuesValue": "€8,263",
       "heroStatDuesLabel": "Open dues",
-      "heroStatAttendanceValue": "81%",
+      "heroStatAttendanceValue": "78%",
       "heroStatAttendanceLabel": "Attendance",
       "chaos": {
         "step": "Why afterhive",
@@ -490,12 +490,12 @@
           "f2": "Divisions & teams",
           "f3": "Custom data fields"
         },
-        "applications": {
-          "title": "Joining without paperwork",
-          "desc": "New members apply through the public join page — the board asks questions, reviews and confirms with one click.",
-          "f1": "Public join link",
-          "f2": "Chat with applicants",
-          "f3": "Admit with one click"
+        "cashbook": {
+          "title": "Club finances in view",
+          "desc": "The cash book runs the bank account and petty cash: every income and expense booked, membership dues flow in automatically.",
+          "f1": "Bank account & petty cash",
+          "f2": "Automatic bookings",
+          "f3": "CSV export"
         },
         "calendar": {
           "title": "The club calendar",
@@ -522,12 +522,12 @@
       "dues": {
         "step": "Dues",
         "heading": "Dues that manage themselves.",
-        "sub": "Define tariffs, start a dues run — afterhive issues the invoices and keeps an eye on open items.",
+        "sub": "Define tariffs, start a dues run — afterhive issues the invoices, collects them via SEPA direct debit and keeps an eye on open items.",
         "runTitle": "Dues run Q3 2026",
         "statusDone": "Run completed",
         "invoicesLabel": "Invoices issued",
-        "openLabel": "Open dues",
-        "note": "Real numbers from the demo club: 320 members, €5,409 in open dues."
+        "openLabel": "Open",
+        "note": "Real numbers from the demo club: 267 members liable to pay, €2,802 open — via SEPA direct debit or bank transfer."
       },
       "attendance": {
         "step": "Attendance",
@@ -551,19 +551,31 @@
         "online": "Online"
       },
       "roles": {
-        "step": "Roles",
+        "step": "Roles & permissions",
         "heading": "Everyone sees exactly the right thing.",
-        "sub": "From the board to the members: five roles govern who sees and does what.",
-        "club_admin": "Sees everything, can do everything — manages club, roles and settings.",
-        "treasurer": "Full control over dues and finances — member data read-only.",
-        "division_admin": "Runs their own division: teams, events and attendance.",
-        "coach": "Tracks attendance and communicates with their own team.",
-        "member": "Sees their own data, events and dues — nothing more.",
-        "note": "The dots show the real access levels across all ten modules — defined once, enforced everywhere automatically.",
-        "level_none": "no access",
+        "sub": "Five roles, ten areas: who may see and edit what — at a glance.",
+        "module": {
+          "members": "Members",
+          "dues": "Dues",
+          "teams": "Teams",
+          "attendance": "Attendance",
+          "events": "Events",
+          "communication": "Communication",
+          "documents": "Documents",
+          "committees": "Committees",
+          "settings": "Settings",
+          "website": "Website"
+        },
+        "scope": {
+          "org": "Whole club",
+          "division": "Own division",
+          "self": "Own data"
+        },
+        "level_none": "none",
         "level_read": "read",
-        "level_write": "write",
-        "level_admin": "admin"
+        "level_write": "edit",
+        "level_admin": "admin",
+        "source": "The app's real permission matrix"
       },
       "trust": {
         "line": "One club, many clubs — and your data stays yours."
