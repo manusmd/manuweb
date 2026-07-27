@@ -49,7 +49,7 @@ export function TourScene() {
           </div>
 
           {/* ---- Desktop: persistent chrome, the app being driven ---- */}
-          <div className="hidden lg:block">
+          <div data-tour-stage="desktop" className="hidden lg:block">
             <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
               {TOUR_STOPS.map(({ key, icon: Icon }, i) => (
                 <span
@@ -140,8 +140,8 @@ export function TourScene() {
             </div>
           </div>
 
-          {/* ---- Mobile: stacked stops ---- */}
-          <div className="mt-10 flex flex-col gap-16 lg:hidden">
+          {/* ---- Mobile (and reduced-motion desktop): stacked stops ---- */}
+          <div data-tour-stage="mobile" className="mt-10 flex flex-col gap-16 lg:hidden">
             {TOUR_STOPS.map(({ key, img, icon: Icon }) => (
               <div key={key}>
                 <span className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.05]">

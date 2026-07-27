@@ -76,6 +76,17 @@ export function useAfterhiveScrollExperience(
           gsap.set(qa('[data-ws-img="1"], [data-ws-url="1"], [data-ws-online]'), { opacity: 1 });
           gsap.set(qa('[data-ws-url="0"], [data-ws-publish]'), { opacity: 0 });
           setCountsToFinal();
+
+          // Tour has no single resolved frame (it's a 6-screen walkthrough), so
+          // under reduced motion fall back to the stacked stops on every width —
+          // otherwise only the first screen would ever show.
+          const tourPin = q('[data-pin="tour"]');
+          if (tourPin) {
+            gsap.set(tourPin, { display: 'block', height: 'auto' });
+            gsap.set(qa('[data-tour-stage="desktop"]'), { display: 'none' });
+            gsap.set(qa('[data-tour-stage="mobile"]'), { display: 'flex' });
+            gsap.set(qa('[data-scene="tour"]'), { paddingTop: '5rem', paddingBottom: '5rem' });
+          }
         });
 
         mm.add(
