@@ -442,6 +442,38 @@
       "heroLead": "Mitglieder, Beiträge, Training, Kommunikation und die eigene Website — ",
       "heroLeadEmphasis": "der ganze Verein in einer App.",
       "scrollCue": "Scrollen und Features entdecken",
+      "heroStatMembersValue": "320",
+      "heroStatMembersLabel": "Mitglieder",
+      "heroStatDuesValue": "5.409 €",
+      "heroStatDuesLabel": "Offene Beiträge",
+      "heroStatAttendanceValue": "81 %",
+      "heroStatAttendanceLabel": "Anwesenheit",
+      "chaos": {
+        "step": "Warum afterhive",
+        "heading": "Ein Tool statt zehn.",
+        "sub": "Vereine jonglieren heute Chats, Tabellen, Zettel, Überweisungen und eine alte Website. afterhive bündelt alles an einem Ort.",
+        "chat": {
+          "label": "Gruppenchat",
+          "meta": "Infos gehen unter"
+        },
+        "sheet": {
+          "label": "Excel-Mitgliederliste",
+          "meta": "Ständig veraltet"
+        },
+        "paper": {
+          "label": "Anwesenheits-Zettel",
+          "meta": "Papier, das keiner findet"
+        },
+        "bank": {
+          "label": "Überweisungen",
+          "meta": "Jedem Beitrag hinterher"
+        },
+        "oldsite": {
+          "label": "Alte Vereins-Website",
+          "meta": "Seit 2015 nicht gepflegt"
+        },
+        "after": "Alles in afterhive"
+      },
       "tour": {
         "step": "Produkt-Tour",
         "heading": "Ein Rundgang durch die App.",
@@ -535,21 +567,8 @@
         "level_write": "schreiben",
         "level_admin": "admin"
       },
-      "tech": {
-        "step": "Unter der Haube",
-        "heading": "Solide gebaut.",
-        "tenant": {
-          "title": "Mandantenfähig",
-          "desc": "Viele Vereine, eine Plattform — jeder Verein streng von den anderen getrennt."
-        },
-        "host": {
-          "title": "Self-hostbar",
-          "desc": "Läuft auf eigener Infrastruktur — die Vereinsdaten bleiben im Verein."
-        },
-        "rules": {
-          "title": "Zentrale Zugriffsregeln",
-          "desc": "Berechtigungen einmal definiert — in App und API automatisch erzwungen."
-        }
+      "trust": {
+        "line": "Ein Verein, viele Vereine — und deine Daten bleiben deine."
       },
       "outro": {
         "step": "Ausprobieren",

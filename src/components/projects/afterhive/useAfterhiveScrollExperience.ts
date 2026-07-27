@@ -2,14 +2,15 @@
 
 import { useEffect } from 'react';
 
-export const SCENES = ['hero', 'tour', 'dues', 'attendance', 'website', 'roles', 'tech'] as const;
+export const SCENES = ['hero', 'chaos', 'tour', 'dues', 'attendance', 'website', 'roles'] as const;
 
 /**
  * GSAP scroll choreography for the afterhive detail page. Same scaffold as the
  * other project pages (bounded fonts/rAF waits, fit-to-viewport, deferred
- * refreshes). Three pinned scenes — product tour, attendance check-in, website
- * publish — with refreshPriority descending down the page; dues animates with
- * a scrubbed progress bar and count-ups on enter.
+ * refreshes). Four pinned scenes — chaos-collapse, product tour, attendance
+ * check-in, website publish — with refreshPriority descending down the page;
+ * dues animates with a scrubbed progress bar and count-ups on enter. A slow
+ * looping drift animates the signature Liquid backdrop.
  */
 export function useAfterhiveScrollExperience(
   rootRef: React.RefObject<HTMLDivElement | null>,
@@ -69,6 +70,7 @@ export function useAfterhiveScrollExperience(
         mm.add('(prefers-reduced-motion: reduce)', () => {
           gsap.set(qa('[data-fade]'), { opacity: 1, y: 0 });
           gsap.set(qa('[data-hero-hidden]'), { opacity: 1, y: 0 });
+          gsap.set(qa('[data-chaos-tool]'), { autoAlpha: 0.12 });
           gsap.set(qa('[data-tour-stop]'), { autoAlpha: 1, y: 0 });
           gsap.set(qa('[data-att-check]'), { opacity: 1, scale: 1 });
           gsap.set(qa('[data-ws-img="1"], [data-ws-url="1"], [data-ws-online]'), { opacity: 1 });
@@ -102,6 +104,20 @@ export function useAfterhiveScrollExperience(
                 yPercent: depth * 40,
                 ease: 'none',
                 scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true },
+              });
+            });
+
+            // Signature Liquid backdrop: each blob drifts slowly on its own loop.
+            qa<HTMLElement>('[data-liquid-blob]').forEach((blob, i) => {
+              const dir = i % 2 === 0 ? 1 : -1;
+              gsap.to(blob, {
+                xPercent: dir * (8 + i * 3),
+                yPercent: dir * (6 + i * 2),
+                scale: 1.12,
+                duration: 14 + i * 4,
+                ease: 'sine.inOut',
+                repeat: -1,
+                yoyo: true,
               });
             });
 
@@ -187,6 +203,56 @@ export function useAfterhiveScrollExperience(
                 });
               };
               ScrollTrigger.addEventListener('refresh', fitPinned);
+
+              // --- CHAOS (pinned scrub): scattered tools collapse into afterhive ---
+              const chaosPin = q('[data-pin="chaos"]');
+              const tools = qa<HTMLElement>('[data-chaos-tool]');
+              const chaosApp = q('[data-chaos-app]');
+              if (chaosPin && chaosApp && tools.length) {
+                gsap.set(chaosApp, { scale: 0.82, autoAlpha: 0.85 });
+                gsap.set('[data-chaos-badge]', { autoAlpha: 0 });
+                tools.forEach(tool => {
+                  gsap.set(tool, {
+                    rotate: tool.style.getPropertyValue('--rot') || 0,
+                    autoAlpha: 1,
+                  });
+                });
+                const tl = gsap.timeline({
+                  scrollTrigger: {
+                    trigger: chaosPin,
+                    start: 'top top',
+                    end: '+=1300',
+                    scrub: 0.6,
+                    pin: true,
+                    anticipatePin: 1,
+                    invalidateOnRefresh: true,
+                    refreshPriority: 5,
+                  },
+                });
+                // tools fly toward the center, shrink and dissolve
+                tl.to(
+                  tools,
+                  {
+                    x: 0,
+                    y: 0,
+                    left: '50%',
+                    top: '50%',
+                    xPercent: -50,
+                    yPercent: -50,
+                    scale: 0.4,
+                    rotate: 0,
+                    autoAlpha: 0,
+                    ease: 'power2.in',
+                    stagger: 0.06,
+                    duration: 1,
+                  },
+                  0
+                );
+                // afterhive rises to full prominence as the clutter clears
+                tl.to(chaosApp, { scale: 1, autoAlpha: 1, duration: 1 }, 0.3);
+                tl.to('[data-chaos-badge]', { autoAlpha: 1, duration: 0.4 }, 0.9);
+                tl.to({}, { duration: 0.6 });
+              }
 
               // --- TOUR (pinned scrub): stops crossfade station by station ---
               const tourPin = q('[data-pin="tour"]');

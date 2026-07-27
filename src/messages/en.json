@@ -440,6 +440,38 @@
       "heroLead": "Members, dues, training, communication and the club's own website — ",
       "heroLeadEmphasis": "the whole club in one app.",
       "scrollCue": "Scroll to explore the features",
+      "heroStatMembersValue": "320",
+      "heroStatMembersLabel": "Members",
+      "heroStatDuesValue": "€5,409",
+      "heroStatDuesLabel": "Open dues",
+      "heroStatAttendanceValue": "81%",
+      "heroStatAttendanceLabel": "Attendance",
+      "chaos": {
+        "step": "Why afterhive",
+        "heading": "One tool instead of ten.",
+        "sub": "Clubs juggle group chats, spreadsheets, paper lists, bank transfers and an old website today. afterhive brings it all into one place.",
+        "chat": {
+          "label": "Group chat",
+          "meta": "Info gets lost"
+        },
+        "sheet": {
+          "label": "Excel member list",
+          "meta": "Always out of date"
+        },
+        "paper": {
+          "label": "Paper attendance list",
+          "meta": "Nobody can find it"
+        },
+        "bank": {
+          "label": "Bank transfers",
+          "meta": "Chased one by one"
+        },
+        "oldsite": {
+          "label": "Old club website",
+          "meta": "Untouched since 2015"
+        },
+        "after": "Everything in afterhive"
+      },
       "tour": {
         "step": "Product tour",
         "heading": "A walk through the app.",
@@ -533,21 +565,8 @@
         "level_write": "write",
         "level_admin": "admin"
       },
-      "tech": {
-        "step": "Under the hood",
-        "heading": "Built to last.",
-        "tenant": {
-          "title": "Multi-tenant",
-          "desc": "Many clubs, one platform — each club strictly separated from the others."
-        },
-        "host": {
-          "title": "Self-hostable",
-          "desc": "Runs on your own infrastructure — club data stays with the club."
-        },
-        "rules": {
-          "title": "Central access rules",
-          "desc": "Permissions defined once — enforced automatically in app and API."
-        }
+      "trust": {
+        "line": "One club, many clubs — and your data stays yours."
       },
       "outro": {
         "step": "Try it",

@@ -1,5 +1,34 @@
 import type { HTMLAttributes, ReactNode } from 'react';
 
+/**
+ * afterhive's signature "Liquid" backdrop — a field of slowly drifting, blurred
+ * violet/fuchsia gradient blobs behind the whole page. Rendered once at the
+ * detail root; the drift is driven by GSAP in the scroll hook (and held static
+ * under reduced motion). This is what sets the flagship page apart visually.
+ */
+export function LiquidField() {
+  return (
+    <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden>
+      <div
+        data-liquid-blob
+        className="absolute -left-40 top-[6%] h-[34rem] w-[34rem] rounded-full bg-accent-violet/20 blur-[150px]"
+      />
+      <div
+        data-liquid-blob
+        className="absolute right-[-12rem] top-[32%] h-[30rem] w-[30rem] rounded-full bg-fuchsia-500/15 blur-[150px]"
+      />
+      <div
+        data-liquid-blob
+        className="absolute left-[10%] top-[62%] h-[32rem] w-[32rem] rounded-full bg-primary/15 blur-[150px]"
+      />
+      <div
+        data-liquid-blob
+        className="absolute right-[8%] bottom-[2%] h-[26rem] w-[26rem] rounded-full bg-accent-violet/15 blur-[140px]"
+      />
+    </div>
+  );
+}
+
 /** Section eyebrow. */
 export function SceneStep({ children }: { children: ReactNode }) {
   return (
