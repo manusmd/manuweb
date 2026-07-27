@@ -22,14 +22,14 @@ function FloatChip({
     <div
       data-hero-chip
       data-parallax={parallax}
-      className={`absolute z-20 flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.07] px-4 py-3 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.85)] backdrop-blur-xl ${className}`}
+      className={`absolute z-20 flex items-center gap-3 rounded-2xl border border-white/10 bg-[#0b0e13]/95 px-4 py-3 shadow-[0_24px_60px_-16px_rgba(0,0,0,0.9)] ring-1 ring-white/[0.06] ${className}`}
     >
-      <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-accent-violet/[0.16] text-accent-violet">
+      <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-accent-violet/25 text-accent-violet">
         <Icon className="h-4 w-4" />
       </span>
       <div className="text-left">
-        <p className="font-display text-lg font-bold leading-none text-foreground">{value}</p>
-        <p className="mt-0.5 text-[11px] text-muted-foreground">{label}</p>
+        <p className="font-display text-lg font-bold leading-none text-white">{value}</p>
+        <p className="mt-0.5 text-[11px] text-white/60">{label}</p>
       </div>
     </div>
   );

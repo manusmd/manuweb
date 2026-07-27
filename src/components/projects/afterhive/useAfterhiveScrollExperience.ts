@@ -72,7 +72,6 @@ export function useAfterhiveScrollExperience(
           gsap.set(qa('[data-hero-hidden]'), { opacity: 1, y: 0 });
           gsap.set(qa('[data-chaos-tool]'), { autoAlpha: 0.12 });
           gsap.set(qa('[data-mx-cell]'), { opacity: 1, scale: 1 });
-          gsap.set(qa('[data-tour-stop]'), { autoAlpha: 1, y: 0 });
           gsap.set(qa('[data-att-check]'), { opacity: 1, scale: 1 });
           gsap.set(qa('[data-ws-img="1"], [data-ws-url="1"], [data-ws-online]'), { opacity: 1 });
           gsap.set(qa('[data-ws-url="0"], [data-ws-publish]'), { opacity: 0 });
@@ -268,19 +267,29 @@ export function useAfterhiveScrollExperience(
                 tl.to({}, { duration: 0.6 });
               }
 
-              // --- TOUR (pinned scrub): stops crossfade station by station ---
+              // --- TOUR (pinned scrub): a guided click-through of the app ---
               const tourPin = q('[data-pin="tour"]');
-              const stops = qa<HTMLElement>('[data-tour-stop]');
+              const screens = qa<HTMLElement>('[data-tour-screen]');
+              const texts = qa<HTMLElement>('[data-tour-text]');
+              const urls = qa<HTMLElement>('[data-tour-url]');
               const tabs = qa<HTMLElement>('[data-tour-tab]');
-              if (tourPin && stops.length > 1) {
-                gsap.set(stops.slice(1), { autoAlpha: 0, y: 30 });
+              const callouts = qa<HTMLElement>('[data-tour-callout]');
+              const calloutFor = (i: number) =>
+                callouts.filter(c => Number(c.dataset.tourCallout) === i);
+              if (tourPin && screens.length > 1) {
+                gsap.set(screens[0], { xPercent: 0, autoAlpha: 1 });
+                gsap.set(screens.slice(1), { xPercent: 100, autoAlpha: 0 });
+                gsap.set(texts.slice(1), { autoAlpha: 0, y: 18 });
+                gsap.set(urls.slice(1), { autoAlpha: 0 });
                 gsap.set(tabs.slice(1), { opacity: 0.4 });
+                gsap.set(callouts, { autoAlpha: 0, y: 6 });
+                calloutFor(0).forEach(c => gsap.set(c, { autoAlpha: 1, y: 0 }));
 
                 const tl = gsap.timeline({
                   scrollTrigger: {
                     trigger: tourPin,
                     start: 'top top',
-                    end: `+=${stops.length * 420}`,
+                    end: `+=${screens.length * 460}`,
                     scrub: 0.6,
                     pin: true,
                     anticipatePin: 1,
@@ -288,18 +297,43 @@ export function useAfterhiveScrollExperience(
                     refreshPriority: 4,
                   },
                 });
-                stops.forEach((stop, i) => {
+                screens.forEach((screen, i) => {
                   if (i === 0) return;
                   const pos = i * 1.5;
-                  tl.to(stops[i - 1], { autoAlpha: 0, y: -30, duration: 0.5 }, pos);
+                  // outgoing screen slides left; incoming slides in from the right
+                  tl.to(screens[i - 1], { xPercent: -100, autoAlpha: 0, duration: 0.6 }, pos);
                   tl.fromTo(
-                    stop,
-                    { autoAlpha: 0, y: 30 },
-                    { autoAlpha: 1, y: 0, duration: 0.5 },
-                    pos + 0.35
+                    screen,
+                    { xPercent: 100, autoAlpha: 0 },
+                    { xPercent: 0, autoAlpha: 1, duration: 0.6 },
+                    pos
                   );
+                  // text
+                  tl.to(texts[i - 1], { autoAlpha: 0, y: -18, duration: 0.4 }, pos);
+                  tl.fromTo(
+                    texts[i],
+                    { autoAlpha: 0, y: 18 },
+                    { autoAlpha: 1, y: 0, duration: 0.4 },
+                    pos + 0.25
+                  );
+                  // url bar
+                  tl.to(urls[i - 1], { autoAlpha: 0, duration: 0.3 }, pos);
+                  tl.to(urls[i], { autoAlpha: 1, duration: 0.3 }, pos + 0.2);
+                  // active tab travels
                   if (tabs[i - 1]) tl.to(tabs[i - 1], { opacity: 0.4, duration: 0.3 }, pos);
                   if (tabs[i]) tl.to(tabs[i], { opacity: 1, duration: 0.3 }, pos);
+                  // callouts: hide the previous stop's, pop this stop's
+                  calloutFor(i - 1).forEach(c =>
+                    tl.to(c, { autoAlpha: 0, y: 6, duration: 0.3 }, pos)
+                  );
+                  calloutFor(i).forEach(c =>
+                    tl.fromTo(
+                      c,
+                      { autoAlpha: 0, y: 6 },
+                      { autoAlpha: 1, y: 0, duration: 0.4 },
+                      pos + 0.45
+                    )
+                  );
                 });
                 tl.to({}, { duration: 1 });
               }
@@ -390,7 +424,6 @@ export function useAfterhiveScrollExperience(
               }
             } else {
               // Mobile: resolved end-states, no pinning.
-              gsap.set(qa('[data-tour-stop]'), { autoAlpha: 1, y: 0 });
               gsap.set(qa('[data-att-check]'), { opacity: 1, scale: 1 });
               gsap.set(qa('[data-ws-img="1"], [data-ws-url="1"], [data-ws-online]'), {
                 opacity: 1,

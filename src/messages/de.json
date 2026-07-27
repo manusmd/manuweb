@@ -483,7 +483,8 @@
           "desc": "Das Dashboard zeigt, wie es dem Verein geht: Mitglieder, offene Beiträge, Anwesenheit und was als Nächstes ansteht.",
           "f1": "Live-Kennzahlen",
           "f2": "Neue Anträge",
-          "f3": "Anstehende Termine"
+          "f3": "Anstehende Termine",
+          "callout": "Offene Beiträge — immer aktuell"
         },
         "members": {
           "title": "Mitglieder im Griff",
@@ -497,7 +498,8 @@
           "desc": "Das Kassenbuch führt Vereinskonto und Barkasse: jede Einnahme und Ausgabe verbucht, Mitgliedsbeiträge fließen automatisch ein.",
           "f1": "Vereinskonto & Barkasse",
           "f2": "Automatische Buchungen",
-          "f3": "CSV-Export"
+          "f3": "CSV-Export",
+          "callout": "Gesamtsaldo auf einen Blick"
         },
         "calendar": {
           "title": "Der Vereinskalender",

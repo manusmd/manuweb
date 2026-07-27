@@ -481,7 +481,8 @@
           "desc": "The dashboard shows how the club is doing: members, open dues, attendance and what's coming up next.",
           "f1": "Live metrics",
           "f2": "New applications",
-          "f3": "Upcoming events"
+          "f3": "Upcoming events",
+          "callout": "Open dues — always current"
         },
         "members": {
           "title": "Members under control",
@@ -495,7 +496,8 @@
           "desc": "The cash book runs the bank account and petty cash: every income and expense booked, membership dues flow in automatically.",
           "f1": "Bank account & petty cash",
           "f2": "Automatic bookings",
-          "f3": "CSV export"
+          "f3": "CSV export",
+          "callout": "Total balance at a glance"
         },
         "calendar": {
           "title": "The club calendar",
