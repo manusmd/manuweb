@@ -11,19 +11,8 @@
     "settings",
     "website"
   ],
-  "levels": [
-    "none",
-    "read",
-    "write",
-    "admin"
-  ],
-  "roleOrder": [
-    "club_admin",
-    "treasurer",
-    "division_admin",
-    "coach",
-    "member"
-  ],
+  "levels": ["none", "read", "write", "admin"],
+  "roleOrder": ["club_admin", "treasurer", "division_admin", "coach", "member"],
   "roleNames": {
     "club_admin": "Administrator",
     "treasurer": "Kassenwart",
@@ -44,18 +33,7 @@
       "admin",
       "admin"
     ],
-    "treasurer": [
-      "read",
-      "admin",
-      "none",
-      "none",
-      "none",
-      "read",
-      "read",
-      "none",
-      "none",
-      "none"
-    ],
+    "treasurer": ["read", "admin", "none", "none", "none", "read", "read", "none", "none", "none"],
     "division_admin": [
       "read",
       "none",
@@ -68,30 +46,8 @@
       "none",
       "none"
     ],
-    "coach": [
-      "none",
-      "none",
-      "read",
-      "write",
-      "read",
-      "write",
-      "none",
-      "none",
-      "none",
-      "none"
-    ],
-    "member": [
-      "read",
-      "read",
-      "read",
-      "read",
-      "read",
-      "read",
-      "read",
-      "read",
-      "none",
-      "none"
-    ]
+    "coach": ["none", "none", "read", "write", "read", "write", "none", "none", "none", "none"],
+    "member": ["read", "read", "read", "read", "read", "read", "read", "read", "none", "none"]
   },
   "models": [
     "User",
