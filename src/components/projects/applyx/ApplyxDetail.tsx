@@ -16,6 +16,7 @@ import { JobPostingScene } from '@/components/projects/applyx/scenes/JobPostingS
 import { AskScene } from '@/components/projects/applyx/scenes/AskScene';
 import { AssistantScene } from '@/components/projects/applyx/scenes/AssistantScene';
 import { OutroScene } from '@/components/projects/applyx/scenes/OutroScene';
+import { ApplyxBackdrop } from '@/components/projects/applyx/SceneParts';
 
 interface ApplyxDetailProps {
   project: Project;
@@ -36,6 +37,8 @@ export function ApplyxDetail({ project, locale }: ApplyxDetailProps) {
 
   return (
     <div ref={rootRef} className="applyx-detail relative -mt-16 w-full overflow-x-hidden">
+      <ApplyxBackdrop />
+
       {/* Scene progress rail (desktop) */}
       <nav
         aria-hidden

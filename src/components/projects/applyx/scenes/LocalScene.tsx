@@ -79,10 +79,10 @@ export function LocalScene() {
               <BoundaryNode icon={Mail} label="IMAP" />
               <BoundaryWire />
               <div className="flex shrink-0 flex-col items-center gap-2.5">
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl border-2 border-accent-violet/50 bg-accent-violet/10 sm:h-16 sm:w-16">
-                  <Cpu className="h-6 w-6 text-accent-violet sm:h-7 sm:w-7" />
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl border-2 border-primary/50 bg-primary/10 sm:h-16 sm:w-16">
+                  <Cpu className="h-6 w-6 text-primary sm:h-7 sm:w-7" />
                 </div>
-                <span className="font-mono text-xs font-medium text-accent-violet">Ollama</span>
+                <span className="font-mono text-xs font-medium text-primary">Ollama</span>
               </div>
               <BoundaryWire />
               <BoundaryNode icon={Database} label="Postgres" />

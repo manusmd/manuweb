@@ -95,7 +95,7 @@ function AnswerBlock({ type, td }: { type: string; td: TD }) {
             <div key={s.label} className="flex items-center gap-3 text-xs">
               <span className="w-24 shrink-0 text-muted-foreground">{s.label}</span>
               <div
-                className="h-4 rounded-sm bg-gradient-to-r from-primary to-accent-violet"
+                className="h-4 rounded-sm bg-gradient-to-r from-primary to-primary"
                 style={{ width: s.w }}
               />
               <span className="tabular-nums text-foreground">{s.n}</span>
@@ -287,7 +287,7 @@ export function AskScene() {
                     <span
                       className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${
                         s.who === 'model'
-                          ? 'bg-accent-violet/10 text-accent-violet'
+                          ? 'bg-primary/10 text-primary'
                           : 'bg-primary/10 text-primary'
                       }`}
                     >

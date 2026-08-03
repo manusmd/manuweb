@@ -18,7 +18,7 @@ export function HeroScene({ project }: { project: Project }) {
       />
       <div
         data-parallax="0.2"
-        className="pointer-events-none absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-accent-violet/20 blur-[120px]"
+        className="pointer-events-none absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-[#6b8afd]/20 blur-[120px]"
       />
       <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center text-center">
         <span
@@ -26,7 +26,7 @@ export function HeroScene({ project }: { project: Project }) {
           data-hero-hidden
           className="mb-6 inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/50 px-4 py-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground backdrop-blur"
         >
-          <Sparkles className="h-3.5 w-3.5 text-accent-violet" />
+          <Sparkles className="h-3.5 w-3.5 text-primary" />
           {td('eyebrow')}
         </span>
         <h1

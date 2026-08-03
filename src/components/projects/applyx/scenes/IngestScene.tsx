@@ -10,7 +10,7 @@ export function IngestScene() {
   const highlight = (chunks: ReactNode) => (
     <mark
       data-highlight
-      className="rounded bg-accent-violet/15 px-1 font-medium text-accent-violet [box-decoration-break:clone]"
+      className="rounded bg-primary/15 px-1 font-medium text-primary [box-decoration-break:clone]"
     >
       {chunks}
     </mark>
@@ -52,7 +52,7 @@ export function IngestScene() {
                     </span>
                     <span
                       data-status="classifying"
-                      className="col-start-1 row-start-1 text-accent-violet opacity-0"
+                      className="col-start-1 row-start-1 text-primary opacity-0"
                     >
                       ◐ {td('ingest.classifying')}
                     </span>

@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl';
 import { CalendarClock, FileCheck2, Mail, MessageSquareReply, type LucideIcon } from 'lucide-react';
-import { SceneStep } from '@/components/projects/applyx/SceneParts';
+import { SceneStep, StatusPill } from '@/components/projects/applyx/SceneParts';
+import { STATUS, type StatusKey } from '@/components/projects/applyx/tokens';
 
 const STAGES = [
   {
@@ -9,6 +10,7 @@ const STAGES = [
     signal: 'signalApplied',
     icon: Mail,
     pos: '0%',
+    status: 'applied',
   },
   {
     key: 'stageReview',
@@ -16,6 +18,7 @@ const STAGES = [
     signal: 'signalReview',
     icon: MessageSquareReply,
     pos: '33.33%',
+    status: 'review',
   },
   {
     key: 'stageInterview',
@@ -23,6 +26,7 @@ const STAGES = [
     signal: 'signalInterview',
     icon: CalendarClock,
     pos: '66.66%',
+    status: 'interview',
   },
   {
     key: 'stageOffer',
@@ -30,6 +34,7 @@ const STAGES = [
     signal: 'signalOffer',
     icon: FileCheck2,
     pos: '100%',
+    status: 'offer',
   },
 ] as const satisfies readonly {
   key: string;
@@ -37,6 +42,7 @@ const STAGES = [
   signal: string;
   icon: LucideIcon;
   pos: string;
+  status: StatusKey;
 }[];
 
 export function PipelineScene() {
@@ -60,21 +66,23 @@ export function PipelineScene() {
               and a row of signal cards that accumulate as each stage lights */}
           <div className="relative hidden lg:block">
             <div className="relative flex justify-between">
-              {STAGES.map(({ key, pos }) => (
+              {STAGES.map(({ key, pos, status }) => (
                 <div
                   key={key}
                   data-stage
                   data-pos={pos}
                   className="flex flex-col items-center gap-3"
-                  style={{ '--lit': 0 } as React.CSSProperties}
+                  style={
+                    { '--lit': 0, '--stage-color': STATUS[status].color } as React.CSSProperties
+                  }
                 >
                   <div
                     data-dot
                     className="h-5 w-5 rounded-full border-2"
                     style={{
-                      borderColor: 'hsl(var(--primary))',
+                      borderColor: 'var(--stage-color)',
                       background:
-                        'color-mix(in srgb, hsl(var(--primary)) calc(var(--lit) * 100%), transparent)',
+                        'color-mix(in srgb, var(--stage-color) calc(var(--lit) * 100%), transparent)',
                       opacity: 'calc(0.4 + var(--lit) * 0.6)',
                     }}
                   />
@@ -103,17 +111,23 @@ export function PipelineScene() {
             </p>
 
             <div className="mt-4 grid grid-cols-4 gap-3">
-              {STAGES.map(({ key, caption, signal, icon: Icon }) => (
+              {STAGES.map(({ key, caption, signal, icon: Icon, status }) => (
                 <div
                   key={key}
                   data-stage-card
-                  className="rounded-xl border border-border/50 bg-card/40 p-4"
+                  className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-4"
                 >
-                  <div className="flex items-center gap-2 text-primary">
-                    <Icon className="h-4 w-4 shrink-0" />
-                    <span className="font-mono text-[11px] uppercase tracking-wide">
-                      {td(`pipeline.${signal}`)}
+                  <div className="flex items-center justify-between gap-2">
+                    <span
+                      className="flex items-center gap-2"
+                      style={{ color: STATUS[status].color }}
+                    >
+                      <Icon className="h-4 w-4 shrink-0" />
+                      <span className="font-mono text-[11px] uppercase tracking-wide">
+                        {td(`pipeline.${signal}`)}
+                      </span>
                     </span>
+                    <StatusPill status={status}>{td(`pipeline.${key}`)}</StatusPill>
                   </div>
                   <p className="mt-3 text-sm font-semibold text-foreground">
                     {td(`pipeline.${key}`)}
@@ -129,22 +143,29 @@ export function PipelineScene() {
           {/* Mobile: vertical stage list, each with its detected signal + caption */}
           <ol className="relative space-y-6 lg:hidden">
             <div className="absolute bottom-2 left-[9px] top-2 w-px bg-border/60" />
-            {STAGES.map(({ key, caption, signal, icon: Icon }) => (
+            {STAGES.map(({ key, caption, signal, icon: Icon, status }) => (
               <li key={key} data-fade className="relative flex gap-4">
-                <span className="relative z-10 mt-0.5 h-[18px] w-[18px] shrink-0 rounded-full border-2 border-primary bg-primary/30" />
+                <span
+                  className="relative z-10 mt-0.5 h-[18px] w-[18px] shrink-0 rounded-full border-2"
+                  style={{
+                    borderColor: STATUS[status].color,
+                    backgroundColor: STATUS[status].tint,
+                  }}
+                />
                 <div>
-                  <div className="flex items-center gap-1.5 text-primary">
-                    <Icon className="h-3.5 w-3.5 shrink-0" />
-                    <span className="font-mono text-[10px] uppercase tracking-wide">
-                      {td(`pipeline.${signal}`)}
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="flex items-center gap-1.5"
+                      style={{ color: STATUS[status].color }}
+                    >
+                      <Icon className="h-3.5 w-3.5 shrink-0" />
+                      <span className="font-mono text-[10px] uppercase tracking-wide">
+                        {td(`pipeline.${signal}`)}
+                      </span>
                     </span>
+                    <StatusPill status={status}>{td(`pipeline.${key}`)}</StatusPill>
                   </div>
-                  <p className="mt-1 text-sm font-semibold text-foreground">
-                    {td(`pipeline.${key}`)}
-                  </p>
-                  <p className="mt-0.5 text-sm text-muted-foreground">
-                    {td(`pipeline.${caption}`)}
-                  </p>
+                  <p className="mt-1 text-sm text-muted-foreground">{td(`pipeline.${caption}`)}</p>
                 </div>
               </li>
             ))}

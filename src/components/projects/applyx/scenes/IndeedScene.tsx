@@ -43,7 +43,7 @@ export function IndeedScene() {
             <div className="mt-5 h-1 w-full overflow-hidden rounded-full bg-muted">
               <div
                 data-scanbar
-                className="h-full w-full origin-left scale-x-0 bg-gradient-to-r from-primary to-accent-violet"
+                className="h-full w-full origin-left scale-x-0 bg-gradient-to-r from-primary to-primary"
               />
             </div>
             <p className="mt-2 text-[11px] text-muted-foreground/70">{td('indeed.scanning')}</p>

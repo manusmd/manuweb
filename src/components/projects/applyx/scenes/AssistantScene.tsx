@@ -12,11 +12,11 @@ import { SceneStep } from '@/components/projects/applyx/SceneParts';
 
 const FEATURES: { key: string; icon: LucideIcon; accent: string }[] = [
   { key: 'queue', icon: ListTodo, accent: 'text-primary' },
-  { key: 'digest', icon: Sparkles, accent: 'text-accent-violet' },
+  { key: 'digest', icon: Sparkles, accent: 'text-primary' },
   { key: 'rejections', icon: TrendingDown, accent: 'text-red-400' },
   { key: 'urgency', icon: AlarmClock, accent: 'text-accent-green' },
   { key: 'dedup', icon: CopyCheck, accent: 'text-primary' },
-  { key: 'enrich', icon: Tags, accent: 'text-accent-violet' },
+  { key: 'enrich', icon: Tags, accent: 'text-primary' },
 ];
 
 export function AssistantScene() {

@@ -24,7 +24,7 @@ const FUNNEL = [
     topW: 100,
     botW: 74,
     from: '#5b8cff',
-    to: '#6f6bf2',
+    to: '#5b8cff',
   },
   {
     key: 'funnelReplied',
@@ -33,8 +33,8 @@ const FUNNEL = [
     ofPrev: true,
     topW: 74,
     botW: 50,
-    from: '#6f6bf2',
-    to: '#8b5cf6',
+    from: '#5b8cff',
+    to: '#3f9fd6',
   },
   {
     key: 'funnelInterview',
@@ -43,7 +43,7 @@ const FUNNEL = [
     ofPrev: true,
     topW: 50,
     botW: 28,
-    from: '#8b5cf6',
+    from: '#3f9fd6',
     to: '#45cdb0',
   },
   {
@@ -239,7 +239,7 @@ export function StatsScene() {
                       <defs>
                         <linearGradient id="replyGauge" x1="0%" y1="0%" x2="100%" y2="100%">
                           <stop offset="0%" stopColor="hsl(var(--primary))" />
-                          <stop offset="100%" stopColor="#8b5cf6" />
+                          <stop offset="100%" stopColor="#3f9fd6" />
                         </linearGradient>
                       </defs>
                     </svg>

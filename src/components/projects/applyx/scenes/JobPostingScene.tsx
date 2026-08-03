@@ -192,7 +192,7 @@ export function JobPostingScene() {
                   <ul className="flex flex-wrap gap-x-3 gap-y-0.5">
                     {responsibilities.map(r => (
                       <li key={r} className="flex items-center gap-1.5 text-foreground">
-                        <span className="h-1 w-1 shrink-0 rounded-full bg-accent-violet" />
+                        <span className="h-1 w-1 shrink-0 rounded-full bg-primary" />
                         {r}
                       </li>
                     ))}
@@ -238,7 +238,7 @@ export function JobPostingScene() {
 
           <div data-fade className={CARD}>
             <div className="flex items-center gap-2">
-              <ClipboardPaste className="h-4 w-4 text-accent-violet" />
+              <ClipboardPaste className="h-4 w-4 text-primary" />
               <span className={SECTION_LABEL}>{td('jobposting.fallbackTitle')}</span>
             </div>
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
