@@ -37,8 +37,14 @@ export function Header({ latestPosts, projects }: HeaderProps) {
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const isHomePage = pathname === `/${locale}`;
-  // On the Feinwerk project page, tint the logo in Feinwerk's lime.
+  // On a project detail page, tint the logo in that app's brand colour.
   const isFeinwerkDetail = pathname === `/${locale}/projects/feinwerk`;
+  const isApplyxDetail = pathname === `/${locale}/projects/applyx`;
+  const logoGradient = isFeinwerkDetail
+    ? 'linear-gradient(135deg, #d8e84a, #aebf3a)'
+    : isApplyxDetail
+      ? 'linear-gradient(135deg, #4f7cff, #7aa2ff)'
+      : undefined;
 
   const { activeId: activeSection } = useActiveHomeSection(isHomePage, 'headerContainment');
 
@@ -175,12 +181,12 @@ export function Header({ latestPosts, projects }: HeaderProps) {
           <Link
             href={`/${locale}`}
             className={`flex items-center space-x-2 pl-2 font-bold transition-transform hover:scale-105 ${
-              isFeinwerkDetail ? '' : 'text-gradient'
+              logoGradient ? '' : 'text-gradient'
             }`}
             style={
-              isFeinwerkDetail
+              logoGradient
                 ? {
-                    backgroundImage: 'linear-gradient(135deg, #d8e84a, #aebf3a)',
+                    backgroundImage: logoGradient,
                     WebkitBackgroundClip: 'text',
                     backgroundClip: 'text',
                     color: 'transparent',
