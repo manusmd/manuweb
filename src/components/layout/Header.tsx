@@ -40,11 +40,14 @@ export function Header({ latestPosts, projects }: HeaderProps) {
   // On a project detail page, tint the logo in that app's brand colour.
   const isFeinwerkDetail = pathname === `/${locale}/projects/feinwerk`;
   const isApplyxDetail = pathname === `/${locale}/projects/applyx`;
+  const isFingermatchDetail = pathname === `/${locale}/projects/fingermatch`;
   const logoGradient = isFeinwerkDetail
     ? 'linear-gradient(135deg, #d8e84a, #aebf3a)'
     : isApplyxDetail
       ? 'linear-gradient(135deg, #4f7cff, #7aa2ff)'
-      : undefined;
+      : isFingermatchDetail
+        ? 'linear-gradient(135deg, #2dd4bf, #14b8a6)'
+        : undefined;
 
   const { activeId: activeSection } = useActiveHomeSection(isHomePage, 'headerContainment');
 

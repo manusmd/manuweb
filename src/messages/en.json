@@ -426,7 +426,12 @@
         "step": "06 — The cockpit",
         "heading": "The full analysis cockpit",
         "sub": "Load two prints, filter markers by type, zoom and pan — and compare live.",
-        "cta": "Try it live"
+        "cta": "Try it live",
+        "readoutMinutiae": "Minutiae",
+        "readoutPairs": "Pairs",
+        "readoutScore": "Score",
+        "readoutStatus": "Status",
+        "readoutStatusValue": "Analysed"
       }
     },
     "afterhive": {

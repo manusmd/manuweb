@@ -428,7 +428,12 @@
         "step": "06 — Das Cockpit",
         "heading": "Das komplette Analyse-Cockpit",
         "sub": "Zwei Abdrücke laden, Marker nach Typ filtern, zoomen und pannen — und live vergleichen.",
-        "cta": "Live ausprobieren"
+        "cta": "Live ausprobieren",
+        "readoutMinutiae": "Minutien",
+        "readoutPairs": "Paare",
+        "readoutScore": "Score",
+        "readoutStatus": "Status",
+        "readoutStatusValue": "Analysiert"
       }
     },
     "afterhive": {

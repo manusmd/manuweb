@@ -1,12 +1,77 @@
 import type { ReactNode } from 'react';
 import { TYPE_TOKENS, type Minutia, type MinutiaType } from './tokens';
 
-/** Section eyebrow, mirrors ApplyX's SceneStep. */
+/**
+ * FingerMatch's forensic backdrop: a cool near-black canvas with a faint teal
+ * measurement grid and a soft vignette — the instrument environment the
+ * scanner frames sit inside. Counterpart to Feinwerk's drafting board.
+ */
+export function FingermatchBackdrop() {
+  return (
+    <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden>
+      <div className="absolute inset-0 bg-[#05070a]" />
+      <div
+        className="absolute inset-0 opacity-[0.5]"
+        style={{
+          backgroundImage:
+            'linear-gradient(hsl(var(--primary) / 0.06) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary) / 0.06) 1px, transparent 1px)',
+          backgroundSize: '30px 30px',
+          maskImage: 'radial-gradient(ellipse at 50% 38%, black, transparent 80%)',
+          WebkitMaskImage: 'radial-gradient(ellipse at 50% 38%, black, transparent 80%)',
+        }}
+      />
+      <div
+        className="absolute -top-40 left-1/2 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full opacity-70"
+        style={{
+          background: 'radial-gradient(circle, hsl(var(--primary) / 0.12), transparent 62%)',
+        }}
+      />
+    </div>
+  );
+}
+
+/** Section eyebrow with a small teal reticle bracket (echoes the scanner corners). */
 export function SceneStep({ children }: { children: ReactNode }) {
   return (
-    <span className="mb-4 inline-block font-mono text-xs font-semibold uppercase tracking-[0.25em] text-primary">
+    <span className="mb-4 inline-flex items-center gap-2.5 font-mono text-xs font-semibold uppercase tracking-[0.25em] text-primary">
+      <span className="h-2.5 w-2.5 rounded-tl-[2px] border-l-2 border-t-2 border-primary" />
       {children}
     </span>
+  );
+}
+
+/**
+ * The app's lab-readout bar: mono key/value pairs (MINUTIEN · ENGINE · STATUS),
+ * the analysed status shown in the pipeline's bifurcation green.
+ */
+export function InstrumentReadout({
+  items,
+  className = '',
+}: {
+  items: { label: string; value: string; tone?: 'green' | 'teal' }[];
+  className?: string;
+}) {
+  return (
+    <div
+      className={`inline-flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 rounded-lg border border-primary/15 bg-black/40 px-4 py-2.5 font-mono text-[11px] uppercase tracking-widest text-muted-foreground ${className}`}
+    >
+      {items.map(({ label, value, tone }, i) => (
+        <span key={i} className="inline-flex items-center gap-2">
+          {label}
+          <span
+            className={
+              tone === 'green'
+                ? 'text-[#3fb950]'
+                : tone === 'teal'
+                  ? 'text-primary'
+                  : 'text-foreground'
+            }
+          >
+            {value}
+          </span>
+        </span>
+      ))}
+    </div>
   );
 }
 

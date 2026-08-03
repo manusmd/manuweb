@@ -140,6 +140,14 @@ body {
   --ring: 219 100% 50%;
 }
 
+/* FingerMatch detail page: retint the brand primary to the app's forensic
+   teal, so every primary-based colour (scanner frames, reticles, glows,
+   buttons, eyebrows) matches fingermatch's instrument look in one place. */
+.fingermatch-detail {
+  --primary: 172 66% 50%;
+  --primary-foreground: 200 30% 6%;
+}
+
 /* Portfolio-specific utilities */
 .text-gradient {
   background: linear-gradient(135deg, hsl(var(--accent-blue)), hsl(var(--accent-violet)));

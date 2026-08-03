@@ -1,11 +1,25 @@
 import { useTranslations } from 'next-intl';
 import { ExternalLink } from 'lucide-react';
 import type { Project } from '@/types/project';
-import { SceneStep, BrowserFrame } from '../parts';
-import { ASSET } from '../tokens';
+import { SceneStep, BrowserFrame, InstrumentReadout } from '../parts';
+import { ASSET, DEMO } from '../tokens';
 
 export function CockpitScene({ project }: { project: Project }) {
   const td = useTranslations('projects.fingermatchDetail');
+
+  const readout = [
+    {
+      label: td('cockpit.readoutMinutiae'),
+      value: `${DEMO.A.minutiae.length}/${DEMO.B.minutiae.length}`,
+    },
+    { label: td('cockpit.readoutPairs'), value: String(DEMO.match.pairs.length) },
+    { label: td('cockpit.readoutScore'), value: String(DEMO.match.score), tone: 'teal' as const },
+    {
+      label: td('cockpit.readoutStatus'),
+      value: td('cockpit.readoutStatusValue'),
+      tone: 'green' as const,
+    },
+  ];
 
   return (
     <section data-scene="cockpit" className="relative px-4 py-20 md:py-28">
@@ -22,6 +36,10 @@ export function CockpitScene({ project }: { project: Project }) {
 
         <div data-fade className="mt-8">
           <BrowserFrame src={ASSET('app-cockpit.png')} alt="FingerMatch analysis cockpit" />
+        </div>
+
+        <div data-fade className="mt-6 flex justify-center">
+          <InstrumentReadout items={readout} />
         </div>
 
         {project.liveUrl ? (

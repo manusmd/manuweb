@@ -11,6 +11,7 @@ import { SingularScene } from './scenes/SingularScene';
 import { MatchScene } from './scenes/MatchScene';
 import { CockpitScene } from './scenes/CockpitScene';
 import { LimitsScene } from './scenes/LimitsScene';
+import { FingermatchBackdrop } from './parts';
 
 /**
  * Scroll-driven story for FingerMatch: two prints run through a genuine classical
@@ -26,6 +27,8 @@ export function FingermatchDetail({ project }: { project: Project; locale: strin
 
   return (
     <div ref={rootRef} className="fingermatch-detail relative -mt-16 w-full overflow-x-hidden">
+      <FingermatchBackdrop />
+
       <nav
         aria-hidden
         className="pointer-events-none fixed left-6 top-1/2 z-40 hidden -translate-y-1/2 flex-col gap-3 lg:flex"
