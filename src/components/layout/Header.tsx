@@ -41,13 +41,16 @@ export function Header({ latestPosts, projects }: HeaderProps) {
   const isFeinwerkDetail = pathname === `/${locale}/projects/feinwerk`;
   const isApplyxDetail = pathname === `/${locale}/projects/applyx`;
   const isFingermatchDetail = pathname === `/${locale}/projects/fingermatch`;
+  const isAfterhiveDetail = pathname === `/${locale}/projects/afterhive`;
   const logoGradient = isFeinwerkDetail
     ? 'linear-gradient(135deg, #d8e84a, #aebf3a)'
     : isApplyxDetail
       ? 'linear-gradient(135deg, #4f7cff, #7aa2ff)'
       : isFingermatchDetail
         ? 'linear-gradient(135deg, #2dd4bf, #14b8a6)'
-        : undefined;
+        : isAfterhiveDetail
+          ? 'linear-gradient(135deg, #8b5cf6, #d946ef)'
+          : undefined;
 
   const { activeId: activeSection } = useActiveHomeSection(isHomePage, 'headerContainment');
 
