@@ -593,6 +593,85 @@
     },
     "portfolio": {
       "description": "Eine moderne, responsive Portfolio-Website mit Next.js 14, flüssigen Animationen, 3D-Elementen und Dark Mode. Zeigt meine Projekte und Erfahrungen."
+    },
+    "feinwerk": {
+      "title": "Feinwerk",
+      "subtitle": "Datei-Werkzeuge, komplett im Browser",
+      "description": "Sechs Datei-Werkzeuge — HEIC→JPG, PDF verkleinern & zusammenfügen, Bilder komprimieren & skalieren, QR-Code & Passwort — die vollständig im Browser laufen. Kein Upload, kein Konto: deine Dateien verlassen dein Gerät nie.",
+      "longDescription": "Feinwerk ist eine Sammlung von sechs alltäglichen Datei-Werkzeugen, die bewusst ohne Server auskommen: Die gesamte Verarbeitung passiert lokal im Browser über WebAssembly, Canvas und pdf.js. HEIC-Fotos werden zu JPG, PDFs verkleinert oder zusammengefügt, Bilder komprimiert und skaliert, QR-Codes und sichere Passwörter erzeugt — ohne Upload, ohne Konto, ohne Tracking (außer mit Einwilligung). Gebaut mit Next.js und erreichbar unter feinwerk-tools.de."
+    },
+    "feinwerkDetail": {
+      "hero": {
+        "eyebrow": "Projekt · Werkzeuge für Dateien",
+        "lead": "Sechs Datei-Werkzeuge, die deine Dateien nicht anfassen. Alles läuft im Browser — kein Upload, kein Konto, kein Server.",
+        "live": "feinwerk-tools.de ↗",
+        "stack": "Next.js · WebAssembly · pdf.js",
+        "scrollCue": "Scrollen"
+      },
+      "upload": {
+        "eyebrow": "Die Angst vor dem Upload",
+        "heading": "Andere Tools laden deine Dateien auf fremde Server.",
+        "server": "fremder Server",
+        "guard": "Dein Gerät",
+        "stamp": "Bleibt lokal"
+      },
+      "pipeline": {
+        "eyebrow": "So funktioniert Feinwerk",
+        "heading": "Die Datei bleibt auf einer Bahn — deiner.",
+        "device": "Dein Gerät",
+        "local": "Lokal",
+        "stageSelect": "auswählen",
+        "stageConvert": "umwandeln",
+        "stageSave": "speichern",
+        "notSent": "Wird nicht gesendet",
+        "bytesLabel": "Bytes ans Internet gesendet"
+      },
+      "tools": {
+        "title": "Sechs Werkzeuge",
+        "unit": "Werkzeug",
+        "items": {
+          "heic": {
+            "name": "HEIC → JPG",
+            "blurb": "iPhone-Fotos in ein Format, das überall aufgeht."
+          },
+          "shrink": {
+            "name": "PDF verkleinern",
+            "blurb": "Damit es per Mail durchgeht."
+          },
+          "merge": {
+            "name": "PDF zusammenfügen",
+            "blurb": "Mehrere Dokumente, eine Datei."
+          },
+          "compress": {
+            "name": "Bild komprimieren",
+            "blurb": "Leichter, ohne dass man es sieht."
+          },
+          "scale": {
+            "name": "Bild skalieren",
+            "blurb": "Genaue Maße, kein Verzerren."
+          },
+          "qr": {
+            "name": "QR-Code & Passwort",
+            "blurb": "Codes und starke Passwörter auf Knopfdruck."
+          }
+        }
+      },
+      "compress": {
+        "eyebrow": "Echte Kompression, lokal gerechnet",
+        "less": "kleiner",
+        "body": "Ein Beispiel: ein 8,4-MB-Foto wird zu 1,2 MB — im Browser, per Canvas, ohne dass ein einziges Byte hochgeladen wird.",
+        "before": "Vorher",
+        "after": "Nachher"
+      },
+      "tech": {
+        "eyebrow": "Wie es gebaut ist",
+        "heading": "Kein Server für die Arbeit. Nur dein Browser.",
+        "body": "Jedes Werkzeug rechnet lokal — WebAssembly, Canvas und pdf.js erledigen die Arbeit im Tab. Kein Server, der deine Dateien je zu sehen bekommt."
+      },
+      "outro": {
+        "eyebrow": "Kein Konto · Kein Upload · Kein Tracking ohne OK",
+        "cta": "Live ansehen ↗"
+      }
     }
   },
   "blog": {

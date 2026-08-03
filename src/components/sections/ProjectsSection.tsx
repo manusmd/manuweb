@@ -9,6 +9,7 @@ import {
   buildApplyxProject,
   buildFingermatchProject,
   buildAfterhiveProject,
+  buildFeinwerkProject,
 } from '@/data/projects';
 import { Github } from 'lucide-react';
 
@@ -17,6 +18,7 @@ export function ProjectsSection() {
   const tc = useTranslations('projects.applyx');
   const tf = useTranslations('projects.fingermatch');
   const ta = useTranslations('projects.afterhive');
+  const tw = useTranslations('projects.feinwerk');
 
   const projects: Project[] = [
     buildApplyxProject({
@@ -36,6 +38,12 @@ export function ProjectsSection() {
       subtitle: ta('subtitle'),
       description: ta('description'),
       longDescription: ta('longDescription'),
+    }),
+    buildFeinwerkProject({
+      title: tw('title'),
+      subtitle: tw('subtitle'),
+      description: tw('description'),
+      longDescription: tw('longDescription'),
     }),
   ];
 

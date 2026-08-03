@@ -3,9 +3,11 @@ import {
   buildApplyxProject,
   buildFingermatchProject,
   buildAfterhiveProject,
+  buildFeinwerkProject,
   APPLYX_SLUG,
   FINGERMATCH_SLUG,
   AFTERHIVE_SLUG,
+  FEINWERK_SLUG,
 } from '@/data/projects';
 import type { Project } from '@/types/project';
 
@@ -33,6 +35,16 @@ export async function resolveProject(locale: string, slug: string): Promise<Proj
   if (slug === AFTERHIVE_SLUG) {
     const t = await getTranslations({ locale, namespace: 'projects.afterhive' });
     return buildAfterhiveProject({
+      title: t('title'),
+      subtitle: t('subtitle'),
+      description: t('description'),
+      longDescription: t('longDescription'),
+    });
+  }
+
+  if (slug === FEINWERK_SLUG) {
+    const t = await getTranslations({ locale, namespace: 'projects.feinwerk' });
+    return buildFeinwerkProject({
       title: t('title'),
       subtitle: t('subtitle'),
       description: t('description'),

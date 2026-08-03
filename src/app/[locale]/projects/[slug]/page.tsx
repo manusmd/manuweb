@@ -1,10 +1,17 @@
 import { notFound } from 'next/navigation';
-import { getProjectSlugs, APPLYX_SLUG, FINGERMATCH_SLUG, AFTERHIVE_SLUG } from '@/data/projects';
+import {
+  getProjectSlugs,
+  APPLYX_SLUG,
+  FINGERMATCH_SLUG,
+  AFTERHIVE_SLUG,
+  FEINWERK_SLUG,
+} from '@/data/projects';
 import { resolveProject } from '@/lib/resolveProject';
 import { ProjectDetailClient } from './ProjectDetailClient';
 import { ApplyxDetail } from '@/components/projects/applyx/ApplyxDetail';
 import { FingermatchDetail } from '@/components/projects/fingermatch/FingermatchDetail';
 import { AfterhiveDetail } from '@/components/projects/afterhive/AfterhiveDetail';
+import { FeinwerkDetail } from '@/components/projects/feinwerk/FeinwerkDetail';
 
 interface ProjectDetailPageProps {
   params: Promise<{
@@ -59,6 +66,10 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
   if (slug === AFTERHIVE_SLUG) {
     return <AfterhiveDetail project={project} locale={locale} />;
+  }
+
+  if (slug === FEINWERK_SLUG) {
+    return <FeinwerkDetail project={project} locale={locale} />;
   }
 
   return <ProjectDetailClient project={project} />;

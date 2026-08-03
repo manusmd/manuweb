@@ -37,6 +37,8 @@ export function Header({ latestPosts, projects }: HeaderProps) {
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const isHomePage = pathname === `/${locale}`;
+  // On the Feinwerk project page, tint the logo in Feinwerk's lime.
+  const isFeinwerkDetail = pathname === `/${locale}/projects/feinwerk`;
 
   const { activeId: activeSection } = useActiveHomeSection(isHomePage, 'headerContainment');
 
@@ -172,7 +174,19 @@ export function Header({ latestPosts, projects }: HeaderProps) {
         >
           <Link
             href={`/${locale}`}
-            className="flex items-center space-x-2 pl-2 font-bold text-gradient transition-transform hover:scale-105"
+            className={`flex items-center space-x-2 pl-2 font-bold transition-transform hover:scale-105 ${
+              isFeinwerkDetail ? '' : 'text-gradient'
+            }`}
+            style={
+              isFeinwerkDetail
+                ? {
+                    backgroundImage: 'linear-gradient(135deg, #d8e84a, #aebf3a)',
+                    WebkitBackgroundClip: 'text',
+                    backgroundClip: 'text',
+                    color: 'transparent',
+                  }
+                : undefined
+            }
             onClick={() => setIsMobileMenuOpen(false)}
             data-logo
           >

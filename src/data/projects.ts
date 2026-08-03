@@ -119,6 +119,39 @@ export function buildAfterhiveProject(copy: ProjectCopy): Project {
   };
 }
 
+export const FEINWERK_SLUG = 'feinwerk';
+
+const feinwerkBase: Omit<Project, 'title' | 'subtitle' | 'description' | 'longDescription'> = {
+  id: 'feinwerk',
+  slug: FEINWERK_SLUG,
+  image: '/projects/feinwerk/card.png',
+  thumbnail: '/projects/feinwerk/card.png',
+  liveUrl: 'https://feinwerk-tools.de',
+  category: 'tool',
+  status: 'completed',
+  featured: true,
+  priority: 3,
+  isApp: true,
+  tags: ['Next.js', 'TypeScript', 'WebAssembly', 'pdf.js', 'Canvas'],
+  tech: ['Next.js', 'TypeScript', 'pdf.js', 'pdf-lib', 'heic2any', 'Canvas'],
+  technologies: [
+    { name: 'Next.js', category: 'frontend' },
+    { name: 'TypeScript', category: 'frontend' },
+    { name: 'pdf.js', category: 'tools' },
+    { name: 'WebAssembly', category: 'tools' },
+    { name: 'Canvas', category: 'frontend' },
+  ],
+  startDate: '2026-08-01',
+  lastUpdated: '2026-08-03',
+};
+
+export function buildFeinwerkProject(copy: ProjectCopy): Project {
+  return {
+    ...feinwerkBase,
+    ...copy,
+  };
+}
+
 export function getProjectSlugs(): string[] {
-  return [APPLYX_SLUG, FINGERMATCH_SLUG, AFTERHIVE_SLUG];
+  return [APPLYX_SLUG, FINGERMATCH_SLUG, AFTERHIVE_SLUG, FEINWERK_SLUG];
 }
