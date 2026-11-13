@@ -768,7 +768,10 @@
       "github": "GitHub",
       "linkedin": "LinkedIn",
       "email": "Email"
-    }
+    },
+    "legal": "Legal",
+    "impressum": "Legal Notice",
+    "datenschutz": "Privacy Policy"
   },
   "Index": {
     "title": "Full Stack Developer",
@@ -936,5 +939,119 @@
         "discovered": "Easter egg discovered"
       }
     }
+  },
+  "impressum": {
+    "title": "Legal Notice",
+    "sections": [
+      {
+        "heading": "Information pursuant to § 5 DDG",
+        "body": ["Manuel Schmid", "Hardtstr. 27", "78467 Konstanz", "Germany"]
+      },
+      {
+        "heading": "Contact",
+        "body": ["E-mail: info@manu-web.de"]
+      },
+      {
+        "heading": "Responsible for the content pursuant to § 18 (2) MStV",
+        "body": ["Manuel Schmid", "Hardtstr. 27", "78467 Konstanz"]
+      },
+      {
+        "heading": "Liability for content",
+        "body": [
+          "As a service provider, I am responsible for my own content on these pages in accordance with § 7 (1) DDG and general law. However, pursuant to §§ 8 to 10 DDG, I am not obliged to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity.",
+          "Obligations to remove or block the use of information under general law remain unaffected. Liability in this respect is, however, only possible from the point in time at which a concrete infringement of the law becomes known. If I become aware of any such infringements, I will remove the content concerned immediately."
+        ]
+      },
+      {
+        "heading": "Liability for links",
+        "body": [
+          "My website contains links to external third-party websites over whose content I have no influence. I therefore cannot accept any liability for this third-party content. The respective provider or operator of the linked pages is always responsible for their content. The linked pages were checked for possible legal violations at the time of linking; no unlawful content was recognisable at that time.",
+          "However, permanent monitoring of the content of the linked pages is not reasonable without concrete evidence of a legal violation. If I become aware of any infringements, I will remove such links immediately."
+        ]
+      },
+      {
+        "heading": "Copyright",
+        "body": [
+          "The content and works created by the site operator on these pages are subject to German copyright law. Duplication, processing, distribution and any form of exploitation beyond the limits of copyright require the written consent of the respective author or creator. Downloads and copies of this site are only permitted for private, non-commercial use.",
+          "Insofar as the content on this site was not created by the operator, the copyrights of third parties are respected and marked as such. Should you nevertheless become aware of a copyright infringement, please inform me accordingly. If I become aware of any infringements, I will remove such content immediately."
+        ]
+      },
+      {
+        "heading": "Consumer dispute resolution",
+        "body": [
+          "I am neither willing nor obliged to participate in dispute resolution proceedings before a consumer arbitration board."
+        ]
+      }
+    ]
+  },
+  "datenschutz": {
+    "title": "Privacy Policy",
+    "updated": "Last updated: November 2026",
+    "sections": [
+      {
+        "heading": "1. Controller",
+        "body": [
+          "The controller within the meaning of the General Data Protection Regulation (GDPR) is:",
+          "Manuel Schmid",
+          "Hardtstr. 27",
+          "78467 Konstanz",
+          "E-mail: info@manu-web.de"
+        ]
+      },
+      {
+        "heading": "2. General information",
+        "body": [
+          "Protecting your personal data is important to me. I process your data exclusively on the basis of the statutory provisions (GDPR, German Federal Data Protection Act). This privacy policy informs you about the most important aspects of data processing on this website.",
+          "This website is a private portfolio site. There is no registration, and neither user accounts nor a newsletter are offered."
+        ]
+      },
+      {
+        "heading": "3. Hosting",
+        "body": [
+          "This website is hosted by Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, USA. When you access the website, technically necessary data (e.g. IP address, time of access, page requested) is automatically transmitted to and processed by Vercel's servers in order to deliver the website.",
+          "The legal basis is Art. 6 (1) (f) GDPR (legitimate interest in a secure and efficient provision of the website). A data processing agreement pursuant to Art. 28 GDPR is in place with Vercel; the transfer to the USA takes place on the basis of the EU Standard Contractual Clauses. Further information: https://vercel.com/legal/privacy-policy"
+        ]
+      },
+      {
+        "heading": "4. Server log files",
+        "body": [
+          "The hosting provider automatically collects and stores information in so-called server log files, which your browser transmits automatically. These include, in particular, browser type and version, operating system used, referrer URL, host name of the accessing computer, time of the server request and the IP address. This data is not merged with other data sources.",
+          "This collection is based on Art. 6 (1) (f) GDPR for the technical provision and security of the website."
+        ]
+      },
+      {
+        "heading": "5. Web analytics (Vercel Analytics & Speed Insights)",
+        "body": [
+          "This website uses Vercel Web Analytics and Vercel Speed Insights to measure reach and performance. These services are cookieless and do not collect data in a way that allows individual visitors to be identified. Only aggregated, anonymised metrics are collected (e.g. page views, loading times, approximate origin, device type).",
+          "The legal basis is Art. 6 (1) (f) GDPR (legitimate interest in the statistical evaluation and technical optimisation of the website). As no cookies are set and no information is read from your device beyond what is technically necessary, no consent is required."
+        ]
+      },
+      {
+        "heading": "6. Contacting me",
+        "body": [
+          "If you send me enquiries by e-mail, your details including the contact data you provide will be stored by me for the purpose of processing the enquiry and in case of follow-up questions. I will not pass on this data without your consent.",
+          "Processing is based on Art. 6 (1) (b) GDPR where your enquiry relates to the performance of a contract or to pre-contractual measures; in all other cases on my legitimate interest in answering enquiries (Art. 6 (1) (f) GDPR). Your data will be deleted as soon as it is no longer required for the purpose and no statutory retention obligations apply."
+        ]
+      },
+      {
+        "heading": "7. Your rights",
+        "body": [
+          "In principle, you have the right to information (Art. 15 GDPR), rectification (Art. 16), erasure (Art. 17), restriction of processing (Art. 18), data portability (Art. 20) and to object to processing (Art. 21).",
+          "To exercise these rights, an e-mail to info@manu-web.de is sufficient."
+        ]
+      },
+      {
+        "heading": "8. Right to lodge a complaint with a supervisory authority",
+        "body": [
+          "If you believe that the processing of your data violates data protection law, you have the right to lodge a complaint with a supervisory authority. The competent authority is the State Commissioner for Data Protection and Freedom of Information of Baden-Württemberg, Lautenschlagerstraße 20, 70173 Stuttgart, Germany."
+        ]
+      },
+      {
+        "heading": "9. Validity and changes to this privacy policy",
+        "body": [
+          "This privacy policy is valid as of November 2026. As the website develops, or due to changed legal or official requirements, it may become necessary to amend this privacy policy."
+        ]
+      }
+    ]
   }
 }

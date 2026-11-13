@@ -68,10 +68,22 @@ export function Footer() {
         </div>
 
         {/* Bottom Section */}
-        <div className="mt-8 pt-8 border-t border-border/40">
-          <div className="flex justify-center">
-            <p className="text-sm text-muted-foreground">{t('copyright', { year: currentYear })}</p>
-          </div>
+        <div className="mt-8 flex flex-col items-center gap-4 border-t border-border/40 pt-8 sm:flex-row sm:justify-between">
+          <p className="text-sm text-muted-foreground">{t('copyright', { year: currentYear })}</p>
+          <nav className="flex items-center gap-5 text-sm">
+            <Link
+              href={`/${locale}/impressum`}
+              className="text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {t('impressum')}
+            </Link>
+            <Link
+              href={`/${locale}/datenschutz`}
+              className="text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {t('datenschutz')}
+            </Link>
+          </nav>
         </div>
       </div>
     </footer>
