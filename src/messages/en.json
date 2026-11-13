@@ -1034,20 +1034,32 @@
         ]
       },
       {
-        "heading": "7. Your rights",
+        "heading": "7. Bitti Studio (application)",
+        "body": [
+          "I operate my own application called Bitti Studio. It is a tool for producing and publishing videos for my YouTube channel “Erklär mir das, Bitti!”. The application is not sold, not distributed and has no users other than me.",
+          "Bitti Studio runs exclusively locally on my Mac. There is no server for the application, no user account, no registration, no analysis of usage behaviour and no transmission of usage data to me or to third parties.",
+          "With my explicit consent, the application accesses my own Google account. This is done for uploading and managing my own YouTube videos including titles, descriptions and comments, for retrieving the statistics of my own channel, and for writing events into a calendar that the application creates itself. It has no access to my other Google calendars. Data from other Google accounts is not processed.",
+          "So that I can reply to them, comments under my videos are displayed in the application. They originate from YouTube and are only shown locally, not stored, analysed or passed on.",
+          "Access tokens are stored exclusively in the macOS Keychain, not in files and not on the internet.",
+          "To schedule posts on Instagram and TikTok, the application passes video files and texts to the service Upload-Post, which I commission for this purpose. There are no other recipients.",
+          "I can disconnect the link to Google in the application at any time and revoke the authorisation in my Google account. After that, no access data is stored any longer."
+        ]
+      },
+      {
+        "heading": "8. Your rights",
         "body": [
           "In principle, you have the right to information (Art. 15 GDPR), rectification (Art. 16), erasure (Art. 17), restriction of processing (Art. 18), data portability (Art. 20) and to object to processing (Art. 21).",
           "To exercise these rights, an e-mail to info@manu-web.de is sufficient."
         ]
       },
       {
-        "heading": "8. Right to lodge a complaint with a supervisory authority",
+        "heading": "9. Right to lodge a complaint with a supervisory authority",
         "body": [
           "If you believe that the processing of your data violates data protection law, you have the right to lodge a complaint with a supervisory authority. The competent authority is the State Commissioner for Data Protection and Freedom of Information of Baden-Württemberg, Lautenschlagerstraße 20, 70173 Stuttgart, Germany."
         ]
       },
       {
-        "heading": "9. Validity and changes to this privacy policy",
+        "heading": "10. Validity and changes to this privacy policy",
         "body": [
           "This privacy policy is valid as of November 2026. As the website develops, or due to changed legal or official requirements, it may become necessary to amend this privacy policy."
         ]

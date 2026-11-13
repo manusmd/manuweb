@@ -1034,20 +1034,32 @@
         ]
       },
       {
-        "heading": "7. Ihre Rechte",
+        "heading": "7. Bitti Studio (Anwendung)",
+        "body": [
+          "Ich betreibe eine eigene Anwendung namens Bitti Studio. Sie ist ein Werkzeug zur Produktion und Veröffentlichung von Videos für meinen YouTube-Kanal „Erklär mir das, Bitti!“. Die Anwendung wird nicht verkauft, nicht verbreitet und hat außer mir keine Nutzer.",
+          "Bitti Studio läuft ausschließlich lokal auf meinem Mac. Es gibt keinen Server der Anwendung, kein Nutzerkonto, keine Registrierung, keine Analyse des Nutzungsverhaltens und keine Übermittlung von Nutzungsdaten an mich oder Dritte.",
+          "Mit meiner ausdrücklichen Einwilligung greift die Anwendung auf mein eigenes Google-Konto zu. Das geschieht für das Hochladen und Verwalten meiner eigenen YouTube-Videos einschließlich Titel, Beschreibungen und Kommentaren, für das Abrufen der Statistiken meines eigenen Kanals sowie für das Schreiben von Terminen in einen Kalender, den die Anwendung selbst anlegt. Auf meine übrigen Google-Kalender hat sie keinen Zugriff. Daten anderer Google-Konten werden nicht verarbeitet.",
+          "Zur Beantwortung werden Kommentare unter meinen Videos in der Anwendung angezeigt. Sie stammen von YouTube und werden nur lokal dargestellt, nicht gespeichert, ausgewertet oder weitergegeben.",
+          "Zugangstoken liegen ausschließlich in der Schlüsselbundverwaltung von macOS, nicht in Dateien und nicht im Internet.",
+          "Zum Einplanen von Beiträgen auf Instagram und TikTok übergibt die Anwendung Videodateien und Texte an den Dienst Upload-Post, den ich dafür beauftrage. Weitere Empfänger gibt es nicht.",
+          "Ich kann die Verbindung zu Google jederzeit in der Anwendung trennen und die Berechtigung in meinem Google-Konto widerrufen. Danach sind keine Zugangsdaten mehr gespeichert."
+        ]
+      },
+      {
+        "heading": "8. Ihre Rechte",
         "body": [
           "Ihnen stehen grundsätzlich die Rechte auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) sowie Widerspruch gegen die Verarbeitung (Art. 21) zu.",
           "Zur Ausübung dieser Rechte genügt eine E-Mail an info@manu-web.de."
         ]
       },
       {
-        "heading": "8. Beschwerderecht bei einer Aufsichtsbehörde",
+        "heading": "9. Beschwerderecht bei einer Aufsichtsbehörde",
         "body": [
           "Wenn Sie der Ansicht sind, dass die Verarbeitung Ihrer Daten gegen das Datenschutzrecht verstößt, haben Sie das Recht, sich bei einer Aufsichtsbehörde zu beschweren. Zuständig ist der Landesbeauftragte für den Datenschutz und die Informationsfreiheit Baden-Württemberg, Lautenschlagerstraße 20, 70173 Stuttgart."
         ]
       },
       {
-        "heading": "9. Aktualität und Änderung dieser Datenschutzerklärung",
+        "heading": "10. Aktualität und Änderung dieser Datenschutzerklärung",
         "body": [
           "Diese Datenschutzerklärung hat den Stand November 2026. Durch die Weiterentwicklung der Website oder aufgrund geänderter gesetzlicher bzw. behördlicher Vorgaben kann es notwendig werden, diese Datenschutzerklärung anzupassen."
         ]
